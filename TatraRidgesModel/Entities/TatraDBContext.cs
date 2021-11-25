@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TatraRidgesModel.Entities.Helpers;
+using TatraRidges.Model.Entities.Helpers;
 
-namespace TatraRidgesModel.Entities;
+namespace TatraRidges.Model.Entities;
 public class TatraDBContext : DbContext
 {
     private readonly string _connectionString = "Server=localhost\\SQLEXPRESS;TatraDb;Trusted_Connection=True;";

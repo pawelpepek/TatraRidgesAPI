@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace TatraRidgesModel.Entities;
+namespace TatraRidges.Model.Entities;
 
 [Table("PointTypes")]
 public class PointType

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace TatraRidgesModel.Entities.Helpers;
+namespace TatraRidges.Model.Entities.Helpers;
 
 internal static class ModelCreatorForTatras
 {

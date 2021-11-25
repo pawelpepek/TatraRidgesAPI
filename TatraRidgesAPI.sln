@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TatraRidgesAPI", "TatraRidgesAPI\TatraRidgesAPI.csproj", "{34A9E9F7-025E-4BD4-B9CD-83E2C55D0060}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TatraRidgesModel", "TatraRidgesModel\TatraRidgesModel.csproj", "{CA4FCF0B-D986-4F8E-A5FA-5088B1E8012D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TatraRidges.Model", "TatraRidgesModel\TatraRidges.Model.csproj", "{CA4FCF0B-D986-4F8E-A5FA-5088B1E8012D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

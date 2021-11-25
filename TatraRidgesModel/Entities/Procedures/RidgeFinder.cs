@@ -1,6 +1,4 @@
-﻿using TatraRidgesModel.Entities;
-
-namespace TatraRidgesModel.Procedures;
+﻿namespace TatraRidges.Model.Entities.Procedures;
 
 public class RidgeFinder
 {
