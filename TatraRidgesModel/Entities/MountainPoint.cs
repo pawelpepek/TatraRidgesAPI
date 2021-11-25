@@ -9,7 +9,7 @@ public class MountainPoint
     public byte PointTypeId { get; set; }
     public string Name { get; set; }
     public string AlternativeName { get; set; }
-    public Nullable<short> Evaluation { get; set; }
+    public short? Evaluation { get; set; }
     public bool PrecisedEvaluation { get; set; }
     public decimal WikiLatitude { get; set; }
     public decimal WikiLongitude { get; set; }
