@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Linq;
+using TatraRidgesModel.Entities.Helpers;
 
 namespace TatraRidgesModel.Entities;
 public class TatraDBContext : DbContext
