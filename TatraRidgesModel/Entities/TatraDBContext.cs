@@ -4,7 +4,7 @@ using TatraRidges.Model.Entities.Helpers;
 namespace TatraRidges.Model.Entities;
 public class TatraDBContext : DbContext
 {
-    private readonly string _connectionString = "Server=localhost\\SQLEXPRESS;TatraDb;Trusted_Connection=True;";
+    private readonly string _connectionString = "Server=localhost\\SQLEXPRESS;Database=TatraDb;Trusted_Connection=True;";
 
     public DbSet<Description> Descriptions { get; set; }
     public DbSet<Difficulty> Difficulties { get; set; }
