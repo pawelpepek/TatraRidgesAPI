@@ -10,6 +10,6 @@ public class Guide
     public string Name { get; set; }
     public string Author { get; set; }
 
-    public virtual List<Route> Route { get; set; }
+    public virtual List<GuideDescription> GuideDescriptions { get; set; }
 }
 

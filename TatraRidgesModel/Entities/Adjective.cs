@@ -2,14 +2,15 @@
 
 namespace TatraRidges.Model.Entities;
 
-[Table("descriptions")]
-public class Description
+[Table("Adjectives")]
+public class Adjective
 {
     public string Id { get; set; }
     public string Text { get; set; }
     public short Rank { get; set; }
 
-    public virtual List<Route> Route { get; set; }
+    public virtual List<DescriptionAdjectivePair> DescriptionAdjectivePairs { get; set; }
+
 }
 
 

@@ -16,4 +16,9 @@ public class MountainPoint
     public decimal Latitude { get; set; }
     public decimal Longitude { get; set; }
     public string? WikiAddress { get; set; }
+
+    public virtual List<PointsConnection> PointsConnections1 { get; set; }
+    public virtual List<PointsConnection> PointsConnections2 { get; set; }
+
+    public virtual PointType PointType { get; set; }
 }

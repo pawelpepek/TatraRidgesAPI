@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace TatraRidges.Model.Entities.Helpers;
 
@@ -6,41 +7,37 @@ internal static class ModelCreatorForTatras
 {
     internal static void Create(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Description>()
+        modelBuilder.Entity<Adjective>()
+            .Property(d => d.Id)
+            .SettingsForString(2);
+        modelBuilder.Entity<Adjective>()
             .Property(d => d.Text)
-            .IsRequired()
-            .HasMaxLength(50);
-        modelBuilder.Entity<Description>()
+            .SettingsForString(50);
+        modelBuilder.Entity<Adjective>()
             .Property(d => d.Rank)
             .IsRequired();
 
         modelBuilder.Entity<Difficulty>()
             .Property(d => d.Text)
-            .HasMaxLength(5)
-            .IsRequired();
+            .SettingsForString(5);
 
         modelBuilder.Entity<DifficultyDetail>()
             .Property(d => d.Sign)
-            .HasMaxLength(1)
-            .IsRequired();
+            .SettingsForString(1);
 
         modelBuilder.Entity<Guide>()
             .Property(g => g.ShortName)
-            .HasMaxLength(5)
-            .IsRequired();
+            .SettingsForString(5);
         modelBuilder.Entity<Guide>()
             .Property(g => g.Name)
-            .HasMaxLength(50)
-            .IsRequired();
+            .SettingsForString(50);
         modelBuilder.Entity<Guide>()
             .Property(g => g.Author)
-            .HasMaxLength(50)
-            .IsRequired();
+            .SettingsForString(50);
 
         modelBuilder.Entity<GuideDescription>()
             .Property(g => g.Number)
-            .HasMaxLength(20)
-            .IsRequired();
+            .SettingsForString(20);
         modelBuilder.Entity<GuideDescription>()
             .Property(g => g.Page)
             .IsRequired();
@@ -56,27 +53,25 @@ internal static class ModelCreatorForTatras
             .IsRequired();
         modelBuilder.Entity<MountainPoint>()
             .Property(p => p.Name)
-            .HasMaxLength(50)
-            .IsRequired();
+            .SettingsForString(50);
         modelBuilder.Entity<MountainPoint>()
             .Property(p => p.AlternativeName)
-            .HasMaxLength(50)
-            .IsRequired();
+            .SettingsForString(50);
         modelBuilder.Entity<MountainPoint>()
             .Property(p => p.PrecisedEvaluation)
             .IsRequired();
         modelBuilder.Entity<MountainPoint>()
             .Property(p => p.WikiLatitude)
-            .IsRequired();
+            .SettingsForDecimal();
         modelBuilder.Entity<MountainPoint>()
             .Property(p => p.WikiLongitude)
-            .IsRequired();
+            .SettingsForDecimal();
         modelBuilder.Entity<MountainPoint>()
             .Property(p => p.Latitude)
-            .IsRequired();
+            .SettingsForDecimal();
         modelBuilder.Entity<MountainPoint>()
             .Property(p => p.Longitude)
-            .IsRequired();
+            .SettingsForDecimal();
         modelBuilder.Entity<MountainPoint>()
             .Property(p => p.WikiAddress)
             .IsRequired();
@@ -90,6 +85,16 @@ internal static class ModelCreatorForTatras
         modelBuilder.Entity<PointsConnection>()
             .Property(c => c.Ridge)
             .IsRequired();
+        modelBuilder.Entity<PointsConnection>()
+            .HasOne(c => c.MountainPoint1)
+            .WithMany(p => p.PointsConnections1)
+            .OnDelete(DeleteBehavior.Restrict)
+            .HasForeignKey(c => c.PointId1);
+        modelBuilder.Entity<PointsConnection>()
+            .HasOne(c => c.MountainPoint2)
+            .WithMany(p => p.PointsConnections2)
+            .OnDelete(DeleteBehavior.Restrict)
+            .HasForeignKey(c => c.PointId2);    
 
         modelBuilder.Entity<PointType>()
             .Property(t => t.Name)
@@ -98,14 +103,13 @@ internal static class ModelCreatorForTatras
 
         modelBuilder.Entity<RouteType>()
             .Property(t => t.Name)
-            .HasMaxLength(20)
-            .IsRequired();
+            .SettingsForString(20);
         modelBuilder.Entity<RouteType>()
             .Property(t => t.Rank)
             .IsRequired();
 
         modelBuilder.Entity<Route>()
-            .Property(r => r.ConnectionId)
+            .Property(r => r.PointsConnectionId)
             .IsRequired();
         modelBuilder.Entity<Route>()
             .Property(r => r.ConsistentDirection)
@@ -125,6 +129,21 @@ internal static class ModelCreatorForTatras
         modelBuilder.Entity<Route>()
             .Property(r => r.RouteTime)
             .IsRequired();
+
+        modelBuilder.Entity<DescriptionAdjectivePair>()
+            .Property(rd => rd.DescriptionId)
+            .IsRequired();
+        modelBuilder.Entity<DescriptionAdjectivePair>()
+            .Property(rd => rd.RouteId)
+            .IsRequired();
+    }
+    private static void SettingsForDecimal(this PropertyBuilder<decimal> property)
+    {
+        property.HasColumnType("decimal(8,6)").IsRequired();
+    }
+    private static void SettingsForString(this PropertyBuilder<string> property, int maxSigns)
+    {
+        property.HasMaxLength(maxSigns).IsRequired();
     }
 }
 

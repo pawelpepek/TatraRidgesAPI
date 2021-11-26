@@ -6,7 +6,7 @@ namespace TatraRidges.Model.Entities;
 public class Route
 {
     public long Id { get; set; }
-    public long ConnectionId { get; set; }
+    public long PointsConnectionId { get; set; }
     public bool ConsistentDirection { get; set; }
     public byte DifficultyId { get; set; }
     public byte DifficultyDetailId { get; set; }
@@ -21,5 +21,5 @@ public class Route
     public virtual GuideDescription GuideDescription { get; set; }
     public virtual RouteType RouteType { get; set; }
 
-    public virtual IList<Description> Description { get; set; }
+    public virtual List<DescriptionAdjectivePair> DescriptionAdjectivePairs { get; set; }
 }

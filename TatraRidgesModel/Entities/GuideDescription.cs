@@ -5,7 +5,7 @@ namespace TatraRidges.Model.Entities
     [Table("GuideDescriptions")]
     public class GuideDescription
     {
-        public byte Id { get; set; }
+        public int Id { get; set; }
         public string Number { get; set; }
         public short Page { get; set; }
         public short Volume { get; set; }

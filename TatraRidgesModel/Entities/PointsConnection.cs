@@ -12,6 +12,7 @@ public class PointsConnection
 
     public virtual MountainPoint MountainPoint1 { get; set; }
     public virtual MountainPoint MountainPoint2 { get; set; }
-    public virtual PointType PointType { get; set; }
+
+    public virtual List<Route> Routes { get; set; }
 }
 

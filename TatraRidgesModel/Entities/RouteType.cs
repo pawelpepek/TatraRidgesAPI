@@ -9,6 +9,6 @@ public class RouteType
     public string Name { get; set; }
     public byte Rank { get; set; }
 
-    public virtual List<Route> Route { get; set; }
+    public virtual List<Route> Routes { get; set; }
 }
 
