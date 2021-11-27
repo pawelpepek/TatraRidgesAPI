@@ -131,7 +131,7 @@ internal static class ModelCreatorForTatras
             .IsRequired();
 
         modelBuilder.Entity<DescriptionAdjectivePair>()
-            .Property(rd => rd.DescriptionId)
+            .Property(rd => rd.AdjectiveId)
             .IsRequired();
         modelBuilder.Entity<DescriptionAdjectivePair>()
             .Property(rd => rd.RouteId)

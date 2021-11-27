@@ -12,8 +12,8 @@ using TatraRidges.Model.Entities;
 namespace TatraRidges.Model.Migrations
 {
     [DbContext(typeof(TatraDbContext))]
-    [Migration("20211126134557_Init")]
-    partial class Init
+    [Migration("20211127222002_ChangeOneColumnName")]
+    partial class ChangeOneColumnName
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -54,10 +54,6 @@ namespace TatraRidges.Model.Migrations
                     b.Property<string>("AdjectiveId")
                         .IsRequired()
                         .HasColumnType("nvarchar(2)");
-
-                    b.Property<string>("DescriptionId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("RouteId")
                         .HasColumnType("bigint");

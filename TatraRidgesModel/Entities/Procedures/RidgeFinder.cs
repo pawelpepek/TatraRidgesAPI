@@ -11,7 +11,7 @@ public class RidgeFinder
 
     public static List<PointsConnection>? FindRidge(int pointFromId, int pointToId)
     {
-        using var context = new TatraDBContext();
+        using var context = new TatraDbContext();
         var instance = new RidgeFinder
         {
             _ridges = context.PointsConnections.Where(con => con.Ridge)

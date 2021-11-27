@@ -10,7 +10,7 @@ using TatraRidges.Model.Entities;
 
 namespace TatraRidges.Model.Migrations
 {
-    [DbContext(typeof(TatraDBContext))]
+    [DbContext(typeof(TatraDbContext))]
     partial class TatraDBContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -52,10 +52,6 @@ namespace TatraRidges.Model.Migrations
                     b.Property<string>("AdjectiveId")
                         .IsRequired()
                         .HasColumnType("nvarchar(2)");
-
-                    b.Property<string>("DescriptionId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("RouteId")
                         .HasColumnType("bigint");

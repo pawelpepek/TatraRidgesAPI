@@ -2,7 +2,7 @@
 using TatraRidges.Model.Entities.Helpers;
 
 namespace TatraRidges.Model.Entities;
-public class TatraDBContext : DbContext
+public class TatraDbContext : DbContext
 {
     private readonly string _connectionString = "Server=localhost\\SQLEXPRESS;Database=TatraDb;Trusted_Connection=True;";
 
@@ -17,7 +17,6 @@ public class TatraDBContext : DbContext
     public DbSet<RouteType> RouteTypes { get; set; }
     public DbSet<Route> Routes { get; set; }
     public DbSet<DescriptionAdjectivePair> DescriptionAdjectivePairs { get; set; }
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
