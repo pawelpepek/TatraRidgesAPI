@@ -1,17 +1,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using TatraRidges.Model.Entities;
 using TatraRidges.Model.Seeders;
+using TatraRidgesAPI.Services;
 
 namespace TatraRidgesAPI
 {
@@ -31,6 +25,7 @@ namespace TatraRidgesAPI
             services.AddDbContext<TatraDbContext>();
             services.AddScoped<DbSeeder>();
             services.AddAutoMapper(this.GetType().Assembly);
+            services.AddScoped<IMountainPointService, MountainPointService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
