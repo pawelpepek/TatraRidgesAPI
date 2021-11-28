@@ -30,6 +30,7 @@ namespace TatraRidgesAPI
             services.AddControllers();
             services.AddDbContext<TatraDbContext>();
             services.AddScoped<DbSeeder>();
+            services.AddAutoMapper(this.GetType().Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
