@@ -4,12 +4,14 @@ using TatraRidges.Model.Entities;
 
 namespace TatraRidgesAPI
 {
-    public class MountainPointMappingProfile:Profile
+    public class TatraMappingProfile:Profile
     {
-        public MountainPointMappingProfile()
+        public TatraMappingProfile()
         {
             CreateMap<MountainPoint, MountainPointBasicDto>()
                 .ForMember(p => p.PointTypeName, t => t.MapFrom(s => s.PointType.Name));
+
+            CreateMap<PointsConnection, PointsRidgeDto>();
         }
     }
 }

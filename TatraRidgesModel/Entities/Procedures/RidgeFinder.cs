@@ -6,9 +6,6 @@ public class RidgeFinder
 
     private RidgeFinder() { }
 
-    public static List<PointsConnection>? FindRidge(MountainPoint pointFrom, MountainPoint pointTo)
-        => FindRidge(pointFrom.Id, pointTo.Id);
-
     public static List<PointsConnection>? FindRidge(int pointFromId, int pointToId)
     {
         using var context = new TatraDbContext();
