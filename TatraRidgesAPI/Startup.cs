@@ -29,6 +29,7 @@ namespace TatraRidgesAPI
             services.AddScoped<IMountainPointService, MountainPointService>();
             services.AddScoped<IPointsConnectionService, PointsConnectionService>();
             services.AddScoped<ErrorHandlingMiddleware>();
+            services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,9 +40,16 @@ namespace TatraRidgesAPI
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseMiddleware<ErrorHandlingMiddleware>();
 
+            app.UseMiddleware<ErrorHandlingMiddleware>();
             app.UseHttpsRedirection();
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "TatraRidges API");
+            });
 
             app.UseRouting();
 
