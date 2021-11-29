@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace TatraRidgesAPI.Exceptions
+﻿namespace TatraRidges.Model.Exceptions
 {
     public class NotFoundException : Exception
     {

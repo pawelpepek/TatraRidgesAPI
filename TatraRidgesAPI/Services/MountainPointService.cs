@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TatraRidges.Model.Dtos;
 using TatraRidges.Model.Entities;
-using TatraRidgesAPI.Exceptions;
+using TatraRidges.Model.Procedures;
 
 namespace TatraRidgesAPI.Services
 {
@@ -27,21 +27,9 @@ namespace TatraRidgesAPI.Services
         }
         public void Move(int id, PointGPSDto newCoordinate)
         {
-            var point = GetPointById(id);
-            point.Latitude = newCoordinate.Latitude;
-            point.Longitude = newCoordinate.Longitude;
-            _dbContext.SaveChanges();
-        }
+            var mountainPointsMover = new MountainPointsMover(_dbContext);
 
-        private MountainPoint GetPointById(int id)
-        {
-            var point = _dbContext.MountainPoints.FirstOrDefault(p => p.Id == id);
-            if (point == null)
-            {
-                throw new NotFoundException("Nie ma puntu z takim Id");
-            }
-            return point;
+            mountainPointsMover.MovePoint(id, newCoordinate);
         }
-
     }
 }
