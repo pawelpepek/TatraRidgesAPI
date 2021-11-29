@@ -1,27 +1,29 @@
-﻿namespace TatraRidges.Model.Entities.Procedures;
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace TatraRidges.Model.Entities.Procedures;
 
 public class RidgeFinder
 {
+    private readonly TatraDbContext _context;
     private IQueryable<PointsConnection> _ridges;
 
-    private RidgeFinder() { }
-
-    public static List<PointsConnection>? FindRidge(int pointFromId, int pointToId)
+    public RidgeFinder(TatraDbContext context)
     {
-        using var context = new TatraDbContext();
-        var instance = new RidgeFinder
-        {
-            _ridges = context.PointsConnections.Where(con => con.Ridge)
-        };
-        return instance.FindRidgeForPoints(pointFromId, pointToId);
+        _context = context;
     }
 
-    private List<PointsConnection>? FindRidgeForPoints(int pointFromId, int pointToId)
+    public List<PointsConnection> FindRidge(int pointFromId, int pointToId)
+    {
+        _ridges = _context.PointsConnections.Where(con => con.Ridge);
+        return FindRidgeForPoints(pointFromId, pointToId);
+    }
+
+    private List<PointsConnection> FindRidgeForPoints(int pointFromId, int pointToId)
     {
         var ridgesFromStart = AllConnectionsFromPoint(pointFromId);
-        if (ridgesFromStart == null)
+        if (!ridgesFromStart.Any())
         {
-            return null;
+            return new List<PointsConnection>();
         }
         var ridgeToPointTo = ridgesFromStart.FirstOrDefault(r => r.PointId1 == pointToId || r.PointId2 == pointToId);
 
@@ -35,17 +37,17 @@ public class RidgeFinder
             {
                 var nextPointFrom = PointDifferentLike(r, pointFromId);
                 var connectedRidges = FindRidgeForPoints(nextPointFrom, pointToId);
-                if (connectedRidges != null)
+                if (connectedRidges.Any())
                 {
                     connectedRidges.Insert(0, r);
                     return connectedRidges;
                 }
             }
         }
-        return null;
+        return new List<PointsConnection>();
     }
 
-    private IQueryable<PointsConnection>? AllConnectionsFromPoint(int pointFromId)
+    private IQueryable<PointsConnection> AllConnectionsFromPoint(int pointFromId)
     {
         var ridgesFromStart = _ridges.Where(con => con.PointId1 == pointFromId || con.PointId2 == pointFromId);
         _ridges = _ridges.Where(r => !ridgesFromStart.Contains(r));
