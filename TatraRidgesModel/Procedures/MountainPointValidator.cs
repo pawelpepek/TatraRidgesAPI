@@ -27,21 +27,16 @@ namespace TatraRidges.Model.Procedures
             var messages = new List<string>();
             if (!IsLatitudeValid()) 
             {
-                messages.Add(OneMessageForError("Szerokość geograficzna", _latitudeRange));
+                messages.Add(_latitudeRange.MessageForValue("Szerokość geograficzna"));
             }
             if (!IsLongitudeValid())
             {
-                messages.Add(OneMessageForError("Długość geograficzna", _longitudeRange));
+                messages.Add(_longitudeRange.MessageForValue("Długość geograficzna"));
             }
             return string.Join("\n", messages);
         }
 
         private bool IsLatitudeValid() => _latitudeRange.IsNumberInThisRange(_latitude);
         private bool IsLongitudeValid() => _longitudeRange.IsNumberInThisRange(_longitude);
-
-        private static string OneMessageForError(string name, DecimalRange range)
-        {
-            return $"{name} musi być z zakresu <{range.MinValue}; {range.MaxValue}>.";
-        }
     }
 }

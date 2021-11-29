@@ -2,14 +2,18 @@
 {
     public class DecimalRange
     {
-        public decimal MinValue { get; }
-        public decimal MaxValue { get; }
+        private readonly decimal _minValue;
+        private readonly decimal _maxValue;
 
         public DecimalRange(decimal minValue, decimal maxValue)
         {
-            MinValue = minValue;
-            MaxValue = maxValue;
+            _minValue = minValue;
+            _maxValue = maxValue;
         }
-        public bool IsNumberInThisRange(decimal value) => value <= MinValue && value >= MaxValue;
+        public bool IsNumberInThisRange(decimal value) => value <= _minValue && value >= _maxValue;
+        public string MessageForValue(string name)
+        {
+            return $"{name} musi być z zakresu <{_minValue}; {_maxValue}>.";
+        }
     }
 }
