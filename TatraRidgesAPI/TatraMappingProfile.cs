@@ -12,6 +12,7 @@ namespace TatraRidgesAPI
                 .ForMember(p => p.PointTypeName, t => t.MapFrom(s => s.PointType.Name));
 
             CreateMap<PointsConnection, PointsRidgeDto>();
+            CreateMap<PointsConnectionCreateDto, PointsConnection>();
         }
     }
 }

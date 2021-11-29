@@ -20,5 +20,11 @@ namespace TatraRidgesAPI.Controllers
         {
             return Ok(_service.GetAllRidges());
         }
+        [HttpPost]
+        public ActionResult PostNewPointsConnection([FromBody] PointsConnectionCreateDto dto)
+        {
+            var newConnectionId = _service.AddConnectionBetweenPoints(dto);
+            return Ok(newConnectionId);
+        }
     }
 }

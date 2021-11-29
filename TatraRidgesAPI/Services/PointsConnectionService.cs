@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TatraRidges.Model.Dtos;
 using TatraRidges.Model.Entities;
+using TatraRidges.Model.Procedures;
 
 namespace TatraRidgesAPI.Services
 {
@@ -19,9 +20,19 @@ namespace TatraRidgesAPI.Services
 
         public IEnumerable<PointsRidgeDto> GetAllRidges()
         {
-            var ridges = _dbContext.PointsConnections.Where(r => r.Ridge);
-            return _mapper.Map<List<PointsRidgeDto>>(ridges);
-        }
+            var connections= new Connections(_dbContext);
 
+            return _mapper.Map<List<PointsRidgeDto>>(connections.GetAll(true));
+        }
+        public long AddConnectionBetweenPoints(PointsConnectionCreateDto dto)
+        {
+            var newConnection = _mapper.Map<PointsConnection>(dto);
+
+            var connectionCreator = new ConnectionCreator(_dbContext);
+
+            connectionCreator.SaveInDbContext(newConnection);
+
+            return newConnection.Id;
+        }
     }
 }

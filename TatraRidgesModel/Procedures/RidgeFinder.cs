@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace TatraRidges.Model.Entities.Procedures;
+namespace TatraRidges.Model.Procedures;
 
 public class RidgeFinder
 {
@@ -47,11 +47,11 @@ public class RidgeFinder
         return new List<PointsConnection>();
     }
 
-    private IQueryable<PointsConnection> AllConnectionsFromPoint(int pointFromId)
+    private IList<PointsConnection> AllConnectionsFromPoint(int pointFromId)
     {
         var ridgesFromStart = _ridges.Where(con => con.PointId1 == pointFromId || con.PointId2 == pointFromId);
         _ridges = _ridges.Where(r => !ridgesFromStart.Contains(r));
-        return ridgesFromStart;
+        return ridgesFromStart.ToList();
     }
 
     private static int PointDifferentLike(PointsConnection connection, int notThisPointId)
