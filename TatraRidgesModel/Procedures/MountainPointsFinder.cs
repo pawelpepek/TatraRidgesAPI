@@ -12,7 +12,7 @@ namespace TatraRidges.Model.Procedures
             var point = _dbContext.MountainPoints.FirstOrDefault(p => p.Id == id);
             if (point == null)
             {
-                throw new NotFoundException("Nie ma punktu z takim Id");
+                throw new NotFoundException($"Nie ma punktu z Id = {id}");
             }
             return point;
         }

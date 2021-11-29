@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TatraRidges.Model.Entities;
 using TatraRidges.Model.Seeders;
+using TatraRidgesAPI.Middleware;
 using TatraRidgesAPI.Services;
 
 namespace TatraRidgesAPI
@@ -27,6 +28,7 @@ namespace TatraRidgesAPI
             services.AddAutoMapper(this.GetType().Assembly);
             services.AddScoped<IMountainPointService, MountainPointService>();
             services.AddScoped<IPointsConnectionService, PointsConnectionService>();
+            services.AddScoped<ErrorHandlingMiddleware>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -37,12 +39,13 @@ namespace TatraRidgesAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseMiddleware<ErrorHandlingMiddleware>();
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            //app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
