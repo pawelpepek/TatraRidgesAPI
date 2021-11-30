@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TatraRidges.Model", "TatraR
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TatraRidgesAPI", "TatraRidgesAPI\TatraRidgesAPI.csproj", "{77F95E0D-E1FF-4A7B-ADEB-5EAA4220709D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tatra.Ridges.Model.UnitTests", "Tatra.Ridges.Model.UnitTests\Tatra.Ridges.Model.UnitTests.csproj", "{1128A88A-1C87-4D0B-A5CB-139061434DDA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TatraRidges.Model.UnitTests", "TatraRidges.Model.UnitTests\TatraRidges.Model.UnitTests.csproj", "{A083FE53-25E4-406D-9470-93EB247569E1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{77F95E0D-E1FF-4A7B-ADEB-5EAA4220709D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77F95E0D-E1FF-4A7B-ADEB-5EAA4220709D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77F95E0D-E1FF-4A7B-ADEB-5EAA4220709D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1128A88A-1C87-4D0B-A5CB-139061434DDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1128A88A-1C87-4D0B-A5CB-139061434DDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1128A88A-1C87-4D0B-A5CB-139061434DDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1128A88A-1C87-4D0B-A5CB-139061434DDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A083FE53-25E4-406D-9470-93EB247569E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A083FE53-25E4-406D-9470-93EB247569E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A083FE53-25E4-406D-9470-93EB247569E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A083FE53-25E4-406D-9470-93EB247569E1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
