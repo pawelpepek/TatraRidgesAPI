@@ -1,4 +1,6 @@
-﻿namespace TatraRidges.Model.Procedures
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace TatraRidges.Model.Procedures
 {
     public class Connections
     {
@@ -13,6 +15,21 @@
             return onlyRidge 
                 ? connections.Where(r => r.Ridge).ToList() 
                 : connections.ToList();
+        }
+        public PointsConnection GetByIdWithChildren(long id)
+        {
+            var connection = _dbContext.PointsConnections
+                                       .Include(c=>c.Routes)
+                                       .ThenInclude(r=>r.RouteType)
+                                       .Include(c=>c.Routes)
+                                       .ThenInclude(r=>r.Difficulty)
+                                       .Include(c=>c.Routes)
+                                       .ThenInclude(r=>r.DifficultyDetail)
+                                       .Include(c=>c.Routes)
+                                       .ThenInclude(c=>c.DescriptionAdjectivePairs)
+                                       .FirstOrDefault(c => c.Id == id);
+
+            return connection ?? PointsConnection.Empty();
         }
     }
 }

@@ -14,5 +14,12 @@ public class PointsConnection
     public virtual MountainPoint MountainPoint2 { get; set; }
 
     public virtual List<Route> Routes { get; set; }
+
+    public static PointsConnection Empty()
+    {
+        return new PointsConnection() { Id = -1 };
+    }
+    public bool IsEmpty() => Id < 0;
+    public bool IsNotEmpty() => Id > 0;
 }
 

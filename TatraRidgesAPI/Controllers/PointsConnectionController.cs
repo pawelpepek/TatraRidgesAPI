@@ -6,6 +6,7 @@ using TatraRidgesAPI.Services;
 namespace TatraRidgesAPI.Controllers
 {
     [Route("api/connection")]
+    [ApiController]
     public class PointsConnectionController : ControllerBase
     {
         private readonly IPointsConnectionService _service;
@@ -20,6 +21,7 @@ namespace TatraRidgesAPI.Controllers
         {
             return Ok(_service.GetAllRidges());
         }
+
         [HttpPost]
         public ActionResult PostNewPointsConnection([FromBody] PointsConnectionCreateDto dto)
         {
