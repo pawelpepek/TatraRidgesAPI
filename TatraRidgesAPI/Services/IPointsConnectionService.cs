@@ -9,5 +9,4 @@ namespace TatraRidgesAPI.Services
 
         long AddConnectionBetweenPoints(PointsConnectionCreateDto dto);
     }
-
 }
