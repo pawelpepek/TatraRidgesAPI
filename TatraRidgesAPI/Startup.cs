@@ -28,6 +28,7 @@ namespace TatraRidgesAPI
             services.AddAutoMapper(this.GetType().Assembly);
             services.AddScoped<IMountainPointService, MountainPointService>();
             services.AddScoped<IPointsConnectionService, PointsConnectionService>();
+            services.AddScoped<IRouteService, RouteService>();
             services.AddScoped<ErrorHandlingMiddleware>();
             services.AddSwaggerGen();
         }

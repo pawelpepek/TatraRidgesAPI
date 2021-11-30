@@ -7,6 +7,7 @@ using TatraRidgesAPI.Services;
 namespace TatraRidgesAPI.Controllers
 {
     [Route("api/point")]
+    [ApiController]
     public class MountainPointsController : ControllerBase
     {
         private readonly IMountainPointService _service;
