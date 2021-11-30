@@ -33,7 +33,7 @@
                 },
                 new Route()
                 {
-                    ConsistentDirection=true,
+                    ConsistentDirection=false,
                     DifficultyId=2,
                     DifficultyDetailId=0,
                     GuideDescription=descriptions[2],
