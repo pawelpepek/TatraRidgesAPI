@@ -1,5 +1,5 @@
 ﻿namespace TatraRidges.Model.Seeders.ParametersData
-{ 
+{
     internal class PointTypesData : SeederTemplate<PointType>
     {
         public PointTypesData(TatraDbContext context) : base(context) { }

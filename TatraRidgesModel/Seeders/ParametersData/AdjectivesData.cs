@@ -1,103 +1,103 @@
 ﻿namespace TatraRidges.Model.Seeders.ParametersData;
 
-internal class AdjectivesData:SeederTemplate<Adjective>
+internal class AdjectivesData : SeederTemplate<Adjective>
 {
     public AdjectivesData(TatraDbContext context) : base(context) { }
     public override List<Adjective> GetEntities()
     {
         return new List<Adjective>()
         {
-            new Adjective() 
-            { 
+            new Adjective()
+            {
                 Id = "_c",
                 Text = "Ciekawa",
                 Rank = 3
             },
-            new Adjective() 
-            { 
+            new Adjective()
+            {
                 Id = "_e",
                 Text = "Eksponowana",
                 Rank = 5
             },
-            new Adjective() 
-            { 
+            new Adjective()
+            {
                 Id = "_k",
                 Text = "Krucha",
                 Rank = -5
             },
-            new Adjective() 
-            { 
+            new Adjective()
+            {
                 Id = "_p",
                 Text = "Piękna",
                 Rank = 5
             },
-            new Adjective() 
-            { 
+            new Adjective()
+            {
                 Id = "_w",
                 Text = "Widokowo piękna",
                 Rank = 5
             },
-            new Adjective() 
-            { 
+            new Adjective()
+            {
                 Id = "bk",
                 Text = "Bardzo krucha",
                 Rank = -7
             },
-            new Adjective() 
-            { 
+            new Adjective()
+            {
                 Id = "bp",
                 Text = "Bardzo piękna",
                 Rank = 7
             },
-            new Adjective() 
-            { 
+            new Adjective()
+            {
                 Id = "bw",
                 Text = "Widokowo bardzo piękna",
                 Rank = 7
             },
-            new Adjective() 
-            { 
+            new Adjective()
+            {
                 Id = "be",
                 Text = "Bardzo eksponowana",
                 Rank = 7
             },
-            new Adjective() 
-            { 
+            new Adjective()
+            {
                 Id = "ce",
                 Text = "Cześciowo eksponowana",
                 Rank = 3},
-            new Adjective() 
-            { 
+            new Adjective()
+            {
                 Id = "ck",
                 Text = "Częściowo krucha",
                 Rank = -3
             },
-            new Adjective() 
-            { 
+            new Adjective()
+            {
                 Id = "me",
                 Text = "Nieco eksponowana",
                 Rank = 3
             },
-            new Adjective() 
+            new Adjective()
             {
                 Id = "nc",
                 Text = "Nieciekawa",
                 Rank = -7
             },
-            new Adjective() 
-            { 
+            new Adjective()
+            {
                 Id = "wk",
                 Text = "Niezwykle krucha",
                 Rank = -10
             },
-            new Adjective() 
-            { 
+            new Adjective()
+            {
                 Id = "wp",
                 Text = "Wspaniała",
                 Rank = 10
             },
-            new Adjective() 
-            { 
+            new Adjective()
+            {
                 Id = "ww",
                 Text = "Widokowo wspaniała",
                 Rank = 10

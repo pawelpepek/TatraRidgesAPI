@@ -17,7 +17,7 @@
                 new Guide()
                 {
                     Id=2,
-                    ShortName="WC", 
+                    ShortName="WC",
                     Name="Tatry Przewodnik Szczegółowy",
                     Author="Władysław Cywiński"
                 }
