@@ -58,6 +58,7 @@ namespace Tatra.Ridges.Model.UnitTests.Helpers
 
         private static bool IsNumberInThisRange_SetValueInRange(ValueInDecimalRange valueAndRange)
         {
+            //arrange
             var decimalRange = valueAndRange.DecimalRange.MakeDecimalRange();
             return decimalRange.IsNumberInThisRange(valueAndRange.Value);
         }
