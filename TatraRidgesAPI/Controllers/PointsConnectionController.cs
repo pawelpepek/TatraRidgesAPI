@@ -24,7 +24,7 @@ namespace TatraRidgesAPI.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles ="Admin")]
         public ActionResult PostNewPointsConnection([FromBody] PointsConnectionCreateDto dto)
         {
             var newConnectionId = _service.AddConnectionBetweenPoints(dto);

@@ -25,7 +25,7 @@ namespace TatraRidgesAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public ActionResult Move([FromRoute] int id, [FromBody] PointGPSDto newCoordinates)
         {
             _service.Move(id, newCoordinates);
