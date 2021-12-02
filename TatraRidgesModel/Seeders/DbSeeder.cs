@@ -20,6 +20,7 @@ namespace TatraRidges.Model.Seeders
             SeedOne(new AdjectivesData(_dbContext));
             SeedOne(new GuidesData(_dbContext));
             SeedOne(new RouteTypesData(_dbContext));
+            SeedOne(new RolesData(_dbContext));
         }
         private void SeedExample()
         {

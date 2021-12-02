@@ -16,6 +16,11 @@ public class TatraDbContext : DbContext
     public DbSet<PointType> PointTypes { get; set; }
     public DbSet<RouteType> RouteTypes { get; set; }
     public DbSet<Route> Routes { get; set; }
+
+    public DbSet<User> Users { get; set; }
+    public DbSet<Role> Roles { get; set; }
+
+
     public DbSet<DescriptionAdjectivePair> DescriptionAdjectivePairs { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

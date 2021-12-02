@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TatraRidges.Model.Entities;
 
@@ -11,9 +12,10 @@ using TatraRidges.Model.Entities;
 namespace TatraRidges.Model.Migrations
 {
     [DbContext(typeof(TatraDbContext))]
-    partial class TatraDBContextModelSnapshot : ModelSnapshot
+    [Migration("20211202121324_User")]
+    partial class User
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
