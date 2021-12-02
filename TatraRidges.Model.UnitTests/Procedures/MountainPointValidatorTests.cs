@@ -5,7 +5,7 @@ using TatraRidges.Model.Dtos;
 using TatraRidges.Model.Procedures;
 using Xunit;
 
-namespace Tatra.Ridges.Model.UnitTests.Procedures
+namespace Tatra.RidgesModel.UnitTests.Procedures
 {
     public class MountainPointValidatorTests
     {

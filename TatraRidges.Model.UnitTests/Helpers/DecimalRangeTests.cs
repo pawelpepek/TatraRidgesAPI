@@ -2,7 +2,7 @@
 using System.Linq;
 using Xunit;
 
-namespace Tatra.Ridges.Model.UnitTests.Helpers
+namespace TatraRidgesModel.UnitTests.Helpers
 {
     public class DecimalRangeTests
     {

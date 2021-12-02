@@ -1,6 +1,6 @@
 ﻿using TatraRidges.Model.Helpers;
 
-namespace Tatra.Ridges.Model.UnitTests.Helpers
+namespace TatraRidgesModel.UnitTests.Helpers
 {
     public struct DecimalRangeForTest
     {
