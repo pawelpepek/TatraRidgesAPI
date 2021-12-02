@@ -31,11 +31,20 @@ namespace TatraRidgesAPI
             services.AddScoped<IRouteService, RouteService>();
             services.AddScoped<ErrorHandlingMiddleware>();
             services.AddSwaggerGen();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("FrontEndClient", builder =>
+                 builder.AllowAnyMethod()
+                 .AllowAnyHeader()
+                 .WithOrigins("http://127.0.0.1:5500")
+                 );
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DbSeeder seeder)
         {
+            app.UseCors("FrontEndClient");
             seeder.Seed();
             if (env.IsDevelopment())
             {
