@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using TatraRidges.Model.Dtos;
 using TatraRidges.Model.Entities;
@@ -24,6 +25,7 @@ namespace TatraRidgesAPI.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize]
         public ActionResult Move([FromRoute] int id, [FromBody] PointGPSDto newCoordinates)
         {
             _service.Move(id, newCoordinates);

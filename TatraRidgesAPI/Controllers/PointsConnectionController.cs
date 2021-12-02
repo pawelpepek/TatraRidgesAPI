@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using TatraRidges.Model.Dtos;
 using TatraRidgesAPI.Services;
@@ -23,6 +24,7 @@ namespace TatraRidgesAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult PostNewPointsConnection([FromBody] PointsConnectionCreateDto dto)
         {
             var newConnectionId = _service.AddConnectionBetweenPoints(dto);

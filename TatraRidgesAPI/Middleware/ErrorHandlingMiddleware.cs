@@ -30,6 +30,10 @@ namespace TatraRidgesAPI.Middleware
             {
                 await HandleException(context, notFoundException, 404);
             }
+            catch(BadRequestException badRequestException)
+            {
+                await HandleException(context, badRequestException, 400);
+            }
             catch (Exception e)
             {
                 _logger.LogError(e, e.Message);
