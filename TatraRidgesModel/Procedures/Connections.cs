@@ -13,7 +13,10 @@ namespace TatraRidges.Model.Procedures
             var connections = _dbContext.PointsConnections;
 
             return onlyRidge 
-                ? connections.Where(r => r.Ridge).ToList() 
+                ? connections.Where(r => r.Ridge)
+                             .Include(r=>r.MountainPoint1)
+                             .Include(r=>r.MountainPoint2)
+                             .ToList() 
                 : connections.ToList();
         }
         public PointsConnection GetByIdWithChildren(long id)
