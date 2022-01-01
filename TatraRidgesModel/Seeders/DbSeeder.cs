@@ -14,13 +14,13 @@ namespace TatraRidges.Model.Seeders
         }
         private void SeedParameters()
         {
-            SeedOne(new DifficultiesData(_dbContext));
-            SeedOne(new DifficultyDetailsData(_dbContext));
-            SeedOne(new PointTypesData(_dbContext));
-            SeedOne(new AdjectivesData(_dbContext));
-            SeedOne(new GuidesData(_dbContext));
-            SeedOne(new RouteTypesData(_dbContext));
-            SeedOne(new RolesData(_dbContext));
+            SeedTable(new DifficultiesData(_dbContext));
+            SeedTable(new DifficultyDetailsData(_dbContext));
+            SeedTable(new PointTypesData(_dbContext));
+            SeedTable(new AdjectivesData(_dbContext));
+            SeedTable(new GuidesData(_dbContext));
+            SeedTable(new RouteTypesData(_dbContext));
+            SeedTable(new RolesData(_dbContext));
         }
         private void SeedExample()
         {
@@ -35,9 +35,9 @@ namespace TatraRidges.Model.Seeders
                 _dbContext.SaveChanges();
             }
         }
-        private static void SeedOne<TEntity>(SeederTemplate<TEntity> seeder) where TEntity : class
+        private static void SeedTable<TEntity>(SeederTemplate<TEntity> tableSeeder) where TEntity : class
         {
-            seeder.Seed();
+            tableSeeder.Seed();
         }
     }
 }

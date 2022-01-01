@@ -20,7 +20,7 @@ namespace TatraRidgesAPI.Services
         }
         public IEnumerable<MountainPointBasicDto> GetAll()
         {
-            var points = _dbContext.MountainPoints
+           var points = _dbContext.MountainPoints
                        .Include(p => p.PointType)
                        .ToList();
             return _mapper.Map<List<MountainPointBasicDto>>(points);

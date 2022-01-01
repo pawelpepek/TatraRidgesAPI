@@ -16,6 +16,11 @@ public class DataSaver
         }
     }
 
+    private bool CheckIsEmptyTable<TEntity>()
+    {
+        var table = GetTable<TEntity>();
+        return table != null && table.Any();
+    }
     private void Save<TEntity>(List<TEntity> data) where TEntity : class
     {
         var dbSet = _context.Set<TEntity>();
@@ -30,12 +35,6 @@ public class DataSaver
             throw new Exception($"Table of {nameof(TEntity)} not found");
         }
     }
-    public bool CheckIsEmptyTable<TEntity>()
-    {
-        var table=GetTable<TEntity>();
-        return table != null && table.Any();
-    }
-
     private IQueryable<TEntity>? GetTable<TEntity>()
     {
         var property = _context.GetType().GetProperties().FirstOrDefault(IsThisType<TEntity>);
