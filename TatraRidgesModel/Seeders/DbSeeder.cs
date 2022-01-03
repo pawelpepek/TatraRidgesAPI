@@ -1,5 +1,6 @@
 ﻿using TatraRidges.Model.Seeders.ParametersData; 
 using TatraRidges.Model.Seeders.ExampleData;
+using Microsoft.EntityFrameworkCore;
 
 namespace TatraRidges.Model.Seeders
 {
@@ -9,8 +10,19 @@ namespace TatraRidges.Model.Seeders
         public DbSeeder(TatraDbContext dbContext) => _dbContext = dbContext;
         public void Seed()
         {
-            SeedParameters();
-            SeedExample();
+            if (_dbContext.Database.CanConnect())
+            {
+                if (_dbContext.Database.IsRelational())
+                {
+                    var pendingMigrations = _dbContext.Database.GetPendingMigrations();
+                    if (pendingMigrations != null && pendingMigrations.Any())
+                    {
+                        _dbContext.Database.Migrate();
+                    }
+                }
+                SeedParameters();
+                SeedExample();
+            }
         }
         private void SeedParameters()
         {

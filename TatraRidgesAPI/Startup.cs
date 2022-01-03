@@ -3,6 +3,7 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -52,7 +53,10 @@ namespace TatraRidgesAPI
             );
 
             services.AddControllers().AddFluentValidation();
-            services.AddDbContext<TatraDbContext>();
+
+            services.AddDbContext<TatraDbContext>(options => options
+            .UseSqlServer(Configuration.GetConnectionString("TatraDbConnection")));
+
             services.AddScoped<DbSeeder>();
             services.AddAutoMapper(this.GetType().Assembly);
             services.AddScoped<IMountainPointService, MountainPointService>();
@@ -71,7 +75,7 @@ namespace TatraRidgesAPI
                 options.AddPolicy("FrontEndClient", builder =>
                  builder.AllowAnyMethod()
                  .AllowAnyHeader()
-                 .WithOrigins("http://127.0.0.1:5500")
+                 .WithOrigins("http://localhost:3001")
                  );
             });
         }

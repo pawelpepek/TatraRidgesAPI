@@ -4,8 +4,6 @@ using TatraRidges.Model.Entities.Helpers;
 namespace TatraRidges.Model.Entities;
 public class TatraDbContext : DbContext
 {
-    private readonly string _connectionString = "Server=localhost\\SQLEXPRESS;Database=TatraDb;Trusted_Connection=True;";
-
     public DbSet<Adjective> Adjectives { get; set; }
     public DbSet<Difficulty> Difficulties { get; set; }
     public DbSet<DifficultyDetail> DifficultyDetails { get; set; }
@@ -20,6 +18,7 @@ public class TatraDbContext : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<Role> Roles { get; set; }
 
+    public TatraDbContext(DbContextOptions<TatraDbContext> options) : base(options) { }
 
     public DbSet<DescriptionAdjectivePair> DescriptionAdjectivePairs { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -28,10 +27,10 @@ public class TatraDbContext : DbContext
         ModelCreatorForTatras.Create(modelBuilder);
     }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.UseSqlServer(_connectionString);
-        base.OnConfiguring(optionsBuilder);
-    }
+    //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    //{
+    //    optionsBuilder.UseSqlServer(_connectionString);
+    //    base.OnConfiguring(optionsBuilder);
+    //}
 }
 
