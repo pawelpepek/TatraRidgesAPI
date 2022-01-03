@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
+using System.Linq;
 using TatraRidges.Model.Dtos;
 using TatraRidges.Model.Helpers;
 using TatraRidgesAPI.Services;
@@ -21,7 +21,8 @@ namespace TatraRidgesAPI.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<PointsRidgeDto>> GetRidgeBetweenPoints([FromQuery]  PointsPair points)
         {
-            return Ok(_service.GetRouteBetweenPoints(points));
+            var connections = _service.GetRouteBetweenPoints(points);
+            return connections.Count()==0?NotFound():Ok(connections);
         }
     }
 }
