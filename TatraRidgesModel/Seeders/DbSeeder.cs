@@ -7,6 +7,7 @@ namespace TatraRidges.Model.Seeders
     public class DbSeeder
     {
         private readonly TatraDbContext _dbContext;
+        private bool isPowered = false;
         public DbSeeder(TatraDbContext dbContext) => _dbContext = dbContext;
         public void Seed()
         {
@@ -26,13 +27,17 @@ namespace TatraRidges.Model.Seeders
         }
         private void SeedParameters()
         {
-            SeedTable(new DifficultiesData(_dbContext));
-            SeedTable(new DifficultyDetailsData(_dbContext));
-            SeedTable(new PointTypesData(_dbContext));
-            SeedTable(new AdjectivesData(_dbContext));
-            SeedTable(new GuidesData(_dbContext));
-            SeedTable(new RouteTypesData(_dbContext));
-            SeedTable(new RolesData(_dbContext));
+            if(!isPowered)
+            {
+                isPowered = true;
+                SeedTable(new DifficultiesData(_dbContext));
+                SeedTable(new DifficultyDetailsData(_dbContext));
+                SeedTable(new PointTypesData(_dbContext));
+                SeedTable(new AdjectivesData(_dbContext));
+                SeedTable(new GuidesData(_dbContext));
+                SeedTable(new RouteTypesData(_dbContext));
+                SeedTable(new RolesData(_dbContext));
+            }
         }
         private void SeedExample()
         {
