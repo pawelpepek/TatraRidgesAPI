@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TatraRidgesAPI", "TatraRidg
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TatraRidges.Model.UnitTests", "TatraRidges.Model.UnitTests\TatraRidges.Model.UnitTests.csproj", "{A083FE53-25E4-406D-9470-93EB247569E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TatraRidgesAPI.IntegrationTests", "TatraRidgesAPI.IntegrationTests\TatraRidgesAPI.IntegrationTests.csproj", "{48632DE5-4BD4-4EFB-B017-42161F0B5F3A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TatraRidgesAPI.IntegrationTests", "TatraRidgesAPI.IntegrationTests\TatraRidgesAPI.IntegrationTests.csproj", "{48632DE5-4BD4-4EFB-B017-42161F0B5F3A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TatraRidges.WebScraping", "TatraRidges.WebScraping\TatraRidges.WebScraping.csproj", "{CA9AB890-6702-4B15-B4DE-DA51C63EDADF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{48632DE5-4BD4-4EFB-B017-42161F0B5F3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{48632DE5-4BD4-4EFB-B017-42161F0B5F3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{48632DE5-4BD4-4EFB-B017-42161F0B5F3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA9AB890-6702-4B15-B4DE-DA51C63EDADF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA9AB890-6702-4B15-B4DE-DA51C63EDADF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA9AB890-6702-4B15-B4DE-DA51C63EDADF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA9AB890-6702-4B15-B4DE-DA51C63EDADF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

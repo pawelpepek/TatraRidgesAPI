@@ -9,6 +9,6 @@ namespace TatraRidgesAPI.IntegrationTests.Controllers
         : ControllerTestsTemplate, IClassFixture<WebApplicationFactory<Startup>>
     {
         public PointsConnectionsUnauthorizedControllerTests(WebApplicationFactory<Startup> factory)
-      : base(factory, "ForConnections", UserRole.Admin) { }
+      : base(factory, "ForConnections", UserRole.None) { }
     }
 }
