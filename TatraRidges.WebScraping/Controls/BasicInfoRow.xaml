@@ -21,7 +21,7 @@
                     <Setter Property="Margin" Value="0,0,5,0"/>
                 </Style>
             </StackPanel.Resources>
-            <CheckBox IsChecked="{Binding IsChecked}" 
+            <CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay}" 
                       FontSize="15"
                       Margin="5,0,5,0"
                       IsEnabled="{Binding IsInDataBase,
@@ -30,8 +30,8 @@
             <TextBlock Text="{Binding IsInDataBaase,
                         Converter={StaticResource InDataBaseConverter}}" 
                         Width="70"/>
-            <TextBlock Text="{Binding Type.Name}" Width="70"/>
-            <TextBlock Text="{Binding Name}"/>
+            <TextBlock Text="{Binding Info.Type.Name}" Width="70"/>
+            <TextBlock Text="{Binding Info.Name}"/>
         </StackPanel>
     </Grid>
 </UserControl>

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TatraRidges.Model.Entities;
 
-namespace TatraRidges.WebScraping.Model.Scrapers
+namespace TatraRidges.WebScraping.Model
 {
     public static class DbContextFactory
     {

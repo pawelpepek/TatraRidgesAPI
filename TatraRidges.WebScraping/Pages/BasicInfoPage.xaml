@@ -12,52 +12,109 @@
         <converters:InvertBoolConverter x:Key="BoolInverter"/>
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
         <converters:BoolToVisibilityInvertConverter x:Key="BoolToVisibilityInvertConverter"/>
+        <converters:MaximumFromCheckedConverter x:Key="MaximumFromCheckedConverter"/>
     </Page.Resources>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="10*"/>
-        </Grid.RowDefinitions>
-        <TextBlock Text="Naciśnij przypicisk Ściągnij żeby wczytać dane!" 
+        <Grid Visibility="{Binding IsLoaded, 
+              Converter={StaticResource BoolToVisibilityInvertConverter}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="10*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Naciśnij przypicisk Ściągnij żeby wczytać dane!" 
                    VerticalAlignment="Center"
                    FontSize="20"
                    HorizontalAlignment="Center"/>
-        <Grid Grid.Row="1">
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10*"/>
+
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+                <ScrollViewer MaxWidth="500" BorderBrush="Gray" BorderThickness="1">
+                    <ItemsControl ItemsSource="{Binding BasicList}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <local:BasicInfoRow/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+                <Grid HorizontalAlignment="Center" Grid.Row="1" Margin="5" Width="500">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Button Command="{Binding DownloadBasicInfoCommand}" 
+                        Grid.Column="0"
+                        FontSize="20" 
+                        Content="Ściągnij listę punktów"
+                        Visibility="{Binding IsLoading,
+                        Converter={StaticResource BoolToVisibilityInvertConverter}}"/>
+                        <Button Content="Ściągnij szczegóły!"
+                            Grid.Column="1"
+                            Command="{Binding DownloadDetailInfoCommand}"/>
+                    </Grid>
+                    <ProgressBar IsIndeterminate="{Binding IsLoadingBasic}"
+                                 Visibility="{Binding IsLoading, 
+                                 Converter={StaticResource BoolToVisibilityConverter}}"
+                                 Maximum="{Binding LoadedCount}"
+                                 Value="{Binding LoadedIndex}"/>
+                    <TextBlock Visibility="{Binding IsLoading, 
+                               Converter={StaticResource BoolToVisibilityConverter}}" 
+                               Text="{Binding LoadedValue}"
+                               VerticalAlignment="Center"
+                               Margin="10"
+                               FontSize="12"/>
+                </Grid>
+            </Grid>
+        </Grid>
+
+        <Grid Visibility="{Binding IsLoaded, 
+              Converter={StaticResource BoolToVisibilityConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="10*"/>
-                
+
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
-            <ScrollViewer MaxWidth="500" BorderBrush="Gray" BorderThickness="1">
-                <ItemsControl ItemsSource="{Binding BasicList}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <local:BasicInfoRow/>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </ScrollViewer>
+            <TextBlock Text="Punkty zostały zapisane w bazie danych!" 
+                               FontSize="20" 
+                               HorizontalAlignment="Center" 
+                               VerticalAlignment="Center"
+                               Height="50"
+                               Visibility="{Binding IsSaved, 
+                               Converter={StaticResource BoolToVisibilityConverter}}"/>
+            <DataGrid ItemsSource="{Binding DataList}" >
+                <!--<DataGrid.Columns>
+                    <DataGridHyperlinkColumn Binding="{Binding Address}">
+                        <DataGridHyperlinkColumn.ElementStyle>
+                            <Style>
+                                <EventSetter Event="Hyperlink.Click" Handler="Hyperlink_Click"/>
+                            </Style>
+                        </DataGridHyperlinkColumn.ElementStyle>
+                    </DataGridHyperlinkColumn>
+                </DataGrid.Columns>-->
+            </DataGrid>
             <Grid HorizontalAlignment="Center" Grid.Row="1" Margin="5" Width="500">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    
-                    <Button Command="{Binding DownloadBasicInfoCommand}" 
+
+                    <Button Command="{Binding BackCommand}" 
                         Grid.Column="0"
                         FontSize="20" 
-                        Content="Ściągnij listę punktów"
-                        Visibility="{Binding IsLoading,
-                        Converter={StaticResource BoolToVisibilityInvertConverter}}"/>
-                    <Button Content="Ściągnij szczegóły!"
+                        Content="Cofnij"/>
+                    <Button Content="Zapisz w bazie!"
                             Grid.Column="1"
-                            Command="{Binding DownloadDetailInfoCommand}"/>
+                            Command="{Binding SaveToDbContextCommand}"/>
                 </Grid>
-                <ProgressBar IsIndeterminate="true"
-                             Visibility="{Binding IsLoading, 
-                             Converter={StaticResource BoolToVisibilityConverter}}"/>
             </Grid>
         </Grid>
     </Grid>
+
+
 </Page>

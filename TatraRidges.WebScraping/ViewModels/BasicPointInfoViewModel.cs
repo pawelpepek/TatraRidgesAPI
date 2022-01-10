@@ -10,17 +10,13 @@ namespace TatraRidges.WebScraping.ViewModels
 
         public bool IsChecked { get; set; }
         public bool IsInDataBaase { get; set; }
-        public string Name { get; }
-        public string Url { get; }
-        public PointType Type{get;}
+        public BasicPointInfo Info { get; private set; }
 
         public BasicPointInfoViewModel(bool isInBase, BasicPointInfo info )
         {
-            Name = info.Name;
-            Url= info.Url;
             IsInDataBaase = isInBase;
             IsChecked = !isInBase;
-            Type = info.Type;
+            Info = info;
         }
     }
 }

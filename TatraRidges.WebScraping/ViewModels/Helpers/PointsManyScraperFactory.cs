@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TatraRidges.WebScraping.Model;
 using TatraRidges.WebScraping.Model.Scrapers;
-using TatraRidges.WebScraping.Model.Structures;
 using TatraRidges.WebScraping.ViewModels;
 
 namespace TTatraRidges.WebScraping.ViewModels.Helpers
 {
     public class PointsManyScraperFactory
     {
-        public PointsManyListsScraper Scraper{get;}
+        public PointsManyListsScraper Scraper { get; }
         public PointsManyScraperFactory()
         {
             using var context = DbContextFactory.GetContext();
@@ -25,21 +25,23 @@ namespace TTatraRidges.WebScraping.ViewModels.Helpers
                     new OneCategoryScraper(
                         "https://pl.wikipedia.org/wiki/Kategoria:Prze%C5%82%C4%99cze_Tatr_Wysokich",
                         pointPass),
-
+                    new OneCategoryScraper(
+                        "https://pl.wikipedia.org/wiki/Kategoria:Turnie_i_ska%C5%82y_Tatr_Wysokich",
+                        pointTop)
                     };
         }
         public async Task<List<BasicPointInfoViewModel>> GetCheckedList()
         {
             var downloadedPoints = await Scraper.GetList();
-            var sortedPoints= downloadedPoints.OrderBy(p=>p.Type.Id)  
-                                              .ThenBy(p=> p.Name);
+            var sortedPoints = downloadedPoints.OrderBy(p => p.Type.Id)
+                                              .ThenBy(p => p.Name);
 
             using var context = DbContextFactory.GetContext();
 
-            var checkedList=downloadedPoints.Select(point
-                => new BasicPointInfoViewModel(
-                    context.MountainPoints.Any(p => p.Name == point.Name),
-                    point)).ToList();
+            var checkedList = downloadedPoints.Select(point
+                  => new BasicPointInfoViewModel(
+                      context.MountainPoints.Any(p => p.Name == point.Name),
+                      point)).ToList();
 
             return checkedList;
         }
