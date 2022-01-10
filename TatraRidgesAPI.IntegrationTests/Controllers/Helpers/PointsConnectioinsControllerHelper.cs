@@ -1,5 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc.Testing;
+﻿using FluentAssertions;
+using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
+using System.Net;
 using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+using TatraRidges.Model.Dtos;
+using TatraRidgesAPI.IntegrationTests.Helpers.DataContext;
 
 namespace TatraRidgesAPI.IntegrationTests.Controllers.Helpers
 {
@@ -7,43 +15,41 @@ namespace TatraRidgesAPI.IntegrationTests.Controllers.Helpers
     {
         public PointsConnectioinsControllerHelper(HttpClient client, WebApplicationFactory<Startup> factory)
             : base(client, factory) { }
-        //public async Task Move_WithModel_ReturnsCode(PointsConnectionCreateDto model, bool authorized)
-        //{
-        //    //arrange
 
-        //    var scopeFactory = Factory.Services.GetService<IServiceScopeFactory>();
-        //    using var scope = scopeFactory.CreateScope();
-        //    var dbContext = scope.ServiceProvider.GetService<TatraDbContext>();
 
-        //    var point1 = new MountainPoint()
-        //    {
-        //        Name = "Tetsowy1",
-        //        AlternativeName = "Testowy1",
-        //        Evaluation = 2000,
-        //        Latitude = 49.12m,
-        //        Longitude = 19.91m,
-        //        PointTypeId = 1,
-        //        PrecisedEvaluation = true,
-        //        WikiAddress = "tt",
-        //        WikiLatitude = 49.12m,
-        //        WikiLongitude = 19.91m
-        //    };
+        public async Task PostNewPointsConnection_WithValidData_ReturnsOK(bool ridge, bool authorized)
+        {
+            var model = new PointsConnectionCreateDto()
+            {
+                PointId1 = new MountainPointsTester(Factory).AddNewMountainPoint().Id,
+                PointId2 = new MountainPointsTester(Factory).AddNewMountainPoint().Id,
+                Ridge = ridge,
+            };
 
-        //    dbContext.MountainPoints.Add(point1);
+            var expectedStatusCode= authorized ? HttpStatusCode.OK: HttpStatusCode.Unauthorized;
 
-        //    dbContext.SaveChanges();
+            await PostNewPointsConnection_ReturnsCode(model, expectedStatusCode);
+        }
+        private async Task PostNewPointsConnection_ReturnsCode(PointsConnectionCreateDto model, HttpStatusCode code)
+        {
+            //arrange
 
-        //    var model = new PointGPSDto() { Latitude = 49.15m, Longitude = 19.92m };
+            var json = JsonConvert.SerializeObject(model);
 
-        //    var json = JsonConvert.SerializeObject(model);
+            var httpContent = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
 
-        //    var httpContent = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
+            //act
+            var response = await Client.PutAsync("/api/connection", httpContent);
 
-        //    //act
-        //    var response = await Client.PutAsync("/api/point/" + point1.Id, httpContent);
+            //assert
+            response.StatusCode.Should().Be(code);
 
-        //    //assert
-        //    response.StatusCode.Should().Be(authorized ? HttpStatusCode.OK : HttpStatusCode.Unauthorized);
-        //}
+            if (code == HttpStatusCode.OK && code == response.StatusCode)
+            {
+                bool isInBase=new PointsConnectionTester(Factory).IsConnectionInDataContext(model);
+
+                isInBase.Should().BeTrue();
+            }
+        }
     }
 }

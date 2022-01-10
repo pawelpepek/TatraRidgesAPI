@@ -7,13 +7,14 @@ using System.Text;
 using System.Threading.Tasks;
 using TatraRidges.Model.Dtos;
 using TatraRidgesAPI.IntegrationTests.Controllers.Helpers.Structures;
+using TatraRidgesAPI.IntegrationTests.Helpers.DataContext;
 
 namespace TatraRidgesAPI.IntegrationTests.Controllers.Helpers
 {
-    public class MountainPointsControllerHelper: ControllerHelperTemplate
+    public class MountainPointsControllerHelper : ControllerHelperTemplate
     {
         public MountainPointsControllerHelper(HttpClient client, WebApplicationFactory<Startup> factory)
-            :base(client, factory){}
+            : base(client, factory) { }
 
         public async Task Move_WithValidModel_WithouthAdminAuthorized_RetursUnauthorized()
             => await Move_WithValidModel_AuthorizedOK(false);
@@ -30,7 +31,7 @@ namespace TatraRidgesAPI.IntegrationTests.Controllers.Helpers
         {
             var model = new PointMoveModel
             {
-                MountainPointId = Seeder.AddNewMountainPoint().Id,
+                MountainPointId = new MountainPointsTester(Factory).AddNewMountainPoint().Id,
                 Coordinates = coordinates,
             };
             await Move_WithPointMoveModel_ReturnsCode(model, code);
@@ -49,6 +50,15 @@ namespace TatraRidgesAPI.IntegrationTests.Controllers.Helpers
 
             //assert
             response.StatusCode.Should().Be(code);
+
+            if(code==HttpStatusCode.OK && code==response.StatusCode)
+            {
+                var changedPoint= new MountainPointsTester(Factory)
+                                    .GetMountainPont(model.MountainPointId);
+
+                model.Coordinates.Latitude.Should().Be(changedPoint.Latitude);
+                model.Coordinates.Longitude.Should().Be(changedPoint.Longitude);
+            }
         }
     }
 }
