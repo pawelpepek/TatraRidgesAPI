@@ -5,10 +5,8 @@ import { latLng, Map } from "leaflet"
 import RidgesMarkersContainer from "./RidgesMarkersContainer"
 import { RidgeMapProps } from "./basics/types"
 import { useState, useCallback } from "react"
-import {useHistory} from 'react-router-dom'
-import { useParams} from "react-router-dom"
-import { NavigationParams } from "./basics/types"
-
+import { useHistory } from "react-router-dom"
+import { useParams } from "react-router-dom"
 
 const RidgeMapContainer: React.FC<RidgeMapProps> = props => {
 	// const params=useParams<NavigationParams>()
