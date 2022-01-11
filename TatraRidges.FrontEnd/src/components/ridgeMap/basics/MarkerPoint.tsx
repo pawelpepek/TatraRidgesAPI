@@ -1,6 +1,6 @@
 import { Marker } from "react-leaflet"
-import { Point, icon } from "leaflet"
-import { MountainPoint } from "./types"
+import { Point, icon, DragEndEvent } from "leaflet"
+import { MountainPoint, LatLongOwner } from "./types"
 import passIcon from "../../img/passIcon.svg"
 import topIcon from "../../img/topIcon.svg"
 import { LeafletEventHandlerFnMap } from "leaflet"
@@ -17,14 +17,24 @@ const MarkerPoint: React.FC<MountainPoint> = point => {
 
 	return (
 		<Marker
+			draggable={true}
 			key={point.id}
 			position={[point.latitude, point.longitude]}
 			title={point.name}
-			icon={markerIcon}
+			// icon={markerIcon}
 			eventHandlers={{
-				mousedown: e => {
+				mousedown: () => {
 					ridgesContext.setActualPointId(point.id)
-					console.log(point.id)
+				},
+				dragend: e => {
+					const eventArgs: DragEndEvent = e
+					const target: LatLongOwner = e.target
+
+					const coordinates = {
+						latitude: target.getLatLng().lat,
+						longitude: target.getLatLng().lng,
+					}
+					ridgesContext.moveActualPoint(coordinates)
 				},
 			}}
 		/>

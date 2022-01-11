@@ -8,11 +8,14 @@ const PointsPanel: React.FC = () => {
 			<div>
 				<p>Point1: {ridgeContext.actualPointId}</p>
 			</div>
-            <button onClick={ridgeContext.switchPoints}>Odwróć</button>
+			<button onClick={ridgeContext.switchPoints}>Odwróć</button>
 			<div>
 				<p>Point2: {ridgeContext.lastPointId}</p>
 			</div>
 			<button onClick={ridgeContext.deleteActualPoint}>Usuń punkt</button>
+			<button onClick={ridgeContext.connectActualPointsRidge}>
+				Połacz punkty
+			</button>
 		</>
 	)
 }
