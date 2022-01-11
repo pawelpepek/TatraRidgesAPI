@@ -4,11 +4,12 @@ import { latLng, Map } from "leaflet"
 
 import RidgesMarkersContainer from "./RidgesMarkersContainer"
 import { RidgeMapProps } from "./basics/types"
-import { useState, useCallback } from "react"
-import { useHistory } from "react-router-dom"
-import { useParams } from "react-router-dom"
+import { useState, useCallback} from "react"
+
 
 const RidgeMapContainer: React.FC<RidgeMapProps> = props => {
+	
+	
 	// const params=useParams<NavigationParams>()
 	// console.log(params)
 	const defaultPosition = latLng(49.179306, 20.088444)

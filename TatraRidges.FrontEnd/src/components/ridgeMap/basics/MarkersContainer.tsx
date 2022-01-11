@@ -1,5 +1,5 @@
 import MarkerPoint from "./MarkerPoint"
-import { MountainPoints} from "./types"
+import { MountainPoints } from "./types"
 
 const MarkersContainer: React.FC<MountainPoints> = props => {
 	return (
