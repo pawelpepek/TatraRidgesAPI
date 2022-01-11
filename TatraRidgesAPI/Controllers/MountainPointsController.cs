@@ -31,5 +31,12 @@ namespace TatraRidgesAPI.Controllers
             _service.Move(id, newCoordinates);
             return Ok();
         }
+
+        [HttpDelete("{id}")]
+        public ActionResult Delete([FromRoute] int id)
+        {
+            _service.Delete(id);
+            return Ok();
+        }
     }
 }

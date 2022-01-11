@@ -31,5 +31,11 @@ namespace TatraRidgesAPI.Services
 
             mountainPointsMover.MovePoint(id, newCoordinate);
         }
+        public void Delete(int id)
+        {
+            var finder = new MountainPointsFinder(_dbContext);
+
+            finder.DeletePointById(id);
+        }
     }
 }

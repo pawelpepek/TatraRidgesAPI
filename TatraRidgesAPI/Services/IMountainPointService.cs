@@ -7,5 +7,6 @@ namespace TatraRidgesAPI.Services
     {
         IEnumerable<MountainPointBasicDto> GetAll();
         void Move(int id, PointGPSDto newCoordinate);
+        void Delete(int id);
     }
 }
