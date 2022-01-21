@@ -37,6 +37,14 @@ export interface ConnectionData {
 	id: number
 	pointId1: number
 	pointId2: number
+	pointFrom:{
+		latitude:number
+		longitude:number
+	}
+	pointTo:{
+		latitude:number
+		longitude:number
+	}
 }
 
 export interface PositionZoomInfo {
@@ -50,12 +58,15 @@ export interface PositionInfo {
 
 }
 
+export interface ConnectionsProps{
+	connections:ConnectionLineProps[]
+}
+
 export interface ConnectionLineProps {
 	id: number
 	point1: MountainPoint
 	point2: MountainPoint
 	color?: string | undefined
-	onChangePositionZoom?(info: PositionZoomInfo): void
 }
 
 export interface Coordinates {
@@ -67,9 +78,6 @@ export interface LatLongOwner{
 	getLatLng():PositionInfo
 }
 
-export interface PointsConnectionCreateDto
-{
-	pointId1:number
-	pointId2:number
-	ridge:boolean
+export interface MarkerProps{
+
 }

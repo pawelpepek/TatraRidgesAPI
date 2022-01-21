@@ -2,18 +2,16 @@ import { MapContainer, Polyline } from "react-leaflet"
 import { TileLayer } from "react-leaflet"
 import { latLng, Map } from "leaflet"
 
-import RidgesMarkersContainer from "./RidgesMarkersContainer"
+import RidgesMarkersContainer from "./RidgesPointsContainer"
+import RidgesLinesContainer from "./RidgesLinesContainer"
 import { RidgeMapProps } from "./basics/types"
-import { useState, useCallback} from "react"
-
+import { useState, useCallback } from "react"
 
 const RidgeMapContainer: React.FC<RidgeMapProps> = props => {
-	
-	
 	// const params=useParams<NavigationParams>()
 	// console.log(params)
-	const defaultPosition = latLng(49.179306, 20.088444)
-	const defaultZoom = 14
+	const defaultPosition = latLng(49.219417, 20.009306)
+	const defaultZoom = 16
 
 	const [[position, zoom], setPosition] = useState([
 		defaultPosition,
@@ -24,7 +22,7 @@ const RidgeMapContainer: React.FC<RidgeMapProps> = props => {
 
 	const onChangeMap = useCallback(() => {
 		setPosition([map.getCenter(), map.getZoom()])
-		console.log(position, zoom)
+		// console.log(position, zoom)
 	}, [])
 
 	const OnMapCreated = useCallback((m: Map) => {
@@ -32,9 +30,13 @@ const RidgeMapContainer: React.FC<RidgeMapProps> = props => {
 		setPosition([map.getCenter(), map.getZoom()])
 		map.on("moveend", onChangeMap)
 		map.on("zoomend", onChangeMap)
-		console.log(position)
+		// console.log(position)
 		// history.replace('/')
 	}, [])
+
+	const nP = { ...defaultPosition }
+	nP.lat += 0.01
+	nP.lng += 0.01
 
 	return (
 		<MapContainer
@@ -49,6 +51,7 @@ const RidgeMapContainer: React.FC<RidgeMapProps> = props => {
 				url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
 			/>
 			<RidgesMarkersContainer />
+			<RidgesLinesContainer />
 		</MapContainer>
 	)
 }

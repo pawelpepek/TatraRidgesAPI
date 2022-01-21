@@ -1,44 +1,43 @@
 import { Marker } from "react-leaflet"
-import { Point, icon, DragEndEvent } from "leaflet"
-import { MountainPoint, LatLongOwner } from "./types"
-import passIcon from "../../img/passIcon.svg"
-import topIcon from "../../img/topIcon.svg"
-import { LeafletEventHandlerFnMap } from "leaflet"
-import { RidgesContext } from "../../context/map-context"
-import React, { useContext } from "react"
+import { LatLongOwner } from "./types"
+import { useDispatch } from "react-redux"
+import { movePoint } from "../../../store/map-actions"
 
-const MarkerPoint: React.FC<MountainPoint> = point => {
-	const ridgesContext = useContext(RidgesContext)
+const MarkerPoint: React.FC<{
+	id: number
+	latitude: number
+	longitude: number
+	name: string
+	onClick(): void
+}> = point => {
+	const dispatch = useDispatch()
 
-	const markerIcon = icon({
-		iconUrl: point.pointTypeId === 1 ? topIcon : passIcon,
-		iconSize: new Point(16, 16, false),
-	})
+	interface Coordinates {
+		latitude: number
+		longitude: number
+	}
 
 	return (
 		<Marker
-			draggable={true}
-			key={point.id}
 			position={[point.latitude, point.longitude]}
 			title={point.name}
-			// icon={markerIcon}
+			draggable={true}
 			eventHandlers={{
-				mousedown: () => {
-					ridgesContext.setActualPointId(point.id)
+				click: () => {
+					point.onClick()
 				},
 				dragend: e => {
-					const eventArgs: DragEndEvent = e
 					const target: LatLongOwner = e.target
 
-					const coordinates = {
+					const coordinates: Coordinates = {
 						latitude: target.getLatLng().lat,
 						longitude: target.getLatLng().lng,
 					}
-					ridgesContext.moveActualPoint(coordinates)
+					dispatch(movePoint(point.id, coordinates))
 				},
 			}}
 		/>
 	)
 }
 
-export default React.memo(MarkerPoint)
+export default MarkerPoint

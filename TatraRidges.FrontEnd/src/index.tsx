@@ -3,14 +3,15 @@ import ReactDOM from "react-dom"
 import "./index.css"
 import App from "./App"
 import reportWebVitals from "./reportWebVitals"
-import RidgesContextProvider from "./components/context/map-context"
+import {Provider} from 'react-redux'
+import store from './store/index'
 
 ReactDOM.render(
-	<RidgesContextProvider>
+	<Provider store={store}>
 		<React.StrictMode>
 			<App />
 		</React.StrictMode>
-	</RidgesContextProvider>,
+	</Provider>,
 	document.getElementById("root")
 )
 
