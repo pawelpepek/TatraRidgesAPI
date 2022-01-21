@@ -1,14 +1,13 @@
-import { MapContainer } from "react-leaflet"
-import { TileLayer } from "react-leaflet"
 import { latLng, LeafletKeyboardEvent, Map } from "leaflet"
+import { useState, useCallback, useEffect } from "react"
+import { MapContainer, TileLayer } from "react-leaflet"
 import { useSelector, useDispatch } from "react-redux"
 
-import RidgesMarkersContainer from "./RidgesPointsContainer"
-import RidgesLinesContainer from "./RidgesLinesContainer"
-import { RidgeMapProps } from "../types"
-import { useState, useCallback, useEffect } from "react"
-import { deletePointById } from "../../store/map-actions"
 import StoreType from "../../store/store-types"
+import { deletePointById } from "../../store/map-actions"
+import RidgesLinesContainer from "./RidgesLinesContainer"
+import RidgesMarkersContainer from "./RidgesPointsContainer"
+import { RidgeMapProps } from "../types"
 
 const RidgeMapContainer: React.FC<RidgeMapProps> = props => {
 	// const params=useParams<NavigationParams>()

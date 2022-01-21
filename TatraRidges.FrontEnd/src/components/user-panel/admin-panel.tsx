@@ -1,10 +1,8 @@
 import { useSelector, useDispatch } from "react-redux"
+
 import { adminModeActions } from "../../store/admin-mode-slice"
+import { deletePointById, postConnectionRidge } from "../../store/map-actions"
 import { pointsActions } from "../../store/map-slice"
-import {
-	deletePointById,
-	postConnectionRidge,
-} from "../../store/map-actions"
 import StoreType from "../../store/store-types"
 
 const AdminPanel: React.FC = () => {

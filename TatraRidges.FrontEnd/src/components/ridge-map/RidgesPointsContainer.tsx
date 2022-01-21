@@ -1,8 +1,9 @@
-import PointsContainer from "./basics/PointsContainer"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
+
 import { fetchPointsData } from "../../store/map-actions"
 import StoreType from "../../store/store-types"
+import PointsContainer from "./basics/PointsContainer"
 
 const RidgesPointsContainer: React.FC = () => {
 	const dispatch = useDispatch()
