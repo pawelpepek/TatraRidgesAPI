@@ -25,7 +25,7 @@ const pointsSlice = createSlice({
 	initialState,
 	reducers: {
 		replacePoints(state, actions) {
-			state.points = actions.payload.points
+			state.points = actions.payload.data
 			state.pointsOk = true
 		},
 		setActualPoint(state, action) {
@@ -48,7 +48,7 @@ const pointsSlice = createSlice({
 		},
 		movePointById(state, actions) {
 			const id = actions.payload.id
-			const coordinates = actions.payload.coordinates as Coordinates
+			const coordinates = actions.payload.body as Coordinates
 
 			const point = state.points.find(p => p.id === id)
 
@@ -66,7 +66,7 @@ const pointsSlice = createSlice({
 		},
 
 		replaceConnections(state, actions) {
-			const connectionsData = actions.payload.connections as ConnectionData[]
+			const connectionsData = actions.payload.data as ConnectionData[]
 
 			if (state.points.length > 0) {
 				for (const c of connectionsData) {
@@ -86,10 +86,10 @@ const pointsSlice = createSlice({
 		connectRidgePoints(state, actions) {
 			const point1 = state.points.find(p => p.id === actions.payload.pointId1)
 			const point2 = state.points.find(p => p.id === actions.payload.pointId2)
-			
+
 			if (point1 !== undefined && point2 !== undefined) {
 				const newConnection: ConnectionPoints = {
-					id: actions.payload.id,
+					id: actions.payload.data,
 					point1,
 					point2,
 				}

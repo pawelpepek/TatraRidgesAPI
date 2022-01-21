@@ -1,200 +1,113 @@
 import { pointsActions } from "./map-slice"
-import { putAction } from "../components/helpers/fetcher"
 
-export const fetchPointsData = () => {
-	return async dispatch => {
-		const fetchData = async () => {
-			const response = await fetch("https://localhost:44342/api/point/")
-
-			if (!response.ok) {
-				throw new Error("Could not fetch points data!")
-			}
-
-			const data = await response.json()
-
-			return data
-		}
-		try {
-			const pointsData = await fetchData()
-
-			dispatch(
-				pointsActions.replacePoints({
-					points: pointsData || [],
-				})
-			)
-		} catch (error) {
-			// dispatch(
-			//   uiActions.showNotification({
-			//     status: 'error',
-			//     title: 'Error!',
-			//     message: 'Fetching cart data failed!',
-			//   })
-			// );
-			console.log("Błąd")
-		}
+const fetchData = async props => {
+	let url = "https://localhost:44342/api/" + props.location
+	if (props.pathPart !== undefined) {
+		url += props.pathPart
+	}
+	const response = await fetch(url, {
+		method: props.method,
+		headers: {
+			"content-type": "application/json;charset=UTF-8",
+		},
+		body: props.body !== undefined ? JSON.stringify(props.body) : null,
+	})
+	if (!response.ok) {
+		console.log(response, props)
+		throw new Error("Serwer nie odpowiada!")
+	}
+	if (props.isBody) {
+		return await response.json()
+	} else {
+		return true
 	}
 }
 
-export const movePoint = (id, coordinates) => {
+export const dataDispatcher = (props, dispatcher) => {
 	return async dispatch => {
-		const loadData = async () => {
-			const response = await fetch("https://localhost:44342/api/point/" + id, {
-				method: "PUT",
-				headers: {
-					"content-type": "application/json;charset=UTF-8",
-				},
-				body: JSON.stringify(coordinates),
-			})
-
-			if (!response.ok) {
-				throw new Error("Could not fetch points data!")
-			} else {
-				return true
-			}
-		}
-		console.log(coordinates, id)
-		try {
-			const loaded = await loadData()
-			if (loaded) {
+		// try {
+		const data = await fetchData(props)
+		if (data) {
+			if (
+				props.body != null ||
+				data !== true ||
+				props.addingInfo != undefined
+			) {
 				dispatch(
-					pointsActions.movePointById({
-						id,
-						coordinates,
+					dispatcher({
+						body: props.body,
+						data,
+						...props.addingInfo,
 					})
 				)
-				return true
 			} else {
-				return false
-			}
-		} catch (error) {
-			// dispatch(
-			//   uiActions.showNotification({
-			//     status: 'error',
-			//     title: 'Error!',
-			//     message: 'Fetching cart data failed!',
-			//   })
-			// );
-			console.log("Błąd")
-			return false
-		}
-	}
-}
-
-export const deletePointById = id => {
-	return async dispatch => {
-		const deleteData = async () => {
-			const response = await fetch("https://localhost:44342/api/point/" + id, {
-				method: "DELETE",
-				headers: {
-					"content-type": "application/json;charset=UTF-8",
-				},
-			})
-			if (!response.ok) {
-				throw new Error("Could not fetch points data!")
+				dispatch(dispatcher())
 			}
 			return true
 		}
-		try {
-			const deleted = await deleteData()
-			if (deleted) {
-				dispatch(pointsActions.deletePoint({ id }))
-				return true
-			} else {
-				return false
-			}
-		} catch (error) {
-			// dispatch(
-			//   uiActions.showNotification({
-			//     status: 'error',
-			//     title: 'Error!',
-			//     message: 'Fetching cart data failed!',
-			//   })
-			// );
-			console.log("Błąd")
-			return false
-		}
+		// } catch (error) {
+		// 	// dispatch(
+		// 	//   uiActions.showNotification({
+		// 	//     status: 'error',
+		// 	//     title: 'Error!',
+		// 	//     message: 'Fetching cart data failed!',
+		// 	//   })
+		// 	// );
+		// 	console.log("Błąd")
+		// }
+		return false
 	}
+}
+export const movePoint = (id, coordinates) => {
+	const props = {
+		method: "PUT",
+		location: "point/",
+		pathPart: id,
+		body: coordinates,
+		addingInfo: { id },
+	}
+	return dataDispatcher(props, pointsActions.movePointById)
+}
+
+export const fetchPointsData = () => {
+	const props = {
+		method: "GET",
+		location: "point",
+		isBody: true,
+	}
+	return dataDispatcher(props, pointsActions.replacePoints)
+}
+
+export const deletePointById = id => {
+	const props = {
+		method: "DELETE",
+		location: "point/",
+		pathPart: id,
+		addingInfo: { id },
+	}
+	return dataDispatcher(props, pointsActions.deletePoint)
 }
 
 export const fetchConnectionsData = () => {
-	return async dispatch => {
-		const fetchData = async () => {
-			const response = await fetch("https://localhost:44342/api/connection/")
-
-			if (!response.ok) {
-				throw new Error("Could not fetch points data!")
-			}
-
-			const data = await response.json()
-
-			return data
-		}
-		try {
-			const data = await fetchData()
-
-			dispatch(
-				pointsActions.replaceConnections({
-					connections: data || [],
-				})
-			)
-		} catch (error) {
-			// dispatch(
-			//   uiActions.showNotification({
-			//     status: 'error',
-			//     title: 'Error!',
-			//     message: 'Fetching cart data failed!',
-			//   })
-			// );
-			console.log("Błąd")
-		}
+	const props = {
+		method: "GET",
+		location: "connection",
+		isBody: true,
 	}
+	return dataDispatcher(props, pointsActions.replaceConnections)
 }
 
 export const postConnectionRidge = (pointId1, pointId2) => {
-	return async dispatch => {
-		let id = -1
-		const loadData = async () => {
-			const body = {
-				pointId1,
-				pointId2,
-				ridge: true,
-			}
-			const response = await fetch("https://localhost:44342/api/connection/", {
-				method: "POST",
-				headers: {
-					"content-type": "application/json;charset=UTF-8",
-				},
-				body: JSON.stringify(body),
-			})
-
-			if (!response.ok) {
-				throw new Error("Could not fetch connection data!")
-			}
-			const data = await response.json()
-
-			return data
-		}
-		try {
-			id = await loadData()
-			if (id >= 0) {
-				dispatch(
-					pointsActions.connectRidgePoints({
-						id,
-						pointId1,
-						pointId2,
-					})
-				)
-			}
-		} catch (error) {
-			// dispatch(
-			//   uiActions.showNotification({
-			//     status: 'error',
-			//     title: 'Error!',
-			//     message: 'Fetching cart data failed!',
-			//   })
-			// );
-			console.log("Błąd", id)
-		}
-		return id
+	const body = {
+		pointId1,
+		pointId2,
+		ridge: true,
 	}
+	const props = {
+		method: "POST",
+		location: "connection",
+		body,
+		addingInfo: { pointId1, pointId2 },
+	}
+	return dataDispatcher(props, pointsActions.connectRidgePoints)
 }
