@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux"
 import { adminModeActions } from "../../store/admin-mode-slice"
 import { pointsActions } from "../../store/map-slice"
-import { MountainPoint } from "../ridgeMap/basics/types"
+import { MountainPoint } from "../ridge-map/basics/types"
 import {
 	deletePointById,
 	postConnectionRidge,
@@ -12,7 +12,7 @@ interface Store {
 	map: { pointFrom: MountainPoint; pointTo: MountainPoint }
 }
 
-const PointsPanel: React.FC = () => {
+const AdminPanel: React.FC = () => {
 	const adminMode = useSelector((state: Store) => state.adminMode.value)
 	const dispatch = useDispatch()
 
@@ -53,4 +53,4 @@ const PointsPanel: React.FC = () => {
 	)
 }
 
-export default PointsPanel
+export default AdminPanel

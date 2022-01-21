@@ -1,7 +1,15 @@
-import { MountainPoint, Coordinates, PointsConnectionCreateDto } from "../basics/types"
+import { MountainPoint, Coordinates , ConnectionData} from "../ridge-map/basics/types"
 
 export const getPoints = async () =>
 	load<MountainPoint[]>("https://localhost:44342/api/point/")
+
+	export const getConnections = async () =>
+	{
+		const result=await load<ConnectionData[]>("https://localhost:44342/api/connection/")
+		// console.log("Ściągam połączenia")
+		return result
+	}
+	
 
 export const deletePointById = async (id: number) =>
 	deleteAction("https://localhost:44342/api/point/" + id)
@@ -24,7 +32,7 @@ const load = async <T>(url: string): Promise<T> =>
 		if (!response.ok) {
 			throw new Error(response.statusText)
 		}
-		console.log("delete")
+		// console.log("delete")
 		return response.json() as Promise<T>
 	})
 
@@ -35,7 +43,7 @@ const deleteAction = async (url: string): Promise<string> =>
 		}
 		return response.text() as Promise<string>
 	})
-const putAction = async <T>(url: string, body: T): Promise<string> =>
+export const putAction = async <T>(url: string, body: T): Promise<string> =>
 	await action(url, "PUT", body)
 
 const action = async <T>(

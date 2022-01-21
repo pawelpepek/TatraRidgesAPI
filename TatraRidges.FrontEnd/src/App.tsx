@@ -1,14 +1,14 @@
 import "./App.css"
-import RidgeMapContainer from "./components/ridgeMap/RidgeMapContainer"
-import PointsPanel from './components/user-panel/points'
+import RidgeMapContainer from "./components/ridge-map/RidgeMapContainer"
+import AdminPanel from "./components/user-panel/admin-panel"
 
 function App() {
 	return (
-		<div className="body-container">
-		<div className='left-panel'>
-			<PointsPanel/>
-		</div>
-				<RidgeMapContainer />
+		<div className='body-container'>
+			<div className='left-panel'>
+				<AdminPanel />
+			</div>
+			<RidgeMapContainer />
 		</div>
 	)
 }

@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
 
-
 const initialCounterState = { value: true}
 
 const adminModeSlice = createSlice({
@@ -12,6 +11,7 @@ const adminModeSlice = createSlice({
 		},
 	},
 })
+
 
 export const adminModeActions=adminModeSlice.actions
 

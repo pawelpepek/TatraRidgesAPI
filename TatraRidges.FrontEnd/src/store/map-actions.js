@@ -1,4 +1,5 @@
 import { pointsActions } from "./map-slice"
+import { putAction } from "../components/helpers/fetcher"
 
 export const fetchPointsData = () => {
 	return async dispatch => {

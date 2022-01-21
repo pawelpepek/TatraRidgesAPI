@@ -1,5 +1,3 @@
-import{LatLng } from 'leaflet'
-
 export interface RidgeMapProps {
 	id?: string
 	className?: string
@@ -37,13 +35,13 @@ export interface ConnectionData {
 	id: number
 	pointId1: number
 	pointId2: number
-	pointFrom:{
-		latitude:number
-		longitude:number
+	pointFrom: {
+		latitude: number
+		longitude: number
 	}
-	pointTo:{
-		latitude:number
-		longitude:number
+	pointTo: {
+		latitude: number
+		longitude: number
 	}
 }
 
@@ -55,11 +53,10 @@ export interface PositionZoomInfo {
 export interface PositionInfo {
 	lat: number
 	lng: number
-
 }
 
-export interface ConnectionsProps{
-	connections:ConnectionLineProps[]
+export interface ConnectionsProps {
+	connections: ConnectionLineProps[]
 }
 
 export interface ConnectionLineProps {
@@ -74,10 +71,6 @@ export interface Coordinates {
 	longitude: number
 }
 
-export interface LatLongOwner{
-	getLatLng():PositionInfo
-}
-
-export interface MarkerProps{
-
+export interface LatLongOwner {
+	getLatLng(): PositionInfo
 }
