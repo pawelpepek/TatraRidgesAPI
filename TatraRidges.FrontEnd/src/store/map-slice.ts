@@ -4,7 +4,7 @@ import {
 	ConnectionPoints,
 	ConnectionData,
 	Coordinates,
-} from "../components/ridge-map/basics/types"
+} from "../components/types"
 
 const emptyPoints: MountainPoint[] = []
 const emptyConnections: ConnectionPoints[] = []

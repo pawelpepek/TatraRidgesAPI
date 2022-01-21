@@ -1,6 +1,6 @@
 import { pointsActions } from "./map-slice"
 import dataDispatcher from "./dispatch-actions"
-import { Coordinates } from "../components/ridge-map/basics/types"
+import { Coordinates } from "../components/types"
 
 export const movePoint = (id: number, coordinates: Coordinates) => {
 	const props = {

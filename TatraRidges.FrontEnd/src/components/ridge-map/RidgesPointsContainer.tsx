@@ -1,17 +1,13 @@
 import PointsContainer from "./basics/PointsContainer"
 import { useEffect } from "react"
-import { MountainPoint } from "./basics/types"
 import { useDispatch, useSelector } from "react-redux"
 import { fetchPointsData } from "../../store/map-actions"
+import StoreType from "../../store/store-types"
 
 const RidgesPointsContainer: React.FC = () => {
-	interface MapPoints {
-		map: { points: MountainPoint[] }
-	}
-
 	const dispatch = useDispatch()
 
-	const points = useSelector((state: MapPoints) => state.map.points)
+	const points = useSelector((state: StoreType) => state.map.points)
 
 	useEffect(() => {
 		dispatch(fetchPointsData())

@@ -1,5 +1,5 @@
 import CirclePoint from "./CirclePoint"
-import { MountainPoints } from "./types"
+import { MountainPoints } from "../../types"
 
 const PointsContainer: React.FC<MountainPoints> = props => {
 	if (props.points.length > 0) {

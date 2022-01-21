@@ -1,23 +1,18 @@
 import { useSelector, useDispatch } from "react-redux"
 import { adminModeActions } from "../../store/admin-mode-slice"
 import { pointsActions } from "../../store/map-slice"
-import { MountainPoint } from "../ridge-map/basics/types"
 import {
 	deletePointById,
 	postConnectionRidge,
 } from "../../store/map-actions"
-
-interface Store {
-	adminMode: { value: boolean }
-	map: { pointFrom: MountainPoint; pointTo: MountainPoint }
-}
+import StoreType from "../../store/store-types"
 
 const AdminPanel: React.FC = () => {
-	const adminMode = useSelector((state: Store) => state.adminMode.value)
+	const adminMode = useSelector((state: StoreType) => state.adminMode.value)
 	const dispatch = useDispatch()
 
-	const pointFrom = useSelector((state: Store) => state.map.pointFrom)
-	const pointTo = useSelector((state: Store) => state.map.pointTo)
+	const pointFrom = useSelector((state: StoreType) => state.map.pointFrom)
+	const pointTo = useSelector((state: StoreType) => state.map.pointTo)
 
 	const clickModeHandler = () => dispatch(adminModeActions.toggle())
 

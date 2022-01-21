@@ -1,5 +1,5 @@
 import LineConnection from "./LineConnection"
-import { ConnectionsProps } from "./types"
+import { ConnectionsProps } from "../../types"
 
 const LinesContainer: React.FC<ConnectionsProps> = props => {
 	return (

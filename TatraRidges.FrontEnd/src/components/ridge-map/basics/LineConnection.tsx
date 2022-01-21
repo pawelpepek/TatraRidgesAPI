@@ -1,6 +1,6 @@
 import { Polyline } from "react-leaflet"
 import { latLng } from "leaflet"
-import { ConnectionLineProps } from "./types"
+import { ConnectionLineProps } from "../../types"
 
 const LineConnection: React.FC<ConnectionLineProps> = props => {
 	const coordinates = [
@@ -8,7 +8,7 @@ const LineConnection: React.FC<ConnectionLineProps> = props => {
 		latLng(props.point2.latitude, props.point2.longitude),
 	]
 
-	const options = { color: props.color }
+	// const options = { color: props.color }
 
 	return <Polyline positions={coordinates} />
 }

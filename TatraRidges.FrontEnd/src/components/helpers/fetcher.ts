@@ -1,4 +1,4 @@
-import { MountainPoint, Coordinates , ConnectionData} from "../ridge-map/basics/types"
+import { MountainPoint, Coordinates , ConnectionData} from "../types"
 
 export const getPoints = async () =>
 	load<MountainPoint[]>("https://localhost:44342/api/point/")

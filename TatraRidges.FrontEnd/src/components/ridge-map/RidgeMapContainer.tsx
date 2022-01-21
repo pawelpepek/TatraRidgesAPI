@@ -1,10 +1,10 @@
 import { MapContainer } from "react-leaflet"
 import { TileLayer } from "react-leaflet"
-import { latLng, Map } from "leaflet"
+import { latLng, LeafletKeyboardEvent, Map } from "leaflet"
 
 import RidgesMarkersContainer from "./RidgesPointsContainer"
 import RidgesLinesContainer from "./RidgesLinesContainer"
-import { RidgeMapProps } from "./basics/types"
+import { RidgeMapProps } from "../types"
 import { useState, useCallback } from "react"
 
 const RidgeMapContainer: React.FC<RidgeMapProps> = props => {
@@ -25,6 +25,12 @@ const RidgeMapContainer: React.FC<RidgeMapProps> = props => {
 		// console.log(position, zoom)
 	}, [])
 
+	const onKeyDown = useCallback((e: LeafletKeyboardEvent) => {
+		if (e.originalEvent.key === "Delete") {
+			console.log(e)
+		}
+	}, [])
+
 	const OnMapCreated = useCallback((m: Map) => {
 		map = m
 		setPosition([map.getCenter(), map.getZoom()])
@@ -32,6 +38,7 @@ const RidgeMapContainer: React.FC<RidgeMapProps> = props => {
 		map.on("zoomend", onChangeMap)
 		// console.log(position)
 		// history.replace('/')
+		map.on("keydown", onKeyDown)
 	}, [])
 
 	const nP = { ...defaultPosition }
