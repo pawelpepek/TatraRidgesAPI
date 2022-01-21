@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux"
-import { adminModeActions } from "../../store/admin-mode"
+import { adminModeActions } from "../../store/admin-mode-slice"
 import { pointsActions } from "../../store/map-slice"
 import { MountainPoint } from "../ridgeMap/basics/types"
 import {
@@ -8,7 +8,6 @@ import {
 } from "../../store/map-actions"
 
 interface Store {
-	counter: { value: Number }
 	adminMode: { value: boolean }
 	map: { pointFrom: MountainPoint; pointTo: MountainPoint }
 }

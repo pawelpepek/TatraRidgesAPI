@@ -1,4 +1,4 @@
-import { MapContainer, Polyline } from "react-leaflet"
+import { MapContainer } from "react-leaflet"
 import { TileLayer } from "react-leaflet"
 import { latLng, Map } from "leaflet"
 
