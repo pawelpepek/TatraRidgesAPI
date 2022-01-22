@@ -14,7 +14,7 @@ const AdminPanel: React.FC = () => {
 
 	const clickModeHandler = () => dispatch(adminModeActions.toggle())
 
-	const clickDeleteHandler = () => dispatch(deletePointById(pointFrom.id))
+	const clickDeleteHandler = () => dispatch(deletePointById(pointTo.id))
 
 	const clickSwitchHandler = () =>
 		dispatch(pointsActions.toggleSelectedPoints())

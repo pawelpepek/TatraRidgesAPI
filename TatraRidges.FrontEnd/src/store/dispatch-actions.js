@@ -1,3 +1,5 @@
+import { uiActions } from "./ui-slice"
+
 const fetchData = async props => {
 	let url = "https://localhost:44342/api/" + props.location
 	if (props.pathPart !== undefined) {
@@ -21,38 +23,71 @@ const fetchData = async props => {
 	}
 }
 
+const getTitleFromMethod = method => {
+	switch (method) {
+		case "POST":
+			return "Wgrywanie"
+		case "PUT":
+			return "Aktualizacja"
+		case "DELETE":
+			return "Usuwanie"
+		case "GET":
+		case "":
+		case undefined:
+		case null:
+			return "Wczytywanie"
+		default:
+			throw new Error("Niepoprawna metoda łączenia z bazą danych!")
+	}
+}
+
 const dataDispatcher = (props, dispatcher) => {
 	return async dispatch => {
-		// try {
-		const data = await fetchData(props)
-		if (data) {
-			if (
-				props.body != null ||
-				data !== true ||
-				props.addingInfo != undefined
-			) {
-				dispatch(
-					dispatcher({
-						body: props.body,
-						data,
-						...props.addingInfo,
-					})
-				)
-			} else {
-				dispatch(dispatcher())
+		const title = getTitleFromMethod(props.method)
+		dispatch(
+			uiActions.showNotification({
+				status: "pending",
+				title: title + "...",
+				message: title + " danych",
+			})
+		)
+		try {
+			const data = await fetchData(props)
+
+			dispatch(
+				uiActions.showNotification({
+					status: "success",
+					title: "Ok",
+					message: "Gotowe!",
+				})
+			)
+			if (data) {
+				if (
+					props.body != null ||
+					data !== true ||
+					props.addingInfo != undefined
+				) {
+					dispatch(
+						dispatcher({
+							body: props.body,
+							data,
+							...props.addingInfo,
+						})
+					)
+				} else {
+					dispatch(dispatcher())
+				}
+				return true
 			}
-			return true
+		} catch (error) {
+			dispatch(
+				uiActions.showNotification({
+					status: "error",
+					title: "Błąd",
+					message: "Błąd bazy danych",
+				})
+			)
 		}
-		// } catch (error) {
-		// 	// dispatch(
-		// 	//   uiActions.showNotification({
-		// 	//     status: 'error',
-		// 	//     title: 'Error!',
-		// 	//     message: 'Fetching cart data failed!',
-		// 	//   })
-		// 	// );
-		// 	console.log("Błąd")
-		// }
 		return false
 	}
 }

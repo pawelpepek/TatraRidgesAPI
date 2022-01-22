@@ -12,6 +12,13 @@ interface StoreType {
 		pointFrom: MountainPoint
 		pointTo: MountainPoint
 	}
+    ui:{
+        notification:{
+            status: string
+            title: string
+            message: string
+        }
+    }
 }
 
 export default StoreType
