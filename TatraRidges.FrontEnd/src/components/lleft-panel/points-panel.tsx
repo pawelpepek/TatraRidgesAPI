@@ -26,7 +26,7 @@ const PointsPanel: React.FC<{ deleteVisible: boolean }> = props => {
 					<p>
 						Punkt do {"=>"} {pointTo.name}
 					</p>
-					<button onClick={clickDeleteHandler}>Usuń punkt</button>
+					{props.deleteVisible && <button onClick={clickDeleteHandler}>Usuń punkt</button>}
 				</div>
 			</div>
 			<button onClick={clickSwitchHandler}>Odwróć</button>

@@ -1,20 +1,20 @@
-import { CircleMarker } from "react-leaflet"
 import { Point, icon, CircleMarkerOptions } from "leaflet"
-import { MountainPoint } from "../../types"
-import passIcon from "../../img/passIcon.svg"
-import topIcon from "../../img/topIcon.svg"
-import React, { useState } from "react"
-import MarkerPoint from "./MarkerPoint"
+import React from "react"
+import { CircleMarker } from "react-leaflet"
 import { useSelector, useDispatch } from "react-redux"
+
 import { pointsActions } from "../../../store/map-slice"
 import StoreType from "../../../store/store-types"
+import passIcon from "../../img/passIcon.svg"
+import topIcon from "../../img/topIcon.svg"
+import { MountainPoint } from "../../types"
+import MarkerPoint from "./MarkerPoint"
 
 const CirlcePoint: React.FC<MountainPoint> = point => {
 	const dispatch = useDispatch()
 
 	const adminMode = useSelector((state: StoreType) => state.adminMode.value)
-
-	const [isMarker, setMarker] = useState(false)
+	const pointTo = useSelector((state: StoreType) => state.map.pointTo)
 
 	// const [isToolTip, setTooltip] = useState(false)
 
@@ -30,10 +30,6 @@ const CirlcePoint: React.FC<MountainPoint> = point => {
 
 	const setActualPoint = () => dispatch(pointsActions.setActualPoint({ point }))
 
-	if (!adminMode && isMarker) {
-		setMarker(false)
-	}
-
 	return (
 		<>
 			<CircleMarker
@@ -43,11 +39,10 @@ const CirlcePoint: React.FC<MountainPoint> = point => {
 				eventHandlers={{
 					click: () => {
 						setActualPoint()
-						setMarker(adminMode)
 					},
 				}}
 			/>
-			{isMarker && adminMode && (
+			{pointTo.id === point.id && adminMode && (
 				<MarkerPoint
 					id={point.id}
 					name={point.name}
