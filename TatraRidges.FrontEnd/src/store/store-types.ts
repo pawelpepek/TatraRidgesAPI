@@ -13,6 +13,7 @@ interface StoreType {
 		pointTo: MountainPoint
 	}
     ui:{
+		visiblePanel:string,
         notification:{
             status: string
             title: string

@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
+	visiblePanel: "admin",
 	notification: {
 		status: "ok",
 		title: "",
@@ -18,6 +19,9 @@ const uiSlice = createSlice({
 				title: action.payload.title,
 				message: action.payload.message,
 			}
+		},
+		setPanelVersion(state, action) {
+			state.visiblePanel = action.payload
 		},
 	},
 })
