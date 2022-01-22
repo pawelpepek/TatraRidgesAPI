@@ -18,7 +18,7 @@ const RidgeMapContainer: React.FC<RidgeMapProps> = props => {
 	const defaultPosition = latLng(49.219417, 20.009306)
 	const defaultZoom = 16
 
-	const pointFrom = useSelector((state: StoreType) => state.map.pointFrom)
+	const pointTo = useSelector((state: StoreType) => state.map.pointTo)
 
 	const [deleting, setDeleting] = useState(false)
 
@@ -26,7 +26,7 @@ const RidgeMapContainer: React.FC<RidgeMapProps> = props => {
 		if (deleting) {
 			setDeleting(false)
 			// console.log(pointFrom)
-			dispatch(deletePointById(pointFrom.id))
+			dispatch(deletePointById(pointTo.id))
 		}
 	}, [deleting])
 

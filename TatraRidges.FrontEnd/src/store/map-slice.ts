@@ -30,9 +30,9 @@ const pointsSlice = createSlice({
 			state.pointsOk = true
 		},
 		setActualPoint(state, action) {
-			if (action.payload.point.id !== state.pointFrom.id) {
-				state.pointTo = state.pointFrom
-				state.pointFrom = action.payload.point
+			if (action.payload.point.id !== state.pointTo.id) {
+				state.pointFrom = state.pointTo
+				state.pointTo = action.payload.point
 			}
 		},
 		toggleSelectedPoints(state) {
@@ -44,8 +44,8 @@ const pointsSlice = createSlice({
 		},
 		deletePoint(state, actions) {
 			state.points = state.points.filter(p => p.id !== actions.payload.id)
-			state.pointFrom = state.pointTo
-			state.pointTo = {} as MountainPoint
+			state.pointTo = state.pointFrom
+			state.pointFrom = {} as MountainPoint
 		},
 		movePointById(state, actions) {
 			const id = actions.payload.id
