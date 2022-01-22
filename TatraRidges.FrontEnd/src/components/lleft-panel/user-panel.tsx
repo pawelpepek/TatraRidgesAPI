@@ -3,7 +3,8 @@ import PointsPanel from "./points-panel"
 const UserPanel: React.FC = () => {
 	return (
 		<>
-			<PointsPanel deleteVisible={false} />
+            <h2>Panel użytkownika</h2>
+			<h3>Logowanie do profilu</h3>
 		</>
 	)
 }

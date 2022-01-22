@@ -24,6 +24,7 @@ const AdminPanel: React.FC = () => {
 
 	return (
 		<>
+		<h2>Panel administratora</h2>
 			<div>
 				<p>
 					Punkt od {"=>"} {pointFrom.name}
