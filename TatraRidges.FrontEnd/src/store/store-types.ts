@@ -1,5 +1,6 @@
 import {
 	ConnectionPoints,
+	Coordinates,
 	MountainPoint,
 } from "../components/types"
 
@@ -20,6 +21,12 @@ interface StoreType {
             message: string
         }
     }
+	center:{
+		value:{
+			coordinates:Coordinates,
+			zoom:number
+		}
+	}
 }
 
 export default StoreType

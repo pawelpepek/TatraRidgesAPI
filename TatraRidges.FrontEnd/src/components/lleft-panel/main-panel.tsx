@@ -6,6 +6,7 @@ import Notification from "../ui/Notification"
 import AdminPanel from "./admin-panel"
 import UserPanel from "./user-panel"
 import FindPanel from "./find-panel"
+import classes from "./main-panel.module.css"
 
 const MainPanel: React.FC = () => {
 	const dispatch = useDispatch()
@@ -21,7 +22,7 @@ const MainPanel: React.FC = () => {
 		changePanelVersion(tab)
 	}
 	return (
-		<div className='left-panel'>
+		<div className={classes.main}>
 			<h1>Granie Tatr Wysokich</h1>
 			<div>
 				<button id={"button-find"} onClick={buttonClickHandler}>

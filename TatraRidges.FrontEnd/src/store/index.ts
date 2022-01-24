@@ -1,14 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit"
 
-import adminModeReducer from "./admin-mode-slice"
 import pointsReducer from "./map-slice"
 import uiReducer from "./ui-slice"
+import centerReducer from "./center-slice"
 
 const store = configureStore({
 	reducer: {
-		adminMode: adminModeReducer,
 		map: pointsReducer,
 		ui: uiReducer,
+		center:centerReducer
 	},
 })
 

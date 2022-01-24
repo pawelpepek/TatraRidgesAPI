@@ -13,8 +13,9 @@ import MarkerPoint from "./MarkerPoint"
 const CirlcePoint: React.FC<MountainPoint> = point => {
 	const dispatch = useDispatch()
 
-	const adminMode = useSelector((state: StoreType) => state.adminMode.value)
+	const visiblePanel = useSelector((state: StoreType) => state.ui.visiblePanel)
 	const pointTo = useSelector((state: StoreType) => state.map.pointTo)
+	const pointFrom = useSelector((state: StoreType) => state.map.pointFrom)
 
 	// const [isToolTip, setTooltip] = useState(false)
 
@@ -42,7 +43,7 @@ const CirlcePoint: React.FC<MountainPoint> = point => {
 					},
 				}}
 			/>
-			{pointTo.id === point.id && adminMode && (
+			{(pointTo.id === point.id || pointFrom.id === point.id) && (
 				<MarkerPoint
 					id={point.id}
 					name={point.name}

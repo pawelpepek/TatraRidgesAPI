@@ -1,9 +1,10 @@
+import L from "leaflet"
 import { Marker } from "react-leaflet"
+
 import { LatLongOwner } from "../../types"
 import { useDispatch } from "react-redux"
 import { movePoint } from "../../../store/map-actions"
 import { Coordinates } from "../../types"
-
 const MarkerPoint: React.FC<{
 	id: number
 	latitude: number
