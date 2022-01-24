@@ -16,7 +16,7 @@ const Notification: React.FC<notificationInfo> = props => {
 		specialClasses = classes.success
 	}
 	if (props.status === "pending") {
-		specialClasses = classes.success
+		specialClasses = classes.pending
 	}
 	const cssClasses = `${classes.notification} ${specialClasses}`
 

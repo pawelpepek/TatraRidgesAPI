@@ -9,6 +9,7 @@ import { deletePointById } from "../../store/map-actions"
 import RidgesLinesContainer from "./RidgesLinesContainer"
 import RidgesMarkersContainer from "./RidgesPointsContainer"
 import { RidgeMapProps } from "../types"
+import classes from "./ridge-map-container"
 
 const RidgeMapContainer: React.FC<RidgeMapProps> = props => {
 	const centerValue = useSelector((state: StoreType) => state.center.value)
