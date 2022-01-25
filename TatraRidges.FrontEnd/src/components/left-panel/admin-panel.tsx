@@ -8,6 +8,7 @@ import NoLocationMarks from "./no-location-marks"
 import RoundButton from "../ui/round-button"
 import linkIcon from "../img/link.svg"
 import RouteForm from './route-form'
+import classes from "./admin-panel.module.css"
 
 const AdminPanel: React.FC = () => {
 	const dispatch = useDispatch()

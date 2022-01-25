@@ -1,0 +1,7 @@
+.option{
+    margin: 5px;
+    padding-left: 20px;
+    background-image: url("../img/mark.svg");
+    background-repeat: no-repeat;
+    padding-top: 3px;
+}
