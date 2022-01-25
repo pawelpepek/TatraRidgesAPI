@@ -31,16 +31,29 @@ const PointsPanel: React.FC<{ deleteVisible: boolean }> = props => {
 			<div className={classes["points-div"]}>
 				<div>
 					<div className={classes.point}>
-						<p className={classes.info}>{pointFrom.name}</p>
+						<section className={classes.info}>
+							<p className={classes.info}>{pointFrom.name}</p>
+							{pointFrom.id >= 0 && (
+								<p className={classes.info}>
+									{pointFrom.evaluation > 0 ? pointFrom.evaluation : "/nan"}{" "}
+									m.n.p.m
+								</p>
+							)}
+						</section>
 					</div>
 				</div>
 
 				<div />
 				<div>
 					<div className={classes.point}>
-						<p className={`${classes.info} ${classes["point-to"]}`}>
-							{pointTo.name}
-						</p>
+						<section className={`${classes.info} ${classes["point-to"]}`}>
+							<p className={classes.info}>{pointTo.name}</p>
+							{pointTo.id >= 0 && (
+								<p className={classes.info}>
+									{pointTo.evaluation > 0 ? pointTo.evaluation : "/nan"} m.n.p.m
+								</p>
+							)}
+						</section>
 						{props.deleteVisible && (
 							<RoundButton
 								alt='Usuń punkt'

@@ -13,6 +13,7 @@ const PointsContainer: React.FC<MountainPoints> = props => {
 						latitude={point.latitude}
 						longitude={point.longitude}
 						pointTypeId={point.pointTypeId}
+						evaluation={point.evaluation}
 					/>
 				))}
 			</>

@@ -5,6 +5,9 @@ import { postConnectionRidge } from "../../store/map-actions"
 import StoreType from "../../store/store-types"
 import PointsPanel from "./points-panel"
 import NoLocationMarks from "./no-location-marks"
+import RoundButton from "../ui/round-button"
+import linkIcon from "../img/link.svg"
+import RouteForm from './route-form'
 
 const AdminPanel: React.FC = () => {
 	const dispatch = useDispatch()
@@ -17,10 +20,21 @@ const AdminPanel: React.FC = () => {
 
 	return (
 		<>
-			<h2>Panel administratora</h2>
 			<PointsPanel deleteVisible={true} />
-			<button onClick={clickConnectHandler}>Połacz punkty</button>
-			<NoLocationMarks/>
+			<h2>Panel administratora</h2>
+			<RoundButton
+				imageSrc={linkIcon}
+				alt='Połacz punkty'
+				onClick={clickConnectHandler}
+			/>
+			<RoundButton
+				imageSrc={linkIcon}
+				alt='Połacz punkty'
+				onClick={clickConnectHandler}
+			/>
+			<div>
+				<NoLocationMarks />
+			</div>
 		</>
 	)
 }

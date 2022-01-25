@@ -12,6 +12,7 @@ export interface MountainPoint {
 	longitude: number
 	id: number
 	pointTypeId: number
+	evaluation:number
 }
 
 export interface MountainPoints {
