@@ -1,4 +1,4 @@
-import { Point, icon, CircleMarkerOptions } from "leaflet"
+import { Point, icon, CircleMarkerOptions, Path } from "leaflet"
 import React from "react"
 import { CircleMarker } from "react-leaflet"
 import { useSelector, useDispatch } from "react-redux"
@@ -36,15 +36,20 @@ const CirlcePoint: React.FC<MountainPoint> = point => {
 			<CircleMarker
 				center={[point.latitude, point.longitude]}
 				pathOptions={options}
-				key={point.id}
+				key={`point_${point.id}`}
 				eventHandlers={{
 					click: () => {
 						setActualPoint()
+					},
+					mouseover: e => {
+						const button = e.target as Path
+						button.bringToFront()
 					},
 				}}
 			/>
 			{(pointTo.id === point.id || pointFrom.id === point.id) && (
 				<MarkerPoint
+					key={`marker_${point.id}`}
 					id={point.id}
 					name={point.name}
 					latitude={point.latitude}

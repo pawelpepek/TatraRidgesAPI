@@ -1,5 +1,5 @@
 import { Polyline } from "react-leaflet"
-import { latLng } from "leaflet"
+import { latLng, Path } from "leaflet"
 import { ConnectionLineProps } from "../../types"
 
 const LineConnection: React.FC<ConnectionLineProps> = props => {
@@ -10,7 +10,17 @@ const LineConnection: React.FC<ConnectionLineProps> = props => {
 
 	// const options = { color: props.color }
 
-	return <Polyline positions={coordinates} />
+	return (
+		<Polyline
+			key={`line_${props.id}`}
+			positions={coordinates}
+			eventHandlers={{
+				mouseover: e => {
+					;(e.target as Path).bringToBack()
+				},
+			}}
+		/>
+	)
 }
 
 export default LineConnection
