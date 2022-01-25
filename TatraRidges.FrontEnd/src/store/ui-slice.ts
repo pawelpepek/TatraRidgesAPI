@@ -1,12 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit"
+import { stat } from "fs"
 
 const initialState = {
-	visiblePanel: "admin",
+	visiblePanel: "find",
 	notification: {
 		status: "ok",
 		title: "",
 		message: "",
 	},
+	logged: false,
 }
 
 const uiSlice = createSlice({
@@ -22,6 +24,13 @@ const uiSlice = createSlice({
 		},
 		setPanelVersion(state, action) {
 			state.visiblePanel = action.payload
+		},
+		setLogged(state, action) {
+			const logged: boolean = action.payload
+			state.logged = logged
+			if (state.visiblePanel === "admin") {
+				state.visiblePanel = "find"
+			}
 		},
 	},
 })

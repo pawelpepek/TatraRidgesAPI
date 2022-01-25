@@ -19,7 +19,8 @@ interface StoreType {
             status: string
             title: string
             message: string
-        }
+        },
+		logged:boolean
     }
 	center:{
 		value:{
