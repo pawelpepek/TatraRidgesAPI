@@ -1,7 +1,7 @@
 import classes from "./round-button.module.css"
 
 export interface RoundButtonProps {
-	idButton: string
+	idButton?: string
 	alt: string
 	imageSrc: string
 	selected?: boolean
