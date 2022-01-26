@@ -1,9 +1,9 @@
 .main {
+	flex-direction: column;
+	display: flex;
 	margin: 10px;
 	width: 540px;
 	height: 100vh;
-	display: flex;
-	flex-direction: column;
 }
 .panel {
 	height: 100%;

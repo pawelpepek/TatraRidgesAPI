@@ -8,13 +8,13 @@
 	width: 100%;
 }
 .point {
+	display: flex;
+	justify-items: center;
 	margin: 5px;
 	width: 100%;
 	border: 1px solid black;
 	height: 60px;
 	border-radius: 5px;
-	display: flex;
-	justify-items: center;
 }
 .button-reverse {
 	margin: 10px;

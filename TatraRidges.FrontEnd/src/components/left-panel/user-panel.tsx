@@ -1,5 +1,3 @@
-import PointsPanel from "./points-panel"
-
 const UserPanel: React.FC = () => {
 	return (
 		<>

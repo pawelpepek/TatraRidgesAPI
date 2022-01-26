@@ -1,13 +1,12 @@
-import { useSelector, useDispatch } from "react-redux"
+import { useSelector } from "react-redux"
 
 import StoreType from "../../store/store-types"
 import Notification from "../ui/Notification"
 import AdminPanel from "./admin/admin-panel"
-import UserPanel from "./user-panel"
 import FindPanel from "./find/find-panel"
 import classes from "./main-panel.module.css"
-
 import NavigationPanel from "./navigation-panel"
+import UserPanel from "./user-panel"
 
 const MainPanel: React.FC = () => {
 	const notification = useSelector((state: StoreType) => state.ui.notification)
