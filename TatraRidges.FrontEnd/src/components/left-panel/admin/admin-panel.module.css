@@ -5,3 +5,15 @@
 	margin-left: 40px;
 	margin-right: 52px;
 }
+
+.visible-part {
+	display: block;
+	overflow: auto;
+	height: 100%;
+}
+
+.not-visible-part {
+	display: block;
+	height: 0;
+	overflow: hidden;
+}

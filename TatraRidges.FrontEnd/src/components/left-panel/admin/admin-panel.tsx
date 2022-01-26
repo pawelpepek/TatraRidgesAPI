@@ -13,14 +13,17 @@ const AdminPanel: React.FC = () => {
 		(state: StoreType) => state.ui.visibleAdminPart
 	)
 
+	const getClassForPart = (part: string) =>
+		partVisible === part ? classes["visible-part"] : classes["not-visible-part"]
+
 	return (
 		<>
 			<PanelHeader text='Panel administratora' />
 			<PointsPanel deleteVisible={true} />
 			<div className={classes["manage-panel"]}>
 				<AdminNavigationPanel />
-				{partVisible === "route" && <RouteForm />}
-				{partVisible === "noLocation" && <NoLocationMarks />}
+				<RouteForm className={getClassForPart("route")} />
+				<NoLocationMarks className={getClassForPart("noLocation")} />
 			</div>
 		</>
 	)
