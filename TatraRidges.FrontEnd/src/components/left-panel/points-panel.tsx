@@ -42,7 +42,6 @@ const PointsPanel: React.FC<{ deleteVisible: boolean }> = props => {
 						</section>
 					</div>
 				</div>
-
 				<div />
 				<div>
 					<div className={classes.point}>
@@ -56,6 +55,7 @@ const PointsPanel: React.FC<{ deleteVisible: boolean }> = props => {
 						</section>
 						{props.deleteVisible && (
 							<RoundButton
+								className={classes.delete}
 								alt='Usuń punkt'
 								onClick={clickDeleteHandler}
 								imageSrc={deleteIcon}
