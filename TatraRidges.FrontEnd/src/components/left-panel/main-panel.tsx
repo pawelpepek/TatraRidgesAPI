@@ -14,14 +14,16 @@ const MainPanel: React.FC = () => {
 
 	return (
 		<div className={classes.main}>
-			<header>
-				<h1>Granie Tatr Wysokich</h1>
-			</header>
-			<NavigationPanel className={classes.navigation} />
-			<div className={classes.panel}>
-				{visiblePanel === "admin" && <AdminPanel />}
-				{visiblePanel === "user" && <UserPanel />}
-				{visiblePanel === "find" && <FindPanel />}
+			<div className={classes.functions}>
+				<header>
+					<h1>Granie Tatr Wysokich</h1>
+				</header>
+				<NavigationPanel className={classes.navigation} />
+				<div className={classes.panel}>
+					{visiblePanel === "admin" && <AdminPanel />}
+					{visiblePanel === "user" && <UserPanel />}
+					{visiblePanel === "find" && <FindPanel />}
+				</div>
 			</div>
 			<Notification
 				status={notification.status}

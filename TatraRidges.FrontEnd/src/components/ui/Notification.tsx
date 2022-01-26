@@ -21,10 +21,11 @@ const Notification: React.FC<notificationInfo> = props => {
 	const cssClasses = `${classes.notification} ${specialClasses}`
 
 	return (
-		<section className={cssClasses}>
-			<h2>{props.title}</h2>
-			<p>{props.message}</p>
-		</section>
+		<div  className={cssClasses}>
+			<section className={classes.section}>
+				<h4>{props.message}</h4>
+			</section>
+		</div>
 	)
 }
 

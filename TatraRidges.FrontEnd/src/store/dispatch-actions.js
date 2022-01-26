@@ -47,8 +47,7 @@ const dataDispatcher = (props, dispatcher) => {
 		dispatch(
 			uiActions.showNotification({
 				status: "pending",
-				title: title + "...",
-				message: title + " danych",
+				message: title + " danych...",
 			})
 		)
 		try {
@@ -57,8 +56,7 @@ const dataDispatcher = (props, dispatcher) => {
 			dispatch(
 				uiActions.showNotification({
 					status: "success",
-					title: "Ok",
-					message: "Gotowe!",
+					message: "Ok",
 				})
 			)
 			if (data) {
@@ -83,7 +81,6 @@ const dataDispatcher = (props, dispatcher) => {
 			dispatch(
 				uiActions.showNotification({
 					status: "error",
-					title: "Błąd",
 					message: "Błąd bazy danych",
 				})
 			)

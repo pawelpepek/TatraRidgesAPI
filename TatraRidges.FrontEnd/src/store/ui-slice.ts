@@ -5,7 +5,6 @@ const initialState = {
 	visiblePanel: "find",
 	notification: {
 		status: "ok",
-		title: "",
 		message: "",
 	},
 	logged: false,
@@ -19,7 +18,6 @@ const uiSlice = createSlice({
 		showNotification(state, action) {
 			state.notification = {
 				status: action.payload.status,
-				title: action.payload.title,
 				message: action.payload.message,
 			}
 		},
