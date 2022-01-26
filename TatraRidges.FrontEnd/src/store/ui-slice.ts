@@ -9,6 +9,7 @@ const initialState = {
 		message: "",
 	},
 	logged: false,
+	visibleAdminPart: "route",
 }
 
 const uiSlice = createSlice({
@@ -31,6 +32,9 @@ const uiSlice = createSlice({
 			if (state.visiblePanel === "admin") {
 				state.visiblePanel = "find"
 			}
+		},
+		setAdminPartVisible(state, action) {
+			state.visibleAdminPart = action.payload
 		},
 	},
 })

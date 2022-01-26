@@ -13,19 +13,20 @@ interface StoreType {
 		pointFrom: MountainPoint
 		pointTo: MountainPoint
 	}
-    ui:{
-		visiblePanel:string,
-        notification:{
-            status: string
-            title: string
-            message: string
-        },
-		logged:boolean
-    }
-	center:{
-		value:{
-			coordinates:Coordinates,
-			zoom:number
+	ui: {
+		visiblePanel: string
+		notification: {
+			status: string
+			title: string
+			message: string
+		}
+		logged: boolean
+		visibleAdminPart: string
+	}
+	center: {
+		value: {
+			coordinates: Coordinates
+			zoom: number
 		}
 	}
 }
