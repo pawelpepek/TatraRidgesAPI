@@ -19,8 +19,8 @@ const AdminPanel: React.FC = () => {
 			<PointsPanel deleteVisible={true} />
 			<div className={classes["manage-panel"]}>
 				<AdminNavigationPanel />
-				{partVisible === "noLocation" && <NoLocationMarks />}
 				{partVisible === "route" && <RouteForm />}
+				{partVisible === "noLocation" && <NoLocationMarks />}
 			</div>
 		</>
 	)

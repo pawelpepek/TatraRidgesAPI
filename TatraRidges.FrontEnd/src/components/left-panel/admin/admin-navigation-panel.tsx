@@ -8,14 +8,14 @@ const AdminNavigationPanel: React.FC = () => {
 	return (
 		<div className={classes["buttons"]}>
 			<AdminNavigationButton
-				name='noLocation'
-				imageSrc={noLocationIcon}
-				alt='Punkty bez lokalizacji'
-			/>
-			<AdminNavigationButton
 				name='route'
 				imageSrc={routeIcon}
 				alt='Dodaj drogę'
+			/>
+			<AdminNavigationButton
+				name='noLocation'
+				imageSrc={noLocationIcon}
+				alt='Punkty bez lokalizacji'
 			/>
 			<ConnectButton />
 		</div>
