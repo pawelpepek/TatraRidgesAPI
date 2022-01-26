@@ -1,0 +1,10 @@
+.images-div {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+.image {
+	margin: 5px;
+	width: 24px;
+	height: 24px;
+}

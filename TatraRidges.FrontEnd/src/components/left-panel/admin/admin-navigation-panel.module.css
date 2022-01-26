@@ -1,6 +1,8 @@
-.buttons{
-    display: flex;
+.buttons {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	display: flex;
 }
-.connection{
-    margin-left: auto;
+.connection {
+	margin-left: auto;
 }

@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from "react-redux"
 
-import { movePoint } from "../../store/map-actions"
-import { pointsActions } from "../../store/map-slice"
-import StoreType from "../../store/store-types"
-import { MountainPoint } from "../types"
+import { movePoint } from "../../../store/map-actions"
+import { pointsActions } from "../../../store/map-slice"
+import StoreType from "../../../store/store-types"
+import { MountainPoint } from "../../types"
 import classes from "./point-option.module.css"
 
 const PointOption: React.FC<{ point: MountainPoint }> = props => {

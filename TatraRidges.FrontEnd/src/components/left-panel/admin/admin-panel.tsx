@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux"
 
 import { postConnectionRidge } from "../../../store/map-actions"
 import StoreType from "../../../store/store-types"
-import PointsPanel from "../points-panel"
+import PointsPanel from "../points/points-panel"
 import NoLocationMarks from "./no-location-marks"
 import PanelHeader from "../panel-header"
 import RouteForm from "./route-form"
