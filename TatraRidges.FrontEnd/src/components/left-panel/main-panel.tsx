@@ -18,7 +18,7 @@ const MainPanel: React.FC = () => {
 			<header>
 				<h1>Granie Tatr Wysokich</h1>
 			</header>
-			<NavigationPanel className={classes.navigation}/>
+			<NavigationPanel className={classes.navigation} />
 			<div className={classes.panel}>
 				{visiblePanel === "admin" && <AdminPanel />}
 				{visiblePanel === "user" && <UserPanel />}

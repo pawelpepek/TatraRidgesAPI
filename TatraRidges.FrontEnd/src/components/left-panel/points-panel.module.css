@@ -13,8 +13,8 @@
 	border: 1px solid black;
 	height: 60px;
 	border-radius: 5px;
-    display: flex;
-    justify-items: center;
+	display: flex;
+	justify-items: center;
 }
 .button-reverse {
 	margin: 10px;
@@ -31,9 +31,12 @@
 	width: 24px;
 	height: 24px;
 }
-.info{
-    margin: 3px;
+.info {
+	margin: 3px;
 }
-.point-to{
-    flex: 70%;
+.point-to {
+	flex: 70%;
+}
+.delete {
+	align-self: center;
 }

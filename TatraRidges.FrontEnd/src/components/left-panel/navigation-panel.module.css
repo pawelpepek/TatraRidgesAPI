@@ -1,7 +1,7 @@
 .navigation {
 	display: flex;
-	flex-direction:row;
+	flex-direction: row;
 }
-.login{
-    margin-left: auto;
+.login {
+	margin-left: auto;
 }

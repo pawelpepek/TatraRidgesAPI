@@ -9,31 +9,28 @@ import adminIcon from "../img/tools.svg"
 import RoundButton from "../../components/ui/round-button"
 import classes from "./navigation-panel.module.css"
 
-const NavigationPanel: React.FC<{className?: string}> = props => {
+const NavigationPanel: React.FC<{ className?: string }> = props => {
 	const dispatch = useDispatch()
 
 	const changePanelVersion = (version: string) =>
 		dispatch(uiActions.setPanelVersion(version))
 
 	const visiblePanel = useSelector((state: StoreType) => state.ui.visiblePanel)
-    const logged = useSelector((state: StoreType) => state.ui.logged)
+	const logged = useSelector((state: StoreType) => state.ui.logged)
 
 	const getTab = (id: string) => id.substring(7)
 
 	const buttonClickHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
 		const button: HTMLButtonElement = event.currentTarget
 
-		if(button.id.substring(7,10)==="log")
-        {
-            dispatch(uiActions.setLogged(button.id==="button-login"))
-        }
-        else{
-            changePanelVersion(getTab(button.id))
-        }
-        
+		if (button.id.substring(7, 10) === "log") {
+			dispatch(uiActions.setLogged(button.id === "button-login"))
+		} else {
+			changePanelVersion(getTab(button.id))
+		}
 	}
 
-    const className=`${props.className} ${classes.navigation}`
+	const className = `${props.className} ${classes.navigation}`
 
 	return (
 		<nav className={className}>
@@ -50,22 +47,26 @@ const NavigationPanel: React.FC<{className?: string}> = props => {
 				imageSrc={adminIcon}
 				onClick={buttonClickHandler}
 				selected={visiblePanel === "admin"}
-                disabled={!logged}
+				disabled={!logged}
 			/>
-			{!logged && <RoundButton
-				className={classes.login}
-				idButton={"button-login"}
-				alt='Panel użytkownika'
-				imageSrc={userOffIcon}
-				onClick={buttonClickHandler}
-			/>}
-            {logged && <RoundButton
-				className={classes.login}
-				idButton={"button-logout"}
-				alt='Panel użytkownika'
-				imageSrc={userIcon}
-				onClick={buttonClickHandler}
-			/>}
+			{!logged && (
+				<RoundButton
+					className={classes.login}
+					idButton={"button-login"}
+					alt='Panel użytkownika'
+					imageSrc={userOffIcon}
+					onClick={buttonClickHandler}
+				/>
+			)}
+			{logged && (
+				<RoundButton
+					className={classes.login}
+					idButton={"button-logout"}
+					alt='Panel użytkownika'
+					imageSrc={userIcon}
+					onClick={buttonClickHandler}
+				/>
+			)}
 		</nav>
 	)
 }
