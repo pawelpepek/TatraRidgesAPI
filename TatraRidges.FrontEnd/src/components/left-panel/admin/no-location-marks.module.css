@@ -1,0 +1,24 @@
+.no-location-list {
+	width: 100%;
+	border-radius: 5px;
+	border: 1px solid black;
+}
+
+.no-location-list::-webkit-scrollbar {
+	width: 20px;
+	height: 14px;
+}
+.no-location-list::-webkit-scrollbar-track {
+	border: rgb(180, 180, 180);
+	background-color: rgb(243, 243, 243);
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+.no-location-list::-webkit-scrollbar-thumb {
+	background-color: lightgrey;
+	border-radius: 5px;
+}
+.description {
+	margin-bottom: 7px;
+	margin-top:5px;
+}

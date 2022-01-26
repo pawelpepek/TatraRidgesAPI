@@ -1,0 +1,13 @@
+<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-map-2" stroke-width="2" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+ <g>
+  <title>Layer 1</title>
+  <line x1="4.98482" y1="14.02762" x2="4.98482" y2="14.03762" id="svg_2"/>
+  <path d="m18.93676,12.00282l-3.5,-5a4,4 0 1 1 7,0l-3.5,5" id="svg_3"/>
+  <path d="m5.01524,21.12586l-3.5,-5a4,4 0 1 1 7,0l-3.5,5" id="svg_7"/>
+  <line x1="18.94252" y1="5.08502" x2="18.94252" y2="5.09502" id="svg_9"/>
+  <path opacity="NaN" d="m9.46224,21.72809c9.77952,-1.25585 -0.38502,-6.06994 8.27794,-6.40483" id="svg_10" stroke="null"/>
+  <line stroke="null" id="svg_1" y2="4.67435" x2="11.19585" y1="4.67435" x1="5.81875" fill="none"/>
+  <line stroke="null" id="svg_4" y2="2.24194" x2="8.45162" y1="7.24194" x1="8.45162" fill="none"/>
+ </g>
+
+</svg>

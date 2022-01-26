@@ -9,7 +9,7 @@ import adminIcon from "../img/tools.svg"
 import RoundButton from "../../components/ui/round-button"
 import classes from "./navigation-panel.module.css"
 
-const NavigationPanel: React.FC = () => {
+const NavigationPanel: React.FC<{className?: string}> = props => {
 	const dispatch = useDispatch()
 
 	const changePanelVersion = (version: string) =>
@@ -22,7 +22,7 @@ const NavigationPanel: React.FC = () => {
 
 	const buttonClickHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
 		const button: HTMLButtonElement = event.currentTarget
-        
+
 		if(button.id.substring(7,10)==="log")
         {
             dispatch(uiActions.setLogged(button.id==="button-login"))
@@ -32,8 +32,11 @@ const NavigationPanel: React.FC = () => {
         }
         
 	}
+
+    const className=`${props.className} ${classes.navigation}`
+
 	return (
-		<nav className={classes.navigation}>
+		<nav className={className}>
 			<RoundButton
 				idButton={"button-find"}
 				alt='Wyszukiwanie drogi'

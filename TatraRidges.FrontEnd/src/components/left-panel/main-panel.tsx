@@ -2,9 +2,9 @@ import { useSelector, useDispatch } from "react-redux"
 
 import StoreType from "../../store/store-types"
 import Notification from "../ui/Notification"
-import AdminPanel from "./admin-panel"
+import AdminPanel from "./admin/admin-panel"
 import UserPanel from "./user-panel"
-import FindPanel from "./find-panel"
+import FindPanel from "./find/find-panel"
 import classes from "./main-panel.module.css"
 
 import NavigationPanel from "./navigation-panel"
@@ -18,7 +18,7 @@ const MainPanel: React.FC = () => {
 			<header>
 				<h1>Granie Tatr Wysokich</h1>
 			</header>
-			<NavigationPanel />
+			<NavigationPanel className={classes.navigation}/>
 			<div className={classes.panel}>
 				{visiblePanel === "admin" && <AdminPanel />}
 				{visiblePanel === "user" && <UserPanel />}
