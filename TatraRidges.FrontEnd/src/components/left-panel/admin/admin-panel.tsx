@@ -4,7 +4,7 @@ import StoreType from "../../../store/store-types"
 import PointsPanel from "../points/points-panel"
 import NoLocationMarks from "./no-location-marks"
 import PanelHeader from "../panel-header"
-import RouteForm from "./route-form"
+import RouteForm from "./RouteForm"
 import classes from "./admin-panel.module.css"
 import AdminNavigationPanel from "./admin-navigation-panel"
 

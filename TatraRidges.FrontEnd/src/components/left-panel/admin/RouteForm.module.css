@@ -1,0 +1,14 @@
+.div{
+    display: flex;
+}
+.column{
+    display: flex;
+    flex-direction: column;
+}
+.table{
+    width: 100%;
+}
+  .first-column{
+    width: 400px;
+    white-space: nowrap;
+  }
