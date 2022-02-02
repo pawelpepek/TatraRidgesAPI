@@ -1,21 +1,29 @@
-.round-button{
-    border-radius: 50%;
-    width: 45px;
-    height: 45px;
-    border: none;
-    background-color: transparent;
-    margin-right: 6px;
+.round-button {
+	border-radius: 50%;
+	width: 45px;
+	height: 45px;
+	border: none;
+	background-color: transparent;
+	margin-right: 6px;
 }
-.round-button:hover{
-    background-color: rgb(243, 243, 243);
+.round-button:hover {
+	background-color: rgb(243, 243, 243);
 }
-.selected{
-    background-color: rgb(230, 230, 230);
+.selected {
+	background-color: rgb(230, 230, 230);
 }
-.disabled{
-    opacity: 0.5;
+.disabled {
+	opacity: 0.5;
 }
-.disabled:hover{
-    opacity: 0.5;
-    background-color:transparent
+.disabled:hover {
+	opacity: 0.5;
+	background-color: transparent;
+}
+.tooltip {
+	display: none;
+	position: absolute;
+	z-index: 1000;
+}
+.round-button:hover .tooltip {
+	display: block;
 }

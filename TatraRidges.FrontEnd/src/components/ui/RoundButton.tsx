@@ -27,6 +27,9 @@ const RoundButton: React.FC<RoundButtonProps> = props => {
 			onClick={buttonClickHandler}
 			id={props.idButton}>
 			<img alt={props.alt} src={props.imageSrc} />
+			<div className={classes.tooltip}>
+				<p>{props.alt}</p>
+			</div>
 		</button>
 	)
 }
