@@ -14,13 +14,13 @@ describe("RoundButton component", () => {
 		expect(messageElement).toBeInTheDocument()
 	}),
 		test("render selected component with className selected", () =>
-			makeTestButton(true, null)),
+			makeTestButton(true, undefined)),
 		test("render not selected component withouth className selected", () =>
-			makeTestButton(false, null)),
+			makeTestButton(false, undefined)),
 		test("render disabled component with className disabled", () =>
-			makeTestButton(null, true)),
+			makeTestButton(undefined, true)),
 		test("render not disabled component withouth className disabled", () =>
-			makeTestButton(null, false)),
+			makeTestButton(undefined, false)),
 		test("render component with className test has className test", () => {
 			//Arrange
 			const { container } = render(
@@ -37,7 +37,10 @@ describe("RoundButton component", () => {
 		})
 })
 
-const makeTestButton = (selected: boolean | null, disabled: boolean | null) => {
+const makeTestButton = (
+	selected: boolean | undefined,
+	disabled: boolean | undefined
+) => {
 	//Arrange
 	const { container } = render(
 		<RoundButton
@@ -54,10 +57,10 @@ const makeTestButton = (selected: boolean | null, disabled: boolean | null) => {
 	const button = container.querySelector("button")
 
 	if (button !== null) {
-		if (selected !== null) {
+		if (selected !== undefined) {
 			expect(button.classList.contains("selected")).toBe(selected)
 		}
-		if (disabled !== null) {
+		if (disabled !== undefined) {
 			expect(button.classList.contains("disabled")).toBe(disabled)
 		}
 	}
