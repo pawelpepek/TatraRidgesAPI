@@ -1,4 +1,4 @@
-import PanelHeader from "../panel-header"
+import PanelHeader from "../PanelHeader"
 import PointsPanel from "../points/points-panel"
 
 const FindPanel: React.FC = () => {

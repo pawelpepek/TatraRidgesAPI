@@ -1,8 +1,8 @@
 import routeIcon from "../../img/route.svg"
 import noLocationIcon from "../../img/no-location-mark.svg"
-import classes from "./admin-navigation-panel.module.css"
-import ConnectButton from "./connect-button"
-import AdminNavigationButton from "./admin-navigation-button"
+import classes from "./AdminNavigationPanel.module.css"
+import ConnectButton from "./ConnectButton"
+import AdminNavigationButton from "./AdminNavigationButton"
 
 const AdminNavigationPanel: React.FC = () => {
 	return (

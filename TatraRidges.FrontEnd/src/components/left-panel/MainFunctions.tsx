@@ -1,11 +1,11 @@
 import { useSelector } from "react-redux"
 
 import StoreType from "../../store/store-types"
-import AdminPanel from "./admin/admin-panel"
-import FindPanel from "./find/find-panel"
-import classes from "./main-functions.module.css"
-import NavigationPanel from "./navigation-panel"
-import UserPanel from "./user-panel"
+import AdminPanel from "./admin/AdminPanel"
+import FindPanel from "./find/FindPanel"
+import classes from "./MainFunctions.module.css"
+import NavigationPanel from "./NavigationPanel"
+import UserPanel from "./UserPanel"
 
 const MainFunctions: React.FC = () => {
 	const visiblePanel = useSelector((state: StoreType) => state.ui.visiblePanel)

@@ -4,7 +4,7 @@ import { movePoint } from "../../../store/map-actions"
 import { pointsActions } from "../../../store/map-slice"
 import StoreType from "../../../store/store-types"
 import { MountainPoint } from "../../types"
-import classes from "./point-option.module.css"
+import classes from "./PointOption.module.css"
 
 const PointOption: React.FC<{ point: MountainPoint }> = props => {
 	const dispatch = useDispatch()

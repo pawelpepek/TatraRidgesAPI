@@ -1,13 +1,13 @@
 import { useSelector, useDispatch } from "react-redux"
 
-import RoundButton from "../../components/ui/round-button"
+import RoundButton from "../ui/round-button"
 import StoreType from "../../store/store-types"
 import { uiActions } from "../../store/ui-slice"
 import mapIcon from "../img/map.svg"
 import adminIcon from "../img/tools.svg"
 import userIcon from "../img/user.svg"
 import userOffIcon from "../img/user-off.svg"
-import classes from "./navigation-panel.module.css"
+import classes from "./NavigationPanel.module.css"
 
 const NavigationPanel: React.FC<{ className?: string }> = props => {
 	const dispatch = useDispatch()

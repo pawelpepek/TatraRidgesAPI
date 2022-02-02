@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux"
 import StoreType from "../../../store/store-types"
-import PointOption from "./point-option"
-import classes from "./no-location-marks.module.css"
-import Description from "./description"
+import PointOption from "./PointOption"
+import classes from "./NoLocationMarks.module.css"
+import Description from "./Description"
 
 const NoLocationMarks: React.FC<{ className?: string }> = props => {
 	const points = useSelector((state: StoreType) => state.map.points)

@@ -1,4 +1,4 @@
-import Description from "../description"
+import Description from "../Description"
 import classes from "./RoutePanel.module.css"
 import RouteForm from "./RouteForm"
 
