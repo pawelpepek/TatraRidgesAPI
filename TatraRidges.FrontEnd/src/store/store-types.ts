@@ -4,6 +4,8 @@ import {
 	MountainPoint,
 } from "../components/types"
 
+import { OptionsProps} from "./route-form-slice"
+
 interface StoreType {
 	adminMode: { value: boolean }
 	map: {
@@ -28,6 +30,19 @@ interface StoreType {
 			coordinates: Coordinates
 			zoom: number
 		}
+	}
+	routeForm: {
+		consistentDirection: boolean
+		guide: string
+		volume: number | null
+		number: string
+		difficulty: string
+		adjectives: string[]
+		routeTypeId: Number
+		rappeling: boolean
+		page: number | null
+		routeTime: Date | null
+		isFilled:boolean
 	}
 }
 

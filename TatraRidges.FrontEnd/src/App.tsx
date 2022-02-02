@@ -6,7 +6,7 @@ function App() {
 	return (
 		<div className='body-container'>
 			<MainPanel />
-			<RidgeMapContainer className='map' />
+			<RidgeMapContainer className='map' /> 
 		</div>
 	)
 }

@@ -6,13 +6,13 @@ export interface RoundButtonProps {
 	imageSrc: string
 	selected?: boolean
 	disabled?: boolean
-    className?:string
-	onClick: (event: React.MouseEvent<HTMLButtonElement>) => void
+	className?: string
+	onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
 }
 
 const RoundButton: React.FC<RoundButtonProps> = props => {
 	const buttonClickHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-		if (!props.disabled) {
+		if (!props.disabled && props.onClick != null) {
 			props.onClick(event)
 		}
 	}

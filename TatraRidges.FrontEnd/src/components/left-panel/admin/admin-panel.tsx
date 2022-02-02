@@ -4,7 +4,7 @@ import StoreType from "../../../store/store-types"
 import PointsPanel from "../points/points-panel"
 import NoLocationMarks from "./no-location-marks"
 import PanelHeader from "../panel-header"
-import RouteForm from "./RouteForm"
+import RoutePanel from "./route-form/RoutePanel"
 import classes from "./admin-panel.module.css"
 import AdminNavigationPanel from "./admin-navigation-panel"
 
@@ -13,17 +13,14 @@ const AdminPanel: React.FC = () => {
 		(state: StoreType) => state.ui.visibleAdminPart
 	)
 
-	const getClassForPart = (part: string) =>
-		partVisible === part ? classes["visible-part"] : classes["not-visible-part"]
-
 	return (
 		<>
 			<PanelHeader text='Panel administratora' />
 			<PointsPanel deleteVisible={true} />
 			<div className={classes["manage-panel"]}>
 				<AdminNavigationPanel />
-				<RouteForm className={getClassForPart("route")} />
-				<NoLocationMarks className={getClassForPart("noLocation")} />
+				{partVisible === "route" && <RoutePanel />}
+				{partVisible === "noLocation" && <NoLocationMarks/>}
 			</div>
 		</>
 	)
