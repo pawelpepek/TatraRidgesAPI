@@ -1,5 +1,5 @@
 import { MountainPoint } from "../../types"
-import classes from "./point-info.module.css"
+import classes from "./PointInfo.module.css"
 
 interface PointInfoProps {
 	point: MountainPoint

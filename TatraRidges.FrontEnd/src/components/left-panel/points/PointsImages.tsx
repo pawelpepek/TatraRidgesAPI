@@ -1,7 +1,7 @@
 import startIcon from "../../img/point.svg"
 import endIcon from "../../img/mark.svg"
 import arrowIcon from "../../img/arrow-down.svg"
-import classes from "./points-images.module.css"
+import classes from "./PointsImages.module.css"
 
 const PointsImages: React.FC = () => {
 	return (

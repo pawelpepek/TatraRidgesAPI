@@ -1,6 +1,6 @@
 import classes from "./RouteForm.module.css"
 import AdjectivSelect from "./AdjectivSelect"
-import RoundButton from "../../../ui/round-button"
+import RoundButton from "../../../ui/RoundButton"
 import addIcon from "../../../img/plus.svg"
 import RouteInputRow from "./RouteInputRow"
 import RouteSelectRow from "./RouteSelectRow"

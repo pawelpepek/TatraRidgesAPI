@@ -3,9 +3,9 @@ import { useDispatch } from "react-redux"
 import { deletePointById } from "../../../store/map-actions"
 import deleteIcon from "../../img/trash.svg"
 import { MountainPoint } from "../../types"
-import RoundButton from "../../ui/round-button"
-import classes from "./point-label.module.css"
-import PointInfo from "./point-info"
+import RoundButton from "../../ui/RoundButton"
+import classes from "./PointLabel.module.css"
+import PointInfo from "./PointInfo"
 
 export interface PointLabelProps {
 	deleteVisible?: boolean

@@ -2,7 +2,6 @@ import classes from "./Notification.module.css"
 
 interface notificationInfo {
 	status: string
-	title: string
 	message: string
 }
 

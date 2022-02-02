@@ -2,10 +2,10 @@ import { useDispatch } from "react-redux"
 
 import { pointsActions } from "../../../store/map-slice"
 import reverseIcon from "../../img/arrow-down-back.svg"
-import RoundButton from "../../ui/round-button"
-import PointsImages from "./points-images"
-import PointsLabels from "./points-labels"
-import classes from "./points-panel.module.css"
+import RoundButton from "../../ui/RoundButton"
+import PointsImages from "./PointsImages"
+import PointsLabels from "./PointsLabels"
+import classes from "./PointsPanel.module.css"
 
 const PointsPanel: React.FC<{ deleteVisible: boolean }> = props => {
 	const dispatch = useDispatch()

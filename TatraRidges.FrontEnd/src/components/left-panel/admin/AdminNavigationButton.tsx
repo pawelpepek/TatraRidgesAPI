@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux"
 
 import StoreType from "../../../store/store-types"
 import { uiActions } from "../../../store/ui-slice"
-import RoundButton from "../../ui/round-button"
+import RoundButton from "../../ui/RoundButton"
 
 interface AdminNavButtonProps {
 	imageSrc: string

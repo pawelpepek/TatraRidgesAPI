@@ -13,7 +13,6 @@ const MainPanel: React.FC = () => {
 			<MainFunctions />
 			<Notification
 				status={notification.status}
-				title={notification.title}
 				message={notification.message}
 			/>
 		</div>

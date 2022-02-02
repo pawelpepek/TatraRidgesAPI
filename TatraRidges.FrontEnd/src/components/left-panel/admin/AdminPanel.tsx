@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux"
 
 import StoreType from "../../../store/store-types"
-import PointsPanel from "../points/points-panel"
+import PointsPanel from "../points/PointsPanel"
 import NoLocationMarks from "./NoLocationMarks"
 import PanelHeader from "../PanelHeader"
 import RoutePanel from "./route-form/RoutePanel"

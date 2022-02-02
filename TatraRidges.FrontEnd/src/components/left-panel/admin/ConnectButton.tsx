@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { postConnectionRidge } from "../../../store/map-actions"
 import StoreType from "../../../store/store-types"
 import linkIcon from "../../img/connection.svg"
-import RoundButton from "../../ui/round-button"
+import RoundButton from "../../ui/RoundButton"
 import classes from "./ConnectButton.module.css"
 
 const ConnectButton: React.FC = () => {
