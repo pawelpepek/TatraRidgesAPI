@@ -1,19 +1,20 @@
-import { render, screen } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 import React from "react"
+import { renderWithInitialReducer } from "./testRedux"
+import testerModel from "./tester"
 
 export const testText = (
 	component: React.ReactElement,
 	text: string = "test"
 ) => {
 	//Arrange
-	render(component)
+	const tester = new testerModel(component)
 
 	//Act
 
 	//Assert
-	const element = screen.getByText(text, { exact: false })
-	expect(element).not.toBeNull()
-	expect(element).toBeInTheDocument()
+	tester.findElementByText(text)
+	tester.checkIsElementInDocument()
 }
 
 export const testClass = (
@@ -22,39 +23,63 @@ export const testClass = (
 	className: string,
 	isInClasses: boolean = true
 ) => {
+	//Arrange
+	const tester = new testerModel(component, "ui")
+
 	//Assert
-	const element = getElement(component, elementName)
-	expect(element).not.toBeNull()
-	if (element !== null) {
-		expect(element.classList.contains(className)).toBe(isInClasses)
-	}
+	tester.findElement(elementName)
+	tester.checkIfElementHasClass(className)?.toBe(isInClasses)
 }
 
 export const testElement = (
 	component: React.ReactElement,
-	elementName: string,
-	visible: boolean
+	elementSelector: string,
+	visible: boolean = true
 ) => {
+	//Arrange
+	const tester = new testerModel(component, "ui")
+
 	//Assert
-	const element = getElement(component, elementName)
-	if (visible) {
-		// expect(element).not.toBeNull()
-		if (element !== null) {
-			expect(element).toBeInTheDocument()
-		} else {
-			expect(element).not.toBeNull()
-		}
-	} else {
-		expect(element).toBeNull()
-	}
+	tester.findElement(elementSelector)
+	tester.checkIsElementInDocument(visible)
 }
 
-const getElement = (component: React.ReactElement, elementName: string) => {
+export const testClickElement = (
+	component: React.ReactElement,
+	elementClickedSelector: string,
+	elementSearchedSelector: string
+) => {
 	//Arrange
-	const { container } = render(component)
+	const { container } = renderWithInitialReducer(component, "ui")
+	const elementClicked = container.querySelector(elementClickedSelector)
 
 	//Act
+	if (elementClicked !== null) {
+		userEvent.click(elementClicked)
+	}
+	//Assert
+	expect(elementClicked).not.toBeNull()
+	const elementSearched = container.querySelector(elementSearchedSelector)
+	expect(elementSearched).not.toBeNull()
+	expect(elementSearched).toBeInTheDocument()
+}
+
+export const testClickElements = (
+	component: React.ReactElement,
+	elementsClickedSelectors: string[],
+	elementSearchedSelector: string
+) => {
+	//Arrange
+	const tester = new testerModel(component, "ui")
+
+	//Act
+	for (const selector of elementsClickedSelectors) {
+		tester.findElement(selector)
+		tester.checkIsElementInDocument()
+		tester.clickElement()
+	}
 
 	//Assert
-	return container.querySelector(elementName)
+	tester.findElement(elementSearchedSelector)
+	tester.checkIsElementInDocument()
 }
