@@ -6,9 +6,9 @@ import classes from "./PointsImages.module.css"
 const PointsImages: React.FC = () => {
 	return (
 		<div className={classes["images-div"]}>
-			<img className={classes.image} src={startIcon} alt='' />
-			<img className={classes.image} src={arrowIcon} alt='' />
-			<img className={classes.image} src={endIcon} alt='' />
+			<img className={classes.image} src={startIcon} alt='Start point' />
+			<img className={classes.image} src={arrowIcon} alt='Arrow' />
+			<img className={classes.image} src={endIcon} alt='Mark end point' />
 		</div>
 	)
 }

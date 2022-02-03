@@ -19,7 +19,7 @@ const PointsPanel: React.FC<{ deleteVisible: boolean }> = props => {
 			<PointsLabels deleteVisible={props.deleteVisible} />
 			<div className={classes["button-reverse"]}>
 				<RoundButton
-					alt='Odróć punkty'
+					alt='Odwróć punkty'
 					onClick={clickSwitchHandler}
 					imageSrc={reverseIcon}
 				/>

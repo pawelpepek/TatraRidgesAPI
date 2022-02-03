@@ -19,7 +19,7 @@ const ConnectButton: React.FC = () => {
 		<RoundButton
 			className={classes.connection}
 			imageSrc={linkIcon}
-			alt='Połacz punkty'
+			alt='Połącz punkty'
 			onClick={clickConnectHandler}
 		/>
 	)

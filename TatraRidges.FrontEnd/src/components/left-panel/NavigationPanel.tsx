@@ -43,7 +43,7 @@ const NavigationPanel: React.FC<{ className?: string }> = props => {
 			/>
 			<RoundButton
 				idButton={"button-admin"}
-				alt='Narzędzia dministracyjne'
+				alt='Narzędzia administracyjne'
 				imageSrc={adminIcon}
 				onClick={buttonClickHandler}
 				selected={visiblePanel === "admin"}
