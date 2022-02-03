@@ -13,13 +13,19 @@ const testPoint: MountainPoint = {
 
 describe("PointInfo component", () => {
 	test("render Point name Szczyt as a text", () =>
-		testText(getTestPointInfo(), "Szczyt"))
+		testText({ component: getTestPointInfo() }, "Szczyt"))
 	test("render Point evaluation 2000 as a text", () =>
-		testText(getTestPointInfo(), "2000"))
+		testText({ component: getTestPointInfo(), reducerName: "map" }, "2000"))
 	test("render component with withButton equals true gives section with className 'point-with-delete'", () =>
-		testClass(getTestPointInfo(true), "section", "point-with-delete"))
+		testClass(
+			{ component: getTestPointInfo(true), elementSelector: "section" },
+			{ className: "point-with-delete", includes: true }
+		))
 	test("render component with withButton equals false gives section withouth className 'point-with-delete'", () =>
-		testClass(getTestPointInfo(false), "section", "point-with-delete", false))
+		testClass(
+			{ component: getTestPointInfo(false), elementSelector: "section" },
+			{ className: "point-with-delete", includes: false }
+		))
 })
 
 const getTestPointInfo = (withButton: boolean = false) => (

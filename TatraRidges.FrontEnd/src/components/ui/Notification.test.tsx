@@ -2,7 +2,8 @@ import Notification from "./Notification"
 import { testClass, testText } from "../helpers/testHelper"
 
 describe("Notification component", () => {
-	test("when status equals error render'test' as a text", () => testText(getComponent()))
+	test("when status equals error render'test' as a text", () =>
+		testText({ component: getComponent() }))
 	test("render error with className error", () => makeTestDiv("error"))
 	test("render success with className success", () => makeTestDiv("success"))
 	test("render pending with className pending", () => makeTestDiv("pending"))
@@ -13,4 +14,7 @@ const getComponent = (status: string = "error") => (
 )
 
 const makeTestDiv = (status: string) =>
-	testClass(getComponent(status), "div", status)
+	testClass(
+		{ component: getComponent(status), elementSelector: "div" },
+		{ className: status, includes: true }
+	)

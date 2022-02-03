@@ -27,7 +27,10 @@ describe("RoundButton component", () => {
 		test("render not disabled component withouth className disabled", () =>
 			testClasses(undefined, false)),
 		test("render component with className test has className test", () =>
-			testClass(testClassButton, "button", "test"))
+			testClass(
+				{ component: testClassButton, elementSelector: "button" },
+				{ className: "test" }
+			))
 })
 
 const getTestButton = (
@@ -54,5 +57,8 @@ const testClasses = (
 
 	const isIn = selected !== undefined ? selected : disabled
 
-	testClass(component, "button", className, isIn)
+	testClass(
+		{ component, elementSelector: "button" },
+		{ className, includes: isIn }
+	)
 }

@@ -14,7 +14,7 @@ class tester {
 		this.component = component
 
 		const { container } =
-			reducerName !== ""
+			reducerName !== "" && reducerName !== undefined
 				? renderWithInitialReducer(component, reducerName)
 				: render(component)
 
@@ -42,7 +42,7 @@ class tester {
 	}
 
 	checkIfElementHasClass(className: string) {
-        this.checkIsElementInDocument()
+		this.checkIsElementInDocument()
 		if (this.element !== null) {
 			return expect(this.element.classList.contains(className))
 		}

@@ -5,6 +5,7 @@ import { Provider } from "react-redux"
 // Import your own reducer
 import uiReducer from "../../store/ui-slice"
 import routeFormReducer from "../../store/route-form-slice"
+import mapReducer from "../../store/map-slice"
 
 const storeConfiguration = storeName => {
 	switch (storeName) {
@@ -12,6 +13,8 @@ const storeConfiguration = storeName => {
 			return { ui: uiReducer }
 		case "routeForm":
 			return { routeForm: routeFormReducer }
+		case "map":
+			return { map: mapReducer }
 		default:
 			return undefined
 	}
@@ -39,4 +42,4 @@ function renderWithInitialReducer(ui, storeName) {
 // re-export everything
 export * from "@testing-library/react"
 // override render method
-export { renderWithInitialReducer , renderWithReducer}
+export { renderWithInitialReducer, renderWithReducer }

@@ -3,12 +3,26 @@ import React from "react"
 import { renderWithInitialReducer } from "./testRedux"
 import testerModel from "./tester"
 
+export interface ComponentConfiguration extends ComponentBasicConfiguration {
+	elementSelector: string
+}
+
+export interface ComponentBasicConfiguration {
+	component: React.ReactElement
+	reducerName?: string
+}
+
+export interface ClassConfiguration {
+	className: string
+	includes?: boolean
+}
+
 export const testText = (
-	component: React.ReactElement,
+	componentConfiguration: ComponentBasicConfiguration,
 	text: string = "test"
 ) => {
 	//Arrange
-	const tester = new testerModel(component)
+	const tester = getTester(componentConfiguration)
 
 	//Act
 
@@ -18,29 +32,34 @@ export const testText = (
 }
 
 export const testClass = (
-	component: React.ReactElement,
-	elementName: string,
-	className: string,
-	isInClasses: boolean = true
+	componentConfiguration: ComponentConfiguration,
+	classConfiguration: ClassConfiguration
 ) => {
 	//Arrange
-	const tester = new testerModel(component, "ui")
+	const tester = new testerModel(
+		componentConfiguration.component,
+		componentConfiguration.reducerName
+	)
+
+	const isInClasses = getBoolean(classConfiguration.includes)
 
 	//Assert
-	tester.findElement(elementName)
-	tester.checkIfElementHasClass(className)?.toBe(isInClasses)
+	tester.findElement(componentConfiguration.elementSelector)
+	tester.checkIfElementHasClass(classConfiguration.className)?.toBe(isInClasses)
 }
 
 export const testElement = (
-	component: React.ReactElement,
-	elementSelector: string,
+	componentConfiguration: ComponentConfiguration,
 	visible: boolean = true
 ) => {
 	//Arrange
-	const tester = new testerModel(component, "ui")
+	const tester = new testerModel(
+		componentConfiguration.component,
+		componentConfiguration.reducerName
+	)
 
 	//Assert
-	tester.findElement(elementSelector)
+	tester.findElement(componentConfiguration.elementSelector)
 	tester.checkIsElementInDocument(visible)
 }
 
@@ -82,4 +101,14 @@ export const testClickElements = (
 	//Assert
 	tester.findElement(elementSearchedSelector)
 	tester.checkIsElementInDocument()
+}
+
+const getBoolean = (value: boolean | undefined) =>
+	value === undefined ? true : value
+
+const getTester = (componentConfiguration: ComponentBasicConfiguration) => {
+	return new testerModel(
+		componentConfiguration.component,
+		componentConfiguration.reducerName
+	)
 }

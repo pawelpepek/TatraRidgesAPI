@@ -24,9 +24,30 @@ describe("NavigationPanel component", () => {
 			"#button-login"
 		))
 	test("initialy not renders 'button-logout'", () =>
-		testElement(testNavigationPanel(), "#button-logout", false))
+		testElement(
+			{
+				component: testNavigationPanel(),
+				elementSelector: "#button-logout",
+				reducerName: "ui",
+			},
+			false
+		))
 	test("render component with className test", () =>
-		testClass(testNavigationPanel("test"), "nav", "test"))
+		testClass(
+			{
+				component: testNavigationPanel("test"),
+				elementSelector: "nav",
+				reducerName: "ui",
+			},
+			{ className: "test" }
+		))
 	test("initialy renders 'button-login'", () =>
-		testElement(testNavigationPanel(), "#button-login", true))
+		testElement(
+			{
+				component: testNavigationPanel(),
+				elementSelector: "#button-login",
+				reducerName: "ui",
+			},
+			true
+		))
 })
