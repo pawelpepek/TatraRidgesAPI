@@ -1,6 +1,11 @@
 import { render, screen } from "@testing-library/react"
+import { testClass } from "../helpers/testHelper"
 import RoundButton from "./RoundButton"
 import icon from "../img/plus.svg"
+
+const testClassButton = (
+	<RoundButton alt='Message' imageSrc={icon} className='test' />
+)
 
 describe("RoundButton component", () => {
 	test("render component with alt equal Message has image with alt equal Message", () => {
@@ -14,54 +19,40 @@ describe("RoundButton component", () => {
 		expect(messageElement).toBeInTheDocument()
 	}),
 		test("render selected component with className selected", () =>
-			makeTestButton(true, undefined)),
+			testClasses(true, undefined)),
 		test("render not selected component withouth className selected", () =>
-			makeTestButton(false, undefined)),
+			testClasses(false, undefined)),
 		test("render disabled component with className disabled", () =>
-			makeTestButton(undefined, true)),
+			testClasses(undefined, true)),
 		test("render not disabled component withouth className disabled", () =>
-			makeTestButton(undefined, false)),
-		test("render component with className test has className test", () => {
-			//Arrange
-			const { container } = render(
-				<RoundButton alt='Message' imageSrc={icon} className='test' />
-			)
-
-			//Act
-
-			//Assert
-			const button = container.querySelector("button")
-			if (button != null) {
-				expect(button.classList.contains("test")).toBe(true)
-			}
-		})
+			testClasses(undefined, false)),
+		test("render component with className test has className test", () =>
+			testClass(testClassButton, "button", "test"))
 })
 
-const makeTestButton = (
+const getTestButton = (
+	selected: boolean | undefined = undefined,
+	disabled: boolean | undefined = undefined
+) => (
+	<RoundButton
+		alt='Message'
+		imageSrc={icon}
+		selected={selected}
+		disabled={disabled}
+	/>
+)
+
+const testClasses = (
 	selected: boolean | undefined,
 	disabled: boolean | undefined
 ) => {
-	//Arrange
-	const { container } = render(
-		<RoundButton
-			alt='Message'
-			imageSrc={icon}
-			selected={selected}
-			disabled={disabled}
-		/>
-	)
+	const component = getTestButton(selected, disabled)
 
-	//Act
+	const selectedClass = selected !== undefined ? "selected" : ""
+	const disabledClass = disabled !== undefined ? "disabled" : ""
+	const className = disabledClass + selectedClass
 
-	//Assert
-	const button = container.querySelector("button")
+	const isIn = selected !== undefined ? selected : disabled
 
-	if (button !== null) {
-		if (selected !== undefined) {
-			expect(button.classList.contains("selected")).toBe(selected)
-		}
-		if (disabled !== undefined) {
-			expect(button.classList.contains("disabled")).toBe(disabled)
-		}
-	}
+	testClass(component, "button", className, isIn)
 }
