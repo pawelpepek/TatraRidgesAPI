@@ -38,8 +38,7 @@ const testType = (type: string) => {
 	//Assert
 
 	const element = container.querySelector(type)
-    if(element!==null)
-    {
-        expect(element).toBeInTheDocument()
-    }
+	if (element !== null) {
+		expect(element).toBeInTheDocument()
+	}
 }

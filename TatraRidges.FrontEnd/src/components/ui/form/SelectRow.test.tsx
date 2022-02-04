@@ -1,8 +1,10 @@
 import { render, screen } from "@testing-library/react"
+import { testText } from "../../helpers/testHelper"
 import SelectRow from "./SelectRow"
 
 describe("InutRow component", () => {
-	test("render Test as label text", () => testText("Test")),
+	test("render TestLabel as label text", () =>
+		testText({ component: getTestSelectedRow() }, "TestLabel")),
 		test("render component with options equals array contains 6 elements gives 6 options", () => {
 			//Assert
 			const element = getTestElement()
@@ -11,21 +13,21 @@ describe("InutRow component", () => {
 			}
 		})
 	test("render component with options equals array contains 't/est6' elements gives text 't/est6", () =>
-		testText("t/est6"))
+		testText({ component: getTestSelectedRow() }, "t/est6"))
 })
 
-const testText = (text: string) => {
-	//Arrange
-	render(getTestSelectedRow())
+// const testText = (text: string) => {
+// 	//Arrange
+// 	render(getTestSelectedRow())
 
-	//Act
+// 	//Act
 
-	//Assert
-	const element = screen.getByText(text, { exact: true })
-	if (element != null) {
-		expect(element).toBeInTheDocument()
-	}
-}
+// 	//Assert
+// 	const element = screen.getByText(text, { exact: true })
+// 	if (element != null) {
+// 		expect(element).toBeInTheDocument()
+// 	}
+// }
 
 const getTestElement = () => {
 	//Arrange
@@ -40,7 +42,7 @@ const getTestElement = () => {
 const getTestSelectedRow = () => {
 	return (
 		<SelectRow
-			labelText='Test'
+			labelText='TestLabel'
 			onChange={() => {}}
 			id='testInput'
 			options={getTestOptions()}
