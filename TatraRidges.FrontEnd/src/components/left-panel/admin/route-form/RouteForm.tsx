@@ -10,16 +10,16 @@ import StoreType from "../../../../store/store-types"
 import { routeFormActions } from "../../../../store/route-form-slice"
 
 const RouteForm: React.FC<{ className?: string }> = props => {
-    const dispatch=useDispatch()
+	const dispatch = useDispatch()
 
 	const isValid = useSelector((state: StoreType) => state.routeForm.isFilled)
 
-    const formValue = useSelector((state: StoreType) => state.routeForm)
+	const formValue = useSelector((state: StoreType) => state.routeForm)
 
 	const submitHandler = (e: React.FormEvent) => {
 		e.preventDefault()
-        console.log(formValue)
-        dispatch(routeFormActions.clear(null))
+		console.log(formValue)
+		dispatch(routeFormActions.clear(null))
 	}
 
 	return (
