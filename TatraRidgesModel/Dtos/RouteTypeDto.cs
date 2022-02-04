@@ -12,5 +12,7 @@
             Name = routeType.Name;
             Rank = routeType.Rank;
         }
+
+        public RouteTypeDto() { }
     }
 }

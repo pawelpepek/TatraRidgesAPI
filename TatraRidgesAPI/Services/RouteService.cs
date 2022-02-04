@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using System.Collections.Generic;
+using System.Linq;
 using TatraRidges.Model.Dtos;
 using TatraRidges.Model.Entities;
 using TatraRidges.Model.Helpers;
@@ -27,6 +28,22 @@ namespace TatraRidgesAPI.Services
             var ridgeContainer= RouteArranger.GetArrangeRouteDto(connection);
 
             return new RidgeAllInformation(ridgeContainer, _dbContext);
+        }
+        public ParametersDto GetParameters()
+        {
+            var adjectives = _dbContext.Adjectives.ToList();
+            var guides= _dbContext.Guides.ToList();
+            var routeTypes=_dbContext.RouteTypes.ToList();
+
+            var difficulties = new DifficultyHandler(_dbContext).GetAllDifficulties();
+
+            return new ParametersDto()
+            {
+                Adjectives = _mapper.Map<List<AdjectiveDto>>(adjectives),
+                Difficulties =difficulties,
+                Guides = _mapper.Map<List<GuideDto>>(guides),
+                RouteTypes = _mapper.Map<List<RouteTypeDto>>(routeTypes)
+            };
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using TatraRidges.Model.Dtos;
-using TatraRidges.Model.Helpers;
 
-namespace TatraRidges.Model.Procedures
+namespace TatraRidges.Model.Helpers
 {
     public class DifficultyHandler
     {
@@ -37,7 +36,7 @@ namespace TatraRidges.Model.Procedures
             allDifficulties.AddRange(littleDifficulties);
             allDifficulties.AddRange(greaterDifficulties);
 
-            return allDifficulties;
+            return allDifficulties.OrderBy(d=>d.Value).ToList();
         }
 
         public DifficultyDto GetTextFromDecimal(decimal value)

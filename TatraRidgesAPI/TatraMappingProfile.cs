@@ -27,6 +27,9 @@ namespace TatraRidgesAPI
                      }
                    ));
             CreateMap<PointsConnectionCreateDto, PointsConnection>();
+            CreateMap<Adjective, AdjectiveDto>();
+            CreateMap<Guide, GuideDto>();
+            CreateMap<RouteType, RouteTypeDto>();
         }
     }
 }

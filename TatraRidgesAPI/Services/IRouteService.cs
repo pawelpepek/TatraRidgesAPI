@@ -7,5 +7,6 @@ namespace TatraRidgesAPI.Services
     public interface IRouteService
     {
         RidgeAllInformation GetRouteBetweenPoints(PointsPair pointsPair);
+        ParametersDto GetParameters();
     }
 }
