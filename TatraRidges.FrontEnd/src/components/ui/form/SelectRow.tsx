@@ -4,7 +4,7 @@ interface SelectRowProps {
 	id: string
 	labelText: string
 	options: { value: string; text: string }[]
-	value?:any
+	value?: any
 	onChange(e: React.FormEvent<HTMLSelectElement>): void
 }
 
@@ -22,7 +22,9 @@ const SelectRow: React.FC<SelectRowProps> = props => {
 					onChange={props.onChange}
 					value={props.value}>
 					{props.options.map(o => (
-						<option value={o.value}>{o.text}</option>
+						<option key={o.value + o.text} value={o.value}>
+							{o.text}
+						</option>
 					))}
 				</select>
 			</td>
