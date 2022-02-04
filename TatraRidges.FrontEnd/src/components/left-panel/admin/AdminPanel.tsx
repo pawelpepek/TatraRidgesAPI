@@ -20,7 +20,7 @@ const AdminPanel: React.FC = () => {
 			<div className={classes["manage-panel"]}>
 				<AdminNavigationPanel />
 				{partVisible === "route" && <RoutePanel />}
-				{partVisible === "noLocation" && <NoLocationMarks/>}
+				{partVisible === "noLocation" && <NoLocationMarks />}
 			</div>
 		</>
 	)
