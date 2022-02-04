@@ -57,7 +57,7 @@
                 {
                     ConsistentDirection=false,
                     DifficultyId=1,
-                    DifficultyDetailId=1,
+                    DifficultyDetailId=0,
                     GuideDescription=descriptions[4],
                     PointsConnection=connections[4],
                     Rappeling=false,

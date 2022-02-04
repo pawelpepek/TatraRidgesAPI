@@ -18,13 +18,15 @@ namespace TatraRidgesAPI.Services
             _mapper = mapper;
         }
 
-        public IEnumerable<RidgeWithRoutesDto> GetRouteBetweenPoints(PointsPair pointsPair)
+        public RidgeAllInformation GetRouteBetweenPoints(PointsPair pointsPair)
         {
             var finder = new RidgeFinder(_dbContext);
 
             var connection = finder.FindRidge(pointsPair.From, pointsPair.To);
 
-            return RouteArranger.GetArrangeRouteDto(connection);
+            var ridgeContainer= RouteArranger.GetArrangeRouteDto(connection);
+
+            return new RidgeAllInformation(ridgeContainer, _dbContext);
         }
     }
 }

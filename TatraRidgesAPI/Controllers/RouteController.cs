@@ -19,10 +19,11 @@ namespace TatraRidgesAPI.Controllers
             _service = service;
         }
         [HttpGet]
-        public ActionResult<IEnumerable<PointsRidgeDto>> GetRidgeBetweenPoints([FromQuery]  PointsPair points)
+        public ActionResult<RidgeAllInformation> GetRidgeBetweenPoints([FromQuery]  PointsPair points)
         {
             var connections = _service.GetRouteBetweenPoints(points);
-            return connections.Count()==0?NotFound():Ok(connections);
+
+            return connections.RidgesContainer.Count()==0?NotFound():Ok(connections);
         }
     }
 }

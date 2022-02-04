@@ -26,7 +26,10 @@ public class RidgeFinder
                                             .ThenInclude(c => c.DescriptionAdjectivePairs)
                                             .Include(c => c.Routes)
                                             .ThenInclude(r => r.DescriptionAdjectivePairs)
-                                            .ThenInclude(a => a.Adjective);
+                                            .ThenInclude(a => a.Adjective)
+                                            .Include(c => c.Routes)
+                                            .ThenInclude(r => r.GuideDescription)
+                                            .ThenInclude(d => d.Guide);
         return FindRidgeForPoints(pointFromId, pointToId);
     }
 

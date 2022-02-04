@@ -6,6 +6,6 @@ namespace TatraRidgesAPI.Services
 {
     public interface IRouteService
     {
-        IEnumerable<RidgeWithRoutesDto> GetRouteBetweenPoints(PointsPair pointsPair);
+        RidgeAllInformation GetRouteBetweenPoints(PointsPair pointsPair);
     }
 }

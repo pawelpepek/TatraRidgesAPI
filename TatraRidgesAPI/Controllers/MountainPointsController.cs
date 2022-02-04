@@ -19,7 +19,7 @@ namespace TatraRidgesAPI.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<MountainPointBasicDto>> GetAll()
+        public ActionResult<IEnumerable<MountainPointDto>> GetAll()
         {
             return Ok(_service.GetAll());
         }
