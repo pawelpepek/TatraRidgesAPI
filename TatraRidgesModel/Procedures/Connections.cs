@@ -34,5 +34,16 @@ namespace TatraRidges.Model.Procedures
 
             return connection ?? PointsConnection.Empty();
         }
+
+        public PointsConnection GetConnectionForPointsId(int pointId1, int pointId2)
+        {
+            var connectionsFromPoint1 = ConnectionForPointId(pointId1,_dbContext.PointsConnections);
+
+            return connectionsFromPoint1==null?null: ConnectionForPointId(pointId2 ,connectionsFromPoint1).FirstOrDefault();
+        }
+        private static IQueryable<PointsConnection> ConnectionForPointId(int pointId, IQueryable<PointsConnection> connections)
+        {
+            return connections.Where(c => c.PointId1 == pointId || c.PointId2 == pointId);
+        }
     }
 }

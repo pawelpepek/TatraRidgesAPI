@@ -40,6 +40,7 @@ const RouteSelectRow: React.FC<RouteSelectRowProps> = props => {
 
 	const allOptions = new Map<string, Options[]>()
 
+	
 	allOptions.set("guide", versions)
 	allOptions.set("difficulty", difficulties)
 	allOptions.set("routeType", types)

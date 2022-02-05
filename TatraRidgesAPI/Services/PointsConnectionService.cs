@@ -33,5 +33,6 @@ namespace TatraRidgesAPI.Services
 
             return newConnection.Id;
         }
+
     }
 }

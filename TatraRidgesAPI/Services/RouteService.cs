@@ -25,22 +25,33 @@ namespace TatraRidgesAPI.Services
 
             var connection = finder.FindRidge(pointsPair.From, pointsPair.To);
 
-            var ridgeContainer= RouteArranger.GetArrangeRouteDto(connection);
+            var ridgeContainer = RouteArranger.GetArrangeRouteDto(connection);
 
             return new RidgeAllInformation(ridgeContainer, _dbContext);
         }
+        public RouteCreateResultDto AddRouteForPoints(AddRouteDto dto)
+        {
+            var (newRouteId, connection) = new RouteCreator(_dbContext).SaveInDbContext( dto);
+
+            return new RouteCreateResultDto()
+            {
+                RouteId = newRouteId,
+                PointsRidge = _mapper.Map<PointsRidgeDto>(connection)
+            };
+        }
+
         public ParametersDto GetParameters()
         {
             var adjectives = _dbContext.Adjectives.ToList();
-            var guides= _dbContext.Guides.ToList();
-            var routeTypes=_dbContext.RouteTypes.ToList();
+            var guides = _dbContext.Guides.ToList();
+            var routeTypes = _dbContext.RouteTypes.ToList();
 
             var difficulties = new DifficultyHandler(_dbContext).GetAllDifficulties();
 
             return new ParametersDto()
             {
                 Adjectives = _mapper.Map<List<AdjectiveDto>>(adjectives),
-                Difficulties =difficulties,
+                Difficulties = difficulties,
                 Guides = _mapper.Map<List<GuideDto>>(guides),
                 RouteTypes = _mapper.Map<List<RouteTypeDto>>(routeTypes)
             };

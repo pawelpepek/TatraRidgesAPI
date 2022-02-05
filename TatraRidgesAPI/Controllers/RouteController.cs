@@ -32,5 +32,11 @@ namespace TatraRidgesAPI.Controllers
             var parameters = _service.GetParameters();
             return  Ok(parameters);
         }
+        [HttpPost]
+        //[Authorize(Roles ="Admin")]
+        public ActionResult PostNewRouteForPointConnection([FromBody] AddRouteDto dto)
+        {
+            return Ok(_service.AddRouteForPoints(dto));
+        }
     }
 }

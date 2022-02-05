@@ -17,6 +17,13 @@ namespace TatraRidges.Model.Procedures
             var point1Id = connection.PointId1;
             var point2Id = connection.PointId2;
 
+            var routes = connection.Routes.Select(r => GetRouteDto(r, ridgePart.ConsistDirection))
+                                          .OrderBy(rt => rt.ConsistentDirection)
+                                          .ThenBy(rt => rt.RouteType.Rank)
+                                          .ThenByDescending(rt => rt.DifficultyValue)
+                                          .ThenByDescending(rt => rt.Rappeling)
+                                          .ToList();
+
             var ridgeRoute = new RidgeWithRoutesDto()
             {
                 PointId1 = ridgePart.ConsistDirection ? point1Id : point2Id,
@@ -24,12 +31,7 @@ namespace TatraRidges.Model.Procedures
 
                 PointsConnectionId=connection.Id,
 
-                Routes = connection.Routes.Select(r => GetRouteDto(r, ridgePart.ConsistDirection))
-                                          .OrderBy(rt => rt.ConsistentDirection)
-                                          .OrderBy(rt => rt.RouteType.Rank)
-                                          .OrderByDescending(rt => rt.DifficultyValue)
-                                          .OrderByDescending(rt => rt.Rappeling)
-                                          .ToList()
+                Routes = routes
             };
             return ridgeRoute;
         }
