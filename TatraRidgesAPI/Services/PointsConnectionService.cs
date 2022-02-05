@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using TatraRidges.Model.Dtos;
 using TatraRidges.Model.Entities;
 using TatraRidges.Model.Procedures;
@@ -19,7 +21,7 @@ namespace TatraRidgesAPI.Services
 
         public IEnumerable<PointsRidgeDto> GetAllRidges()
         {
-            var connections= new Connections(_dbContext);
+            var connections = new Connections(_dbContext);
 
             return _mapper.Map<List<PointsRidgeDto>>(connections.GetAll(true));
         }
@@ -34,5 +36,12 @@ namespace TatraRidgesAPI.Services
             return newConnection.Id;
         }
 
+        public long GetNextEmptyRidgeId()
+        {
+            var nextConnection = _dbContext.PointsConnections.Include(c => c.Routes)
+                                                           .Where(c => !c.Routes.Any() && c.Ridge)
+                                                           .FirstOrDefault();
+            return nextConnection == null ? -1 : nextConnection.Id;
+        }
     }
 }

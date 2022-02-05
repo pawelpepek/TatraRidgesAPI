@@ -30,5 +30,10 @@ namespace TatraRidgesAPI.Controllers
             var newConnectionId = _service.AddConnectionBetweenPoints(dto);
             return Ok(newConnectionId);
         }
+        [HttpGet("empty")]
+        public ActionResult<long> GetNextEmptyRidge()
+        {
+            return Ok(_service.GetNextEmptyRidgeId());
+        }
     }
 }
