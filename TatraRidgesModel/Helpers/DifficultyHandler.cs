@@ -14,13 +14,20 @@ namespace TatraRidges.Model.Helpers
             _difficulties = _dbContext.Difficulties.ToList();
             _difficultiesDetails = _dbContext.DifficultyDetails.ToList();
         }
-        
+
+        public DifficultyDto GetTextFromDecimal(decimal value)
+        {
+            var difficulties = GetAllDifficulties();
+
+            return difficulties.OrderBy(d => Math.Abs(d.Value - value)).First();
+        }
+
         public List<DifficultyDto> GetAllDifficulties()
         {
 
             var allDifficulties = new List<DifficultyDto>();
 
-            var noDifficulties = _difficulties.Where(d => d.Id ==0)
+            var noDifficulties = _difficulties.Where(d => d.Id == 0)
                                              .SelectMany(d => GetDifficultyOptions(d))
                                              .ToList();
 
@@ -36,21 +43,15 @@ namespace TatraRidges.Model.Helpers
             allDifficulties.AddRange(littleDifficulties);
             allDifficulties.AddRange(greaterDifficulties);
 
-            return allDifficulties.OrderBy(d=>d.Value).ToList();
-        }
-
-        public DifficultyDto GetTextFromDecimal(decimal value)
-        {
-            var difficulties = GetAllDifficulties();
-
-            return difficulties.OrderBy(d => Math.Abs(d.Value - value)).First();
+            return allDifficulties.OrderBy(d => d.Value).ToList();
         }
 
         private List<DifficultyDto> GetDifficultyOptions(Difficulty difficulty)
         {
             return _difficultiesDetails.Select(d => GetDifficultyDto(difficulty,d))
-                                      .ToList();
+                                       .ToList();
         }
+
         private static DifficultyDto GetDifficultyDto(Difficulty difficulty, DifficultyDetail detail)
         {
             return new DifficultyDto()

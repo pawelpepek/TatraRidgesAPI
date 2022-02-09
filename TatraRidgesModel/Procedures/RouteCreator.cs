@@ -29,13 +29,13 @@ namespace TatraRidges.Model.Procedures
                                                   .Select(g => g.First())
                                                   .ToList();
 
-            var connection=new Connections(_dbContext).GetConnectionForPointsId(dto.PointId1,dto.PointId2);
+            var connection=new Connections(_dbContext).GetRidgeForPointsId(dto.PointId1,dto.PointId2);
 
             var isNewConnection = connection == null;
 
             if (isNewConnection)
             {
-                connection=new PointsConnection() { PointId1=dto.PointId1, PointId2=dto.PointId2 };
+                connection=new PointsConnection() { PointId1=dto.PointId1, PointId2=dto.PointId2, Ridge=true };
                 new ConnectionCreator(_dbContext).SaveInDbContext(connection);
             }
 

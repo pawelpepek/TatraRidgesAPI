@@ -9,6 +9,7 @@
 
         private long _rankTimesTicks;
         private long _ticks;
+        private Adjective _closestAdjective=null;
 
         public string Id { get; }
 
@@ -25,22 +26,28 @@
             _ticks += ticks;
         }
 
+        public void FindClosestAdjective()
+        {
+            var rank = GetRank();
+            _closestAdjective = _commonAdjectives.OrderBy(a => Math.Abs(a.Rank - rank)).First();
+        }
+
         public string GetText()
         {
-            if (IsToLower())
+            if (_closestAdjective==null || IsToLower())
             {
                 return string.Empty;
             }
             else
             {
-                var rank = GetRank();
-                var adjective = _commonAdjectives.OrderBy(a => Math.Abs(a.Rank - rank)).First();
-                var description = adjective.Id.Substring(0, 1) == "c" || IsMost() ? adjective.Text : "częściowo " + adjective.Text;
+                var description= _closestAdjective.Text.Replace("Częściowo ","");
                 return description.ToLower();
             }
         }
 
         public bool IsToLower() => GetTicks() < _breakToLover * _allTicks;
+
+        public bool IsPart()=> _closestAdjective.Id.StartsWith("c") || !IsMost();
 
         private decimal GetRank()
         {
