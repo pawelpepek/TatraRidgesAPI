@@ -1,4 +1,4 @@
-﻿namespace TatraRidgesModel.UnitTests.Helpers
+﻿namespace TatraRidgesModel.UnitTests.HelpersForTests
 {
     public struct ValueInDecimalRange
     {

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using TatraRidgesModel.UnitTests.HelpersForTests;
 using Xunit;
 
 namespace TatraRidgesModel.UnitTests.Helpers
