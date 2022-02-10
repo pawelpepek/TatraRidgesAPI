@@ -1,6 +1,6 @@
 ﻿namespace TatraRidges.Model.Helpers
 {
-    internal class AdjectiveGroupData
+    public class AdjectiveGroupData
     {
         private readonly decimal _breakMost = .66m;
         private readonly decimal _breakToLover = .15m;
@@ -52,7 +52,7 @@
         private decimal GetRank()
         {
             var ticks = GetTicks();
-            return _rankTimesTicks / ticks;
+            return  _rankTimesTicks / ticks;
         }
 
         private bool IsMost() => GetTicks() > _breakMost * _allTicks;
