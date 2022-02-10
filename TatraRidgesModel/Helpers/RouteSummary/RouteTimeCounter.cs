@@ -6,7 +6,7 @@ namespace TatraRidges.Model.Helpers.RouteSummary
     {
         public static long TicksCount(List<RouteDto> routes)
         {
-            return routes.Sum(r => r.RouteTime.Ticks);
+            return routes.Where(r=>r!=null).Sum(r => r.RouteTime.Ticks);
         }
     }
 }
