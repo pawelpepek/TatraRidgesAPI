@@ -4,29 +4,29 @@ namespace TatraRidges.Model.Helpers.RouteSummary
 {
     public class RouteSummaryBuilder
     {
-        private readonly List<RouteDto> _routes;
+        private readonly List<RouteDto?> _routes;
         private readonly TatraDbContext _dbContext;
 
         private readonly RouteSummary _routeSummary;
 
-        public RouteSummaryBuilder(List<RouteDto> routes)
+        public RouteSummaryBuilder(List<RouteDto?> routes)
         {
             _routes = routes;
             _routeSummary = new RouteSummary();
         }
 
-        public RouteSummaryBuilder(TatraDbContext dbContext, List<RouteDto> routes):this(routes)
+        public RouteSummaryBuilder(TatraDbContext dbContext, List<RouteDto?> routes):this(routes)
         {
             _dbContext = dbContext;
         }
         public RouteSummaryBuilder SetIsEmptyRoad()
         {
-            _routeSummary.IsEmptyRoad = _routes.Any(r => r == null);
+            _routeSummary.IsEmptyRoute = _routes.Any(r => r == null);
             return this;
         }
         public RouteSummaryBuilder SetIsConsistentDirection()
         {
-            _routeSummary.IsConsistentDirection = _routes.Any(r => r.ConsistentDirection);
+            _routeSummary.IsConsistentDirection = _routes.All(r =>r==null || r.ConsistentDirection);
             return this;
         }
         public RouteSummaryBuilder SetRouteTime()

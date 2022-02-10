@@ -10,8 +10,6 @@ namespace TatraRidges.Model.UnitTests.Helpers.RouteSummer.RouteSummaryBuilderTes
     {
         private static IEnumerable<object[]> GetInSamplesRangesWithNotConsistentDirectionRoute()
         {
-            var builder = new RouteBuilder();
-
             var list = new List<List<RouteDto?>>()
             {
                 new List<RouteDto?>(){ GetSimplyRoute()  },
@@ -22,8 +20,6 @@ namespace TatraRidges.Model.UnitTests.Helpers.RouteSummer.RouteSummaryBuilderTes
         }
         private static IEnumerable<object[]> GetInSamplesRangesAllConsisntentDirection()
         {
-            var builder = new RouteBuilder();
-
             var list = new List<List<RouteDto?>>()
             {
                 new List<RouteDto?>(){ GetConsistentDirectionRoute() },

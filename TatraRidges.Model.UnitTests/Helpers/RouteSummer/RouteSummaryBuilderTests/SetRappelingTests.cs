@@ -10,8 +10,6 @@ namespace TatraRidges.Model.UnitTests.Helpers.RouteSummer.RouteSummaryBuilderTes
     {
         private static IEnumerable<object[]> GetSamplesRangesWithouthRappeling()
         {
-            var builder = new RouteBuilder();
-
             var list = new List<List<RouteDto?>>()
             {
                 new List<RouteDto?>(){ null,null},
@@ -23,8 +21,6 @@ namespace TatraRidges.Model.UnitTests.Helpers.RouteSummer.RouteSummaryBuilderTes
         }
         private static IEnumerable<object[]> GetSamplesRangesWithRappeling()
         {
-            var builder = new RouteBuilder();
-
             var list = new List<List<RouteDto?>>()
             {
                 new List<RouteDto?>(){ GetRouteWithRappeling(), null},

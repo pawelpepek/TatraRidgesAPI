@@ -3,7 +3,7 @@ using TatraRidges.Model.Dtos;
 using TatraRidges.Model.Helpers.RouteSummary;
 using TatraRidges.Model.UnitTests.HelpersForTests;
 
-namespace TatraRidges.Model.UnitTests.Helpers.RouteSummer.RouteSummaryBuilderTests
+namespace TatraRidges.Model.UnitTests.Helpers.RouteSummer
 {
     public abstract class MethodTestsTemplate
     {

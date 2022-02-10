@@ -9,7 +9,7 @@ namespace TatraRidges.Model.Helpers.RouteSummary
 {
     public static class RouteSummaryCreator
     {
-        public static RouteSummary Create(List<RouteDto>routes, TatraDbContext dbContext)
+        public static RouteSummary Create(List<RouteDto?>routes, TatraDbContext dbContext)
         {
             var builder = new RouteSummaryBuilder(dbContext, routes);
             return builder.SetIsConsistentDirection()

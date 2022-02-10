@@ -9,11 +9,10 @@ using Xunit;
 
 namespace TatraRidges.Model.UnitTests.Helpers.RouteSummer.RouteSummaryBuilderTests
 {
-    public class SetRouteTimeTests
+    public class SetRouteTimeTests:MethodTestsTemplate
     {
         public static IEnumerable<object[]> GetSamplesRanges()
         {
-            var builder = new RouteBuilder();
             var list = new List<(List<RouteDto?> Routes, TimeSpan time)>()
             {
                 (new List<RouteDto?>(){null,null },new TimeSpan()),
@@ -36,13 +35,12 @@ namespace TatraRidges.Model.UnitTests.Helpers.RouteSummer.RouteSummaryBuilderTes
         public void SetIsConsistentDirection_InsertSampleRoutes_RouteTimeEqualsValuFromSample((List<RouteDto?> Routes, TimeSpan Time) example)
         {
             //arrange
-            var summaryBuilder = new RouteSummaryBuilder(example.Routes);
-
-            //act
-            var summary = summaryBuilder.SetRouteTime().Build();
+            var summary = ArrangeAndAct(example.Routes);
 
             //assert
             summary.RouteTime.Should().Equals(example.Time);
         }
+
+        protected override void Act()=>_summaryBuilder.SetRouteTime();
     }
 }

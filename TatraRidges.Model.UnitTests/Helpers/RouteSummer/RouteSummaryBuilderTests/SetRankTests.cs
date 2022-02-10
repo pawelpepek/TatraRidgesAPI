@@ -13,7 +13,6 @@ namespace TatraRidges.Model.UnitTests.Helpers.RouteSummer.RouteSummaryBuilderTes
     {
         public static IEnumerable<object[]> GetSamplesRanges()
         {
-            var builder = new RouteBuilder();
             var list = new List<(List<RouteDto?> Routes,int Rank)>()
             {
                 (new List<RouteDto?>(){null,null },0),

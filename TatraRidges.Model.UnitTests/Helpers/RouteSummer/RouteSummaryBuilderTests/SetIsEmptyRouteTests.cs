@@ -22,7 +22,6 @@ namespace TatraRidges.Model.UnitTests.Helpers.RouteSummer.RouteSummaryBuilderTes
 
         public static IEnumerable<object[]> GetInSamplesRangesWhithouthNulls()
         {
-            var builder = new RouteBuilder();
             var list = new List<List<RouteDto?>>()
             {
                 new List<RouteDto?>(){ RoutesExamples.GetSimplyRoute() },

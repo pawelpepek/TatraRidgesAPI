@@ -13,8 +13,8 @@ namespace TatraRidges.Model.Helpers.RouteSummary
         {
             _allTicks = routes.Sum(r => r.RouteTime.Ticks);
 
-            var maxDifficultyValue = routes.Max(r => r.DifficultyValue);
-            var avarageDifficultyValue = routes.Sum(r => r.DifficultyValue * r.RouteTime.Ticks) / _allTicks;
+            var maxDifficultyValue = routes.Any()?routes.Max(r => r.DifficultyValue):0;
+            var avarageDifficultyValue = routes.Any() ? routes.Sum(r => r.DifficultyValue * r.RouteTime.Ticks) / _allTicks:0;
 
             var diffHandler = new DifficultyHandler(dbContext);
 
