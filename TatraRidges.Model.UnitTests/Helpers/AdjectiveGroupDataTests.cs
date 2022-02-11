@@ -103,24 +103,16 @@ namespace TatraRidges.Model.UnitTests.Helpers
         }
 
         [Fact]
-        public void GetText_ForPrepareNothing_ReturnsError()
+        public void GetText_ForPrepareNothing_ReturnsEmptyString()
         {
             //arrange
             var adjectiveGroupData = new AdjectiveGroupData("e", _commonAdjectives, 2000);
-            var exception=false;
 
             //act
-            try
-            {
-                adjectiveGroupData.FindClosestAdjective();
-            }
-            catch
-            {
-                exception = true;
-            }
+            adjectiveGroupData.FindClosestAdjective();
 
             //assert
-            exception.Should().BeTrue();
+            adjectiveGroupData.GetText().Should().Equals("");
         }
 
         protected static Adjective? GetAdjective(string id) => _commonAdjectives.FirstOrDefault(a => a.Id == id);
