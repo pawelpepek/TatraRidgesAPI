@@ -1,5 +1,4 @@
 ﻿using TatraRidges.Model.Dtos;
-using TatraRidges.Model.Entities;
 
 namespace TatraRidgesAPI.IntegrationTests.Controllers.TestsBuilders.MountainPoints
 {

@@ -1,10 +1,9 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Newtonsoft.Json;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using TatraRidges.Model.Dtos;
+using TatraRidgesAPI.IntegrationTests.Helpers;
 using TatraRidgesAPI.IntegrationTests.Helpers.DataContext;
 
 namespace TatraRidgesAPI.IntegrationTests.Controllers.TestsBuilders.Routes
@@ -38,9 +37,8 @@ namespace TatraRidgesAPI.IntegrationTests.Controllers.TestsBuilders.Routes
         {
             //arrange
             SetModel();
-            var json = JsonConvert.SerializeObject(_model);
 
-            var httpContent = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
+            var httpContent = _model.ToJsonHttpContent();
 
             //act
             return await _client.PostAsync("/api/route", httpContent);

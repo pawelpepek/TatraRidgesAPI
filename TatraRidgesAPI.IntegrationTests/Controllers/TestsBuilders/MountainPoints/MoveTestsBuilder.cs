@@ -1,11 +1,10 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using TatraRidges.Model.Dtos;
+using TatraRidgesAPI.IntegrationTests.Helpers;
 using TatraRidgesAPI.IntegrationTests.Helpers.DataContext;
 
 namespace TatraRidgesAPI.IntegrationTests.Controllers.TestsBuilders.MountainPoints
@@ -39,9 +38,7 @@ namespace TatraRidgesAPI.IntegrationTests.Controllers.TestsBuilders.MountainPoin
                 Coordinates = _coordinates,
             };
 
-            var json = JsonConvert.SerializeObject(model.Coordinates);
-
-            var httpContent = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
+            var httpContent = model.Coordinates.ToJsonHttpContent();
 
             //act
             return await _client.PutAsync("/api/point/" + _point.Id, httpContent);
