@@ -21,7 +21,7 @@ namespace TatraRidgesAPI.IntegrationTests.Controllers
 
         [Theory]
         [MemberData(nameof(GetValidPointGPS))]
-        public async Task Move_WithValidModel_WithAdminAutorization_ReturnsOk(PointGPSDto pointGPS)
+        public async Task Move_WithValidModel_WithAdminAutorization_ReturnsOK(PointGPSDto pointGPS)
             => await new MoveTestsBuilder(Factory, Client).SetCoordinates(pointGPS)
                                                           .SetPointInContext(true)
                                                           .SetStatusCode(HttpStatusCode.OK)
