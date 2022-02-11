@@ -21,7 +21,7 @@ namespace TatraRidgesAPI.IntegrationTests.Controllers
 
         [Theory]
         [MemberData(nameof(GetValidPointGPS))]
-        public async Task Move_WithValidModel_WithAdminAutorization_ReturnsOK(PointGPSDto pointGPS)
+        public async Task Move_WithValidModel_ReturnsOK(PointGPSDto pointGPS)
             => await new MoveTestsBuilder(Factory, Client).SetCoordinates(pointGPS)
                                                           .SetPointInContext(true)
                                                           .SetStatusCode(HttpStatusCode.OK)
@@ -29,19 +29,19 @@ namespace TatraRidgesAPI.IntegrationTests.Controllers
 
         [Theory]
         [MemberData(nameof(GetInvalidPointGPS))]
-        public async Task Move_WithInvalidModel_WithAdminAutorization_ReturnsRequestedRangeNotSatisfiable(PointGPSDto pointGPS)
+        public async Task Move_WithInvalidModel_ReturnsRequestedRangeNotSatisfiable(PointGPSDto pointGPS)
             => await new MoveTestsBuilder(Factory, Client).SetCoordinates(pointGPS)
                                                           .SetPointInContext(true)
                                                           .SetStatusCode(HttpStatusCode.RequestedRangeNotSatisfiable)
                                                           .Build();
         [Fact]
-        public async Task Delete_ExistingPoint_WithAdminAutorization_ReturnsOK()
+        public async Task Delete_ExistingPoint_ReturnsOK()
               => await new DeleteTestsBuilder(Factory, Client).SetPointInContext(true)
                                                               .SetStatusCode(HttpStatusCode.OK)
                                                               .Build();
 
         [Fact]
-        public async Task Delete_NotExistingPoint_WithAdminAutorization_ReturnsNotFound()
+        public async Task Delete_NotExistingPoint_ReturnsNotFound()
               => await new DeleteTestsBuilder(Factory, Client).SetPointInContext(false)
                                                               .SetStatusCode(HttpStatusCode.NotFound)
                                                               .Build();

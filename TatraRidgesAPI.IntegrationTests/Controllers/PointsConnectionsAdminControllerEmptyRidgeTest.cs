@@ -16,7 +16,7 @@ namespace TatraRidgesAPI.IntegrationTests.Controllers
             : base(factory, "ForConnectionsEmpty", UserRole.Admin) { }
 
         [Fact]
-        public async Task GetNextEmptyRidge_WithAdminAutorization_WithoutExistingEmptyOne_RetursNotFound()
+        public async Task GetNextEmptyRidge_WithoutExistingEmptyOne_RetursNotFound()
              => await new GetNextEmptyRidgeTestsBuilder(Factory, Client).SetExistEmptyConnection(false)
                                                                         .SetStatusCode(HttpStatusCode.NotFound)
                                                                         .Build();

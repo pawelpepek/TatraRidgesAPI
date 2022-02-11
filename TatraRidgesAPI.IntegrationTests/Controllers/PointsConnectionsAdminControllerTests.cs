@@ -18,19 +18,19 @@ namespace TatraRidgesAPI.IntegrationTests.Controllers
         [Theory]
         [InlineData(false)]
         [InlineData(true)]
-        public async Task PostNewPointsConnection_WithAdminAutorization_WithExistingPoints_ReturnsOK(bool ridge)
+        public async Task PostNewPointsConnection_WithExistingPoints_ReturnsOK(bool ridge)
             => await new PostNewPointsConnectionTestsBuilder(Factory, Client).SetIsPointsExists(true)
                                                                              .SetIsRidge(ridge)
                                                                              .SetStatusCode(HttpStatusCode.OK)
                                                                              .Build();
 
         [Fact]
-        public async Task GetNextEmptyRidge_WithAdminAutorization_WithExistingOne_RetursOK()
+        public async Task GetNextEmptyRidge_WithExistingOne_RetursOK()
             => await new GetNextEmptyRidgeTestsBuilder(Factory, Client).SetExistEmptyConnection(true)
                                                                        .SetStatusCode(HttpStatusCode.OK)
                                                                        .Build();
         [Fact]
-        public async Task PostNewPointsConnection_WithAdminAutorization_MakeLoopConnection_ReturnsConflict()
+        public async Task PostNewPointsConnection_MakeLoopConnection_ReturnsConflict()
             => await new PostNewPointsConnectionTestsBuilder(Factory, Client).SetIsPointsExists(true)
                                                                              .SetPointsConnectionIsLooped()
                                                                              .SetStatusCode(HttpStatusCode.Conflict)

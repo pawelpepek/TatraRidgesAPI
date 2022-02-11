@@ -28,14 +28,14 @@ namespace TatraRidgesAPI.IntegrationTests.Controllers
         }
 
         [Fact]
-        public async Task Move_WithValidModel_WithouthAutorization_ReturnsUnauthorized()
+        public async Task Move_WithValidModel_ReturnsUnauthorized()
             => await new MoveTestsBuilder(Factory, Client).SetValidCoordinates()
                                                           .SetPointInContext(true)
                                                           .SetStatusCode(HttpStatusCode.Unauthorized)
                                                           .Build();
 
         [Fact]
-        public async Task Delete_ExistingPoint_WithouthAutorization_ReturnsUnauthorized()
+        public async Task Delete_ExistingPoint_ReturnsUnauthorized()
             => await new DeleteTestsBuilder(Factory, Client).SetPointInContext(true)
                                                             .SetStatusCode(HttpStatusCode.Unauthorized)
                                                             .Build();

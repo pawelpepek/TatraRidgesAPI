@@ -29,13 +29,13 @@ namespace TatraRidgesAPI.IntegrationTests.Controllers
         }
 
         [Fact]
-        public async Task PostNewPointsConnection_WithouthAutorization_WithExistingPoints_ReturnsUnauthorized()
+        public async Task PostNewPointsConnection_WithExistingPoints_ReturnsUnauthorized()
             => await new PostNewPointsConnectionTestsBuilder(Factory, Client).SetIsPointsExists(true)
                                                                     .SetStatusCode(HttpStatusCode.Unauthorized)
                                                                     .Build();
 
         [Fact]
-        public async Task GetNextEmptyRidge_WithouthAutorization_WithExistingOne_RetursUnauthorized()
+        public async Task GetNextEmptyRidgen_WithExistingOne_RetursUnauthorized()
             => await new GetNextEmptyRidgeTestsBuilder(Factory, Client).SetExistEmptyConnection(true)
                                                                        .SetStatusCode(HttpStatusCode.Unauthorized)
                                                                        .Build();
