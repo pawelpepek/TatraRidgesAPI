@@ -1,0 +1,88 @@
+﻿using FluentAssertions;
+using Microsoft.AspNetCore.Mvc.Testing;
+using Newtonsoft.Json;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+using TatraRidges.Model.Dtos;
+using TatraRidgesAPI.IntegrationTests.Helpers.DataContext;
+
+namespace TatraRidgesAPI.IntegrationTests.Controllers.TestsBuilders.PointsConnections
+{
+    public class PostNewPointsConnectionTestsBuilder : ControllersTestsBuilderTemplate
+    {
+        private bool _ridge;
+        private bool _exists;
+        private bool _looped;
+
+        private PointsConnectionCreateDto _model;
+
+        public PostNewPointsConnectionTestsBuilder(WebApplicationFactory<Startup> factory, HttpClient client)
+            : base(factory, client) { }
+
+
+        public PostNewPointsConnectionTestsBuilder SetIsRidge(bool ridge)
+        {
+            _ridge = ridge;
+            return this;
+        }
+        public PostNewPointsConnectionTestsBuilder SetIsPointsExists(bool exists)
+        {
+            _exists=exists;
+            return this;
+        }
+        public PostNewPointsConnectionTestsBuilder SetPointsConnectionIsLooped()
+        {
+            _looped=true;
+            return this;
+        }
+
+        protected async override Task<HttpResponseMessage> ArrangeAndAct()
+        {
+            //arrange
+            SetModel();
+
+            var json = JsonConvert.SerializeObject(_model);
+
+            var httpContent = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
+
+            //act
+            return await _client.PostAsync("/api/connection", httpContent);
+        }
+        protected override void AssertValues()
+        {
+            if (IsStatusCodeOK())
+            {
+                bool isInBase = new PointsConnectionTester(_factory).IsConnectionInDataContext(_model);
+
+                isInBase.Should().BeTrue();
+            }
+        }
+
+        private void SetModel()
+        {
+            if(_looped)
+            {
+                var connectionsCount = 10;
+
+                var tester = new PointsConnectionTester(_factory);
+                var connections=tester.AddNewRidgeConnections(connectionsCount);
+                _model = new PointsConnectionCreateDto()
+                {
+                    PointId1 =connections[connectionsCount-2].PointId1,
+                    PointId2 = connections[0].PointId2,
+                    Ridge = true,
+                };
+            }
+            else
+            {
+                _model = new PointsConnectionCreateDto()
+                {
+                    PointId1 = new MountainPointsTester(_factory).GetMountainPoint(true).Id,
+                    PointId2 = new MountainPointsTester(_factory).GetMountainPoint(_exists).Id,
+                    Ridge = _ridge,
+                };
+            }
+        }
+    }
+}

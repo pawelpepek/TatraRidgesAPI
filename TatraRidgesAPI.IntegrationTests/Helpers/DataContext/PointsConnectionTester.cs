@@ -16,9 +16,10 @@ namespace TatraRidgesAPI.IntegrationTests.Helpers.DataContext
             using var scope = GetScope();
             var dbContext = GetDbContext(scope);
 
-            return dbContext.PointsConnections.Any(c => ConnectionEqualsModel(c, model));
+            return dbContext.PointsConnections.ToList()
+                                              .Any(c => ConnectionEqualsModel(c, model));
         }
-        public IEnumerable<PointsConnection> AddNewRidgeConnections(int pointsCount)
+        public List<PointsConnection> AddNewRidgeConnections(int pointsCount)
         {
             var pointSeeder = new MountainPointsTester(_factory);
 
