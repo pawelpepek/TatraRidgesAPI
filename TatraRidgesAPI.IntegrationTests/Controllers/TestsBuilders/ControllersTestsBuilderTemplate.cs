@@ -36,6 +36,7 @@ namespace TatraRidgesAPI.IntegrationTests.Controllers.TestsBuilders
             _response.StatusCode.Should().Be(_code);
             AssertValues();
         }
+        protected bool IsStatusCodeOK() => _code == HttpStatusCode.OK && _code == _response.StatusCode;
         protected abstract Task<HttpResponseMessage> ArrangeAndAct();
         protected abstract void AssertValues();
     }

@@ -49,7 +49,7 @@ namespace TatraRidgesAPI.IntegrationTests.Controllers.TestsBuilders.MountainPoin
         }
         protected override void AssertValues()
         {
-            if (_code == HttpStatusCode.OK && _code == _response.StatusCode)
+            if (IsStatusCodeOK())
             {
                 var changedPoint = new MountainPointsTester(_factory)
                                     .GetMountainPoint(_point.Id);
