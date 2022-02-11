@@ -9,7 +9,7 @@
 
         private long _rankTimesTicks;
         private long _ticks;
-        private Adjective _closestAdjective=null;
+        private Adjective _closestAdjective = null;
 
         public string Id { get; }
 
@@ -34,25 +34,25 @@
 
         public string GetText()
         {
-            if (_closestAdjective==null || IsToLower())
+            if (_closestAdjective == null || IsToLower())
             {
                 return string.Empty;
             }
             else
             {
-                var description= _closestAdjective.Text.Replace("Częściowo ","");
+                var description = _closestAdjective.Text.Replace("Częściowo ", "");
                 return description.ToLower();
             }
         }
 
         public bool IsToLower() => GetTicks() < _breakToLover * _allTicks;
 
-        public bool IsPart()=> _closestAdjective.Id.StartsWith("c") || !IsMost();
+        public bool IsPart() => _closestAdjective.Id.StartsWith("c") || !IsMost();
 
         private decimal GetRank()
         {
             var ticks = GetTicks();
-            return  _rankTimesTicks / ticks;
+            return ticks == 0 ? 0 : _rankTimesTicks / ticks;
         }
 
         private bool IsMost() => GetTicks() > _breakMost * _allTicks;

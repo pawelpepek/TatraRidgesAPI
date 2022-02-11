@@ -63,14 +63,13 @@ namespace TatraRidgesAPI.IntegrationTests.Controllers.TestsBuilders.PointsConnec
         {
             if(_looped)
             {
-                var connectionsCount = 10;
-
                 var tester = new PointsConnectionTester(_factory);
-                var connections=tester.AddNewRidgeConnections(connectionsCount);
+                var (pointId1, pointId2)= tester.GetLoppedPoints();
+
                 _model = new PointsConnectionCreateDto()
                 {
-                    PointId1 =connections[connectionsCount-2].PointId1,
-                    PointId2 = connections[0].PointId2,
+                    PointId1 =pointId1,
+                    PointId2 = pointId2,
                     Ridge = true,
                 };
             }

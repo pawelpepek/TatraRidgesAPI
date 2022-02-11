@@ -24,10 +24,11 @@ namespace TatraRidgesAPI.Controllers
         {
             var connections = _service.GetRouteBetweenPoints(points);
 
-            return connections.RidgesContainer.Count() == 0 ? NotFound() : Ok(connections);
+            return connections.RidgesContainer.Any() ? Ok(connections): NotFound();
         }
 
         [HttpGet("parameters")]
+        [Authorize(Roles = "Admin")]
         public ActionResult<ParametersDto> GetParameters()
         {
             var parameters = _service.GetParameters();
@@ -35,7 +36,7 @@ namespace TatraRidgesAPI.Controllers
         }
         [HttpPost]
         [Authorize(Roles ="Admin")]
-        public ActionResult PostNewRouteForPointConnection([FromBody] AddRouteDto dto)
+        public ActionResult PostNewRouteBetweenPoints([FromBody] AddRouteDto dto)
         {
             return Ok(_service.AddRouteForPoints(dto));
         }

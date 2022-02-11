@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TatraRidges.Model.Dtos;
@@ -19,6 +20,7 @@ namespace TatraRidgesAPI.IntegrationTests.Helpers.DataContext
             return dbContext.PointsConnections.ToList()
                                               .Any(c => ConnectionEqualsModel(c, model));
         }
+
         public List<PointsConnection> AddNewRidgeConnections(int pointsCount)
         {
             var pointSeeder = new MountainPointsTester(_factory);
@@ -52,6 +54,15 @@ namespace TatraRidgesAPI.IntegrationTests.Helpers.DataContext
 
             dbContext.PointsConnections.RemoveRange(connectionToDelete);
             dbContext.SaveChanges();
+        }
+
+        public (int pointId1, int pointId2) GetLoppedPoints()
+        {
+            var connectionsCount = 10;
+
+            var connections = AddNewRidgeConnections(connectionsCount);
+
+            return (connections[connectionsCount - 2].PointId1, connections[0].PointId2);
         }
 
         private static bool ConnectionEqualsModel(PointsConnection connection, PointsConnectionCreateDto model)

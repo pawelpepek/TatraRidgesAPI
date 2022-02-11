@@ -15,7 +15,7 @@ namespace TatraRidges.Model.Helpers.RouteSummary
             _routeSummary = new RouteSummary();
         }
 
-        public RouteSummaryBuilder(TatraDbContext dbContext, List<RouteDto?> routes):this(routes)
+        public RouteSummaryBuilder(TatraDbContext dbContext, List<RouteDto?> routes) : this(routes)
         {
             _dbContext = dbContext;
         }
@@ -26,12 +26,12 @@ namespace TatraRidges.Model.Helpers.RouteSummary
         }
         public RouteSummaryBuilder SetIsConsistentDirection()
         {
-            _routeSummary.IsConsistentDirection = _routes.All(r =>r==null || r.ConsistentDirection);
+            _routeSummary.IsConsistentDirection = _routes.All(r => r == null || r.ConsistentDirection);
             return this;
         }
         public RouteSummaryBuilder SetRouteTime()
         {
-            _routeSummary.RouteTime= new TimeSpan(GetAllTicks());
+            _routeSummary.RouteTime = new TimeSpan(GetAllTicks());
             return this;
         }
         public RouteSummaryBuilder SetDifficulties()
@@ -46,7 +46,8 @@ namespace TatraRidges.Model.Helpers.RouteSummary
 
         public RouteSummaryBuilder SetRank()
         {
-            var exactRank = GetNotEmptyRoutes().Sum(r => r.Rank * r.RouteTime.Ticks)/ Convert.ToDecimal(GetAllTicks());
+            var exactRank = GetAllTicks() == 0 ? 0
+                            : GetNotEmptyRoutes().Sum(r => r.Rank * r.RouteTime.Ticks) / Convert.ToDecimal(GetAllTicks());
 
             _routeSummary.Rank = Convert.ToInt32(Math.Round(exactRank, 0));
 
@@ -69,5 +70,6 @@ namespace TatraRidges.Model.Helpers.RouteSummary
 
         private long GetAllTicks() => RouteTimeCounter.TicksCount(GetNotEmptyRoutes());
         private List<RouteDto> GetNotEmptyRoutes() => _routes.Where(r => r != null).ToList();
+
     }
 }
