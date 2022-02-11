@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +34,7 @@ namespace TatraRidgesAPI.Controllers
             return  Ok(parameters);
         }
         [HttpPost]
-        //[Authorize(Roles ="Admin")]
+        [Authorize(Roles ="Admin")]
         public ActionResult PostNewRouteForPointConnection([FromBody] AddRouteDto dto)
         {
             return Ok(_service.AddRouteForPoints(dto));
