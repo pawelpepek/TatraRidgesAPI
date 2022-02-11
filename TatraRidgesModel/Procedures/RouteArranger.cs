@@ -18,10 +18,12 @@ namespace TatraRidges.Model.Procedures
             var point2Id = connection.PointId2;
 
             var routes = connection.Routes.Select(r => GetRouteDto(r, ridgePart.ConsistDirection))
-                                          .OrderBy(rt => rt.ConsistentDirection)
+                                          .OrderByDescending(rt => rt.ConsistentDirection)
                                           .ThenBy(rt => rt.RouteType.Rank)
+                                          .ThenByDescending(rt=>rt.Rank)
                                           .ThenByDescending(rt => rt.DifficultyValue)
-                                          .ThenByDescending(rt => rt.Rappeling)
+                                          .ThenBy(rt => rt.Rappeling)
+                                          .ThenBy(rt=>rt.RouteTime)
                                           .ToList();
 
             var ridgeRoute = new RidgeWithRoutesDto()

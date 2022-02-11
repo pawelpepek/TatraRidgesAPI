@@ -10,7 +10,7 @@ namespace TatraRidges.Model.UnitTests.Helpers.RouteSummer
         protected RouteSummaryBuilder _summaryBuilder;
 
         protected static RouteDto GetSimplyRoute() => GetBuilder().Create();
-        protected static RouteBuilder GetBuilder() => new();
+        protected static RouteDtoBuilder GetBuilder() => new();
 
         protected RouteSummary ArrangeAndAct(List<RouteDto?> routes)
         {

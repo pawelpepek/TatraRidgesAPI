@@ -6,7 +6,7 @@ namespace TatraRidges.Model.UnitTests.Helpers.RouteSummer.RouteSummaryBuilderTes
     public class RoutesExamples
     {
         public static RouteDto GetSimplyRoute() => GetBuilder().Create();
-        public static RouteBuilder GetBuilder()=>  new ();
+        public static RouteDtoBuilder GetBuilder()=>  new ();
 
     }
 }
