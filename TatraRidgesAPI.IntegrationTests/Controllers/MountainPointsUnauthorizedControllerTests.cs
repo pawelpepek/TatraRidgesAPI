@@ -3,21 +3,17 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using System.Net;
 using System.Threading.Tasks;
 using TatraRidgesAPI.IntegrationTests.Controllers.Basics;
-using TatraRidgesAPI.IntegrationTests.Controllers.Helpers;
+using TatraRidgesAPI.IntegrationTests.Controllers.TestsBuilders.MountainPoints;
 using TatraRidgesAPI.IntegrationTests.Helpers;
 using Xunit;
 
 namespace TatraRidgesAPI.IntegrationTests.Controllers
 {
-    public class MountainPointsUnauthorizedControllerTests 
+    public class MountainPointsUnauthorizedControllerTests
         : ControllerTestsTemplate, IClassFixture<WebApplicationFactory<Startup>>
     {
-        private readonly MountainPointsControllerHelper _helper;
         public MountainPointsUnauthorizedControllerTests(WebApplicationFactory<Startup> factory)
-        : base(factory, "ForPoints", UserRole.None) 
-        {
-            _helper = new MountainPointsControllerHelper(Client, Factory);
-        }
+        : base(factory, "ForPoints", UserRole.None) { }
 
         [Fact]
         public async Task GetAll_ReturnsOKResult()
@@ -33,6 +29,15 @@ namespace TatraRidgesAPI.IntegrationTests.Controllers
 
         [Fact]
         public async Task Move_WithValidModel_WithouthAutorization_ReturnsUnauthorized()
-        =>await _helper.Move_WithValidModel_WithouthAdminAuthorized_RetursUnauthorized();
+            => await new MoveTestsBuilder(Factory, Client).SetValidCoordinates()
+                                                          .SetPointInContext(true)
+                                                          .SetStatusCode(HttpStatusCode.Unauthorized)
+                                                          .Build();
+
+        [Fact]
+        public async Task Delete_ExistingPoint_WithouthAutorization_ReturnsUnauthorized()
+            => await new DeleteTestsBuilder(Factory, Client).SetPointInContext(true)
+                                                            .SetStatusCode(HttpStatusCode.Unauthorized)
+                                                            .Build();
     }
 }

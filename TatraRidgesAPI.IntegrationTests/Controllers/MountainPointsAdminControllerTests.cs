@@ -5,49 +5,47 @@ using System.Net;
 using System.Threading.Tasks;
 using TatraRidges.Model.Dtos;
 using TatraRidgesAPI.IntegrationTests.Controllers.Basics;
-using TatraRidgesAPI.IntegrationTests.Controllers.Helpers;
 using TatraRidgesAPI.IntegrationTests.Controllers.Helpers.DataForTests;
+using TatraRidgesAPI.IntegrationTests.Controllers.TestsBuilders.MountainPoints;
 using TatraRidgesAPI.IntegrationTests.Helpers;
 using Xunit;
 
 namespace TatraRidgesAPI.IntegrationTests.Controllers
 {
-    public class MountainPointsAdminControllerTests 
+    public class MountainPointsAdminControllerTests
         : ControllerTestsTemplate, IClassFixture<WebApplicationFactory<Startup>>
     {
-        private readonly MountainPointsControllerHelper _helper;
-
         public MountainPointsAdminControllerTests(WebApplicationFactory<Startup> factory)
-        : base(factory, "ForPoints", UserRole.Admin) 
-        {
-            _helper = new MountainPointsControllerHelper(Client, Factory);
-        }
+        : base(factory, "ForPoints", UserRole.Admin) { }
 
         public static IEnumerable<object[]> GetValidPointGPS() => DataForMoveMountainPoints.GetValidPointGPS();
         public static IEnumerable<object[]> GetInvalidPointGPS() => DataForMoveMountainPoints.GetInvalidPointGPS();
 
-
-        [Fact]
-        public async Task GetAll_ReturnsOKResult()
-        {
-            //arrange
-
-            //act
-            var response = await Client.GetAsync("/api/point");
-
-            //assert
-            response.StatusCode.Should().Be(HttpStatusCode.OK);
-        }
-
         [Theory]
         [MemberData(nameof(GetValidPointGPS))]
         public async Task Move_WithValidModel_WithAdminAutorization_ReturnsOk(PointGPSDto pointGPS)
-            => await _helper.Move_ExistingPointId_WithCoordinates_ReturnsCode(pointGPS,HttpStatusCode.OK);
+            => await new MoveTestsBuilder(Factory, Client).SetCoordinates(pointGPS)
+                                                          .SetPointInContext(true)
+                                                          .SetStatusCode(HttpStatusCode.OK)
+                                                          .Build();
 
         [Theory]
         [MemberData(nameof(GetInvalidPointGPS))]
-        public async Task Move_WithInvalidModel_WithAdminAutorization_ReturnsOk(PointGPSDto pointGPS)
-            => await _helper.Move_ExistingPointId_WithCoordinates_ReturnsCode(pointGPS, HttpStatusCode.RequestedRangeNotSatisfiable);
+        public async Task Move_WithInvalidModel_WithAdminAutorization_ReturnsRequestedRangeNotSatisfiable(PointGPSDto pointGPS)
+            => await new MoveTestsBuilder(Factory, Client).SetCoordinates(pointGPS)
+                                                          .SetPointInContext(true)
+                                                          .SetStatusCode(HttpStatusCode.RequestedRangeNotSatisfiable)
+                                                          .Build();
+        [Fact]
+        public async Task Delete_ExistingPoint_WithAdminAutorization_ReturnsOK()
+              => await new DeleteTestsBuilder(Factory, Client).SetPointInContext(true)
+                                                              .SetStatusCode(HttpStatusCode.OK)
+                                                              .Build();
 
+        [Fact]
+        public async Task Delete_NotExistingPoint_WithAdminAutorization_ReturnsNotFound()
+              => await new DeleteTestsBuilder(Factory, Client).SetPointInContext(false)
+                                                              .SetStatusCode(HttpStatusCode.NotFound)
+                                                              .Build();
     }
 }
