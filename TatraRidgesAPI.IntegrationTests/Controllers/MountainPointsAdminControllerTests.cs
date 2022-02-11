@@ -1,11 +1,9 @@
-﻿using FluentAssertions;
-using Microsoft.AspNetCore.Mvc.Testing;
+﻿using Microsoft.AspNetCore.Mvc.Testing;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using TatraRidges.Model.Dtos;
 using TatraRidgesAPI.IntegrationTests.Controllers.Basics;
-using TatraRidgesAPI.IntegrationTests.Controllers.Helpers.DataForTests;
 using TatraRidgesAPI.IntegrationTests.Controllers.TestsBuilders.MountainPoints;
 using TatraRidgesAPI.IntegrationTests.Helpers;
 using Xunit;

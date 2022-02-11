@@ -1,7 +1,7 @@
 ﻿using TatraRidges.Model.Dtos;
 using TatraRidges.Model.Entities;
 
-namespace TatraRidgesAPI.IntegrationTests.Controllers.Helpers.Structures
+namespace TatraRidgesAPI.IntegrationTests.Controllers.TestsBuilders.MountainPoints
 {
     public class PointMoveModel
     {

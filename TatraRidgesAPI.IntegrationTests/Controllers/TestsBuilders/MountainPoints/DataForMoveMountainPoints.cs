@@ -2,7 +2,7 @@
 using System.Linq;
 using TatraRidges.Model.Dtos;
 
-namespace TatraRidgesAPI.IntegrationTests.Controllers.Helpers.DataForTests
+namespace TatraRidgesAPI.IntegrationTests.Controllers.TestsBuilders.MountainPoints
 {
     public static class DataForMoveMountainPoints
     {

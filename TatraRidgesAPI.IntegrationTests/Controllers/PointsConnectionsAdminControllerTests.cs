@@ -20,9 +20,9 @@ namespace TatraRidgesAPI.IntegrationTests.Controllers
         [InlineData(true)]
         public async Task PostNewPointsConnection_WithAdminAutorization_WithExistingPoints_ReturnsOK(bool ridge)
             => await new PostNewPointsConnectionTestsBuilder(Factory, Client).SetIsPointsExists(true)
-                                                                            .SetIsRidge(ridge)
-                                                                            .SetStatusCode(HttpStatusCode.OK)
-                                                                            .Build();
+                                                                             .SetIsRidge(ridge)
+                                                                             .SetStatusCode(HttpStatusCode.OK)
+                                                                             .Build();
 
         [Fact]
         public async Task GetNextEmptyRidge_WithAdminAutorization_WithExistingOne_RetursOK()
@@ -32,9 +32,9 @@ namespace TatraRidgesAPI.IntegrationTests.Controllers
         [Fact]
         public async Task PostNewPointsConnection_WithAdminAutorization_MakeLoopConnection_ReturnsConflict()
             => await new PostNewPointsConnectionTestsBuilder(Factory, Client).SetIsPointsExists(true)
-                                                                            .SetPointsConnectionIsLooped()
-                                                                            .SetStatusCode(HttpStatusCode.Conflict)
-                                                                            .Build();
+                                                                             .SetPointsConnectionIsLooped()
+                                                                             .SetStatusCode(HttpStatusCode.Conflict)
+                                                                             .Build();
 
         [Fact]
         public async Task GetNextEmptyRidge_WithAdminAutorization_WithoutExistingEmptyOne_RetursOK()

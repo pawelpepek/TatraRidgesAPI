@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
-using System.Collections.Generic;
-using System.Linq;
 using TatraRidges.Model.Entities;
 
 namespace TatraRidgesAPI.IntegrationTests.Helpers.DataContext

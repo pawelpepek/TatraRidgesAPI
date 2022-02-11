@@ -6,7 +6,6 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using TatraRidges.Model.Dtos;
-using TatraRidgesAPI.IntegrationTests.Controllers.Helpers.Structures;
 using TatraRidgesAPI.IntegrationTests.Helpers.DataContext;
 
 namespace TatraRidgesAPI.IntegrationTests.Controllers.TestsBuilders.MountainPoints
