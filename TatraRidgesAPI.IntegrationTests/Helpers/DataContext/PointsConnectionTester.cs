@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using TatraRidges.Model.Dtos;
@@ -38,6 +39,18 @@ namespace TatraRidgesAPI.IntegrationTests.Helpers.DataContext
                 }
             }
             return result;
+        }
+        public void DeleteAllConnectionRidgeWithouthRoutes()
+        {
+            using var scope = GetScope();
+            var dbContext = GetDbContext(scope);
+
+            var connectionToDelete=dbContext.PointsConnections.Include(c => c.Routes)
+                                       .Where(c => c.Ridge && c.Routes.Any())
+                                       .ToList();
+
+            dbContext.PointsConnections.RemoveRange(connectionToDelete);
+            dbContext.SaveChanges();
         }
 
         private static bool ConnectionEqualsModel(PointsConnection connection, PointsConnectionCreateDto model)

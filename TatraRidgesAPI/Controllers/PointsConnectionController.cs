@@ -24,16 +24,18 @@ namespace TatraRidgesAPI.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles ="Admin")]
+        [Authorize(Roles = "Admin")]
         public ActionResult PostNewPointsConnection([FromBody] PointsConnectionCreateDto dto)
         {
             var newConnectionId = _service.AddConnectionBetweenPoints(dto);
             return Ok(newConnectionId);
         }
         [HttpGet("empty")]
+        [Authorize(Roles = "Admin")]
         public ActionResult<long> GetNextEmptyRidge()
         {
-            return Ok(_service.GetNextEmptyRidgeId());
+            var id = _service.GetNextEmptyRidgeId();
+            return id >= 0 ? Ok(id) : NotFound();
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Net;
 using System.Threading.Tasks;
 using TatraRidgesAPI.IntegrationTests.Controllers.Basics;
 using TatraRidgesAPI.IntegrationTests.Controllers.Helpers;
+using TatraRidgesAPI.IntegrationTests.Controllers.TestsBuilders.PointsConnections;
 using TatraRidgesAPI.IntegrationTests.Helpers;
 using Xunit;
 
@@ -36,5 +37,11 @@ namespace TatraRidgesAPI.IntegrationTests.Controllers
         [Fact]
         public async Task PostNewPointsConnection_WithValidData_ReturnsUnauthorize()
         =>  await _helper.PostNewPointsConnection_WithValidData_ReturnsOK(true, false);
+
+        [Fact]
+        public async Task GetNextEmptyRidge_WithouthAutorization_WithExistingOne_RetursOK()
+            => await new GetNextEmptyRidgeTestsBuilder(Factory, Client).SetExistEmptyConnection(true)
+                                                                       .SetStatusCode(HttpStatusCode.Unauthorized)
+                                                                       .Build();
     }
 }
