@@ -35,11 +35,5 @@ namespace TatraRidgesAPI.IntegrationTests.Controllers
                                                                              .SetPointsConnectionIsLooped()
                                                                              .SetStatusCode(HttpStatusCode.Conflict)
                                                                              .Build();
-
-        [Fact]
-        public async Task GetNextEmptyRidge_WithAdminAutorization_WithoutExistingEmptyOne_RetursNotFound()
-             => await new GetNextEmptyRidgeTestsBuilder(Factory, Client).SetExistEmptyConnection(false)
-                                                                        .SetStatusCode(HttpStatusCode.NotFound)
-                                                                        .Build();
     }
 }
