@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using TatraRidges.Model.Dtos;
-using TatraRidges.Model.Helpers.RouteSummary;
-using TatraRidges.Model.UnitTests.HelpersForTests;
 using Xunit;
 
 namespace TatraRidges.Model.UnitTests.Helpers.RouteSummer.RouteSummaryBuilderTests

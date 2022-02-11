@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TatraRidges.Model.Dtos;
 using TatraRidges.Model.Helpers.RouteSummary;
 using TatraRidges.Model.UnitTests.Helpers.RouteSummer.RouteSummaryBuilderTests;
