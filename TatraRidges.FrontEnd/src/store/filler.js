@@ -1,5 +1,3 @@
-import { collapseTextChangeRangesAcrossMultipleVersions } from "typescript"
-
 export const fillObject = (obj, propertyName, value) => {
 	obj[propertyName] = value
 

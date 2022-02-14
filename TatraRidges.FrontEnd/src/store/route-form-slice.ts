@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { getTsBuildInfoEmitOutputFilePath } from "typescript"
-import { fillObject, objectIsFilled, getObjectListValues } from "./filler"
+import { fillObject, objectIsFilled } from "./filler"
 
 export interface OptionsProps {
 	value: string
