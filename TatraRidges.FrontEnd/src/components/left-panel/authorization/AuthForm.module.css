@@ -1,0 +1,27 @@
+.auth-panel {
+	margin-left: 40px;
+	margin-right: 52px;
+	height: 100%;
+}
+.panel-button{
+    display: flex;
+    justify-content: right;
+}
+.control {
+    margin-bottom: 0.5rem;
+  }
+  
+  .control label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  
+  .control input {
+	width: 96%;
+	border-radius: 3px;
+	border: 1px solid black;
+	height: 25px;
+	font-size: 14px;
+}
+

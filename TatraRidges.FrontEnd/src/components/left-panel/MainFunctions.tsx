@@ -5,6 +5,7 @@ import AdminPanel from "./admin/AdminPanel"
 import FindPanel from "./find/FindPanel"
 import classes from "./MainFunctions.module.css"
 import NavigationPanel from "./NavigationPanel"
+import AuthForm from "./authorization/AuthForm"
 import UserPanel from "./UserPanel"
 
 const MainFunctions: React.FC = () => {
@@ -18,8 +19,8 @@ const MainFunctions: React.FC = () => {
 			<NavigationPanel className={classes.navigation} />
 			<div className={classes.panel}>
 				{visiblePanel === "admin" && <AdminPanel />}
-				{visiblePanel === "user" && <UserPanel />}
 				{visiblePanel === "find" && <FindPanel />}
+				{visiblePanel === "login" && <AuthForm />}
 			</div>
 		</div>
 	)

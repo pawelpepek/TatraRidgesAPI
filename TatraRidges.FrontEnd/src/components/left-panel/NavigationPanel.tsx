@@ -22,9 +22,9 @@ const NavigationPanel: React.FC<{ className?: string }> = props => {
 
 	const buttonClickHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
 		const button: HTMLButtonElement = event.currentTarget
-
-		if (button.id.substring(7, 10) === "log") {
-			dispatch(uiActions.setLogged(button.id === "button-login"))
+		if (button.id === "button-logout") {
+			dispatch(uiActions.setLogged(false))
+			changePanelVersion("find")
 		} else {
 			changePanelVersion(getTab(button.id))
 		}
@@ -56,6 +56,7 @@ const NavigationPanel: React.FC<{ className?: string }> = props => {
 					alt='Panel użytkownika'
 					imageSrc={userOffIcon}
 					onClick={buttonClickHandler}
+					selected={visiblePanel === "login"}
 				/>
 			)}
 			{logged && (

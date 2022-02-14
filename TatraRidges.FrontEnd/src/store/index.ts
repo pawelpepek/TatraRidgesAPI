@@ -4,6 +4,7 @@ import pointsReducer from "./map-slice"
 import uiReducer from "./ui-slice"
 import centerReducer from "./center-slice"
 import routeFormReducer from "./route-form-slice"
+import loginFormReducer from "./login-form.slice"
 
 
 const store = configureStore({
@@ -11,7 +12,8 @@ const store = configureStore({
 		map: pointsReducer,
 		ui: uiReducer,
 		center:centerReducer,
-		routeForm:routeFormReducer
+		routeForm:routeFormReducer,
+		loginForm:loginFormReducer
 	},
 })
 

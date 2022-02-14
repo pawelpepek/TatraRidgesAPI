@@ -44,6 +44,11 @@ interface StoreType {
 		routeTime: Date | null
 		isFilled:boolean
 	}
+	loginForm:{
+		email:string
+		password:string
+		isFilled:boolean
+	}
 }
 
 export default StoreType
