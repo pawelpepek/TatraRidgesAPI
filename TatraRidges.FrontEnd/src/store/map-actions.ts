@@ -9,6 +9,7 @@ export const movePoint = (id: number, coordinates: Coordinates) => {
 		pathPart: id,
 		body: coordinates,
 		addingInfo: { id },
+		token: true,
 	}
 	return dataDispatcher(props, pointsActions.movePointById)
 }
@@ -28,6 +29,7 @@ export const deletePointById = (id: number) => {
 		location: "point/",
 		pathPart: id,
 		addingInfo: { id },
+		token: true,
 	}
 	return dataDispatcher(props, pointsActions.deletePoint)
 }
@@ -52,6 +54,7 @@ export const postConnectionRidge = (pointId1: number, pointId2: number) => {
 		location: "connection",
 		body,
 		addingInfo: { pointId1, pointId2 },
+		token: true,
 	}
 	return dataDispatcher(props, pointsActions.connectRidgePoints)
 }
