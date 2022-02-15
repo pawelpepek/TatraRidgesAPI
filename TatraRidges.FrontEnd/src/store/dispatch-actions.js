@@ -1,4 +1,5 @@
 import { uiActions } from "./ui-slice"
+import {getMessage} from "./statusCodeMessage"
 
 const fetchData = async props => {
 	let url = "https://localhost:44342/api/" + props.location
@@ -12,15 +13,24 @@ const fetchData = async props => {
 		},
 		body: props.body !== undefined ? JSON.stringify(props.body) : null,
 	})
-	if (!response.ok) {
-		console.log(response, props)
-		throw new Error("Serwer nie odpowiada!")
-	}
-	if (props.isBody) {
-		return await response.json()
-	} else {
-		return true
-	}
+		.then(async response => {
+			if (response.ok) {
+				if (props.isBody) {
+					return await response.json()
+				} else {
+					return true
+				}
+			}
+			else
+			{
+				const message=getMessage(response.status)
+				throw new Error(message)
+			}
+		})
+		.catch(error => {
+			throw new Error(error.message)
+		})
+	return response
 }
 
 const getTitleFromMethod = method => {
@@ -81,7 +91,7 @@ const dataDispatcher = (props, dispatcher) => {
 			dispatch(
 				uiActions.showNotification({
 					status: "error",
-					message: "Błąd bazy danych",
+					message: error.message,
 				})
 			)
 		}
