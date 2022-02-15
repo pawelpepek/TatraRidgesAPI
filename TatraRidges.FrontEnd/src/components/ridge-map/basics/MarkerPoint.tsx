@@ -1,10 +1,11 @@
-import L from "leaflet"
 import { Marker } from "react-leaflet"
-
 import { LatLongOwner } from "../../types"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { movePoint } from "../../../store/map-actions"
 import { Coordinates } from "../../types"
+import { useState } from "react"
+import StoreType from "../../../store/store-types"
+
 const MarkerPoint: React.FC<{
 	id: number
 	latitude: number
@@ -14,23 +15,30 @@ const MarkerPoint: React.FC<{
 }> = point => {
 	const dispatch = useDispatch()
 
+	const partVisible = useSelector((state: StoreType) => state.ui.visiblePanel)
+
+	const [_, setChangeSwitch] = useState(false)
+
 	return (
 		<Marker
 			position={[point.latitude, point.longitude]}
 			title={point.name}
-			draggable={true}
+			draggable={partVisible === "admin"}
 			eventHandlers={{
 				click: () => {
 					point.onClick()
 				},
-				dragend: e => {
+				dragend: async e => {
 					const target: LatLongOwner = e.target
 
 					const coordinates: Coordinates = {
 						latitude: target.getLatLng().lat,
 						longitude: target.getLatLng().lng,
 					}
-					dispatch(movePoint(point.id, coordinates))
+					const ok = await dispatch(movePoint(point.id, coordinates))
+					if (!ok) {
+						setChangeSwitch(prevState => !prevState)
+					}
 				},
 			}}
 		/>
