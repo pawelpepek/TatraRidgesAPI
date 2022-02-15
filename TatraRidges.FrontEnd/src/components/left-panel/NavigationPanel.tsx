@@ -63,7 +63,7 @@ const NavigationPanel: React.FC<{ className?: string }> = props => {
 				<RoundButton
 					className={classes.login}
 					idButton={"button-logout"}
-					alt='Panel użytkownika'
+					alt='Wyloguj'
 					imageSrc={userIcon}
 					onClick={buttonClickHandler}
 				/>

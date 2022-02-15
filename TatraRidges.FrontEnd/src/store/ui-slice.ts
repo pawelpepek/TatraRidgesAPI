@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
+import {isLoginOk, loginHandler} from "./authorizationHandler"
 
 const initialState = {
 	visiblePanel: "find",
@@ -7,7 +8,7 @@ const initialState = {
 		message: "",
 	},
 	visibleAdminPart: "route",
-	isLogged: localStorage.getItem("token") !== null,
+	isLogged: isLoginOk(),
 }
 
 const uiSlice = createSlice({
@@ -25,9 +26,8 @@ const uiSlice = createSlice({
 		},
 		setLogged(state, action) {
 			const logged = action.payload.data != null
-			state.isLogged = logged
 			if (logged) {
-				localStorage.setItem("token", action.payload.data)
+				loginHandler(action.payload.data)
 				state.visiblePanel = "admin"
 			} else {
 				if (state.visiblePanel === "admin") {
@@ -35,6 +35,7 @@ const uiSlice = createSlice({
 				}
 				localStorage.removeItem("token")
 			}
+			state.isLogged = isLoginOk()
 		},
 		setAdminPartVisible(state, action) {
 			state.visibleAdminPart = action.payload
