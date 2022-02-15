@@ -6,18 +6,28 @@ const fetchData = async props => {
 	if (props.pathPart !== undefined) {
 		url += props.pathPart
 	}
+
+	const headers={
+		"content-type": "application/json;charset=UTF-8",
+	}
+
+	if(props.token)
+	{
+		headers["Authorization"]=`Bearer ${localStorage.getItem("token")}`
+	}
 	const response = await fetch(url, {
 		method: props.method,
-		headers: {
-			"content-type": "application/json;charset=UTF-8",
-		},
+		headers,
 		body: props.body !== undefined ? JSON.stringify(props.body) : null,
 	})
 		.then(async response => {
 			if (response.ok) {
 				if (props.isBody) {
 					return await response.json()
-				} else {
+				} else if(props.isText){
+					return await response.text()
+				}
+				else {
 					return true
 				}
 			}
@@ -52,8 +62,8 @@ const getTitleFromMethod = method => {
 }
 
 const dataDispatcher = (props, dispatcher) => {
+	const title = getTitleFromMethod(props.method)
 	return async dispatch => {
-		const title = getTitleFromMethod(props.method)
 		dispatch(
 			uiActions.showNotification({
 				status: "pending",

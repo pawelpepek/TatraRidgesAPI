@@ -22,8 +22,8 @@ interface StoreType {
 			title: string
 			message: string
 		}
-		logged: boolean
 		visibleAdminPart: string
+		isLogged:boolean
 	}
 	center: {
 		value: {

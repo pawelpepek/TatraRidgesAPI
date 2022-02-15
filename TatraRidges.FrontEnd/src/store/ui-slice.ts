@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { stat } from "fs"
 
 const initialState = {
 	visiblePanel: "find",
@@ -7,8 +6,8 @@ const initialState = {
 		status: "ok",
 		message: "",
 	},
-	logged: false,
 	visibleAdminPart: "route",
+	isLogged: localStorage.getItem("token") !== null,
 }
 
 const uiSlice = createSlice({
@@ -25,10 +24,16 @@ const uiSlice = createSlice({
 			state.visiblePanel = action.payload
 		},
 		setLogged(state, action) {
-			const logged: boolean = action.payload
-			state.logged = logged
-			if (state.visiblePanel === "admin") {
-				state.visiblePanel = "find"
+			const logged = action.payload.data != null
+			state.isLogged = logged
+			if (logged) {
+				localStorage.setItem("token", action.payload.data)
+				state.visiblePanel = "admin"
+			} else {
+				if (state.visiblePanel === "admin") {
+					state.visiblePanel = "find"
+				}
+				localStorage.removeItem("token")
 			}
 		},
 		setAdminPartVisible(state, action) {

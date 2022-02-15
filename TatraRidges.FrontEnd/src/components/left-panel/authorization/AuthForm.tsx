@@ -1,32 +1,28 @@
-import { useRef } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { uiActions } from "../../../store/ui-slice"
 import RoundButton from "../../ui/RoundButton"
 import PanelHeader from "../PanelHeader"
 import loginIcon from "../../img/login.svg"
 import { loginFormActions } from "../../../store/login-form.slice"
+import {login}from "../../../store/user-actions"
+
 
 import classes from "./AuthForm.module.css"
 import StoreType from "../../../store/store-types"
 
 const AuthForm: React.FC = () => {
-	const emailRef = useRef<HTMLInputElement>(null)
-	const passwordRef = useRef<HTMLInputElement>(null)
 
 	const formIsValid= useSelector((state: StoreType) => state.loginForm.isFilled)
 
+	const enteredEmail = useSelector((state: StoreType) => state.loginForm.email)
+	const enteredPassword = useSelector((state: StoreType) => state.loginForm.password)
+
 	const dispatch = useDispatch()
 
-	const submitHandler = (e: { preventDefault: () => void }) => {
+	const submitHandler =(e: { preventDefault: () => void }) => {
 		e.preventDefault()
 
-		const enteredEmail = emailRef.current
-		const enteredPassword = passwordRef.current
-
-		console.log(enteredEmail, enteredPassword)
-
-		dispatch(uiActions.setLogged(true))
-		dispatch(uiActions.setPanelVersion("admin"))
+		dispatch(login(enteredEmail,enteredPassword))
 	}
 
 	const onChange = (e: React.FormEvent<HTMLInputElement>) => {
@@ -65,3 +61,4 @@ const AuthForm: React.FC = () => {
 }
 
 export default AuthForm
+

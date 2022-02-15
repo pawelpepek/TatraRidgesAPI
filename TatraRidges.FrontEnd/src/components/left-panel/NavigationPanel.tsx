@@ -16,7 +16,7 @@ const NavigationPanel: React.FC<{ className?: string }> = props => {
 		dispatch(uiActions.setPanelVersion(version))
 
 	const visiblePanel = useSelector((state: StoreType) => state.ui.visiblePanel)
-	const logged = useSelector((state: StoreType) => state.ui.logged)
+	const logged = useSelector((state: StoreType) => state.ui.isLogged)
 
 	const getTab = (id: string) => id.substring(7)
 
