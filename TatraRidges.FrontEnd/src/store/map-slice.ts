@@ -7,6 +7,8 @@ import {
 	Coordinates,
 } from "../components/types"
 
+import {RidgeAllInformation} from "./routeTypes"
+
 const emptyPoints: MountainPoint[] = []
 const emptyConnections: ConnectionPoints[] = []
 
@@ -16,6 +18,7 @@ const initialState = {
 	points: emptyPoints,
 	pointsOk: false,
 	connections: emptyConnections,
+	ridgeInfo:{} as RidgeAllInformation
 }
 const changeCoordinates = (point: MountainPoint, coordinates: Coordinates) => {
 	point.latitude = coordinates.latitude
@@ -105,6 +108,12 @@ const pointsSlice = createSlice({
 				state.connections.push(newConnection)
 			}
 		},
+		getRidge(state, actions) {
+			state.ridgeInfo=actions.payload.data
+		},
+		clearRidge(state,actions){
+			state.ridgeInfo={} as RidgeAllInformation
+		}
 	},
 })
 

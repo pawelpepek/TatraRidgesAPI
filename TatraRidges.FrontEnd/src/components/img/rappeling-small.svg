@@ -1,0 +1,11 @@
+<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" stroke-linejoin="round" stroke-linecap="round" fill="none" stroke="#000000" stroke-width="2" class="icon icon-tabler icon-tabler-man">
+
+ <g>
+  <title>Layer 1</title>
+  <circle stroke="null" id="svg_2" r="1.59502" cy="4.53271" cx="8.35514"/>
+  <path stroke="null" id="svg_3" d="m6.73936,17.51402l0,-3.95214l-0.66771,-0.79043l0,-3.16171a0.66771,0.79043 0 0 1 0.66771,-0.79043l2.67082,0a0.66771,0.79043 0 0 1 0.66771,0.79043l0,3.16171l-0.66771,0.79043l0,3.95214"/>
+  <line transform="rotate(6.65267 14.243 5.45795)" fill="none" id="svg_4" y2="9.07165" x2="13.1838" y1="1.84424" x1="15.30218" stroke="null"/>
+  <line transform="rotate(11.0914 2.96574 18.2305)" stroke="null" fill="none" id="svg_6" y2="21.15319" x2="2.45322" y1="15.30786" x1="3.47825"/>
+  <line id="svg_7" y2="22.34267" x2="10.7539" y1="1.96885" x1="19.97508" stroke="null" fill="none"/>
+ </g>
+</svg>

@@ -3,8 +3,9 @@ import { LatLongOwner } from "../../types"
 import { useDispatch, useSelector } from "react-redux"
 import { movePoint } from "../../../store/map-actions"
 import { Coordinates } from "../../types"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import StoreType from "../../../store/store-types"
+import { pointsActions } from "../../../store/map-slice"
 
 const MarkerPoint: React.FC<{
 	id: number
@@ -18,6 +19,10 @@ const MarkerPoint: React.FC<{
 	const partVisible = useSelector((state: StoreType) => state.ui.visiblePanel)
 
 	const [_, setChangeSwitch] = useState(false)
+
+	useEffect(() => {
+		dispatch(pointsActions.clearRidge(null))
+	}, [dispatch])
 
 	return (
 		<Marker

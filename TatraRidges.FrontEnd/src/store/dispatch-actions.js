@@ -6,7 +6,6 @@ const fetchData = async props => {
 	if (props.pathPart !== undefined) {
 		url += props.pathPart
 	}
-
 	const headers={
 		"content-type": "application/json;charset=UTF-8",
 	}
@@ -63,6 +62,7 @@ const getTitleFromMethod = method => {
 
 const dataDispatcher = (props, dispatcher) => {
 	const title = getTitleFromMethod(props.method)
+
 	return async dispatch => {
 		dispatch(
 			uiActions.showNotification({

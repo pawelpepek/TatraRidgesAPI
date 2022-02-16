@@ -58,3 +58,14 @@ export const postConnectionRidge = (pointId1: number, pointId2: number) => {
 	}
 	return dataDispatcher(props, pointsActions.connectRidgePoints)
 }
+
+export const getRidge = (pointFrom: number, pointTo: number) => {
+	const pathPart = `?from=${pointFrom}&to=${pointTo}`
+	const props = {
+		method: "GET",
+		location: "route",
+		isBody: true,
+		pathPart,
+	}
+	return dataDispatcher(props, pointsActions.getRidge)
+}

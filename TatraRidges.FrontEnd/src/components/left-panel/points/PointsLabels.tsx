@@ -5,6 +5,7 @@ import PointLabel from "./PointLabel"
 import classes from "./PointsLabels.module.css"
 
 const PointsLabels: React.FC<{ deleteVisible: boolean }> = props => {
+
 	const pointFrom = useSelector((state: StoreType) => state.map.pointFrom)
 	const pointTo = useSelector((state: StoreType) => state.map.pointTo)
 

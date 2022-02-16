@@ -4,6 +4,8 @@ import {
 	MountainPoint,
 } from "../components/types"
 
+import {RidgeAllInformation} from "./routeTypes"
+
 import { OptionsProps} from "./route-form-slice"
 
 interface StoreType {
@@ -14,6 +16,7 @@ interface StoreType {
 		points: MountainPoint[]
 		pointFrom: MountainPoint
 		pointTo: MountainPoint
+		ridgeInfo:RidgeAllInformation
 	}
 	ui: {
 		visiblePanel: string

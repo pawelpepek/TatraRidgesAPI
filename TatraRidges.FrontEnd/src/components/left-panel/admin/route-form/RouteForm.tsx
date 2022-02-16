@@ -49,7 +49,7 @@ const RouteForm: React.FC<{ className?: string }> = props => {
 				</tbody>
 			</table>
 			<div className={classes["panel-button"]}>
-				<RoundButton alt='Dodaj' imageSrc={addIcon} disabled={!isValid} />
+				<RoundButton alt='Dodaj' imageSrc={addIcon} disabled={!isValid}/>
 			</div>
 		</form>
 	)
