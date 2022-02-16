@@ -1,10 +1,10 @@
 .container {
 	display: flex;
     flex-direction: column;
-	margin: 5px;
-    margin-left: 40px;
-    margin-right: 52px;
-	border: 1px solid black;
+    margin-top: 10px;
+    margin-left: var(--left-margin);
+    margin-right: calc(var(--right-margin) - 8px);
+	border:var(--input-border);
 	height: auto;
 	border-radius: var(--input-border-radius);
 }

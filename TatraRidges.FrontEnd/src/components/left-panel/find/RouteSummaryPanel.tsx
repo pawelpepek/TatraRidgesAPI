@@ -16,7 +16,6 @@ const RouteSummaryPanel: React.FC<{ summary: RouteSummary }> = props => {
 	const minutesText = minutes > 0 ? `${minutes} min.` : ""
 
 	return (
-		<>
 			<div className={classes.container}>
 				<div className={classes.description}>
 					<section className={classes.section}>
@@ -39,17 +38,29 @@ const RouteSummaryPanel: React.FC<{ summary: RouteSummary }> = props => {
 				</div>
 				<div className={classes.description}>
 					<div className={classes["additiona-info"]}>
-						{props.summary.isEmptyRoute && <span className={classes.empty}>Brak danych</span>}
+						{props.summary.isEmptyRoute && (
+							<span className={classes.empty}>Brak danych</span>
+						)}
 					</div>
-					{!props.summary.isConsistentDirection && <img className={classes.image} src={diffDirectionIcon} alt='Występują drogi z opisem w odwrotnym kierunku' />}
-					{props.summary.rappeling && <img className={classes.image} src={rappelingIcon} alt='Zjazd na linie' />}			
+					{!props.summary.isConsistentDirection && (
+						<img
+							className={classes.image}
+							src={diffDirectionIcon}
+							alt='Występują drogi z opisem w odwrotnym kierunku'
+						/>
+					)}
+					{props.summary.rappeling && (
+						<img
+							className={classes.image}
+							src={rappelingIcon}
+							alt='Zjazd na linie'
+						/>
+					)}
 					<div className={classes.time}>
 						<span>{`${hoursText}${minutesText}`}</span>
 					</div>
-					
 				</div>
 			</div>
-		</>
 	)
 }
 
