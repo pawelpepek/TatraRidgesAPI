@@ -9,11 +9,11 @@ import StoreType from "../../../../store/store-types"
 
 const AdjectivSelect: React.FC = () => {
 	const dispatch = useDispatch()
-	
-	const selected=useSelector((state: StoreType) => state.routeForm.adjectives)
+
+	const selected = useSelector((state: StoreType) => state.routeForm.adjectives)
 
 	const onChange = (option: readonly OptionsProps[]) => {
-		const options = [...option].map(o=>o.value)
+		const options = [...option].map(o => o.value)
 		const payload = {
 			name: "adjectives",
 			value: options,
@@ -28,7 +28,7 @@ const AdjectivSelect: React.FC = () => {
 		{ value: "_k", label: "Krucha" },
 	]
 
-	const selectedOptions=options2.filter(o=>selected.includes( o.value))
+	const selectedOptions = options2.filter(o => selected.includes(o.value))
 
 	return (
 		<>

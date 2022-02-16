@@ -2,9 +2,8 @@
 	height: 100%;
 }
 .manage-panel {
-	margin-left: 39px;
-	margin-right: 52px;
-	height: 100%;
+	margin-left: var(--left-margin);
+	margin-right: calc(var(--right-margin) - 10px);
 }
 
 .visible-part {

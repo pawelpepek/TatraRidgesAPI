@@ -4,7 +4,7 @@ import PointOption from "./PointOption"
 import classes from "./NoLocationMarks.module.css"
 import Description from "./Description"
 
-const NoLocationMarks: React.FC<{ className?: string }> = props => {
+const NoLocationMarks: React.FC = () => {
 	const points = useSelector((state: StoreType) => state.map.points)
 
 	const noLocationPoints = points
@@ -12,7 +12,7 @@ const NoLocationMarks: React.FC<{ className?: string }> = props => {
 		.sort((a, b) => (a.name > b.name ? 1 : -1))
 
 	return (
-		<div className={props.className}>
+		<div className={classes.div}>
 			<Description text='Punkty bez lokalizacji' />
 			<select size={20} className={classes["no-location-list"]}>
 				{noLocationPoints.map(p => (

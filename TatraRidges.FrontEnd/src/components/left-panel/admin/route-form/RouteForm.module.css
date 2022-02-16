@@ -1,18 +1,23 @@
-.div{
-    display: flex;
+.div {
+	display: flex;
 }
-.column{
-    display: flex;
-    flex-direction: column;
+
+.column {
+	display: flex;
+	flex-direction: column;
 }
-.table{
-    width: 100%;
+
+.table {
+	width: 100%;
+	border-spacing: 0px 2px;
 }
-  .first-column{
-    width: 400px;
-    white-space: nowrap;
-  }
-  .panel-button{
-    display: flex;
-    justify-content: right;
-  }
+
+.first-column {
+	width: 400px;
+	white-space: nowrap;
+}
+
+.panel-button {
+	display: flex;
+	justify-content: right;
+}
