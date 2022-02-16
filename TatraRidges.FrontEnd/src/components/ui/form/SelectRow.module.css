@@ -1,7 +1,7 @@
 .select{
     width: 100%;
-    border-radius: 3px;
-    border: 1px solid black;
+    border-radius: var(--input-border-radius);
+    border: var(--input-border);
     height: 25px;
 	font-size: 14px;
 }

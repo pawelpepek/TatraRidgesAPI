@@ -1,7 +1,7 @@
 .no-location-list {
 	width: 100%;
-	border-radius: 5px;
-	border: 1px solid black;
+	border-radius: var(--input-border-radius);
+	border: var(--input-border);
 }
 
 .no-location-list::-webkit-scrollbar {
@@ -11,12 +11,12 @@
 .no-location-list::-webkit-scrollbar-track {
 	border: rgb(180, 180, 180);
 	background-color: rgb(243, 243, 243);
-	border-top-right-radius: 5px;
-	border-bottom-right-radius: 5px;
+	border-top-right-radius: var(--input-border-radius);
+	border-bottom-right-radius: var(--input-border-radius);
 }
 .no-location-list::-webkit-scrollbar-thumb {
 	background-color: lightgrey;
-	border-radius: 5px;
+	border-radius: var(--input-border-radius);
 }
 .description {
 	margin-bottom: 7px;

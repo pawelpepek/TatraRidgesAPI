@@ -6,7 +6,7 @@
     margin-right: 52px;
 	border: 1px solid black;
 	height: auto;
-	border-radius: 5px;
+	border-radius: var(--input-border-radius);
 }
 .description {
 	display: flex;
@@ -43,7 +43,7 @@
     justify-content: center;
     align-items: center;
     margin: 5px;
-    border: 1px solid black;
+    border: var(--input-border);
 }
 .numbers{
     display: flex;
@@ -63,5 +63,5 @@
 }
 .image{
     margin:3px 5px;
-    
+
 }
