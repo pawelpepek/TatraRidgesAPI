@@ -1,8 +1,7 @@
 .point {
 	display: flex;
 	justify-items: center;
-	margin: 5px;
-	width: 100%;
+	margin: 5px 0px;
 	border: 1px solid black;
 	height: 60px;
 	border-radius: 5px;

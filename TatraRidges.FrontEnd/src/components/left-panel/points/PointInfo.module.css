@@ -1,5 +1,7 @@
 .info {
 	margin: 3px 5px;
+	white-space: nowrap;
+	overflow: hidden;
 }
 .point-with-delete {
 	flex: 70%;

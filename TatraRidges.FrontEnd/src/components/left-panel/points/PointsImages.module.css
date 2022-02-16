@@ -1,7 +1,10 @@
 .images-div {
 	display: flex;
 	flex-direction: column;
+	align-items: center;
 	justify-content: space-between;
+	width: var(--left-margin);
+	min-width: var(--left-margin);
 }
 .image {
 	margin: 5px;
