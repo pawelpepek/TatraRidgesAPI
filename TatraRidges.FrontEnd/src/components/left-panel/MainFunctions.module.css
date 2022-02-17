@@ -1,6 +1,12 @@
 .header {
 	margin-left: var(--left-margin);
+	font-size: 12px;
 }
+
+h1{
+	margin-top: 5px;
+}
+
 .functions {
 	flex: 80%;
 	height: auto;

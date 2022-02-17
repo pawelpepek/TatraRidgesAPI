@@ -110,6 +110,13 @@ const pointsSlice = createSlice({
 		},
 		getRidge(state, actions) {
 			state.ridgeInfo=actions.payload.data
+			if(state.ridgeInfo!=={} as RidgeAllInformation)
+			{
+				state.ridgeInfo.ridgesContainer.forEach(c=>{
+					c.point1=state.points.find(p=>p.id===c.pointId1)
+					c.point2=state.points.find(p=>p.id===c.pointId2)
+				})
+			}
 		},
 		clearRidge(state,actions){
 			state.ridgeInfo={} as RidgeAllInformation

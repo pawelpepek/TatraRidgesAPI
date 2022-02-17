@@ -13,11 +13,11 @@ interface SecondInfoLabel {
 const SecondInfoLabel: React.FC<SecondInfoLabel> = props => {
 	return (
 		<div className={classes.description}>
-			<div className={classes["additiona-info"]}>
-				{props.isEmptyRoute && (
+			{props.isEmptyRoute && (
+				<div className={classes["additiona-info"]}>
 					<span className={classes.empty}>Brak danych</span>
-				)}
-			</div>
+				</div>
+			)}
 			{!props.isConsistentDirection && (
 				<ImageLabel
 					iconSrc={diffDirectionIcon}

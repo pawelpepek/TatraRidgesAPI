@@ -1,0 +1,9 @@
+.p {
+	font-size: 14px;
+	margin: 3px 5px 0px 10px;
+	position: relative;
+}
+.evaluation {
+	position: absolute;
+	right: 5px;
+}

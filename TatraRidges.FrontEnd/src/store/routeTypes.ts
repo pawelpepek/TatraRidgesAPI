@@ -1,3 +1,5 @@
+import { MountainPoint } from "../components/types";
+
 export interface RidgeAllInformation {
 	initalRouteSummary: RouteSummary
 	ridgesContainer: RidgeWithRoutes[]
@@ -14,6 +16,8 @@ export interface RouteSummary extends RouteOptions {
 export interface RidgeWithRoutes {
 	pointId1: number
 	pointId2: number
+	point1?:MountainPoint
+	point2?:MountainPoint
 	pointsConnectionId: number
 	routes: Route[]
 }

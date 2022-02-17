@@ -12,9 +12,9 @@ const MainFunctions: React.FC = () => {
 
 	return (
 		<div className={classes.functions}>
-			<header className={classes.header}>
+			{/* <header className={classes.header}>
 				<h1>Granie Tatr Wysokich</h1>
-			</header>
+			</header> */}
 			<NavigationPanel className={classes.navigation} />
 				{visiblePanel === "admin" && <AdminPanel />}
 				{visiblePanel === "find" && <FindPanel />}

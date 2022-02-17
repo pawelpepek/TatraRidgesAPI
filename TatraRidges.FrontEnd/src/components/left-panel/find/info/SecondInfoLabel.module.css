@@ -1,7 +1,7 @@
 .description {
 	display: flex;
 	flex-direction: row;
-	margin: 5px;
+	margin: 0px 8px 2px;
 }
 .additional-info {
 	width: 100%;
@@ -11,4 +11,5 @@
 	font-weight: bold;
 	width: 100px;
 	white-space: nowrap;
+    margin-right: 5px;
 }
