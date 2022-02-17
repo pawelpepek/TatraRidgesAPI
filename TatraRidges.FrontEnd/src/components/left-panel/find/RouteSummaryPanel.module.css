@@ -1,67 +1,11 @@
 .container {
 	display: flex;
-    flex-direction: column;
-    margin-top: 10px;
-    margin-left: var(--left-margin);
-    margin-right: calc(var(--right-margin) - 8px);
-	border:var(--input-border);
+	flex-direction: column;
+	margin-top: 10px;
+	margin-left: var(--left-margin);
+	margin-right: calc(var(--right-margin) - 8px);
+	border: var(--input-border);
 	height: auto;
 	border-radius: var(--input-border-radius);
 }
-.description {
-	display: flex;
-    flex-direction: row;
-    margin: 5px;
-}
-.section{
-    margin-left: 5px;
-    width: 100%;
-}
-.difficulty{
-    font-family: 'Courier New', monospace;
-    font-size: 20px;
-    font-weight: bold;
-}
-.difficulty-max{
-    font-family: 'Courier New', monospace;
-    font-size: 30px;
-    font-weight: bold;
-    margin-right: 5px;
-}
-.additional-info{
-    width: 100%;
-    
-}
-.rank{
-    border-radius: 50%;
-    background-color: rgb(127, 252, 127);
-    width: 40px;
-    height: 40px;
-    font-weight: bold;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 5px;
-    border: var(--input-border);
-}
-.numbers{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: flex-end;
-}
-.time{
-    width: 100%;
-    text-align: end;
-}
-.empty{
-    color: red;
-    font-weight: bold;
-    width: 100px;
-    white-space: nowrap;
-}
-.image{
-    margin:3px 5px;
 
-}

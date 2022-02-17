@@ -1,0 +1,5 @@
+.description {
+	display: flex;
+    flex-direction: row;
+    margin: 5px;
+}

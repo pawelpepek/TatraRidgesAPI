@@ -1,66 +1,24 @@
 import { RouteSummary } from "../../../store/routeTypes"
 import classes from "./RouteSummaryPanel.module.css"
-import rappelingIcon from "../../img/rappeling-small.svg"
-import diffDirectionIcon from "../../img/different-direction.svg"
+import FirstInfoLabel from "./info/FirstInfoLabel"
+import SecondInfoLabel from "./info/SecondInfoLabel"
 
 const RouteSummaryPanel: React.FC<{ summary: RouteSummary }> = props => {
-	const rank =
-		props.summary.rank > 0 ? "+" + props.summary.rank : props.summary.rank + ""
-
-	const parts = props.summary.routeTime.toString().split(":")
-
-	const hours = parseInt(parts[0])
-	const minutes = parseInt(parts[1])
-
-	const hoursText = hours > 0 ? `${hours} godz. ` : ""
-	const minutesText = minutes > 0 ? `${minutes} min.` : ""
-
 	return (
-			<div className={classes.container}>
-				<div className={classes.description}>
-					<section className={classes.section}>
-						{props.summary.description}
-					</section>
-					<div className={classes.numbers}>
-						<section className={classes.rank}>
-							<p>{rank}</p>
-						</section>
-						<section>
-							<span
-								className={
-									classes.difficulty
-								}>{`${props.summary.avarageDifficulty.text}/`}</span>
-							<span className={classes["difficulty-max"]}>
-								{props.summary.maxDifficulty.text}
-							</span>
-						</section>
-					</div>
-				</div>
-				<div className={classes.description}>
-					<div className={classes["additiona-info"]}>
-						{props.summary.isEmptyRoute && (
-							<span className={classes.empty}>Brak danych</span>
-						)}
-					</div>
-					{!props.summary.isConsistentDirection && (
-						<img
-							className={classes.image}
-							src={diffDirectionIcon}
-							alt='Występują drogi z opisem w odwrotnym kierunku'
-						/>
-					)}
-					{props.summary.rappeling && (
-						<img
-							className={classes.image}
-							src={rappelingIcon}
-							alt='Zjazd na linie'
-						/>
-					)}
-					<div className={classes.time}>
-						<span>{`${hoursText}${minutesText}`}</span>
-					</div>
-				</div>
-			</div>
+		<div className={classes.container}>
+			<FirstInfoLabel
+				text1={props.summary.description}
+				maxDifficulty={props.summary.maxDifficulty.text}
+				avarageDifficulty={props.summary.avarageDifficulty.text}
+				rank={props.summary.rank}
+			/>
+			<SecondInfoLabel
+				rappeling={props.summary.rappeling}
+				isEmptyRoute={props.summary.isEmptyRoute}
+				isConsistentDirection={props.summary.isConsistentDirection}
+				routeTime={props.summary.routeTime}
+			/>
+		</div>
 	)
 }
 

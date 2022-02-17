@@ -1,0 +1,14 @@
+.description {
+	display: flex;
+	flex-direction: row;
+	margin: 5px;
+}
+.additional-info {
+	width: 100%;
+}
+.empty {
+	color: red;
+	font-weight: bold;
+	width: 100px;
+	white-space: nowrap;
+}
