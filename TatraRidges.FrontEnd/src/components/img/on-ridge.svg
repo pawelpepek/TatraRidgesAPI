@@ -1,0 +1,26 @@
+<svg width="40" height="40" xmlns="http://www.w3.org/2000/svg" stroke-linejoin="round" stroke-linecap="round" fill="none" stroke="#000000" stroke-width="2" class="icon icon-tabler icon-tabler-map-2">
+  <path id="svg_5" d="m992.42143,227.87109c-1.81208,-1.61074 -3.02013,-0.67114 -3.07383,-0.72484c0.05369,0.05369 4.88591,2.33557 3.07383,0.72484z" opacity="NaN"/>
+  <path fill="none" stroke="#000" opacity="NaN" d="m70.2521,28.90756" id="svg_9"/>
+  <path fill="none" stroke="#000" opacity="NaN" d="m15.63025,38.65546" id="svg_10"/>
+  <path fill="none" stroke="#000" opacity="NaN" d="m7.56303,37.64706" id="svg_11"/>
+  <line fill="none" x1="32.43697" y1="3.78151" x2="10.5042" y2="38.31933" id="svg_8" stroke-linejoin="undefined" stroke-linecap="undefined" stroke="#000"/>
+  <line transform="rotate(-27.1378 31.5025 3.58124)" fill="none" stroke="#000" x1="34.77977" y1="3.32914" x2="28.22514" y2="3.83334" id="svg_18"/>
+  <line transform="rotate(6.82857 33.5741 4.75639)" fill="none" x1="34.07832" y1="1.89925" x2="33.06992" y2="7.61354" id="svg_19" stroke="#000"/>
+  <path fill="none" stroke="#000" opacity="NaN" d="m17.14286,14.11765" id="svg_25"/>
+  <path fill="none" stroke="#000" opacity="NaN" d="m715.36975,250.85714c0.16807,-7.56303 8.48739,-7.98319 8.48739,-7.98319c0,0 -8.65546,15.54622 -8.48739,7.98319z" id="svg_26"/>
+  <path fill="none" stroke="#000" opacity="NaN" d="m3.61345,2.43697" id="svg_28"/>
+  <path fill="none" stroke="#000" opacity="NaN" d="m-102.90757,-118.78992c-0.16807,0 -0.5042,-0.67227 -0.5042,-0.67227c0,0 0.67227,0.67227 0.5042,0.67227z" id="svg_36"/>
+  <path fill="none" stroke="#000" opacity="NaN" d="m13.27731,22.10084" id="svg_44"/>
+  <path fill="none" stroke="#000" opacity="NaN" d="m9.2437,7.39496" id="svg_58"/>
+  <path fill="none" stroke="#000" opacity="NaN" d="m4.95798,11.17647" id="svg_59"/>
+  <path fill="none" stroke="#000" opacity="NaN" d="m21.2605,4.45378" id="svg_62"/>
+  <path fill="none" stroke="#000" opacity="NaN" d="m18.26389,33.19444" id="svg_67"/>
+  <path fill="none" stroke="#000" opacity="NaN" d="m16.66667,33.26389" id="svg_69"/>
+  <path fill="none" stroke="#000" opacity="NaN" d="m26.66667,25.20833" id="svg_71"/>
+  <path fill="none" stroke="#000" opacity="NaN" d="m24.30556,20.69444" id="svg_73"/>
+  <line transform="rotate(-1.24087 24.0298 10.1119)" id="svg_1" y2="12.46268" x2="22.38806" y1="7.76119" x1="25.67164" stroke="#000" fill="none"/>
+  <line transform="rotate(-1.24087 25.2985 21.4552)" id="svg_2" y2="23.80597" x2="23.65671" y1="19.10447" x1="26.9403" stroke="#000" fill="none"/>
+  <line transform="rotate(-1.24087 15.0747 24.4403)" id="svg_3" y2="26.79104" x2="13.43283" y1="22.08955" x1="16.71642" stroke="#000" fill="none"/>
+  <line transform="rotate(-1.24087 15.9702 36.3806)" id="svg_4" y2="38.73134" x2="14.32836" y1="34.02984" x1="17.61194" stroke="#000" fill="none"/>
+ 
+</svg>

@@ -18,6 +18,7 @@ const RoutePartPanel: React.FC<{ route: Route }> = props => {
 				text2={addDescription}
 				maxDifficulty={route.difficulty}
 				rank={route.rank}
+				routeType={props.route.routeType}
 			/>
 			<SecondInfoLabel
 				rappeling={route.rappeling}
