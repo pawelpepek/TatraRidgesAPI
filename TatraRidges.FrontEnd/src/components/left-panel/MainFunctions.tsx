@@ -2,7 +2,7 @@ import { useSelector } from "react-redux"
 
 import StoreType from "../../store/store-types"
 import AdminPanel from "./admin/AdminPanel"
-import FindPanel from "./find/FindPanel"
+import FindPanel from "./search/SearchPanel"
 import classes from "./MainFunctions.module.css"
 import NavigationPanel from "./NavigationPanel"
 import AuthForm from "./authorization/AuthForm"

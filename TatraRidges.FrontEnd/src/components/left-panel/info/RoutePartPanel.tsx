@@ -1,4 +1,4 @@
-import { Route } from "../../../../store/routeTypes"
+import { Route } from "../../../store/routeTypes"
 import FirstInfoLabel from "./FirstInfoLabel"
 import SecondInfoLabel from "./SecondInfoLabel"
 

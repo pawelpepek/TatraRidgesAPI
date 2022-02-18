@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux"
 import StoreType from "../../../store/store-types"
 import { getRidge } from "../../../store/map-actions"
 
-const FindPanel: React.FC = () => {
+const SearchPanel: React.FC = () => {
 	const dispatch = useDispatch()
 
 	const pointFrom = useSelector((state: StoreType) => state.map.pointFrom)
@@ -26,4 +26,4 @@ const FindPanel: React.FC = () => {
 	)
 }
 
-export default FindPanel
+export default SearchPanel

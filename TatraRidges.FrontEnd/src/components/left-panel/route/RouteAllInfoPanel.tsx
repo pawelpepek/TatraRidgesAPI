@@ -2,7 +2,7 @@ import { RidgeAllInformation } from "../../../store/routeTypes"
 
 import RouteSummaryPanel from "./summary/RouteSummaryPanel"
 import RouteList from "./list/RouteList"
-import MountainsPointsConnectionLabel from "../find/info/MountainsPointsConnectionLabel"
+import MountainsPointsConnectionLabel from "../info/MountainsPointsConnectionLabel"
 
 const RouteAllInfoPanel: React.FC<{ route: RidgeAllInformation }> = props => {
 	const isNotEmpty = props.route.initalRouteSummary !== undefined

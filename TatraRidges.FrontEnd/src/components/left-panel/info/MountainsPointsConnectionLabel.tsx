@@ -1,5 +1,5 @@
 import classes from "./MountainsPointsConnectionLabel.module.css"
-import { MountainPoint } from "../../../types"
+import { MountainPoint } from "../../types"
 import MountainPointRowLabel from "./MountainPointRowLabel"
 
 const MountainsPointsConnectionLabel: React.FC<{
