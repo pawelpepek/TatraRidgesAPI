@@ -14,9 +14,9 @@ const PointInfo: React.FC<PointInfoProps> = props => {
 	}
 	return (
 		<section className={className}>
-			<p className={classes.info}>{props.point.name}</p>
+			<p className={classes.name}>{props.point.name}</p>
 			{props.point.id >= 0 && (
-				<p className={classes.info}>
+				<p className={classes.evaluation}>
 					{props.point.evaluation > 0 ? props.point.evaluation : "/nan"} m.n.p.m
 				</p>
 			)}

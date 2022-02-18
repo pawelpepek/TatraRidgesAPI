@@ -1,8 +1,24 @@
 .info {
-	margin: 3px 5px;
-	white-space: nowrap;
+	display: flex;
+	flex-direction: column;
+	justify-content:space-between;
+	width: 100%;
+}
+.name{
+	margin-left: 5px;
+	margin-top: 5px;
+	margin-bottom: 0px;
+	white-space: normal;
 	overflow: hidden;
 }
+.evaluation{
+	margin-top: 0px;
+	margin-left: 5px;
+	margin-bottom:5px;
+	margin-right: 5px;
+	text-align: right;
+}
+
 .point-with-delete {
 	flex: 70%;
 }

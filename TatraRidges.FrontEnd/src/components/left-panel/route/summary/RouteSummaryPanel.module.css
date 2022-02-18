@@ -1,13 +1,12 @@
 .container {
 	display: flex;
 	flex-direction: column;
-	margin-top: 15px;
-	margin-left: var(--left-margin);
-	margin-right: calc(var(--right-margin) - 8px);
+	margin-top: 20px;
+
 	border-top:var(--input-border);
 	border-bottom:var(--input-border);
-	/* border: var(--input-border); */
+	border: var(--input-border);
 	height: auto;
-	/* border-radius: var(--input-border-radius); */
+	border-radius: var(--input-border-radius);
 }
 

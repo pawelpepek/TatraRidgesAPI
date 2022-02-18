@@ -3,10 +3,13 @@
 	justify-items: center;
 	margin: 5px 0px;
 	border: var(--input-border);
-	height: 60px;
+	height: 80px;
 	border-radius: var(--input-border-radius);
 }
 
 .delete {
-	align-self: center;
+	position:fixed;
+	align-self: flex-end;
+	margin-bottom: 5px;
+	margin-left: 5px;
 }

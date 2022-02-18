@@ -7,14 +7,15 @@ import MainFunctions from "./MainFunctions"
 
 const MainPanel: React.FC = () => {
 	const notification = useSelector((state: StoreType) => state.ui.notification)
+	const isRoute=useSelector((state: StoreType) => state.ui.isRouteVisible)
 
 	return (
 		<div className={classes.main}>
 			<MainFunctions />
-			<Notification
+			{!isRoute && <Notification
 				status={notification.status}
 				message={notification.message}
-			/>
+			/>}
 		</div>
 	)
 }

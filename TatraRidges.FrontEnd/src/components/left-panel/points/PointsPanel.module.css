@@ -1,8 +1,10 @@
 .main-div {
 	display: flex;
 	align-items: center;
+	width: 100%;
 }
 .button-reverse {
+
 	width: 45px;
 	height: 45px;
 }

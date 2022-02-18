@@ -2,7 +2,7 @@ import { useSelector } from "react-redux"
 
 import StoreType from "../../store/store-types"
 import AdminPanel from "./admin/AdminPanel"
-import FindPanel from "./search/SearchPanel"
+import SearchPanel from "./find/SearchPanel"
 import classes from "./MainFunctions.module.css"
 import NavigationPanel from "./NavigationPanel"
 import AuthForm from "./authorization/AuthForm"
@@ -13,14 +13,16 @@ const MainFunctions: React.FC = () => {
 	return (
 		<div className={classes.functions}>
 			{visiblePanel !== "route" && (
-				<header className={classes.header}>
-					<h1>Granie Tatr Wysokich</h1>
-				</header>
+				<>
+					<header className={classes.header}>
+						<h1>Granie Tatr Wysokich</h1>
+					</header>
+					<NavigationPanel className={classes.navigation} />
+					{visiblePanel === "admin" && <AdminPanel />}
+					{visiblePanel === "search" && <SearchPanel />}
+					{visiblePanel === "login" && <AuthForm />}
+				</>
 			)}
-			<NavigationPanel className={classes.navigation} />
-			{visiblePanel === "admin" && <AdminPanel />}
-			{visiblePanel === "search" && <FindPanel />}
-			{visiblePanel === "login" && <AuthForm />}
 			{visiblePanel === "route" && <RoutePanel />}
 		</div>
 	)

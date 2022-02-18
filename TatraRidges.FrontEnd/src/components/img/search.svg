@@ -1,0 +1,8 @@
+<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg"  stroke-width="2" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path opacity="NaN" d="m7.3846875835413845,11.556521114941466 c5.85000341736148,-0.7512359289303989 -0.23031481256263295,-3.630972659514898 4.9517744519887765,-3.8313002465989467 " id="svg_10" stroke="null"/>
+
+</svg>

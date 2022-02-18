@@ -5,8 +5,8 @@
 }
 
 .no-location-list::-webkit-scrollbar {
-	width: 20px;
-	height: 14px;
+	width: 10px;
+	height: 10px;
 }
 .no-location-list::-webkit-scrollbar-track {
 	border: rgb(180, 180, 180);
