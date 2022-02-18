@@ -1,6 +1,9 @@
 .list {
+    display: inline-block;
 	overflow: auto;
 	height: 455px;
 	margin-bottom: 5px;
-    border-top: 1px solid black;
+    margin-left: var(--left-margin);
+    margin-right: calc(var(--right-margin) - 24px);
+    padding: 5px 0px;
 }
