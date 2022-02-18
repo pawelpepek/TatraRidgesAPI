@@ -1,7 +1,7 @@
 import { RidgeAllInformation } from "../../../store/routeTypes"
 
 import RouteSummaryPanel from "./summary/RouteSummaryPanel"
-import RouteList from "./list/RouteList"
+import RouteList from "../route/list/RouteList"
 
 const RouteAllInfoPanel: React.FC<{route: RidgeAllInformation}> = props => {
 	const isNotEmpty=props.route.initalRouteSummary!==undefined

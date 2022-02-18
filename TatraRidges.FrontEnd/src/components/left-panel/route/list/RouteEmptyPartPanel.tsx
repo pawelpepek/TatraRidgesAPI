@@ -1,4 +1,4 @@
-import FirstInfoLabel from "../info/FirstInfoLabel"
+import FirstInfoLabel from "../../find/info/FirstInfoLabel"
 import classes from "./RouteEmptyPartPanel.module.css"
 
 const RouteEmptyPartPanel: React.FC = () => {

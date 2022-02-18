@@ -1,7 +1,7 @@
 import { RidgeWithRoutes } from "../../../../store/routeTypes"
 import classes from "./RouteAnyPartPanel.module.css"
-import RoutePartPanel from "../info/RoutePartPanel"
-import MountainsPointsConnectionLabel from "../info/MountainsPointsConnectionLabel"
+import RoutePartPanel from "../../find/info/RoutePartPanel"
+import MountainsPointsConnectionLabel from "../../find/info/MountainsPointsConnectionLabel"
 import RouteEmptyPartPanel from "./RouteEmptyPartPanel"
 
 const RouteAnyPartPanel: React.FC<{
