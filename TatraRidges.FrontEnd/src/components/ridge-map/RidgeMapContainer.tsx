@@ -64,7 +64,6 @@ const RidgeMapContainer: React.FC<RidgeMapProps> = props => {
 		if (e.originalEvent.key === "Delete") {
 			setDeleting(true)
 		}
-		console.log(e.originalEvent.key)
 		if (e.originalEvent.key === "z") {
 			fitMap()
 		}
