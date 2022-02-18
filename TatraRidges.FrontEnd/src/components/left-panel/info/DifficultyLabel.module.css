@@ -1,12 +1,10 @@
-.difficulty{
-    font-family: 'Courier New', monospace;
-    font-size: 18px;
-    font-weight: bold;
+.difficulty {
+	font-family: "Courier New", monospace;
+	font-size: 18px;
+	font-weight: bold;
 }
-.difficulty-max{
-    font-family: 'Courier New', monospace;
-    font-size: 26px;
-    font-weight: bold;
-    margin-right: 5px;
-    margin-bottom: 0px;
+.difficulty-max {
+	font-size: 26px;
+	margin-right: 5px;
+	margin-bottom: 0px;
 }
