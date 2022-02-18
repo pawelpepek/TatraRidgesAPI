@@ -1,4 +1,4 @@
-import { LeafletKeyboardEvent, Map } from "leaflet"
+import L, { LeafletEvent, LeafletKeyboardEvent, Map } from "leaflet"
 import { useState, useCallback, useEffect } from "react"
 import { MapContainer, TileLayer } from "react-leaflet"
 import { useSelector, useDispatch } from "react-redux"
@@ -15,6 +15,9 @@ const RidgeMapContainer: React.FC<RidgeMapProps> = props => {
 	const dispatch = useDispatch()
 
 	const pointTo = useSelector((state: StoreType) => state.map.pointTo)
+
+	let map: L.Map
+
 	const [deleting, setDeleting] = useState(false)
 
 	useEffect(() => {
@@ -25,31 +28,53 @@ const RidgeMapContainer: React.FC<RidgeMapProps> = props => {
 		}
 	}, [deleting])
 
-	let map: Map
+	const fitMap = useCallback(() => {
+		const layers: L.Layer[] = []
+		if (map !== undefined && map !== null && Object.keys(map).length > 3) {
+			// console.log(map)
+			map.eachLayer(lr => {
+				// console.log(lr)
+				if (lr.hasOwnProperty("_latlngs")) {
+					console.log(lr)
+					layers.push(lr)
+				}
+			})
+			if (layers.length > 0) {
+				const group = L.featureGroup(layers)
+				console.log(group)
+				const bounds = group.getBounds()
+				bounds.isValid() && map.fitBounds(bounds)
+			}
+		}
+	},[])
 
-	const onChangeMap = useCallback(() => {
+	const onChangeMap = useCallback((e: LeafletEvent) => {
+		const m = e.target as Map
 		const value = {
 			coordinates: {
-				latitude: map.getCenter().lat,
-				longitude: map.getCenter().lng,
+				latitude: m.getCenter().lat,
+				longitude: m.getCenter().lng,
 			},
-			zoom: map.getZoom(),
+			zoom: m.getZoom(),
 		}
 		dispatch(centerActions.setValues(value))
-		// console.log(value)
 	}, [])
 
 	const onKeyDown = useCallback((e: LeafletKeyboardEvent) => {
 		if (e.originalEvent.key === "Delete") {
 			setDeleting(true)
 		}
+		console.log(e.originalEvent.key)
+		if (e.originalEvent.key === "z") {
+			fitMap()
+		}
 	}, [])
 
 	const onMapCreated = useCallback((m: Map) => {
 		map = m
-		map.on("moveend", onChangeMap)
-		map.on("zoomend", onChangeMap)
-		map.on("keydown", onKeyDown)
+		m.on("moveend", onChangeMap)
+		m.on("zoomend", onChangeMap)
+		m.on("keydown", onKeyDown)
 	}, [])
 
 	return (
