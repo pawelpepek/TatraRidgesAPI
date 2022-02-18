@@ -1,5 +1,5 @@
 import classes from "./MountainPointRowLabel.module.css"
-import { MountainPoint } from "../../types"
+import { MountainPoint } from "../../../types"
 
 const MountainPointRowLabel: React.FC<{
 	point: MountainPoint

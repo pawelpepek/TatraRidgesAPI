@@ -1,4 +1,4 @@
-import {RidgeWithRoutes} from "../../../store/routeTypes"
+import {RidgeWithRoutes} from "../../../../store/routeTypes"
 import RouteAnyPartPanel from "./RouteAnyPartPanel"
 import classes from "./RouteList.module.css"
 

@@ -1,6 +1,6 @@
-import { Route } from "../../../store/routeTypes"
-import FirstInfoLabel from "./info/FirstInfoLabel"
-import SecondInfoLabel from "./info/SecondInfoLabel"
+import { Route } from "../../../../store/routeTypes"
+import FirstInfoLabel from "./FirstInfoLabel"
+import SecondInfoLabel from "./SecondInfoLabel"
 
 const RoutePartPanel: React.FC<{ route: Route }> = props => {
 	const route = props.route
