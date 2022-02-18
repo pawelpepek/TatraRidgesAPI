@@ -1,7 +1,7 @@
 import { RouteSummary } from "../../../../store/routeTypes"
 import classes from "./RouteSummaryPanel.module.css"
-import FirstInfoLabel from "../info/FirstInfoLabel"
-import SecondInfoLabel from "../info/SecondInfoLabel"
+import FirstInfoLabel from "../../find/info/FirstInfoLabel"
+import SecondInfoLabel from "../../find/info/SecondInfoLabel"
 
 const RouteSummaryPanel: React.FC<{ summary: RouteSummary }> = props => {
 	return (

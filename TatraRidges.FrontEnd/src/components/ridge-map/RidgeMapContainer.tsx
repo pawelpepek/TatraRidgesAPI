@@ -41,12 +41,12 @@ const RidgeMapContainer: React.FC<RidgeMapProps> = props => {
 			})
 			if (layers.length > 0) {
 				const group = L.featureGroup(layers)
-				console.log(group)
+				// console.log(group)
 				const bounds = group.getBounds()
 				bounds.isValid() && map.fitBounds(bounds)
 			}
 		}
-	},[])
+	}, [])
 
 	const onChangeMap = useCallback((e: LeafletEvent) => {
 		const m = e.target as Map

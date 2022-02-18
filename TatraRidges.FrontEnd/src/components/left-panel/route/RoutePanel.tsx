@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux"
 import StoreType from "../../../store/store-types"
-import RouteAllInfoPanel from "../find/RouteAllInfoPanel"
+import RouteAllInfoPanel from "./RouteAllInfoPanel"
 
 const RoutePanel: React.FC = () => {
     const ridgeInfo = useSelector((state: StoreType) => state.map.ridgeInfo)
