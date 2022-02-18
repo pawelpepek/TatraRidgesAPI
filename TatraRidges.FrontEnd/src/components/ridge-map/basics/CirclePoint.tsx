@@ -13,6 +13,7 @@ const CirlcePoint: React.FC<MountainPoint> = point => {
 
 	const pointTo = useSelector((state: StoreType) => state.map.pointTo)
 	const pointFrom = useSelector((state: StoreType) => state.map.pointFrom)
+	const visiblePanel = useSelector((state: StoreType) => state.ui.visiblePanel)
 
 	// const [isToolTip, setTooltip] = useState(false)
 
@@ -21,7 +22,12 @@ const CirlcePoint: React.FC<MountainPoint> = point => {
 		radius: 10,
 	}
 
-	const setActualPoint = () => dispatch(pointsActions.setActualPoint({ point }))
+	const setActualPoint = ()=>{
+		if(visiblePanel!=="route")
+		{
+			dispatch(pointsActions.setActualPoint({ point }))
+		}
+	}
 
 	return (
 		<>

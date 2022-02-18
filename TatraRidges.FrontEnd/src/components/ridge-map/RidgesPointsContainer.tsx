@@ -8,7 +8,19 @@ import PointsContainer from "./basics/PointsContainer"
 const RidgesPointsContainer: React.FC = () => {
 	const dispatch = useDispatch()
 
-	const points = useSelector((state: StoreType) => state.map.points)
+	let points = useSelector((state: StoreType) => state.map.points)
+	const ridge = useSelector((state: StoreType) => state.map.ridgeInfo)
+	const isRouteVisible = useSelector(
+		(state: StoreType) => state.ui.isRouteVisible
+	)
+
+	if (isRouteVisible) {
+		const ridges = ridge.ridgesContainer
+		const pointsIds = ridges.map(r => r.pointId1)
+		pointsIds.push(ridges[ridges.length - 1].pointId2)
+
+		points = points.filter(p => pointsIds.includes(p.id))
+	}
 
 	useEffect(() => {
 		dispatch(fetchPointsData())

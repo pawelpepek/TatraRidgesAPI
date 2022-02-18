@@ -8,9 +8,21 @@ import StoreType from "../../store/store-types"
 const RidgesLinesContainer: React.FC = () => {
 	const dispatch = useDispatch()
 
-	const connections = useSelector((state: StoreType) => state.map.connections)
+	let connections = useSelector((state: StoreType) => state.map.connections)
 
 	const pointsOk = useSelector((state: StoreType) => state.map.pointsOk)
+
+	const ridge = useSelector((state: StoreType) => state.map.ridgeInfo)
+	const isRouteVisible = useSelector(
+		(state: StoreType) => state.ui.isRouteVisible
+	)
+	
+	if (isRouteVisible) {
+		const ridges = ridge.ridgesContainer
+		const ridgesIds = ridges.map(r => r.pointsConnectionId)
+
+		connections = connections.filter(c => ridgesIds.includes(c.id))
+	}
 
 	useEffect(() => {
 		dispatch(fetchConnectionsData())

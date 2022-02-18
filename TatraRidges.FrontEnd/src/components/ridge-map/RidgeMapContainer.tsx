@@ -7,7 +7,7 @@ import { centerActions } from "../../store/center-slice"
 import StoreType from "../../store/store-types"
 import { deletePointById } from "../../store/map-actions"
 import RidgesLinesContainer from "./RidgesLinesContainer"
-import RidgesMarkersContainer from "./RidgesPointsContainer"
+import RidgesPointsContainer from "./RidgesPointsContainer"
 import { RidgeMapProps } from "../types"
 
 const RidgeMapContainer: React.FC<RidgeMapProps> = props => {
@@ -67,7 +67,7 @@ const RidgeMapContainer: React.FC<RidgeMapProps> = props => {
 				attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 				url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
 			/>
-			<RidgesMarkersContainer />
+			<RidgesPointsContainer />
 			<RidgesLinesContainer />
 		</MapContainer>
 	)

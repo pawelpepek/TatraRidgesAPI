@@ -1,20 +1,13 @@
-// import { useSelector } from "react-redux"
-
-// import StoreType from "../../../store/store-types"
-// import PointsPanel from "../points/PointsPanel"
-// import PanelHeader from "../PanelHeader"
-// import RoutePanel from "./route-form/RoutePanel"
-// import classes from "./AdminPanel.module.css"
-// import AdminNavigationPanel from "./AdminNavigationPanel"
+import { useSelector } from "react-redux"
+import StoreType from "../../../store/store-types"
+import RouteAllInfoPanel from "../find/RouteAllInfoPanel"
 
 const RoutePanel: React.FC = () => {
-	// const partVisible = useSelector(
-	// 	(state: StoreType) => state.ui.visibleAdminPart
-	// )
+    const ridgeInfo = useSelector((state: StoreType) => state.map.ridgeInfo)
 
 	return (
 		<>
-			<p>dróżka</p>
+			<RouteAllInfoPanel route={ridgeInfo} />
 		</>
 	)
 }
