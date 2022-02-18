@@ -5,12 +5,16 @@ import MountainPointRowLabel from "./MountainPointRowLabel"
 const MountainsPointsConnectionLabel: React.FC<{
 	point1: MountainPoint
 	point2: MountainPoint
+	routesCount?: number
 }> = props => {
 	return (
-		<div>
-			<MountainPointRowLabel point={props.point1} />
+		<>
+			<MountainPointRowLabel
+				point={props.point1}
+				numberDisplay={props.routesCount}
+			/>
 			<MountainPointRowLabel point={props.point2} className={classes.p2} />
-		</div>
+		</>
 	)
 }
 

@@ -5,4 +5,44 @@
 .evaluation {
 	position: absolute;
 	right: 5px;
+	margin-right: 2px;
+}
+.add {
+	position: absolute;
+	right: 50px;
+	border-radius: 50%;
+	background-color: white;
+	padding: 2px;
+	text-align: center;
+	font-weight: bold;
+	color: blue;
+	border: 2px solid blue;
+	animation: grow-animation 2s ease-in-out infinite;
+	font-size: 14px;
+}
+@keyframes grow-animation {
+	0% {
+		transform: rotate(0deg);
+	}
+	5% {
+		transform: rotate(25deg);
+	}
+	10% {
+		transform: rotate(0deg);
+	}
+	15% {
+		transform: rotate(25deg);
+	}
+	20% {
+		transform: rotate(0deg);
+	}
+	25% {
+		transform: rotate(25deg);
+	}
+	30% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(0deg);
+	}
 }
