@@ -1,12 +1,12 @@
 .list {
-    display: inline-block;
+	display: inline-block;
 	overflow: auto;
 	height: auto;
 	margin-bottom: 5px;
-    padding: 5px 0px;
-    overflow-y: overlay;
-    border-radius: var(--input-border-radius);
-    border:var(--input-border)
+	padding: 0px 0px;
+	overflow-y: overlay;
+	border-radius: var(--input-border-radius);
+	border: var(--input-border);
 }
 
 .list::-webkit-scrollbar {
@@ -22,4 +22,7 @@
 .list::-webkit-scrollbar-thumb {
 	background-color: lightgrey;
 	border-radius: var(--input-border-radius);
+}
+.list li:last-child {
+	border-bottom: none;
 }
