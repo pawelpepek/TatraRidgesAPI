@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit"
 import {isLoginOk, loginHandler} from "./authorizationHandler"
 
 const initialState = {
-	visiblePanel: "find",
+	visiblePanel: "search",
 	notification: {
 		status: "ok",
 		message: "",
@@ -31,7 +31,7 @@ const uiSlice = createSlice({
 				state.visiblePanel = "admin"
 			} else {
 				if (state.visiblePanel === "admin") {
-					state.visiblePanel = "find"
+					state.visiblePanel = "search"
 				}
 				localStorage.removeItem("token")
 			}

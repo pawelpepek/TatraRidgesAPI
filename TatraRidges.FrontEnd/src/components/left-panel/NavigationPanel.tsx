@@ -24,7 +24,7 @@ const NavigationPanel: React.FC<{ className?: string }> = props => {
 		const button: HTMLButtonElement = event.currentTarget
 		if (button.id === "button-logout") {
 			dispatch(uiActions.setLogged(false))
-			changePanelVersion("find")
+			changePanelVersion("search")
 		} else {
 			changePanelVersion(getTab(button.id))
 		}
@@ -35,11 +35,11 @@ const NavigationPanel: React.FC<{ className?: string }> = props => {
 	return (
 		<nav className={className}>
 			<RoundButton
-				idButton={"button-find"}
+				idButton={"button-search"}
 				alt='Wyszukiwanie drogi'
 				imageSrc={mapIcon}
 				onClick={buttonClickHandler}
-				selected={visiblePanel === "find"}
+				selected={visiblePanel === "search"}
 			/>
 			<RoundButton
 				idButton={"button-admin"}

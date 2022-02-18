@@ -17,7 +17,7 @@ const MainFunctions: React.FC = () => {
 			</header> */}
 			<NavigationPanel className={classes.navigation} />
 				{visiblePanel === "admin" && <AdminPanel />}
-				{visiblePanel === "find" && <FindPanel />}
+				{visiblePanel === "search" && <FindPanel />}
 				{visiblePanel === "login" && <AuthForm />}
 		</div>
 	)
