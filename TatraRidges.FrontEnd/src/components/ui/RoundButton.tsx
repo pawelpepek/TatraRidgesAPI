@@ -1,4 +1,5 @@
 import classes from "./RoundButton.module.css"
+import Tooltip from "./Tooltip"
 
 export interface RoundButtonProps {
 	idButton?: string
@@ -27,9 +28,7 @@ const RoundButton: React.FC<RoundButtonProps> = props => {
 			onClick={buttonClickHandler}
 			id={props.idButton}>
 			<img alt={props.alt} src={props.imageSrc} />
-			<div className={classes.tooltip}>
-				<span>{props.alt}</span>
-			</div>
+			<Tooltip text={props.alt} className={classes.tooltip} />
 		</button>
 	)
 }

@@ -19,16 +19,7 @@
 	opacity: 0.5;
 	background-color: transparent;
 }
-.tooltip {
-	display: none;
-	position: absolute;
-	z-index: 1000;
-}
+
 .round-button:hover .tooltip {
 	display: block;
-	border-radius: var(--input-border-radius);
-	border: var(--input-border);
-	background-color: azure;
-	margin-top: 10px;
-	padding: 5px;
 }
