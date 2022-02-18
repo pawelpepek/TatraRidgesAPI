@@ -40,6 +40,10 @@ const uiSlice = createSlice({
 		setAdminPartVisible(state, action) {
 			state.visibleAdminPart = action.payload
 		},
+		setRouteVisible(state,action)
+		{
+			state.visiblePanel="route"
+		}
 	},
 })
 

@@ -1,6 +1,7 @@
 import { Coordinates } from "../components/types"
 import dataDispatcher from "./dispatch-actions"
 import { pointsActions } from "./map-slice"
+import {uiActions} from "./ui-slice"
 
 export const movePoint = (id: number, coordinates: Coordinates) => {
 	const props = {
@@ -67,5 +68,5 @@ export const getRidge = (pointFrom: number, pointTo: number) => {
 		isBody: true,
 		pathPart,
 	}
-	return dataDispatcher(props, pointsActions.getRidge)
+	return dataDispatcher(props, [pointsActions.getRidge,uiActions.setRouteVisible])
 }

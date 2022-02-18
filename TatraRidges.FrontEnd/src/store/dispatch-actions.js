@@ -1,18 +1,17 @@
 import { uiActions } from "./ui-slice"
-import {getMessage} from "./statusCodeMessage"
+import { getMessage } from "./statusCodeMessage"
 
 const fetchData = async props => {
 	let url = "https://localhost:44342/api/" + props.location
 	if (props.pathPart !== undefined) {
 		url += props.pathPart
 	}
-	const headers={
+	const headers = {
 		"content-type": "application/json;charset=UTF-8",
 	}
 
-	if(props.token)
-	{
-		headers["Authorization"]=`Bearer ${localStorage.getItem("token")}`
+	if (props.token) {
+		headers["Authorization"] = `Bearer ${localStorage.getItem("token")}`
 	}
 	const response = await fetch(url, {
 		method: props.method,
@@ -23,16 +22,13 @@ const fetchData = async props => {
 			if (response.ok) {
 				if (props.isBody) {
 					return await response.json()
-				} else if(props.isText){
+				} else if (props.isText) {
 					return await response.text()
-				}
-				else {
+				} else {
 					return true
 				}
-			}
-			else
-			{
-				const message=getMessage(response.status)
+			} else {
+				const message = getMessage(response.status)
 				throw new Error(message)
 			}
 		})
@@ -71,15 +67,7 @@ const dataDispatcher = (props, dispatcher) => {
 			})
 		)
 		try {
-			const data = await fetchData(props)
-
-			dispatch(
-				uiActions.showNotification({
-					status: "success",
-					message: "Ok",
-				})
-			)
-			if (data) {
+			const makeDispatch=(props,dispatcher)=>{
 				if (
 					props.body != null ||
 					data !== true ||
@@ -94,6 +82,27 @@ const dataDispatcher = (props, dispatcher) => {
 					)
 				} else {
 					dispatch(dispatcher())
+				}
+			}
+
+
+			const data = await fetchData(props)
+
+			dispatch(
+				uiActions.showNotification({
+					status: "success",
+					message: "Ok",
+				})
+			)
+			if (data) {
+				let dispatchers = dispatcher
+				if (Object.prototype.toString.call(dispatcher) !== "[object Array]") {
+					dispatchers = new Array()
+					dispatchers.push(dispatcher)
+				}
+				for(const dis of dispatchers)
+				{
+					makeDispatch(props,dis)
 				}
 				return true
 			}

@@ -116,6 +116,7 @@ const pointsSlice = createSlice({
 					c.point1=state.points.find(p=>p.id===c.pointId1)
 					c.point2=state.points.find(p=>p.id===c.pointId2)
 				})
+				
 			}
 		},
 		clearRidge(state,actions){

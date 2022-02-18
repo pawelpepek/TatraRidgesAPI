@@ -25,7 +25,7 @@ const FindPanel: React.FC = () => {
 			<PanelHeader text='Wyszukiwanie dróg' />
 			<PointsPanel deleteVisible={false} />
 			<RoundButton alt='Wyszukaj' imageSrc={icon} onClick={clickHandler} />
-			<RouteAllInfoPanel route={ridgeInfo} />
+			{/* <RouteAllInfoPanel route={ridgeInfo} /> */}
 		</>
 	)
 }
