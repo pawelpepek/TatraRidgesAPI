@@ -11,7 +11,7 @@ const TimeLabel: React.FC<{ routeTime: Date }> = props => {
 
 	return (
 		<div className={classes.time}>
-			<span>{`${hoursText}${minutesText}`}</span>
+			<span data-tip={"Czas przejścia podany w przewodniku"}>{`${hoursText}${minutesText}`}</span>
 		</div>
 	)
 }

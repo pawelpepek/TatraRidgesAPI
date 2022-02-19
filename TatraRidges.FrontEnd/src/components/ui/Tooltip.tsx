@@ -1,12 +1,15 @@
-import classes from "./Tooltip.module.css"
+import ReactTooltip from "react-tooltip"
 
-const Tooltip: React.FC<{ text: string; className: string }> = props => {
-	const className = `${classes.tooltip} ${props.className}`
-
+const Tooltip: React.FC = () => {
 	return (
-		<div className={className}>
-			<span>{props.text}</span>
-		</div>
+		<ReactTooltip
+			type={"info"}
+			backgroundColor='aliceblue'
+			borderColor='gray'
+			border={true}
+			textColor='black'
+			delayShow={400}
+		/>
 	)
 }
 

@@ -17,7 +17,7 @@ const RankLabel: React.FC<{ rank: number }> = props => {
 	const sectionStyle = { backgroundColor: backgroundColor }
 
 	return (
-		<section className={classes.rank} style={sectionStyle}>
+		<section data-tip={"Ranking drogi"} className={classes.rank} style={sectionStyle}>
 			<p>{rank}</p>
 		</section>
 	)

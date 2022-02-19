@@ -19,7 +19,3 @@
 	opacity: 0.5;
 	background-color: transparent;
 }
-
-.round-button:hover .tooltip {
-	display: block;
-}

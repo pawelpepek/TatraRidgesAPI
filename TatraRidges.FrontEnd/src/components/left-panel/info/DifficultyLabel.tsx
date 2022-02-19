@@ -7,7 +7,14 @@ const DifficultyLabel: React.FC<{ text: string; small?: boolean }> = props => {
 	}`
 
 	const text = (props.small ? "Średni" : "Maksymalny") + " poziom trudności"
-	return <span className={className}>{props.text}</span>
+	return (
+		<>
+			<span data-tip={text} className={className}>
+				{props.text}
+			</span>
+			
+		</>
+	)
 }
 
 export default DifficultyLabel

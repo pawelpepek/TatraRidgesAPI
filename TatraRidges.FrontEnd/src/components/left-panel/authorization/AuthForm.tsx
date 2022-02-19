@@ -9,6 +9,7 @@ import {login}from "../../../store/user-actions"
 
 import classes from "./AuthForm.module.css"
 import StoreType from "../../../store/store-types"
+import Tooltip from "../../ui/Tooltip"
 
 const AuthForm: React.FC = () => {
 
@@ -56,6 +57,7 @@ const AuthForm: React.FC = () => {
 					/>
 				</div>
 			</form>
+			<Tooltip/>
 		</>
 	)
 }

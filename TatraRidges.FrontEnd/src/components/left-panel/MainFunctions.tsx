@@ -7,6 +7,7 @@ import classes from "./MainFunctions.module.css"
 import NavigationPanel from "./NavigationPanel"
 import AuthForm from "./authorization/AuthForm"
 import RoutePanel from "./route/RoutePanel"
+import Tooltip from "../ui/Tooltip"
 
 const MainFunctions: React.FC = () => {
 	const visiblePanel = useSelector((state: StoreType) => state.ui.visiblePanel)

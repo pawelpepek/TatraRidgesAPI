@@ -12,9 +12,15 @@ const MountainPointRowLabel: React.FC<{
 		<p className={className}>
 			<span>{props.point.name}</span>
 			{props.numberDisplay !== undefined && props.numberDisplay > 1 && (
-				<button className={classes.add}>+{props.numberDisplay}</button>
+				<button
+					data-tip='Alternatywne warianty do wyboru'
+					className={classes.add}>
+					+{props.numberDisplay}
+				</button>
 			)}
-			<span className={classes.evaluation}>{props.point.evaluation}</span>
+			<span data-tip='Wysokość w m.n.p.m.' className={classes.evaluation}>
+				{props.point.evaluation}
+			</span>
 		</p>
 	)
 }
