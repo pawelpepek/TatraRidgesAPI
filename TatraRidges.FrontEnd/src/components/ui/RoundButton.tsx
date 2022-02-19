@@ -1,3 +1,5 @@
+import { useSelector } from "react-redux"
+import StoreType from "../../store/store-types"
 import classes from "./RoundButton.module.css"
 
 export interface RoundButtonProps {
@@ -17,9 +19,11 @@ const RoundButton: React.FC<RoundButtonProps> = props => {
 		}
 	}
 
+	const status=useSelector((state: StoreType) => state.ui.notification.status)
+
 	const buttonClasses = `${classes["round-button"]} ${
 		props.selected ? classes.selected : ""
-	}  ${props.disabled ? classes.disabled : ""} ${props.className}`
+	}  ${props.disabled || status==="pending" ? classes.disabled : ""} ${props.className}`
 
 	return (
 		<button
