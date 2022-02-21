@@ -35,7 +35,7 @@ const RidgeMapContainer: React.FC<RidgeMapProps> = props => {
 			map.eachLayer(lr => {
 				// console.log(lr)
 				if (lr.hasOwnProperty("_latlngs")) {
-					console.log(lr)
+					// console.log(lr)
 					layers.push(lr)
 				}
 			})

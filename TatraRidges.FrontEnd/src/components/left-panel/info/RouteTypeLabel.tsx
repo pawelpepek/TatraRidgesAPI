@@ -18,7 +18,11 @@ const RouteTypeLabel: React.FC<{ routeType: RouteType }> = props => {
 
 	const icon = getIcon(props.routeType.id)
 
-	return <ImageLabel iconSrc={icon} alt={props.routeType.name} />
+	return (
+		<div>
+			<ImageLabel iconSrc={icon} alt={props.routeType.name} />
+		</div>
+	)
 }
 
 export default RouteTypeLabel
