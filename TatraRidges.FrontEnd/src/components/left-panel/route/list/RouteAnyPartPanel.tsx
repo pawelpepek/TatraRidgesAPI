@@ -3,6 +3,7 @@ import classes from "./RouteAnyPartPanel.module.css"
 import RoutePartPanel from "./RoutePartPanel"
 import MountainsPointsConnectionLabel from "../../info/MountainsPointsConnectionLabel"
 import RouteEmptyPartPanel from "./RouteEmptyPartPanel"
+import RouteVersionsButton from "./RouteVersionsButton"
 
 const RouteAnyPartPanel: React.FC<{
 	ridgeWithRoutes: RidgeWithRoutes
@@ -16,11 +17,11 @@ const RouteAnyPartPanel: React.FC<{
 			className={classes.container}
 			key={props.ridgeWithRoutes.pointsConnectionId}>
 			{point1 !== undefined && point2 != undefined && (
-				<MountainsPointsConnectionLabel
-					point1={point1}
-					point2={point2}
-					routesCount={routes.length}
-				/>
+				<MountainsPointsConnectionLabel point1={point1} point2={point2}>
+					{routes !== undefined && routes !== null && routes.length > 1 && (
+						<RouteVersionsButton routes={routes} />
+					)}
+				</MountainsPointsConnectionLabel>
 			)}
 
 			{routes.length > 0 ? (
