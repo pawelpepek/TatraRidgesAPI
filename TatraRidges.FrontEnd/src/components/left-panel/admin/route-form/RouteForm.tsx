@@ -8,10 +8,14 @@ import RouteCheckboxRow from "./RouteCheckBoxRow"
 import { useSelector, useDispatch } from "react-redux"
 import StoreType from "../../../../store/store-types"
 import { routeFormActions } from "../../../../store/route-form-slice"
+import { getParameters } from "../../../../store/map-actions"
+import { useEffect } from "react"
 
 const RouteForm: React.FC<{ className?: string }> = props => {
 	const dispatch = useDispatch()
 
+	const isStarted = useSelector((state: StoreType) => state.routeForm.isRunning)
+	
 	const isValid = useSelector((state: StoreType) => state.routeForm.isFilled)
 
 	const formValue = useSelector((state: StoreType) => state.routeForm)
@@ -21,6 +25,12 @@ const RouteForm: React.FC<{ className?: string }> = props => {
 		console.log(formValue)
 		dispatch(routeFormActions.clear(null))
 	}
+
+	useEffect(() => {
+		if (!isStarted) {
+			dispatch(getParameters())
+		}
+	}, [isStarted])
 
 	return (
 		<form onSubmit={submitHandler}>
@@ -49,7 +59,7 @@ const RouteForm: React.FC<{ className?: string }> = props => {
 				</tbody>
 			</table>
 			<div className={classes["panel-button"]}>
-				<RoundButton alt='Dodaj' imageSrc={addIcon} disabled={!isValid}/>
+				<RoundButton alt='Dodaj' imageSrc={addIcon} disabled={!isValid} />
 			</div>
 		</form>
 	)

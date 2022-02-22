@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { fillObject, objectIsFilled } from "./filler"
+import { RouteType, Difficulty, Adjective, Guide } from "./routeTypes"
 
 export interface OptionsProps {
 	value: string
@@ -7,6 +8,13 @@ export interface OptionsProps {
 }
 
 export interface RouteFormValues {
+	isRunning: boolean
+	containerValues: {
+		guides: Guide[]
+		routeTypes: RouteType[]
+		difficulties: Difficulty[]
+		adjectives: Adjective[]
+	}
 	consistentDirection: boolean
 	guide: number
 	volume: number | null
@@ -21,6 +29,13 @@ export interface RouteFormValues {
 }
 
 const initialState: RouteFormValues = {
+	isRunning: false,
+	containerValues: {
+		guides: [],
+		difficulties: [],
+		adjectives: [],
+		routeTypes: [],
+	},
 	consistentDirection: false,
 	guide: 1,
 	volume: 1,
@@ -52,6 +67,9 @@ const routeFormSlice = createSlice({
 			state.routeTime = null
 			state.rappeling = false
 			state.consistentDirection = false
+		},
+		setValuesContainer(state, action) {
+			state.containerValues = action.payload.data
 		},
 	},
 })

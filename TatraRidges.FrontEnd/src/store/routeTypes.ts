@@ -62,3 +62,8 @@ export interface Adjective {
 	id: string
 	text: string
 }
+
+export interface Guide{
+	id:number
+	shortName:string
+}

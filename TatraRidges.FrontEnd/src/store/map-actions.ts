@@ -2,6 +2,7 @@ import { Coordinates } from "../components/types"
 import dataDispatcher from "./dispatch-actions"
 import { pointsActions } from "./map-slice"
 import {uiActions} from "./ui-slice"
+import { routeFormActions } from "./route-form-slice"
 
 export const movePoint = (id: number, coordinates: Coordinates) => {
 	const props = {
@@ -69,4 +70,14 @@ export const getRidge = (pointFrom: number, pointTo: number) => {
 		pathPart,
 	}
 	return dataDispatcher(props, [pointsActions.getRidge,uiActions.setRouteVisible])
+}
+
+export const getParameters=()=>{
+	const props={
+		method: "GET",
+		location: "route/parameters",
+		isBody: true,
+		token: true,
+	}
+	return dataDispatcher(props, routeFormActions.setValuesContainer)
 }

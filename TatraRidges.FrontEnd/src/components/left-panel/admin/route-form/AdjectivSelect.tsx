@@ -6,11 +6,15 @@ import {
 import { useSelector, useDispatch } from "react-redux"
 import classes from "./AdjectivSelect.module.css"
 import StoreType from "../../../../store/store-types"
+import { Adjective } from "../../../../store/routeTypes"
 
 const AdjectivSelect: React.FC = () => {
 	const dispatch = useDispatch()
 
 	const selected = useSelector((state: StoreType) => state.routeForm.adjectives)
+	const adjectives = useSelector(
+		(state: StoreType) => state.routeForm.containerValues.adjectives
+	)
 
 	const onChange = (option: readonly OptionsProps[]) => {
 		const options = [...option].map(o => o.value)
@@ -22,11 +26,17 @@ const AdjectivSelect: React.FC = () => {
 		dispatch(routeFormActions.setValue(payload))
 	}
 
-	const options2 = [
-		{ value: "_p", label: "Piękna" },
-		{ value: "bp", label: "Bardzo piękna" },
-		{ value: "_k", label: "Krucha" },
-	]
+	const selectedGroup = selected.map(a => a.substring(1))
+
+	const adjectiveSelectedOrNotSimilar = (a: Adjective) =>
+		!selectedGroup.includes(a.id.substring(1)) || selected.includes(a.id)
+
+	const options2 = adjectives.filter(adjectiveSelectedOrNotSimilar).map(a => {
+		return {
+			value: a.id,
+			label: a.text,
+		}
+	})
 
 	const selectedOptions = options2.filter(o => selected.includes(o.value))
 

@@ -4,7 +4,7 @@ import {
 	MountainPoint,
 } from "../components/types"
 
-import { RidgeAllInformation } from "./routeTypes"
+import { Adjective, Difficulty, Guide, RidgeAllInformation, RouteType } from "./routeTypes"
 
 interface StoreType {
 	adminMode: { value: boolean }
@@ -35,6 +35,13 @@ interface StoreType {
 		}
 	}
 	routeForm: {
+		isRunning:boolean
+		containerValues: {
+			guides: Guide[]
+			routeTypes: RouteType[]
+			difficulties: Difficulty[]
+			adjectives: Adjective[]
+		}
 		consistentDirection: boolean
 		guide: string
 		volume: number | null
