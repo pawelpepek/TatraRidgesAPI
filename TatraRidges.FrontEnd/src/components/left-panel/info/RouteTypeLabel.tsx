@@ -2,7 +2,7 @@ import onRidgeIcon from "../../img/on-ridge.svg"
 import farRidgeIcon from "../../img/far-ridge.svg"
 import nearRidgeIcon from "../../img/near-ridge.svg"
 import { RouteType } from "../../../store/routeTypes"
-import ImageLabel from "./ImageLabel"
+import ImageLabel from "../../ui/ImageLabel"
 
 const RouteTypeLabel: React.FC<{ routeType: RouteType }> = props => {
 	const getIcon = (value: number) => {

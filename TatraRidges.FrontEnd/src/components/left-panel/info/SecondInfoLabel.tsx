@@ -2,7 +2,7 @@ import classes from "./SecondInfoLabel.module.css"
 import rappelingIcon from "../../img/rappeling-small.svg"
 import diffDirectionIcon from "../../img/different-direction.svg"
 import TimeLabel from "./TimeLabel"
-import ImageLabel from "./ImageLabel"
+import ImageLabel from "../../ui/ImageLabel"
 
 interface SecondInfoLabel {
 	isEmptyRoute: boolean
