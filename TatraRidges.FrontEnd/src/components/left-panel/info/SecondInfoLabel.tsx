@@ -6,7 +6,7 @@ import ImageLabel from "./ImageLabel"
 
 interface SecondInfoLabel {
 	isEmptyRoute: boolean
-	isConsistentDirection: boolean
+	directionDescription: string
 	rappeling: boolean
 	routeTime: Date
 }
@@ -18,10 +18,10 @@ const SecondInfoLabel: React.FC<SecondInfoLabel> = props => {
 					<span className={classes.empty}>Brak danych</span>
 				</div>
 			)}
-			{!props.isConsistentDirection && (
+			{props.directionDescription!=="" && (
 				<ImageLabel
 					iconSrc={diffDirectionIcon}
-					alt='Występują drogi z opisem w odwrotnym kierunku'
+					alt={props.directionDescription}
 				/>
 			)}
 			{props.rappeling && (

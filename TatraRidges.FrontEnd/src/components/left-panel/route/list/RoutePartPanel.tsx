@@ -23,7 +23,9 @@ const RoutePartPanel: React.FC<{ route: Route }> = props => {
 			<SecondInfoLabel
 				rappeling={route.rappeling}
 				isEmptyRoute={false}
-				isConsistentDirection={route.consistentDirection}
+				directionDescription={
+					route.consistentDirection ? "" : "Droga z opisem w odwrotnym kierunku"
+				}
 				routeTime={route.routeTime}
 			/>
 		</>

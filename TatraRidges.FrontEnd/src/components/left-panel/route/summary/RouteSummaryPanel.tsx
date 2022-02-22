@@ -26,7 +26,11 @@ const RouteSummaryPanel: React.FC<{ info: RidgeAllInformation }> = props => {
 			<SecondInfoLabel
 				rappeling={summary.rappeling}
 				isEmptyRoute={summary.isEmptyRoute}
-				isConsistentDirection={summary.isConsistentDirection}
+				directionDescription={
+					summary.isConsistentDirection
+						? ""
+						: "Występują drogi z opisem w odwrotnym kierunku"
+				}
 				routeTime={summary.routeTime}
 			/>
 		</RoundContainer>
