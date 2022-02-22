@@ -1,0 +1,9 @@
+.box{
+    max-height: 30px;
+    align-self: flex-start;
+    margin-left: 15px;
+    
+}
+.option{
+    display: none;
+}

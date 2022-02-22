@@ -115,12 +115,20 @@ const pointsSlice = createSlice({
 				state.ridgeInfo.ridgesContainer.forEach(c=>{
 					c.point1=state.points.find(p=>p.id===c.pointId1)
 					c.point2=state.points.find(p=>p.id===c.pointId2)
+					c.selectedId=c.routes.length>0? c.routes[0].id:-1
 				})
 				
 			}
 		},
 		clearRidge(state,actions){
 			state.ridgeInfo={} as RidgeAllInformation
+		},
+		setSelectedRoutePartId(state, action){
+			var parts=state.ridgeInfo.ridgesContainer.find(r=>r.pointsConnectionId==action.payload.connectionId)
+			if(parts!==undefined)
+			{
+				parts.selectedId=action.payload.id
+			}
 		}
 	},
 })

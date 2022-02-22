@@ -1,14 +1,14 @@
 import { RidgeWithRoutes } from "../../../../store/routeTypes"
 import RouteAnyPartPanel from "./RouteAnyPartPanel"
-import classes from "./RouteList.module.css"
+import List from "../../../ui/List"
 
 const RouteList: React.FC<{ parts: RidgeWithRoutes[] }> = props => {
 	return (
-		<ul className={classes.list}>
+		<List>
 			{props.parts.map(p => (
 				<RouteAnyPartPanel ridgeWithRoutes={p} key={p.pointsConnectionId} />
 			))}
-		</ul>
+		</List>
 	)
 }
 

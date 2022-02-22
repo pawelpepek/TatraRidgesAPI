@@ -1,8 +1,8 @@
 import { RidgeAllInformation } from "../../../../store/routeTypes"
-import classes from "./RouteSummaryPanel.module.css"
 import FirstInfoLabel from "../../info/FirstInfoLabel"
 import SecondInfoLabel from "../../info/SecondInfoLabel"
 import MountainsPointsConnectionLabel from "../../info/MountainsPointsConnectionLabel"
+import RoundContainer from "../../../ui/RoundContainer"
 
 const RouteSummaryPanel: React.FC<{ info: RidgeAllInformation }> = props => {
 	const summary = props.info.initalRouteSummary
@@ -12,7 +12,7 @@ const RouteSummaryPanel: React.FC<{ info: RidgeAllInformation }> = props => {
 		props.info.ridgesContainer[props.info.ridgesContainer.length - 1].point2
 
 	return (
-		<div className={classes.container}>
+		<RoundContainer>
 			{point1 !== undefined && point2 !== undefined && (
 				<MountainsPointsConnectionLabel point1={point1} point2={point2} />
 			)}
@@ -29,7 +29,7 @@ const RouteSummaryPanel: React.FC<{ info: RidgeAllInformation }> = props => {
 				isConsistentDirection={summary.isConsistentDirection}
 				routeTime={summary.routeTime}
 			/>
-		</div>
+		</RoundContainer>
 	)
 }
 

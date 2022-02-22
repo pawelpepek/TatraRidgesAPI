@@ -20,6 +20,7 @@ export interface RidgeWithRoutes {
 	point2?:MountainPoint
 	pointsConnectionId: number
 	routes: Route[]
+	selectedId:number
 }
 
 export interface Difficulty {

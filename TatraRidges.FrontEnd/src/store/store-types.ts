@@ -4,9 +4,7 @@ import {
 	MountainPoint,
 } from "../components/types"
 
-import {RidgeAllInformation} from "./routeTypes"
-
-import { OptionsProps} from "./route-form-slice"
+import { RidgeAllInformation } from "./routeTypes"
 
 interface StoreType {
 	adminMode: { value: boolean }
@@ -16,7 +14,7 @@ interface StoreType {
 		points: MountainPoint[]
 		pointFrom: MountainPoint
 		pointTo: MountainPoint
-		ridgeInfo:RidgeAllInformation
+		ridgeInfo: RidgeAllInformation
 	}
 	ui: {
 		visiblePanel: string
@@ -26,8 +24,9 @@ interface StoreType {
 			message: string
 		}
 		visibleAdminPart: string
-		isLogged:boolean
-		isRouteVisible:boolean
+		selectedRoutePart: number
+		isLogged: boolean
+		isRouteVisible: boolean
 	}
 	center: {
 		value: {
@@ -46,12 +45,12 @@ interface StoreType {
 		rappeling: boolean
 		page: number | null
 		routeTime: Date | null
-		isFilled:boolean
+		isFilled: boolean
 	}
-	loginForm:{
-		email:string
-		password:string
-		isFilled:boolean
+	loginForm: {
+		email: string
+		password: string
+		isFilled: boolean
 	}
 }
 
