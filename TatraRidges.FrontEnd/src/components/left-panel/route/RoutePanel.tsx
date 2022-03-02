@@ -14,9 +14,6 @@ const RoutePanel: React.FC = () => {
 	)
 
 	const alternative = visibleRoutePart >= 0
-
-	console.log(visibleRoutePart)
-
 	const backVersion = alternative ? "main" : "search"
 	const backText = alternative ? "Wróć do wyszukiwania" : "Wróć do tras"
 

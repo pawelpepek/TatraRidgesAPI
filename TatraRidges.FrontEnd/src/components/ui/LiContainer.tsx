@@ -1,9 +1,9 @@
 import classes from "./LiContainer.module.css"
 
 
-const LiContainer: React.FC<{ key: number }> = props => {
+const LiContainer: React.FC= props => {
 	return (
-		<li className={classes.container} key={props.key}>
+		<li>
 			{props.children}
 		</li>
 	)

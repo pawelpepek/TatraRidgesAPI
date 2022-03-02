@@ -1,29 +1,26 @@
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import RoundButton from "../../ui/RoundButton"
 import { uiActions } from "../../../store/ui-slice"
 import backIcon from "../../img/back.svg"
 
 import classes from "./RouteHeader.module.css"
 
-interface RouteHeaderProps{
+interface RouteHeaderProps {
 	className?: string
-	backVersion:string
-	backText:string
-	header:string
+	backVersion: string
+	backText: string
+	header: string
 }
 
 const RouteHeader: React.FC<RouteHeaderProps> = props => {
 	const dispatch = useDispatch()
 
 	const buttonClickHandler = () => {
-		console.log(props.backVersion)
-		if(props.backVersion==="search")
-		{
+		if (props.backVersion === "search") {
 			dispatch(uiActions.setPanelVersion(props.backVersion))
-		}
-		else{
+		} else {
 			dispatch(uiActions.setRoutePartVisible(-1))
-		}	
+		}
 	}
 
 	const className = `${props.className} ${classes.navigation}`
