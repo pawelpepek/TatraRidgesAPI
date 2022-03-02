@@ -16,7 +16,7 @@ const RidgesLinesContainer: React.FC = () => {
 	const isRouteVisible = useSelector(
 		(state: StoreType) => state.ui.isRouteVisible
 	)
-	
+
 	if (isRouteVisible) {
 		const ridges = ridge.ridgesContainer
 		const ridgesIds = ridges.map(r => r.pointsConnectionId)
@@ -28,7 +28,7 @@ const RidgesLinesContainer: React.FC = () => {
 		dispatch(fetchConnectionsData())
 	}, [dispatch, pointsOk])
 
-	return <LinesContainer connections={connections} />
+	return <>{isRouteVisible && <LinesContainer connections={connections} />}</>
 }
 
 export default RidgesLinesContainer
