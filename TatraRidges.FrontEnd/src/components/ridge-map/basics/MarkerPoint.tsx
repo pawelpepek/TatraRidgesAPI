@@ -6,6 +6,7 @@ import { Coordinates } from "../../types"
 import { useEffect, useState } from "react"
 import StoreType from "../../../store/store-types"
 import { pointsActions } from "../../../store/map-slice"
+import { Tooltip } from "react-leaflet"
 
 const MarkerPoint: React.FC<{
 	id: number
@@ -27,7 +28,6 @@ const MarkerPoint: React.FC<{
 	return (
 		<Marker
 			position={[point.latitude, point.longitude]}
-			title={point.name}
 			draggable={partVisible === "admin"}
 			eventHandlers={{
 				click: () => {
@@ -45,8 +45,9 @@ const MarkerPoint: React.FC<{
 						setChangeSwitch(prevState => !prevState)
 					}
 				},
-			}}
-		/>
+			}}>
+			<Tooltip>{point.name}</Tooltip>
+		</Marker>
 	)
 }
 
