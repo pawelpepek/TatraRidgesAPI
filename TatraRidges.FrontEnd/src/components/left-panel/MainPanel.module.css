@@ -1,7 +1,18 @@
 .main {
 	flex-direction: column;
 	display: flex;
-	width: 400px;
+	width: auto;
+	max-height: 100vh;
+}
+
+.maxHeight{
 	height: 100vh;
-	min-width: 400px;
+}
+
+@media (min-width: 576px) {
+	.main {
+		min-width: 400px;
+		width: 400px;
+		height: 100vh;
+	}
 }

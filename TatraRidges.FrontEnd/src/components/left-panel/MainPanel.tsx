@@ -9,8 +9,10 @@ const MainPanel: React.FC = () => {
 	const notification = useSelector((state: StoreType) => state.ui.notification)
 	const isRoute=useSelector((state: StoreType) => state.ui.isRouteVisible)
 
+	let className=`${classes.main} ${isRoute?classes.maxHeight:""}`
+
 	return (
-		<div className={classes.main}>
+		<div className={className}>
 			<MainFunctions />
 			{!isRoute && <Notification
 				status={notification.status}
