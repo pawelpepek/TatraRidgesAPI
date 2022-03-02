@@ -74,6 +74,7 @@ const RidgeMapContainer: React.FC<RidgeMapProps> = props => {
 		m.on("moveend", onChangeMap)
 		m.on("zoomend", onChangeMap)
 		m.on("keydown", onKeyDown)
+		m.createPane("circleMarkerPane");
 	}, [])
 
 	return (

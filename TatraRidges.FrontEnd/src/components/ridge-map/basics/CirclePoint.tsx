@@ -22,9 +22,8 @@ const CirlcePoint: React.FC<MountainPoint> = point => {
 		radius: 10,
 	}
 
-	const setActualPoint = ()=>{
-		if(visiblePanel!=="route")
-		{
+	const setActualPoint = () => {
+		if (visiblePanel !== "route") {
 			dispatch(pointsActions.setActualPoint({ point }))
 		}
 	}
@@ -35,13 +34,10 @@ const CirlcePoint: React.FC<MountainPoint> = point => {
 				center={[point.latitude, point.longitude]}
 				pathOptions={options}
 				key={`point_${point.id}`}
+				pane={"circleMarkerPane"}
 				eventHandlers={{
 					click: () => {
 						setActualPoint()
-					},
-					mouseover: e => {
-						const button = e.target as Path
-						button.bringToFront()
 					},
 				}}
 			/>
