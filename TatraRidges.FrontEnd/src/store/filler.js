@@ -1,7 +1,7 @@
 export const fillObject = (obj, propertyName, value) => {
 	obj[propertyName] = value
 
-    // console.log("object", obj)
+	// console.log("object", obj)
 }
 
 export const objectIsFilled = (obj, exceptions) => {
@@ -11,15 +11,15 @@ export const objectIsFilled = (obj, exceptions) => {
 
 			if (!Array.isArray(exceptions) || !exceptions.includes(key)) {
 				if (typeof element === "number" && element <= 0) {
-                    console.log(key,"number",element)
+					// console.log(key,"number",element)
 					return false
 				}
 				if (element == null) {
-                    console.log(key,"null")
+					// console.log(key,"null")
 					return false
 				}
 				if (element === "") {
-                    console.log(key,"empty")
+					// console.log(key,"empty")
 					return false
 				}
 			}
@@ -28,16 +28,15 @@ export const objectIsFilled = (obj, exceptions) => {
 	return true
 }
 
-export const getObjectListValues=(obj, exception)=>
-{
-    const result=new Map()
-    for (const key in obj) {
-		if (Object.hasOwnProperty.call(obj, key) && key!==exception) {
+export const getObjectListValues = (obj, exception) => {
+	const result = new Map()
+	for (const key in obj) {
+		if (Object.hasOwnProperty.call(obj, key) && key !== exception) {
 			const element = obj[key]
-            result.set(key,element)
-        }
-    }
-    return result
+			result.set(key, element)
+		}
+	}
+	return result
 }
 
-export const getPropertyValue=(obj, propertyName)=>obj[propertyName] 
+export const getPropertyValue = (obj, propertyName) => obj[propertyName]
