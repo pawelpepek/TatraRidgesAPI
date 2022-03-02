@@ -4,9 +4,10 @@ import RouteList from "./list/RouteList"
 
 const RouteAllInfoPanel: React.FC<{ route: RidgeAllInformation }> = props => {
 	const isNotEmpty = props.route.initalRouteSummary !== undefined
+	const manyParts = isNotEmpty && props.route.ridgesContainer.length > 1
 	return (
 		<>
-			{isNotEmpty && <RouteSummaryPanel info={props.route} />}
+			{manyParts && <RouteSummaryPanel info={props.route} />}
 			{isNotEmpty && <RouteList parts={props.route.ridgesContainer} />}
 		</>
 	)
