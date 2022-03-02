@@ -34,15 +34,15 @@ const pointsSlice = createSlice({
 		},
 		setActualPoint(state, action) {
 			if (action.payload.point.id !== state.pointTo.id) {
-				if (
-					Object.keys(state.pointFrom).length < 1 &&
-					Object.keys(state.pointTo).length > 0
-				) {
-					state.pointFrom = action.payload.point
-				} else {
+				// if (
+				// 	Object.keys(state.pointFrom).length < 1 &&
+				// 	Object.keys(state.pointTo).length > 0
+				// ) {
+				// 	state.pointFrom = action.payload.point
+				// } else {
 					state.pointFrom = state.pointTo
 					state.pointTo = action.payload.point
-				}
+				// }
 			}
 		},
 		toggleSelectedPoints(state) {
