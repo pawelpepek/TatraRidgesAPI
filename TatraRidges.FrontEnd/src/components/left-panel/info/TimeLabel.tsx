@@ -2,16 +2,23 @@ import classes from "./TimeLabel.module.css"
 
 const TimeLabel: React.FC<{ routeTime: Date }> = props => {
 	const parts = props.routeTime.toString().split(":")
+	
+	const firstParts=parts[0].split(".")
 
-	const hours = parseInt(parts[0])
+	const days=firstParts.length>1?parseInt(firstParts[0]):0
+	
+	const hours = parseInt(firstParts[firstParts.length-1])
 	const minutes = parseInt(parts[1])
 
-	const hoursText = hours > 0 ? `${hours} godz. ` : ""
+	const hoursText = hours > 0 ? `${hours + 24 * days} godz. ` : ""
 	const minutesText = minutes > 0 ? `${minutes} min.` : ""
 
 	return (
 		<div className={classes.time}>
-			<span data-tip={"Czas przejścia podany w przewodniku"}>{`${hoursText}${minutesText}`}</span>
+			<span
+				data-tip={
+					"Czas przejścia podany w przewodniku"
+				}>{`${hoursText}${minutesText}`}</span>
 		</div>
 	)
 }
