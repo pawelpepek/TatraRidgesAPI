@@ -11,15 +11,15 @@ export const objectIsFilled = (obj, exceptions) => {
 
 			if (!Array.isArray(exceptions) || !exceptions.includes(key)) {
 				if (typeof element === "number" && element <= 0) {
-                    // console.log(key,"number",element)
+                    console.log(key,"number",element)
 					return false
 				}
 				if (element == null) {
-                    // console.log(key,"null")
+                    console.log(key,"null")
 					return false
 				}
 				if (element === "") {
-                    // console.log(key,"empty")
+                    console.log(key,"empty")
 					return false
 				}
 			}

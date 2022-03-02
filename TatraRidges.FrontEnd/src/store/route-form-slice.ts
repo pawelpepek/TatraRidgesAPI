@@ -19,7 +19,7 @@ export interface RouteFormValues {
 	guide: number
 	volume: number | null
 	number: string
-	difficulty: string
+	difficulty: number
 	adjectives: string[]
 	routeTypeId: Number
 	rappeling: boolean
@@ -40,7 +40,7 @@ const initialState: RouteFormValues = {
 	guide: 1,
 	volume: 1,
 	number: "",
-	difficulty: "0-",
+	difficulty: 0,
 	adjectives: [],
 	routeTypeId: 1,
 	rappeling: false,

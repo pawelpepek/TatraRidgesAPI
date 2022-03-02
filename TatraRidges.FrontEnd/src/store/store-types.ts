@@ -43,12 +43,12 @@ interface StoreType {
 			adjectives: Adjective[]
 		}
 		consistentDirection: boolean
-		guide: string
+		guide: number
 		volume: number | null
 		number: string
-		difficulty: string
+		difficulty: number
 		adjectives: string[]
-		routeTypeId: Number
+		routeTypeId: number
 		rappeling: boolean
 		page: number | null
 		routeTime: Date | null

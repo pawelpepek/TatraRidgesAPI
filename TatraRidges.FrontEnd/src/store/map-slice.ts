@@ -7,7 +7,7 @@ import {
 	Coordinates,
 } from "../components/types"
 
-import {RidgeAllInformation} from "./routeTypes"
+import { RidgeAllInformation } from "./routeTypes"
 
 const emptyPoints: MountainPoint[] = []
 const emptyConnections: ConnectionPoints[] = []
@@ -18,7 +18,7 @@ const initialState = {
 	points: emptyPoints,
 	pointsOk: false,
 	connections: emptyConnections,
-	ridgeInfo:{} as RidgeAllInformation
+	ridgeInfo: {} as RidgeAllInformation,
 }
 const changeCoordinates = (point: MountainPoint, coordinates: Coordinates) => {
 	point.latitude = coordinates.latitude
@@ -39,7 +39,6 @@ const pointsSlice = createSlice({
 					Object.keys(state.pointTo).length > 0
 				) {
 					state.pointFrom = action.payload.point
-					
 				} else {
 					state.pointFrom = state.pointTo
 					state.pointTo = action.payload.point
@@ -108,28 +107,42 @@ const pointsSlice = createSlice({
 				state.connections.push(newConnection)
 			}
 		},
+		addRidgePoints(state, actions) {
+			if (actions.payload.data.pointsRidge !== null) {
+				const point1 = state.points.find(p => p.id === actions.payload.pointId1)
+				const point2 = state.points.find(p => p.id === actions.payload.pointId2)
+
+				if (point1 !== undefined && point2 !== undefined) {
+					const newConnection: ConnectionPoints = {
+						id: actions.payload.data.Id,
+						point1,
+						point2,
+					}
+					state.connections.push(newConnection)
+				}
+			}
+		},
 		getRidge(state, actions) {
-			state.ridgeInfo=actions.payload.data
-			if(state.ridgeInfo!=={} as RidgeAllInformation)
-			{
-				state.ridgeInfo.ridgesContainer.forEach(c=>{
-					c.point1=state.points.find(p=>p.id===c.pointId1)
-					c.point2=state.points.find(p=>p.id===c.pointId2)
-					c.selectedId=c.routes.length>0? c.routes[0].id:-1
+			state.ridgeInfo = actions.payload.data
+			if (state.ridgeInfo !== ({} as RidgeAllInformation)) {
+				state.ridgeInfo.ridgesContainer.forEach(c => {
+					c.point1 = state.points.find(p => p.id === c.pointId1)
+					c.point2 = state.points.find(p => p.id === c.pointId2)
+					c.selectedId = c.routes.length > 0 ? c.routes[0].id : -1
 				})
-				
 			}
 		},
-		clearRidge(state,actions){
-			state.ridgeInfo={} as RidgeAllInformation
+		clearRidge(state, actions) {
+			state.ridgeInfo = {} as RidgeAllInformation
 		},
-		setSelectedRoutePartId(state, action){
-			var parts=state.ridgeInfo.ridgesContainer.find(r=>r.pointsConnectionId==action.payload.connectionId)
-			if(parts!==undefined)
-			{
-				parts.selectedId=action.payload.id
+		setSelectedRoutePartId(state, action) {
+			var parts = state.ridgeInfo.ridgesContainer.find(
+				r => r.pointsConnectionId == action.payload.connectionId
+			)
+			if (parts !== undefined) {
+				parts.selectedId = action.payload.id
 			}
-		}
+		},
 	},
 })
 

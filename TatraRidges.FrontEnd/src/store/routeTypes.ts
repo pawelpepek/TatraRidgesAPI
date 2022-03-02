@@ -1,4 +1,4 @@
-import { MountainPoint } from "../components/types";
+import { MountainPoint } from "../components/types"
 
 export interface RidgeAllInformation {
 	initalRouteSummary: RouteSummary
@@ -16,11 +16,11 @@ export interface RouteSummary extends RouteOptions {
 export interface RidgeWithRoutes {
 	pointId1: number
 	pointId2: number
-	point1?:MountainPoint
-	point2?:MountainPoint
+	point1?: MountainPoint
+	point2?: MountainPoint
 	pointsConnectionId: number
 	routes: Route[]
-	selectedId:number
+	selectedId: number
 }
 
 export interface Difficulty {
@@ -63,7 +63,26 @@ export interface Adjective {
 	text: string
 }
 
-export interface Guide{
-	id:number
-	shortName:string
+export interface Guide {
+	id: number
+	shortName: string
+}
+
+export interface AddRoute {
+	pointId1: number
+	pointId2: number
+	difficultyValue: number
+	difficultySign: string
+	rappeling: boolean
+	routeType: number
+	guideDescription: AddGuideDescription
+	routeTime: string
+	adjectives: string[]
+}
+
+export interface AddGuideDescription {
+	guideId: number
+	page: number
+	volume: number
+	number: string
 }

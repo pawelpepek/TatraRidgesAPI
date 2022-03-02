@@ -32,7 +32,7 @@ const RouteSelectRow: React.FC<RouteSelectRowProps> = props => {
 
 	const difficulties = parameters.difficulties.map(d => {
 		return {
-			value: d.text,
+			value: d.value.toString(),
 			text: d.text,
 		}
 	})
@@ -47,7 +47,7 @@ const RouteSelectRow: React.FC<RouteSelectRowProps> = props => {
 
 	allOptions.set("guide", versions)
 	allOptions.set("difficulty", difficulties)
-	allOptions.set("routeType", types)
+	allOptions.set("routeTypeId", types)
 
 	const id = `routeForm${props.id}`
 

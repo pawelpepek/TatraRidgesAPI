@@ -29,7 +29,7 @@ const RoutePanel: React.FC = () => {
 		return routes
 	}
 	const getPoint1 = () => getRoutes().point1 as MountainPoint
-	const getPoint2 = () => getRoutes().point1 as MountainPoint
+	const getPoint2 = () => getRoutes().point2 as MountainPoint
 
 	const header = alternative ? "Wybór wariantu" : "Wynik wyszukiwania"
 

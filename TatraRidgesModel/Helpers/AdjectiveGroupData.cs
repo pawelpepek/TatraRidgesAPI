@@ -45,7 +45,7 @@
             }
         }
 
-        public bool IsToLower() => GetTicks() < _breakToLover * _allTicks;
+        public bool IsToLower() => GetTicks() < _breakToLover * _allTicks || GetTicks()==0;
 
         public bool IsPart() => _closestAdjective.Id.StartsWith("c") || !IsMost();
 

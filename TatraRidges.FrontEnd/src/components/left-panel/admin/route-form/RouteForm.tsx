@@ -7,23 +7,51 @@ import RouteSelectRow from "./RouteSelectRow"
 import RouteCheckboxRow from "./RouteCheckBoxRow"
 import { useSelector, useDispatch } from "react-redux"
 import StoreType from "../../../../store/store-types"
-import { routeFormActions } from "../../../../store/route-form-slice"
 import { getParameters } from "../../../../store/map-actions"
 import { useEffect } from "react"
+import { postRouteRidge } from "../../../../store/map-actions"
+import { AddRoute } from "../../../../store/routeTypes"
+import {
+	getNotNullable,
+	destructDifficultyValue,
+} from "../../../helpers/functions"
+import CheckboxRow from "../../../ui/form/CheckboxRow"
 
 const RouteForm: React.FC<{ className?: string }> = props => {
 	const dispatch = useDispatch()
 
 	const isStarted = useSelector((state: StoreType) => state.routeForm.isRunning)
-	
+
 	const isValid = useSelector((state: StoreType) => state.routeForm.isFilled)
 
 	const formValue = useSelector((state: StoreType) => state.routeForm)
 
+	const point1 = useSelector((state: StoreType) => state.map.pointFrom)
+	const point2 = useSelector((state: StoreType) => state.map.pointTo)
+
 	const submitHandler = (e: React.FormEvent) => {
 		e.preventDefault()
-		console.log(formValue)
-		dispatch(routeFormActions.clear(null))
+
+		const difficulty = destructDifficultyValue(formValue.difficulty)
+
+		const newRoute: AddRoute = {
+			pointId1: point1.id,
+			pointId2: point2.id,
+			rappeling: formValue.rappeling,
+			routeTime: getNotNullable(formValue.routeTime).toString() + ":00",
+			adjectives: formValue.adjectives,
+			guideDescription: {
+				guideId: formValue.guide,
+				page: getNotNullable(formValue.page),
+				volume: getNotNullable(formValue.volume),
+				number: formValue.number,
+			},
+			routeType: formValue.routeTypeId,
+			difficultyValue: difficulty.valueNumber,
+			difficultySign: difficulty.sign,
+		}
+
+		dispatch(postRouteRidge(newRoute))
 	}
 
 	useEffect(() => {
@@ -46,16 +74,16 @@ const RouteForm: React.FC<{ className?: string }> = props => {
 					<RouteSelectRow id='guide' labelText='Przewodnik' />
 					<RouteInputRow id='volume' labelText='Tom' type='Number' />
 					<RouteInputRow id='number' labelText='Numer' type='Text' />
+					<RouteInputRow id='page' labelText='Strona' type='Number' />
 					<RouteSelectRow id='difficulty' labelText='Trudność' />
+					<RouteCheckboxRow id='rappeling' labelText='Zjazd na linie' />
 					<tr>
 						<td colSpan={2}>
 							<AdjectivSelect />
 						</td>
 					</tr>
 					<RouteInputRow id='routeTime' labelText='Czas' type='Time' />
-					<RouteSelectRow id='routeType' labelText='Rodzaj drogi' />
-					<RouteCheckboxRow id='rappeling' labelText='Zjazd na linie' />
-					<RouteInputRow id='page' labelText='Strona' type='Number' />
+					<RouteSelectRow id='routeTypeId' labelText='Rodzaj drogi' />
 				</tbody>
 			</table>
 			<div className={classes["panel-button"]}>
