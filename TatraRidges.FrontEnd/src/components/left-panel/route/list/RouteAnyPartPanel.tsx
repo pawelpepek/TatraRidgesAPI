@@ -18,8 +18,8 @@ const RouteAnyPartPanel: React.FC<{
 	const point1 = props.ridgeWithRoutes.point1
 	const point2 = props.ridgeWithRoutes.point2
 	return (
-		<LiContainer
-			key={props.ridgeWithRoutes.pointsConnectionId}>
+		<LiContainer>
+			key={props.ridgeWithRoutes.pointsConnectionId}
 			{point1 !== undefined && point2 != undefined && (
 				<MountainsPointsConnectionLabel point1={point1} point2={point2}>
 					{routes !== undefined && routes !== null && routes.length > 1 && (
