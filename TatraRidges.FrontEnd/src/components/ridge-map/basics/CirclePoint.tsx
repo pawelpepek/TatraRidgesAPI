@@ -7,6 +7,7 @@ import { pointsActions } from "../../../store/map-slice"
 import StoreType from "../../../store/store-types"
 import { MountainPoint } from "../../types"
 import MarkerPoint from "./MarkerPoint"
+import { Tooltip } from "react-leaflet"
 
 const CirlcePoint: React.FC<MountainPoint> = point => {
 	const dispatch = useDispatch()
@@ -40,7 +41,7 @@ const CirlcePoint: React.FC<MountainPoint> = point => {
 						setActualPoint()
 					},
 				}}
-			/>
+			><Tooltip>{point.name}</Tooltip></CircleMarker>
 			{(pointTo.id === point.id || pointFrom.id === point.id) && (
 				<MarkerPoint
 					key={`marker_${point.id}`}
