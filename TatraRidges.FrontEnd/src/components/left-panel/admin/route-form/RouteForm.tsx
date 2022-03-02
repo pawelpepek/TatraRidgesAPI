@@ -15,7 +15,6 @@ import {
 	getNotNullable,
 	destructDifficultyValue,
 } from "../../../helpers/functions"
-import CheckboxRow from "../../../ui/form/CheckboxRow"
 
 const RouteForm: React.FC<{ className?: string }> = props => {
 	const dispatch = useDispatch()
@@ -70,7 +69,6 @@ const RouteForm: React.FC<{ className?: string }> = props => {
 					</tr>
 				</thead>
 				<tbody>
-					<RouteCheckboxRow id='consistentDirection' labelText='Odwrotnie' />
 					<RouteSelectRow id='guide' labelText='Przewodnik' />
 					<RouteInputRow id='volume' labelText='Tom' type='Number' />
 					<RouteInputRow id='number' labelText='Numer' type='Text' />

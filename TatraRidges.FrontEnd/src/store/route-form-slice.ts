@@ -15,7 +15,6 @@ export interface RouteFormValues {
 		difficulties: Difficulty[]
 		adjectives: Adjective[]
 	}
-	consistentDirection: boolean
 	guide: number
 	volume: number | null
 	number: string
@@ -36,7 +35,6 @@ const initialState: RouteFormValues = {
 		adjectives: [],
 		routeTypes: [],
 	},
-	consistentDirection: false,
 	guide: 1,
 	volume: 1,
 	number: "",
@@ -66,7 +64,6 @@ const routeFormSlice = createSlice({
 			state.page = null
 			state.routeTime = null
 			state.rappeling = false
-			state.consistentDirection = false
 		},
 		setValuesContainer(state, action) {
 			state.containerValues = action.payload.data

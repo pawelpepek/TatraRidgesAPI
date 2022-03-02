@@ -42,7 +42,6 @@ interface StoreType {
 			difficulties: Difficulty[]
 			adjectives: Adjective[]
 		}
-		consistentDirection: boolean
 		guide: number
 		volume: number | null
 		number: string
