@@ -1,13 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
-	value:{
-		coordinates:{
-			latitude: 49.219417,
-			longitude: 20.009306,
+	value: {
+		coordinates: {
+			latitude: 49.179306,
+			longitude: 20.088444,
 		},
-		zoom:16
-	}
+		zoom: 16,
+	},
 }
 
 const centerSlice = createSlice({
