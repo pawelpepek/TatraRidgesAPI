@@ -17,7 +17,12 @@ const OptionBox: React.FC<{
 
 	return (
 		<>
-			<input type='radio' checked={props.checked} className={classes.option} />
+			<input
+				type='radio'
+				checked={props.checked}
+				className={classes.option}
+				onChange={clickHandler}
+			/>
 			<img
 				className={classes.box}
 				data-tip={text}
