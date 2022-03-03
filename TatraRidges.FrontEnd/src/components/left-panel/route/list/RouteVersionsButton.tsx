@@ -6,7 +6,6 @@ const RouteVersionsButton: React.FC<{ routes: Route[], id:number}> = props => {
 	const dispatch=useDispatch()
 
 	const onClick = () => {
-		console.log(props.id)
 		dispatch(uiActions.setRoutePartVisible(props.id))
 	}
 
