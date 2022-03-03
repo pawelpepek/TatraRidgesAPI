@@ -1,0 +1,6 @@
+.container {
+	border: var(--input-border);
+	border-radius: var(--input-border-radius);
+	margin-top: 7px;
+    margin-bottom: 7px;
+}
