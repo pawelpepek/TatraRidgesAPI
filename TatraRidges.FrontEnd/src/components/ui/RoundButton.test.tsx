@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react"
 import { testClass } from "../helpers/testHelper"
 import RoundButton from "./RoundButton"
 import icon from "../img/plus.svg"
+import * as redux from "react-redux"
 
 const testClassButton = (
 	<RoundButton alt='Message' imageSrc={icon} className='test' />
@@ -10,6 +11,8 @@ const testClassButton = (
 describe("RoundButton component", () => {
 	test("render component with alt equal Message has image with alt equal Message", () => {
 		//Arrange
+		const spy = jest.spyOn(redux, "useSelector")
+		spy.mockReturnValue("ok")
 		render(<RoundButton alt='Message' imageSrc={icon} />)
 
 		//Act
