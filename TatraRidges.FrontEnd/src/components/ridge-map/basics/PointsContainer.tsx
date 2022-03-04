@@ -1,5 +1,7 @@
 import CirclePoint from "./CirclePoint"
 import { MountainPoints } from "../../types"
+import MarkersPoints from "./MarkersPoints"
+import React from "react"
 
 const PointsContainer: React.FC<MountainPoints> = props => {
 	if (props.points.length > 0) {
@@ -16,6 +18,7 @@ const PointsContainer: React.FC<MountainPoints> = props => {
 						evaluation={point.evaluation}
 					/>
 				))}
+				<MarkersPoints/>
 			</>
 		)
 	} else {
@@ -23,4 +26,4 @@ const PointsContainer: React.FC<MountainPoints> = props => {
 	}
 }
 
-export default PointsContainer
+export default React.memo(PointsContainer)

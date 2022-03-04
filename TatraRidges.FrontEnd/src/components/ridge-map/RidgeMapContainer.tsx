@@ -9,6 +9,7 @@ import { deletePointById } from "../../store/map-actions"
 import RidgesLinesContainer from "./RidgesLinesContainer"
 import RidgesPointsContainer from "./RidgesPointsContainer"
 import { RidgeMapProps } from "../types"
+import React from "react"
 
 const RidgeMapContainer: React.FC<RidgeMapProps> = props => {
 	const centerValue = useSelector((state: StoreType) => state.center.value)
@@ -23,7 +24,6 @@ const RidgeMapContainer: React.FC<RidgeMapProps> = props => {
 	useEffect(() => {
 		if (deleting) {
 			setDeleting(false)
-			// console.log(pointFrom)
 			dispatch(deletePointById(pointTo.id))
 		}
 	}, [deleting])
@@ -31,11 +31,8 @@ const RidgeMapContainer: React.FC<RidgeMapProps> = props => {
 	const fitMap = useCallback(() => {
 		const layers: L.Layer[] = []
 		if (map !== undefined && map !== null && Object.keys(map).length > 3) {
-			// console.log(map)
 			map.eachLayer(lr => {
-				// console.log(lr)
 				if (lr.hasOwnProperty("_latlngs")) {
-					// console.log(lr)
 					layers.push(lr)
 				}
 			})
@@ -74,7 +71,7 @@ const RidgeMapContainer: React.FC<RidgeMapProps> = props => {
 		m.on("moveend", onChangeMap)
 		m.on("zoomend", onChangeMap)
 		m.on("keydown", onKeyDown)
-		m.createPane("circleMarkerPane");
+		m.createPane("circleMarkerPane")
 	}, [])
 
 	return (
@@ -98,4 +95,4 @@ const RidgeMapContainer: React.FC<RidgeMapProps> = props => {
 	)
 }
 
-export default RidgeMapContainer
+export default React.memo(RidgeMapContainer)

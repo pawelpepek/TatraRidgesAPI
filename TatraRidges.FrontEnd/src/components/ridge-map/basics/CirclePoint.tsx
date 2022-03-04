@@ -11,9 +11,7 @@ import { Tooltip } from "react-leaflet"
 
 const CirlcePoint: React.FC<MountainPoint> = point => {
 	const dispatch = useDispatch()
-
-	const pointTo = useSelector((state: StoreType) => state.map.pointTo)
-	const pointFrom = useSelector((state: StoreType) => state.map.pointFrom)
+	
 	const visiblePanel = useSelector((state: StoreType) => state.ui.visiblePanel)
 
 	// const [isToolTip, setTooltip] = useState(false)
@@ -30,29 +28,18 @@ const CirlcePoint: React.FC<MountainPoint> = point => {
 	}
 
 	return (
-		<>
-			<CircleMarker
-				center={[point.latitude, point.longitude]}
-				pathOptions={options}
-				key={`point_${point.id}`}
-				pane={"circleMarkerPane"}
-				eventHandlers={{
-					click: () => {
-						setActualPoint()
-					},
-				}}
-			><Tooltip>{point.name}</Tooltip></CircleMarker>
-			{(pointTo.id === point.id || pointFrom.id === point.id) && (
-				<MarkerPoint
-					key={`marker_${point.id}`}
-					id={point.id}
-					name={point.name}
-					latitude={point.latitude}
-					longitude={point.longitude}
-					onClick={setActualPoint}
-				/>
-			)}
-		</>
+		<CircleMarker
+			center={[point.latitude, point.longitude]}
+			pathOptions={options}
+			key={`point_${point.id}`}
+			pane={"circleMarkerPane"}
+			eventHandlers={{
+				click: () => {
+					setActualPoint()
+				},
+			}}>
+			<Tooltip>{point.name}</Tooltip>
+		</CircleMarker>
 	)
 }
 

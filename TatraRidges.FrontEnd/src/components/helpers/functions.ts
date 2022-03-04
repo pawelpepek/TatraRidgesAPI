@@ -1,4 +1,5 @@
 import { ValueContainerProps } from "react-select"
+import { objectIsFilled } from "../../store/filler"
 
 export function getNotNullable<T>(value: T | null | undefined) {
 	if (value == undefined || value === null) {
@@ -19,4 +20,8 @@ export function destructDifficultyValue(value: number) {
 	}
 
 	return { valueNumber, sign }
+}
+
+export function isNotEmpty<T>(value:T){
+    return Object.keys(value).length>0
 }

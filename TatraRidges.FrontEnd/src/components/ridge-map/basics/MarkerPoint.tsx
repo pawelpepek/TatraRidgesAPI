@@ -7,23 +7,30 @@ import { useEffect, useState } from "react"
 import StoreType from "../../../store/store-types"
 import { pointsActions } from "../../../store/map-slice"
 import { Tooltip } from "react-leaflet"
+import React from "react"
 
 const MarkerPoint: React.FC<{
 	id: number
 	latitude: number
 	longitude: number
 	name: string
-	onClick(): void
 }> = point => {
+	const visiblePanel = useSelector((state: StoreType) => state.ui.visiblePanel)
 	const dispatch = useDispatch()
 
 	const partVisible = useSelector((state: StoreType) => state.ui.visiblePanel)
 
 	const [_, setChangeSwitch] = useState(false)
 
-	useEffect(() => {
-		dispatch(pointsActions.clearRidge(null))
-	}, [dispatch])
+	// useEffect(() => {
+	// 	dispatch(pointsActions.clearRidge(null))
+	// }, [dispatch])
+
+	const setActualPoint = () => {
+		if (visiblePanel !== "route") {
+			dispatch(pointsActions.setActualPoint({ point }))
+		}
+	}
 
 	return (
 		<Marker
@@ -31,7 +38,7 @@ const MarkerPoint: React.FC<{
 			draggable={partVisible === "admin"}
 			eventHandlers={{
 				click: () => {
-					point.onClick()
+					setActualPoint()
 				},
 				dragend: async e => {
 					const target: LatLongOwner = e.target
@@ -51,4 +58,4 @@ const MarkerPoint: React.FC<{
 	)
 }
 
-export default MarkerPoint
+export default React.memo(MarkerPoint)
