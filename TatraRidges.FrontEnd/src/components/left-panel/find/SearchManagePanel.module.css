@@ -1,10 +1,20 @@
 .manage-panel {
 	margin-left: var(--left-margin);
 	margin-right: calc(var(--right-margin) - 10px);
-    margin-top: 10px;
-	margin-bottom: 10px;
+    margin-top: 5px;
+	margin-bottom: 0px;
 	display: flex;
 }
 .button{
     margin-left: auto;
+	width: 45x;
+	height: 45px;
+	margin-top: 2px;
+}
+
+@media (min-width: 576px) {
+	.manage-panel{
+		margin-bottom: 10px;
+		margin-top: 10px;
+	}
 }

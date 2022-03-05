@@ -5,20 +5,32 @@
 	width: 100%;
 }
 .name{
-	margin-left: 5px;
-	margin-top: 5px;
+	margin-left: 2px;
+	margin-top: 2px;
 	margin-bottom: 0px;
 	white-space: normal;
 	overflow: hidden;
 }
 .evaluation{
 	margin-top: 0px;
-	margin-left: 5px;
-	margin-bottom:5px;
-	margin-right: 5px;
+	margin-left: 2px;
+	margin-bottom:2px;
+	margin-right: 2px;
 	text-align: right;
 }
 
 .point-with-delete {
 	flex: 70%;
+}
+
+@media (min-width: 576px) {
+	.name{
+		margin-left: 5px;
+		margin-top: 5px;
+	}
+	.evaluation{
+		margin-left: 5px;
+		margin-bottom:5px;
+		margin-right: 5px;
+	}
 }

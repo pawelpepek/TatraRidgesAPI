@@ -1,10 +1,11 @@
 .point {
 	display: flex;
 	justify-items: center;
-	margin: 5px 0px;
+	margin: 2px 0px;
 	border: var(--input-border);
-	height: 80px;
+	height: 40px;
 	border-radius: var(--input-border-radius);
+	font-size: 12px;
 }
 
 .delete {
@@ -12,4 +13,12 @@
 	align-self: flex-end;
 	margin-bottom: 5px;
 	margin-left: 5px;
+}
+
+@media (min-width: 576px) {
+	.point{
+		height: 80px;
+		font-size: 16px;
+		margin: 5px 0px;
+	}
 }

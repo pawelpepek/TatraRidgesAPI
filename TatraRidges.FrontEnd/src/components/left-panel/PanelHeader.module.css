@@ -1,4 +1,13 @@
 .header {
 	margin-left: var(--left-margin);
-	margin-bottom: 10px;
+	margin-bottom: 3px;
+	font-size: 18px;
+}
+
+
+@media (min-width: 576px) {
+	.header {
+		margin-bottom: 10px;
+		font-size: 24px;
+	}
 }

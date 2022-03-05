@@ -7,7 +7,15 @@
 	min-width: var(--left-margin);
 }
 .image {
-	margin: 5px;
-	width: 24px;
-	height: 24px;
+	margin: 2px;
+	width: 20x;
+	height: 20px;
+}
+
+@media (min-width: 576px) {
+	.image {
+		margin: 5px;
+		width: 24px;
+		height: 24px;
+	}
 }
