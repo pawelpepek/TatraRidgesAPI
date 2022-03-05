@@ -1,44 +1,52 @@
-import { CircleMarkerOptions, Path } from "leaflet"
-import React from "react"
+import { CircleMarkerOptions } from "leaflet"
+import React, { useEffect, useState } from "react"
 import { CircleMarker } from "react-leaflet"
 import { useSelector, useDispatch } from "react-redux"
 
 import { pointsActions } from "../../../store/map-slice"
 import StoreType from "../../../store/store-types"
 import { MountainPoint } from "../../types"
-import MarkerPoint from "./MarkerPoint"
 import { Tooltip } from "react-leaflet"
 
-const CirlcePoint: React.FC<MountainPoint> = point => {
+const CirlcePoint: React.FC<{ point: MountainPoint }> = props => {
 	const dispatch = useDispatch()
-	
-	const visiblePanel = useSelector((state: StoreType) => state.ui.visiblePanel)
 
-	// const [isToolTip, setTooltip] = useState(false)
+	const [clicked, setClicked] = useState(false)
+
+	const visiblePanel = useSelector((state: StoreType) =>
+		clicked ? state.ui.visiblePanel : ""
+	)
 
 	const options: CircleMarkerOptions = {
-		color: point.pointTypeId === 1 ? "red" : "blue",
+		color: props.point.pointTypeId === 1 ? "red" : "blue",
 		radius: 10,
 	}
 
 	const setActualPoint = () => {
-		if (visiblePanel !== "route") {
-			dispatch(pointsActions.setActualPoint({ point }))
-		}
+		setClicked(true)
 	}
+
+	useEffect(() => {
+		if (clicked) {
+			if (visiblePanel !== "route") {
+				dispatch(pointsActions.setActualPoint({ point: props.point }))
+			}
+			setClicked(false)
+		}
+	}, [clicked])
 
 	return (
 		<CircleMarker
-			center={[point.latitude, point.longitude]}
+			center={[props.point.latitude, props.point.longitude]}
 			pathOptions={options}
-			key={`point_${point.id}`}
+			key={`point_${props.point.id}`}
 			pane={"circleMarkerPane"}
 			eventHandlers={{
 				click: () => {
 					setActualPoint()
 				},
 			}}>
-			<Tooltip>{point.name}</Tooltip>
+			<Tooltip>{props.point.name}</Tooltip>
 		</CircleMarker>
 	)
 }

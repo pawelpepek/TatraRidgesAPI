@@ -8,17 +8,9 @@ const PointsContainer: React.FC<MountainPoints> = props => {
 		return (
 			<>
 				{props.points.map(point => (
-					<CirclePoint
-						key={point.id}
-						id={point.id}
-						name={point.name}
-						latitude={point.latitude}
-						longitude={point.longitude}
-						pointTypeId={point.pointTypeId}
-						evaluation={point.evaluation}
-					/>
+					<CirclePoint key={point.id} point={point} />
 				))}
-				<MarkersPoints/>
+				<MarkersPoints />
 			</>
 		)
 	} else {
