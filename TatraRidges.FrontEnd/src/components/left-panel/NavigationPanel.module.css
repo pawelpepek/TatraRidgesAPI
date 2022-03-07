@@ -1,8 +1,14 @@
 .navigation {
-	display: flex;
+	display: none;
 	flex-direction: row;
 }
 .login {
 	margin-left: auto;
 	margin-right: 0px;
+}
+
+@media (min-width: 576px) {
+	.navigation {
+		display: flex;
+	}
 }
