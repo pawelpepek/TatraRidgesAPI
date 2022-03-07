@@ -11,22 +11,10 @@ const MarkersPoints: React.FC = () => {
 	return (
 		<>
 			{isNotEmpty(pointFrom) && (
-				<MarkerPoint
-					key={`marker_${pointFrom.id}`}
-					id={pointFrom.id}
-					name={pointFrom.name}
-					latitude={pointFrom.latitude}
-					longitude={pointFrom.longitude}
-				/>
+				<MarkerPoint key={`marker_${pointFrom.id}`} point={pointFrom} end={false} />
 			)}
 			{isNotEmpty(pointTo) && (
-				<MarkerPoint
-					key={`marker_${pointTo.id}`}
-					id={pointTo.id}
-					name={pointTo.name}
-					latitude={pointTo.latitude}
-					longitude={pointTo.longitude}
-				/>
+				<MarkerPoint key={`marker_${pointTo.id}`} point={pointTo} end={true} />
 			)}
 		</>
 	)

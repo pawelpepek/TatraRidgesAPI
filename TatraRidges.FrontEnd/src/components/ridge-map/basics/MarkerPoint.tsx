@@ -1,30 +1,30 @@
 import { Marker } from "react-leaflet"
-import { LatLongOwner } from "../../types"
+import { LatLongOwner, MountainPoint } from "../../types"
 import { useDispatch, useSelector } from "react-redux"
 import { movePoint } from "../../../store/map-actions"
 import { Coordinates } from "../../types"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import StoreType from "../../../store/store-types"
 import { pointsActions } from "../../../store/map-slice"
 import { Tooltip } from "react-leaflet"
 import React from "react"
+import { latLng } from "leaflet"
+import { getIconProperty } from "./MarkerIcon"
 
-const MarkerPoint: React.FC<{
-	id: number
-	latitude: number
-	longitude: number
-	name: string
-}> = point => {
+interface MarkerPointProps {
+	point: MountainPoint
+	end?: boolean
+}
+
+const MarkerPoint: React.FC<MarkerPointProps> = props => {
+	const point = props.point
+
 	const visiblePanel = useSelector((state: StoreType) => state.ui.visiblePanel)
 	const dispatch = useDispatch()
 
 	const partVisible = useSelector((state: StoreType) => state.ui.visiblePanel)
 
 	const [_, setChangeSwitch] = useState(false)
-
-	// useEffect(() => {
-	// 	dispatch(pointsActions.clearRidge(null))
-	// }, [dispatch])
 
 	const setActualPoint = () => {
 		if (visiblePanel !== "route") {
@@ -34,7 +34,8 @@ const MarkerPoint: React.FC<{
 
 	return (
 		<Marker
-			position={[point.latitude, point.longitude]}
+			{...getIconProperty(props.end)}
+			position={latLng(point.latitude, point.longitude)}
 			draggable={partVisible === "admin"}
 			eventHandlers={{
 				click: () => {
