@@ -8,18 +8,19 @@ import StoreType from "../../store/store-types"
 import { deletePointById } from "../../store/map-actions"
 import RidgesLinesContainer from "./RidgesLinesContainer"
 import RidgesPointsContainer from "./RidgesPointsContainer"
-import { RidgeMapProps } from "../types"
+import { RidgeMapProps, MountainPoint } from "../types"
 import React from "react"
 
 const RidgeMapContainer: React.FC<RidgeMapProps> = props => {
 	const centerValue = useSelector((state: StoreType) => state.center.value)
 	const dispatch = useDispatch()
 
-	const pointTo = useSelector((state: StoreType) => state.map.pointTo)
+	const [deleting, setDeleting] = useState(false)
+	const pointTo = useSelector((state: StoreType) =>
+		deleting ? state.map.pointTo : ({} as MountainPoint)
+	)
 
 	let map: L.Map
-
-	const [deleting, setDeleting] = useState(false)
 
 	useEffect(() => {
 		if (deleting) {
@@ -38,7 +39,6 @@ const RidgeMapContainer: React.FC<RidgeMapProps> = props => {
 			})
 			if (layers.length > 0) {
 				const group = L.featureGroup(layers)
-				// console.log(group)
 				const bounds = group.getBounds()
 				bounds.isValid() && map.fitBounds(bounds)
 			}
@@ -83,6 +83,7 @@ const RidgeMapContainer: React.FC<RidgeMapProps> = props => {
 			zoom={centerValue.zoom}
 			className={props.className}
 			id={props.id}
+			maxZoom={17}
 			scrollWheelZoom={true}
 			whenCreated={onMapCreated}>
 			<TileLayer

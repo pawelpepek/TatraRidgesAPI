@@ -6,7 +6,7 @@ const initialState = {
 			latitude: 49.179306,
 			longitude: 20.088444,
 		},
-		zoom: 16,
+		zoom: 15,
 	},
 }
 
