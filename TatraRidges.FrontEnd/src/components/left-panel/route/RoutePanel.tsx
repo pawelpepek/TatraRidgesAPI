@@ -15,7 +15,7 @@ const RoutePanel: React.FC = () => {
 
 	const alternative = visibleRoutePart >= 0
 	const backVersion = alternative ? "main" : "search"
-	const backText = alternative ? "Wróć do wyszukiwania" : "Wróć do tras"
+	const backText = alternative ? "Wróć do tras" : "Wróć do wyszukiwania"
 
 	const getRoutes = () => {
 		const result = ridgeInfo.ridgesContainer.find(
