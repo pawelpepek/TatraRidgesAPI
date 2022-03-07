@@ -12,6 +12,7 @@ const RoutePanel: React.FC = () => {
 	const visibleRoutePart = useSelector(
 		(state: StoreType) => state.ui.selectedRoutePart
 	)
+	const isMapVisible=useSelector((state: StoreType) => state.ui.visiblePanel==="route-map")
 
 	const alternative = visibleRoutePart >= 0
 	const backVersion = alternative ? "main" : "search"

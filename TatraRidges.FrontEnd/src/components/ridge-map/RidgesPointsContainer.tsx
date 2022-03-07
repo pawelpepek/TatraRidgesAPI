@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 
 import { fetchPointsData } from "../../store/map-actions"
 import StoreType from "../../store/store-types"
+import useRouteVisible from "../../store/use-rote-visible"
 import PointsContainer from "./basics/PointsContainer"
 
 const RidgesPointsContainer: React.FC = () => {
@@ -10,9 +11,7 @@ const RidgesPointsContainer: React.FC = () => {
 
 	let points = useSelector((state: StoreType) => state.map.points)
 	const ridge = useSelector((state: StoreType) => state.map.ridgeInfo)
-	const isRouteVisible = useSelector(
-		(state: StoreType) => state.ui.isRouteVisible
-	)
+	const isRouteVisible = useRouteVisible()
 
 	if (isRouteVisible) {
 		const ridges = ridge.ridgesContainer

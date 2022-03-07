@@ -10,7 +10,6 @@ const initialState = {
 	visibleAdminPart: "route",
 	selectedRoutePart: -1,
 	isLogged: isLoginOk(),
-	isRouteVisible: false,
 }
 
 const uiSlice = createSlice({
@@ -25,7 +24,6 @@ const uiSlice = createSlice({
 		},
 		setPanelVersion(state, action) {
 			state.visiblePanel = action.payload
-			state.isRouteVisible = action.payload === "route"
 		},
 		setLogged(state, action) {
 			const logged = action.payload.data != null
@@ -39,15 +37,12 @@ const uiSlice = createSlice({
 				localStorage.removeItem("token")
 			}
 			state.isLogged = isLoginOk()
-			state.isRouteVisible = false
 		},
 		setAdminPartVisible(state, action) {
 			state.visibleAdminPart = action.payload
-			state.isRouteVisible = false
 		},
 		setRouteVisible(state, action) {
 			state.visiblePanel = "route"
-			state.isRouteVisible = true
 		},
 		setRoutePartVisible(state, action) {
 			state.selectedRoutePart = action.payload

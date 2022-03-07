@@ -26,7 +26,6 @@ interface StoreType {
 		visibleAdminPart: string
 		selectedRoutePart: number
 		isLogged: boolean
-		isRouteVisible: boolean
 	}
 	center: {
 		value: {

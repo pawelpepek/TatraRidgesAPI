@@ -4,12 +4,13 @@ import StoreType from "../../store/store-types"
 import Notification from "../ui/Notification"
 import classes from "./MainPanel.module.css"
 import MainFunctions from "./MainFunctions"
+import useRouteVisible from "../../store/use-rote-visible"
 
 const MainPanel: React.FC = () => {
 	const errorMessage = useSelector((state: StoreType) =>
 		state.ui.notification.status == "error" ? state.ui.notification.message : ""
 	)
-	const isRoute = useSelector((state: StoreType) => state.ui.isRouteVisible)
+	const isRoute = useRouteVisible()
 
 	let className = `${classes.main} ${isRoute ? classes.maxHeight : ""}`
 

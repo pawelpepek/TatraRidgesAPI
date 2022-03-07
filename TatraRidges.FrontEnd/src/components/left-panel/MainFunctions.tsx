@@ -13,7 +13,7 @@ const MainFunctions: React.FC = () => {
 
 	return (
 		<div className={classes.functions}>
-			{visiblePanel !== "route" && (
+			{!visiblePanel.startsWith("route") && (
 				<>
 					<header className={classes.header}>
 						<h1>Granie Tatr Wysokich</h1>
@@ -24,7 +24,7 @@ const MainFunctions: React.FC = () => {
 					{visiblePanel === "login" && <AuthForm />}
 				</>
 			)}
-			{visiblePanel === "route" && <RoutePanel />}
+			{visiblePanel.startsWith("route") && <RoutePanel />}
 		</div>
 	)
 }

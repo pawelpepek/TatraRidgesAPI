@@ -58,9 +58,7 @@ const Chart: React.FC<{ parts: RidgeWithRoutes[] }> = props => {
 			type: "area",
 			stacked: false,
 			zoom: {
-				// 	type: "x",
 				enabled: false,
-				// 	autoScaleYaxis: true,
 			},
 		},
 		dataLabels: {
