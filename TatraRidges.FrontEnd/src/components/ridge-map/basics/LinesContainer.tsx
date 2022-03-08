@@ -6,7 +6,7 @@ const LinesContainer: React.FC<ConnectionsProps> = props => {
 		<>
 			{props.connections.map(c => (
 				<LineConnection
-					key={c.id}
+					key={`line_${c.id}`}
 					id={c.id}
 					point1={c.point1}
 					point2={c.point2}

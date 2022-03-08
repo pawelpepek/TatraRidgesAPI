@@ -4,6 +4,7 @@ import LinesContainer from "./basics/LinesContainer"
 import { fetchConnectionsData } from "../../store/map-actions"
 import StoreType from "../../store/store-types"
 import useRouteVisible from "../../hooks/use-rote-visible"
+import useAdminVisible from "../../hooks/use-admin-visible"
 
 const RidgesLinesContainer: React.FC = () => {
 	const dispatch = useDispatch()
@@ -13,6 +14,8 @@ const RidgesLinesContainer: React.FC = () => {
 	const pointsOk = useSelector((state: StoreType) => state.map.pointsOk)
 
 	const ridge = useSelector((state: StoreType) => state.map.ridgeInfo)
+
+	const isAdminVisible = useAdminVisible()
 
 	const isRouteVisible = useRouteVisible()
 
@@ -27,7 +30,13 @@ const RidgesLinesContainer: React.FC = () => {
 		dispatch(fetchConnectionsData())
 	}, [dispatch, pointsOk])
 
-	return <>{isRouteVisible && <LinesContainer connections={connections} />}</>
+	return (
+		<>
+			{(isRouteVisible || isAdminVisible) && (
+				<LinesContainer connections={connections} />
+			)}
+		</>
+	)
 }
 
 export default RidgesLinesContainer
