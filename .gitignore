@@ -380,3 +380,5 @@ yarn-error.log*
 #API settings
 appsettings.Development.json
 appsettings.json
+/TatraRidgesAPI/appsettings.json
+/TatraRidgesAPI/appsettings.Development.json
