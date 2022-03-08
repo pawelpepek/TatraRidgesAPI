@@ -1,30 +1,19 @@
 import L, { LeafletEvent, LeafletKeyboardEvent, Map } from "leaflet"
-import { useState, useCallback, useEffect } from "react"
+import { useCallback} from "react"
 import { MapContainer, TileLayer } from "react-leaflet"
 import { useSelector, useDispatch } from "react-redux"
 import { centerActions } from "../../../store/center-slice"
 import StoreType from "../../../store/store-types"
-import { deletePointById } from "../../../store/map-actions"
-import { MountainPoint } from "../../types"
 import React from "react"
+import usePointDelete from "../../../hooks/use-point-delete"
 
 const MountainMap: React.FC = props => {
 	const centerValue = useSelector((state: StoreType) => state.center.value)
 	const dispatch = useDispatch()
-
-	const [deleting, setDeleting] = useState(false)
-	const pointTo = useSelector((state: StoreType) =>
-		deleting ? state.map.pointTo : ({} as MountainPoint)
-	)
+    
+    const deletePoint=usePointDelete()
 
 	let map: L.Map
-
-	useEffect(() => {
-		if (deleting) {
-			setDeleting(false)
-			dispatch(deletePointById(pointTo.id))
-		}
-	}, [deleting])
 
 	const fitMap = useCallback(() => {
 		const layers: L.Layer[] = []
@@ -56,7 +45,7 @@ const MountainMap: React.FC = props => {
 
 	const onKeyDown = useCallback((e: LeafletKeyboardEvent) => {
 		if (e.originalEvent.key === "Delete") {
-			setDeleting(true)
+			deletePoint()
 		}
 		if (e.originalEvent.key === "z") {
 			fitMap()
