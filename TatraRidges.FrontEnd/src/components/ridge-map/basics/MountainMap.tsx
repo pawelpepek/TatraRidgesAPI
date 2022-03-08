@@ -6,6 +6,7 @@ import { centerActions } from "../../../store/center-slice"
 import StoreType from "../../../store/store-types"
 import React from "react"
 import usePointDelete from "../../../hooks/use-point-delete"
+import useMapFit from "../../../hooks/use-map-fit"
 
 const MountainMap: React.FC = props => {
 	const centerValue = useSelector((state: StoreType) => state.center.value)
@@ -15,21 +16,7 @@ const MountainMap: React.FC = props => {
 
 	let map: L.Map
 
-	const fitMap = useCallback(() => {
-		const layers: L.Layer[] = []
-		if (map !== undefined && map !== null && Object.keys(map).length > 3) {
-			map.eachLayer(lr => {
-				if (lr.hasOwnProperty("_latlngs")) {
-					layers.push(lr)
-				}
-			})
-			if (layers.length > 0) {
-				const group = L.featureGroup(layers)
-				const bounds = group.getBounds()
-				bounds.isValid() && map.fitBounds(bounds)
-			}
-		}
-	}, [])
+	const fitMap = useMapFit()
 
 	const onChangeMap = useCallback((e: LeafletEvent) => {
 		const m = e.target as Map
@@ -48,7 +35,7 @@ const MountainMap: React.FC = props => {
 			deletePoint()
 		}
 		if (e.originalEvent.key === "z") {
-			fitMap()
+			fitMap(map)
 		}
 	}, [])
 
@@ -67,7 +54,7 @@ const MountainMap: React.FC = props => {
 				centerValue.coordinates.longitude,
 			]}
 			zoom={centerValue.zoom}
-			maxZoom={17}
+			maxZoom={15}
 			scrollWheelZoom={true}
 			whenCreated={onMapCreated}>
 			<TileLayer
