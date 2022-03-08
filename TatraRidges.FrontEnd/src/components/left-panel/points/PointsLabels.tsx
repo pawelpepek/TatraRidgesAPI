@@ -1,5 +1,4 @@
 import { useSelector } from "react-redux"
-
 import StoreType from "../../../store/store-types"
 import PointLabel from "./PointLabel"
 import classes from "./PointsLabels.module.css"

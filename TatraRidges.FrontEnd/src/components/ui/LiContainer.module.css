@@ -3,7 +3,6 @@
 	flex-direction: column;
 	margin-top: 5px;
 	margin-left: 0px;
-	/* margin-right: calc(var(--right-margin) - 8px); */
 	border-bottom: 1px solid gray;
 	height: auto;
 	width: 100%;

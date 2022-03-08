@@ -1,5 +1,4 @@
 import { useDispatch } from "react-redux"
-
 import { pointsActions } from "../../../store/map-slice"
 import reverseIcon from "../../img/arrow-down-back.svg"
 import RoundButton from "../../ui/RoundButton"

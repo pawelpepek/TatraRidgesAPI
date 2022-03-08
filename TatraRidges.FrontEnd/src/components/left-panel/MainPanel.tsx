@@ -1,10 +1,9 @@
 import { useSelector } from "react-redux"
-
 import StoreType from "../../store/store-types"
 import Notification from "../ui/Notification"
 import classes from "./MainPanel.module.css"
 import MainFunctions from "./MainFunctions"
-import useRouteVisible from "../../store/use-rote-visible"
+import useRouteVisible from "../../hooks/use-rote-visible"
 
 const MainPanel: React.FC = () => {
 	const errorMessage = useSelector((state: StoreType) =>

@@ -1,10 +1,9 @@
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-
 import LinesContainer from "./basics/LinesContainer"
 import { fetchConnectionsData } from "../../store/map-actions"
 import StoreType from "../../store/store-types"
-import useRouteVisible from "../../store/use-rote-visible"
+import useRouteVisible from "../../hooks/use-rote-visible"
 
 const RidgesLinesContainer: React.FC = () => {
 	const dispatch = useDispatch()
@@ -14,6 +13,7 @@ const RidgesLinesContainer: React.FC = () => {
 	const pointsOk = useSelector((state: StoreType) => state.map.pointsOk)
 
 	const ridge = useSelector((state: StoreType) => state.map.ridgeInfo)
+
 	const isRouteVisible = useRouteVisible()
 
 	if (isRouteVisible) {

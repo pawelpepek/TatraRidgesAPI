@@ -1,18 +1,10 @@
-export interface RidgeMapProps {
-	id?: string
-	className?: string
-	lat?: number
-	log?: number
-	zoom?: number
-}
-
 export interface MountainPoint {
 	name: string
 	latitude: number
 	longitude: number
 	id: number
 	pointTypeId: number
-	evaluation:number
+	evaluation: number
 }
 
 export interface MountainPoints {

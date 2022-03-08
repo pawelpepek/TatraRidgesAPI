@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from "react-redux"
-
 import { postConnectionRidge } from "../../../store/map-actions"
 import StoreType from "../../../store/store-types"
 import linkIcon from "../../img/connection.svg"

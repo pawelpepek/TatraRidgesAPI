@@ -1,5 +1,4 @@
 import { useSelector } from "react-redux"
-
 import StoreType from "../../../store/store-types"
 import PointsPanel from "../points/PointsPanel"
 import NoLocationMarks from "./NoLocationMarks"

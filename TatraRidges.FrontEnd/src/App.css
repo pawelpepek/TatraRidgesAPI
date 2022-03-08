@@ -23,13 +23,6 @@
 	display: none;
 }
 
-:root {
-	--left-margin: 45px;
-	--right-margin: 52px;
-	--input-border-radius: 5px;
-	--input-border: 1px solid black;
-}
-
 .centeredSpinner {
 	top:0px;
 	left:0px;

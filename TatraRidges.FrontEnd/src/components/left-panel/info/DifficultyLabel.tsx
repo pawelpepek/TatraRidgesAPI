@@ -1,4 +1,3 @@
-import Tooltip from "../../ui/Tooltip"
 import classes from "./DifficultyLabel.module.css"
 
 const DifficultyLabel: React.FC<{ text: string; small?: boolean }> = props => {
@@ -12,7 +11,6 @@ const DifficultyLabel: React.FC<{ text: string; small?: boolean }> = props => {
 			<span data-tip={text} className={className}>
 				{props.text}
 			</span>
-			
 		</>
 	)
 }

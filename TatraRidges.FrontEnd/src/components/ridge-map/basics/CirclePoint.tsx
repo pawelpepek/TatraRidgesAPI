@@ -2,7 +2,6 @@ import { CircleMarkerOptions } from "leaflet"
 import React, { useEffect, useState } from "react"
 import { CircleMarker } from "react-leaflet"
 import { useSelector, useDispatch } from "react-redux"
-
 import { pointsActions } from "../../../store/map-slice"
 import StoreType from "../../../store/store-types"
 import { MountainPoint } from "../../types"

@@ -2,7 +2,6 @@ import { useSelector, useDispatch } from "react-redux"
 import RoundButton from "../ui/RoundButton"
 import StoreType from "../../store/store-types"
 import { uiActions } from "../../store/ui-slice"
-
 import mapIcon from "../img/map.svg"
 import adminIcon from "../img/tools.svg"
 import userIcon from "../img/user.svg"

@@ -1,5 +1,4 @@
 import { useDispatch } from "react-redux"
-
 import { deletePointById } from "../../../store/map-actions"
 import deleteIcon from "../../img/trash.svg"
 import { MountainPoint } from "../../types"

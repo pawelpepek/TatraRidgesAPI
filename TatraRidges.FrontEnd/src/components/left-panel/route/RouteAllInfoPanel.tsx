@@ -5,10 +5,7 @@ import Chart from "./Chart"
 
 const RouteAllInfoPanel: React.FC<{ route: RidgeAllInformation }> = props => {
 	const isNotEmpty = props.route.initalRouteSummary !== undefined
-	// const manyParts =
-	// 	isNotEmpty &&
-	// 	props.route.ridgesContainer !== undefined &&
-	// 	props.route.ridgesContainer.length > 1
+
 	return (
 		<>
 			{isNotEmpty && <RouteSummaryPanel info={props.route} />}

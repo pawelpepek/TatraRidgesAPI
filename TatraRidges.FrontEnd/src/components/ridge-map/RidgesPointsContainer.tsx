@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 
 import { fetchPointsData } from "../../store/map-actions"
 import StoreType from "../../store/store-types"
-import useRouteVisible from "../../store/use-rote-visible"
+import useRouteVisible from "../../hooks/use-rote-visible"
 import PointsContainer from "./basics/PointsContainer"
 
 const RidgesPointsContainer: React.FC = () => {
