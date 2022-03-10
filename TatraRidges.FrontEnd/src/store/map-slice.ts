@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
+import { WritableDraft } from "immer/dist/internal"
 
 import {
 	MountainPoint,
@@ -40,8 +41,8 @@ const pointsSlice = createSlice({
 				// ) {
 				// 	state.pointFrom = action.payload.point
 				// } else {
-					state.pointFrom = state.pointTo
-					state.pointTo = action.payload.point
+				state.pointFrom = state.pointTo
+				state.pointTo = action.payload.point
 				// }
 			}
 		},
@@ -63,9 +64,16 @@ const pointsSlice = createSlice({
 
 			const point = state.points.find(p => p.id === id)
 
-			if (point !== undefined) {
+			const setPointCoordinates = (
+				point: WritableDraft<MountainPoint>,
+				coordinates: Coordinates
+			) => {
 				point.latitude = coordinates.latitude
 				point.longitude = coordinates.longitude
+			}
+
+			if (point !== undefined) {
+				setPointCoordinates(point, coordinates)
 
 				state.connections
 					.filter(c => c.point1.id === id)
@@ -73,6 +81,13 @@ const pointsSlice = createSlice({
 				state.connections
 					.filter(c => c.point2.id === id)
 					.forEach(c => changeCoordinates(c.point2, coordinates))
+
+				if (id === state.pointFrom.id) {
+					setPointCoordinates(state.pointFrom, coordinates)
+				}
+				if (id === state.pointTo.id) {
+					setPointCoordinates(state.pointTo, coordinates)
+				}
 			}
 		},
 
