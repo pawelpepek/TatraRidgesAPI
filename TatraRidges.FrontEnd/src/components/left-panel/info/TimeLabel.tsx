@@ -10,7 +10,7 @@ const TimeLabel: React.FC<{ routeTime: Date }> = props => {
 	const hours = parseInt(firstParts[firstParts.length-1])
 	const minutes = parseInt(parts[1])
 
-	const hoursText = hours > 0 ? `${hours + 24 * days} godz. ` : ""
+	const hoursText = hours+days > 0 ? `${hours + 24 * days} godz. ` : ""
 	const minutesText = minutes > 0 ? `${minutes} min.` : ""
 
 	return (
