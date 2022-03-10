@@ -11,7 +11,11 @@ const MarkersPoints: React.FC = () => {
 	return (
 		<>
 			{isNotEmpty(pointFrom) && (
-				<MarkerPoint key={`marker_${pointFrom.id}`} point={pointFrom} end={false} />
+				<MarkerPoint
+					key={`marker_${pointFrom.id}`}
+					point={pointFrom}
+					end={false}
+				/>
 			)}
 			{isNotEmpty(pointTo) && (
 				<MarkerPoint key={`marker_${pointTo.id}`} point={pointTo} end={true} />
@@ -20,4 +24,4 @@ const MarkersPoints: React.FC = () => {
 	)
 }
 
-export default React.memo(MarkersPoints)
+export default MarkersPoints

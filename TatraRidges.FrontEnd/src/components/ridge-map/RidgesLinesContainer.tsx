@@ -9,21 +9,19 @@ import useAdminVisible from "../../hooks/use-admin-visible"
 const RidgesLinesContainer: React.FC = () => {
 	const dispatch = useDispatch()
 
-	let connections = useSelector((state: StoreType) => state.map.connections)
-
+	const connections = useSelector((state: StoreType) => state.map.connections)
 	const pointsOk = useSelector((state: StoreType) => state.map.pointsOk)
-
 	const ridge = useSelector((state: StoreType) => state.map.ridgeInfo)
-
 	const isAdminVisible = useAdminVisible()
-
 	const isRouteVisible = useRouteVisible()
+
+	let cons=connections
 
 	if (isRouteVisible) {
 		const ridges = ridge.ridgesContainer
 		const ridgesIds = ridges.map(r => r.pointsConnectionId)
 
-		connections = connections.filter(c => ridgesIds.includes(c.id))
+		cons = connections.filter(c => ridgesIds.includes(c.id))
 	}
 
 	useEffect(() => {
@@ -33,7 +31,7 @@ const RidgesLinesContainer: React.FC = () => {
 	return (
 		<>
 			{(isRouteVisible || isAdminVisible) && (
-				<LinesContainer connections={connections} />
+				<LinesContainer connections={cons} />
 			)}
 		</>
 	)

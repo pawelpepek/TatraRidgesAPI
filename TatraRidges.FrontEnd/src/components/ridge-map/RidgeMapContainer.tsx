@@ -12,4 +12,4 @@ const RidgeMapContainer: React.FC = () => {
 	)
 }
 
-export default React.memo(RidgeMapContainer)
+export default RidgeMapContainer

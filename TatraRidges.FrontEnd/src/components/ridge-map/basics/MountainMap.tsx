@@ -1,5 +1,5 @@
 import L, { LeafletEvent, LeafletKeyboardEvent, Map } from "leaflet"
-import { useCallback} from "react"
+import { useCallback } from "react"
 import { MapContainer, TileLayer } from "react-leaflet"
 import { useSelector, useDispatch } from "react-redux"
 import { centerActions } from "../../../store/center-slice"
@@ -11,8 +11,8 @@ import useMapFit from "../../../hooks/use-map-fit"
 const MountainMap: React.FC = props => {
 	const centerValue = useSelector((state: StoreType) => state.center.value)
 	const dispatch = useDispatch()
-    
-    const deletePoint=usePointDelete()
+
+	const deletePoint = usePointDelete()
 
 	let map: L.Map
 
@@ -54,14 +54,14 @@ const MountainMap: React.FC = props => {
 				centerValue.coordinates.longitude,
 			]}
 			zoom={centerValue.zoom}
-			maxZoom={15}
+			maxZoom={17}
 			scrollWheelZoom={true}
 			whenCreated={onMapCreated}>
 			<TileLayer
 				attribution='Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
 				url='https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png'
 			/>
-            {props.children}
+			{props.children}
 		</MapContainer>
 	)
 }
