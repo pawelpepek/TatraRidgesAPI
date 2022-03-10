@@ -69,17 +69,18 @@ const RouteForm: React.FC<{ className?: string }> = props => {
 					</tr>
 				</thead>
 				<tbody>
+					<RouteCheckboxRow id='clearAfterAdd' labelText='Wyczyść dane' />
 					<RouteSelectRow id='guide' labelText='Przewodnik' />
 					<RouteInputRow id='volume' labelText='Tom' type='Number' />
-					<RouteInputRow id='number' labelText='Numer' type='Text' />
-					<RouteInputRow id='page' labelText='Strona' type='Number' />
-					<RouteSelectRow id='difficulty' labelText='Trudność' />
-					<RouteCheckboxRow id='rappeling' labelText='Zjazd na linie' />
 					<tr>
 						<td colSpan={2}>
 							<AdjectivSelect />
 						</td>
 					</tr>
+					<RouteInputRow id='number' labelText='Numer' type='Text' />
+					<RouteInputRow id='page' labelText='Strona' type='Number' />
+					<RouteSelectRow id='difficulty' labelText='Trudność' />
+					<RouteCheckboxRow id='rappeling' labelText='Zjazd na linie' />
 					<RouteInputRow id='routeTime' labelText='Czas' type='Time' />
 					<RouteSelectRow id='routeTypeId' labelText='Rodzaj drogi' />
 				</tbody>
