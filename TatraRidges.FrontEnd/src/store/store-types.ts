@@ -51,6 +51,7 @@ interface StoreType {
 		page: number | null
 		routeTime: Date | null
 		isFilled: boolean
+		clearAfterAdd:boolean
 	}
 	loginForm: {
 		email: string

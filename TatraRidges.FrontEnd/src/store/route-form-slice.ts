@@ -25,6 +25,7 @@ export interface RouteFormValues {
 	page: number | null
 	routeTime: Date | null
 	isFilled: boolean
+	clearAfterAdd: boolean
 }
 
 const initialState: RouteFormValues = {
@@ -45,6 +46,7 @@ const initialState: RouteFormValues = {
 	page: null,
 	routeTime: null,
 	isFilled: false,
+	clearAfterAdd: true,
 }
 
 const routeFormSlice = createSlice({
@@ -58,10 +60,12 @@ const routeFormSlice = createSlice({
 			state.isFilled = objectIsFilled(state, ["adjectives"])
 		},
 		clear(state, action) {
+			if (state.clearAfterAdd) {
+				state.number = ""
+				state.adjectives = []
+				state.page = null
+			}
 			state.isFilled = false
-			state.number = ""
-			state.adjectives = []
-			state.page = null
 			state.routeTime = null
 			state.rappeling = false
 		},
