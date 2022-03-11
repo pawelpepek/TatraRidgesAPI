@@ -35,15 +35,8 @@ const pointsSlice = createSlice({
 		},
 		setActualPoint(state, action) {
 			if (action.payload.point.id !== state.pointTo.id) {
-				// if (
-				// 	Object.keys(state.pointFrom).length < 1 &&
-				// 	Object.keys(state.pointTo).length > 0
-				// ) {
-				// 	state.pointFrom = action.payload.point
-				// } else {
 				state.pointFrom = state.pointTo
 				state.pointTo = action.payload.point
-				// }
 			}
 		},
 		toggleSelectedPoints(state) {
@@ -126,10 +119,10 @@ const pointsSlice = createSlice({
 			if (actions.payload.data.pointsRidge !== null) {
 				const point1 = state.points.find(p => p.id === actions.payload.pointId1)
 				const point2 = state.points.find(p => p.id === actions.payload.pointId2)
-
+				console.log(actions.payload)
 				if (point1 !== undefined && point2 !== undefined) {
 					const newConnection: ConnectionPoints = {
-						id: actions.payload.data.Id,
+						id: actions.payload.data.pointsRidge.id,
 						point1,
 						point2,
 					}

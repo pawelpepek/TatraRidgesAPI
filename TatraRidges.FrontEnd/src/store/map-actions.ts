@@ -95,6 +95,7 @@ export const postRouteRidge = (route: AddRoute) => {
 		method: "POST",
 		location: "route",
 		body,
+		isBody: true,
 		addingInfo: {
 			pointId1,
 			pointId2,
