@@ -43,5 +43,16 @@ namespace TatraRidgesAPI.IntegrationTests.Controllers
              => await new GetRidgeBetweenPointsTestsBuilder(Factory, Client).SetPointNotExist()
                                                                             .SetStatusCode(HttpStatusCode.NotFound)
                                                                             .Build();
+
+        [Fact]
+        public async Task GetRouteSummary_WithNotExistingRoute_ReturnsNotFound()
+             => await new GetRouteSummaryTestsBuilder(Factory, Client).SetPointNotExist()
+                                                                      .SetStatusCode(HttpStatusCode.NotFound)
+                                                                      .Build();
+
+        [Fact]
+        public async Task GetRouteSummary_WithExistingRoute_ReturnsOk()
+             => await new GetRouteSummaryTestsBuilder(Factory, Client).SetStatusCode(HttpStatusCode.OK)
+                                                                      .Build();
     }
 }
