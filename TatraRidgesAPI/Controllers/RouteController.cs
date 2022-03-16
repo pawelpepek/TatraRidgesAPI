@@ -27,7 +27,7 @@ namespace TatraRidgesAPI.Controllers
 
             return connections.RidgesContainer.Any() ? Ok(connections) : NotFound();
         }
-        [HttpGet("parts")]
+        [HttpPost("parts")]
         public ActionResult<RouteSummary> GetRouteSummary([FromBody] List<RouteIdFromDto> routesIdFrom)
         {
             var summary = _service.GetRouteSummary(routesIdFrom);

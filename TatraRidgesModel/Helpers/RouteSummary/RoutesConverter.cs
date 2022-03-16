@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TatraRidges.Model.Dtos;
+using TatraRidges.Model.Exceptions;
 using TatraRidges.Model.Procedures;
 
 namespace TatraRidges.Model.Helpers.RouteSummary
@@ -24,7 +25,11 @@ namespace TatraRidges.Model.Helpers.RouteSummary
                                          .Include(r => r.GuideDescription)
                                          .ThenInclude(g => g.Guide)
                                          .Include(r => r.RouteType)
-                                         .First(r => r.Id == routeIdFrom.RouteId);
+                                         .FirstOrDefault(r => r.Id == routeIdFrom.RouteId);
+            if(route==null)
+            {
+                throw new NotFoundException($"Brak drogi numer {routeIdFrom.RouteId}");
+            }
 
             var pointFromRoute = route.ConsistentDirection
                                ? route.PointsConnection.PointId1
