@@ -6,7 +6,8 @@ const RoutePartPanel: React.FC<{ route: Route }> = props => {
 	const route = props.route
 
 	const description =
-		"Droga " + route.descriptionAdjective.map(a => a.text).join(", ")
+		"Droga " +
+		route.descriptionAdjective.map(a => a.text.toLowerCase()).join(", ")
 
 	const guideDesc = route.guideDescription
 

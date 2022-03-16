@@ -80,6 +80,11 @@ export interface AddRoute {
 	adjectives: string[]
 }
 
+export interface RouteIdFrom {
+	routeId: number
+	pointFrom: number
+}
+
 export interface AddGuideDescription {
 	guideId: number
 	page: number

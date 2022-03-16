@@ -140,6 +140,9 @@ const pointsSlice = createSlice({
 				})
 			}
 		},
+		getSummary(state, actions) {
+			state.ridgeInfo.initalRouteSummary = actions.payload.data
+		},
 		clearRidge(state, actions) {
 			state.ridgeInfo = {} as RidgeAllInformation
 		},

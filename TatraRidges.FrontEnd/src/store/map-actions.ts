@@ -3,7 +3,7 @@ import dataDispatcher from "./dispatch-actions"
 import { pointsActions } from "./map-slice"
 import { uiActions } from "./ui-slice"
 import { routeFormActions } from "./route-form-slice"
-import { AddRoute } from "./routeTypes"
+import { AddRoute, RouteIdFrom } from "./routeTypes"
 
 export const movePoint = (id: number, coordinates: Coordinates) => {
 	const props = {
@@ -84,6 +84,16 @@ export const getParameters = () => {
 		token: true,
 	}
 	return dataDispatcher(props, routeFormActions.setValuesContainer)
+}
+
+export const getSummaryForRoutes = (routes: RouteIdFrom[]) => {
+	const props = {
+		method: "POST",
+		location: "route/parts",
+		body: routes,
+		isBody: true,
+	}
+	return dataDispatcher(props, pointsActions.getSummary)
 }
 
 export const postRouteRidge = (route: AddRoute) => {
