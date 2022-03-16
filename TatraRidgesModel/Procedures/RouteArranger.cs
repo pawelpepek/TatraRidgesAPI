@@ -10,6 +10,27 @@ namespace TatraRidges.Model.Procedures
             return ridgeRoute.Select(r => GetRidgeWithRoutesDto(r)).ToList();
         }
 
+        public static RouteDto GetRouteDto(Route route, bool consistDirection)
+        {
+            return new RouteDto()
+            {
+                Id = route.Id,
+                Difficulty = route.Difficulty.Text + route.DifficultyDetail.Sign,
+                GuideDescription = GetGuideDescriptionDto(route.GuideDescription),
+                RouteTime = route.RouteTime,
+                DifficultyValue = DifficultyConverter.GetValueForDifficulty(route.Difficulty, route.DifficultyDetail),
+                RouteType = new RouteTypeDto(route.RouteType),
+                Rappeling = route.Rappeling,
+                Rank = route.DescriptionAdjectivePairs.Select(p => p.Adjective).Sum(a => a.Rank),
+                ConsistentDirection = consistDirection
+                                    ? route.ConsistentDirection
+                                    : !route.ConsistentDirection,
+                DescriptionAdjective = route.DescriptionAdjectivePairs
+                                            .Select(a => GetAdjectiveDto(a))
+                                            .ToList()
+            };
+        }
+
         private static RidgeWithRoutesDto GetRidgeWithRoutesDto(PointsConnectionWithDirection ridgePart)
         {
             var connection = ridgePart.PointsConnection;
@@ -36,27 +57,6 @@ namespace TatraRidges.Model.Procedures
                 Routes = routes
             };
             return ridgeRoute;
-        }
-
-        private static RouteDto GetRouteDto(Route route, bool consistDirection)
-        {
-            return new RouteDto()
-            {
-                Id=route.Id,
-                Difficulty = route.Difficulty.Text + route.DifficultyDetail.Sign,
-                GuideDescription= GetGuideDescriptionDto(route.GuideDescription),
-                RouteTime = route.RouteTime,
-                DifficultyValue = DifficultyConverter.GetValueForDifficulty(route.Difficulty, route.DifficultyDetail),
-                RouteType = new RouteTypeDto(route.RouteType),
-                Rappeling = route.Rappeling,
-                Rank = route.DescriptionAdjectivePairs.Select(p => p.Adjective).Sum(a => a.Rank),
-                ConsistentDirection = consistDirection
-                                    ? route.ConsistentDirection
-                                    : !route.ConsistentDirection,
-                DescriptionAdjective = route.DescriptionAdjectivePairs
-                                            .Select(a => GetAdjectiveDto(a))
-                                            .ToList()
-            };
         }
 
         private static GuideDescriptionDto GetGuideDescriptionDto(GuideDescription guideDescription)

@@ -4,6 +4,7 @@ using System.Linq;
 using TatraRidges.Model.Dtos;
 using TatraRidges.Model.Entities;
 using TatraRidges.Model.Helpers;
+using TatraRidges.Model.Helpers.RouteSummary;
 using TatraRidges.Model.Procedures;
 
 namespace TatraRidgesAPI.Services
@@ -29,9 +30,17 @@ namespace TatraRidgesAPI.Services
 
             return new RidgeAllInformation(ridgeContainer, _dbContext);
         }
+
+        public RouteSummary GetRouteSummary(List<RouteIdFromDto> routesIdFrom)
+        {
+            var ridges = (new RoutesConverter(_dbContext)).Convert(routesIdFrom);
+
+            return RouteSummaryCreator.Create(ridges, _dbContext);
+        }
+
         public RouteCreateResultDto AddRouteForPoints(AddRouteDto dto)
         {
-            var (newRouteId, connection) = new RouteCreator(_dbContext).SaveInDbContext( dto);
+            var (newRouteId, connection) = new RouteCreator(_dbContext).SaveInDbContext(dto);
 
             return new RouteCreateResultDto()
             {
