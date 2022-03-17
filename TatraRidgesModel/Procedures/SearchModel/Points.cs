@@ -39,7 +39,10 @@
             var removed = this.Where(p => p.Connections.Count == 1 && !_routeIds.Contains(p.Id)).ToList();
             for (var i = removed.Count - 1; i >= 0; i--)
             {
-                removed[i].Connections[0].Delete();
+                if (removed[i].Connections.Any())
+                {
+                    removed[i].Connections[0].Delete();
+                }
                 Remove(removed[i]);
             }
 
