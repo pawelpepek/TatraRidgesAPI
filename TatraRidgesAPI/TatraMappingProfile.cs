@@ -8,8 +8,7 @@ namespace TatraRidgesAPI
     {
         public TatraMappingProfile()
         {
-            CreateMap<MountainPoint, MountainPointDto>()
-                .ForMember(p => p.PointTypeName, t => t.MapFrom(s => s.PointType.Name));
+            CreateMap<MountainPoint, MountainPointDto>();
 
             CreateMap<PointsConnection, PointsRidgeDto>()
                 .ForMember(r=>r.PointFrom,t=>t.MapFrom(s=>
