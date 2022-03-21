@@ -3,11 +3,11 @@ import React, { Suspense } from "react"
 import StoreType from "../../store/store-types"
 import AdminPanel from "./admin/AdminPanel"
 import classes from "./MainFunctions.module.css"
+import RoutePanel from "./route/RoutePanel"
 
 const MainFunctions: React.FC = () => {
 	const visiblePanel = useSelector((state: StoreType) => state.ui.visiblePanel)
 
-	const RoutePanel = React.lazy(() => import("./route/RoutePanel"))
 	const SearchPanel = React.lazy(() => import("./find/SearchPanel"))
 	const AuthForm = React.lazy(() => import("./authorization/AuthForm"))
 	const NavigationPanel = React.lazy(() => import("./NavigationPanel"))
