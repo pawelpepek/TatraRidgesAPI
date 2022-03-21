@@ -2,7 +2,8 @@ import { uiActions } from "./ui-slice"
 import { getMessage } from "./statusCodeMessage"
 
 const fetchData = async props => {
-	let url = "https://localhost:44342/api/" + props.location
+	const conf = require("../config.dev.json")
+	let url = conf.webAPI + props.location
 	if (props.pathPart !== undefined) {
 		url += props.pathPart
 	}
@@ -67,7 +68,7 @@ const dataDispatcher = (props, dispatcher) => {
 			})
 		)
 		try {
-			const makeDispatch=(props,dispatcher)=>{
+			const makeDispatch = (props, dispatcher) => {
 				if (
 					props.body != null ||
 					data !== true ||
@@ -85,7 +86,6 @@ const dataDispatcher = (props, dispatcher) => {
 				}
 			}
 
-
 			const data = await fetchData(props)
 
 			dispatch(
@@ -100,9 +100,8 @@ const dataDispatcher = (props, dispatcher) => {
 					dispatchers = new Array()
 					dispatchers.push(dispatcher)
 				}
-				for(const dis of dispatchers)
-				{
-					makeDispatch(props,dis)
+				for (const dis of dispatchers) {
+					makeDispatch(props, dis)
 				}
 				return true
 			}
