@@ -1,30 +1,33 @@
 import { useSelector } from "react-redux"
-
+import React, { Suspense } from "react"
 import StoreType from "../../store/store-types"
 import AdminPanel from "./admin/AdminPanel"
-import SearchPanel from "./find/SearchPanel"
 import classes from "./MainFunctions.module.css"
-import NavigationPanel from "./NavigationPanel"
-import AuthForm from "./authorization/AuthForm"
-import RoutePanel from "./route/RoutePanel"
 
 const MainFunctions: React.FC = () => {
 	const visiblePanel = useSelector((state: StoreType) => state.ui.visiblePanel)
 
+	const RoutePanel = React.lazy(() => import("./route/RoutePanel"))
+	const SearchPanel = React.lazy(() => import("./find/SearchPanel"))
+	const AuthForm = React.lazy(() => import("./authorization/AuthForm"))
+	const NavigationPanel = React.lazy(() => import("./NavigationPanel"))
+
 	return (
 		<div className={classes.functions}>
-			{!visiblePanel.startsWith("route") && (
-				<>
-					<header className={classes.header}>
-						<h1>Granie Tatr Wysokich</h1>
-					</header>
-					<NavigationPanel className={classes.navigation} />
-					{visiblePanel === "admin" && <AdminPanel />}
-					{visiblePanel === "search" && <SearchPanel />}
-					{visiblePanel === "login" && <AuthForm />}
-				</>
-			)}
-			{visiblePanel.startsWith("route") && <RoutePanel />}
+			<Suspense fallback={<p>Loading...</p>}>
+				{!visiblePanel.startsWith("route") && (
+					<>
+						<header className={classes.header}>
+							<h1>Granie Tatr Wysokich</h1>
+						</header>
+						<NavigationPanel className={classes.navigation} />
+						{visiblePanel === "admin" && <AdminPanel />}
+						{visiblePanel === "search" && <SearchPanel />}
+						{visiblePanel === "login" && <AuthForm />}
+					</>
+				)}
+				{visiblePanel.startsWith("route") && <RoutePanel />}
+			</Suspense>
 		</div>
 	)
 }
