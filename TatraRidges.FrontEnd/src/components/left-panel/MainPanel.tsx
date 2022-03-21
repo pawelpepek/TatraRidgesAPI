@@ -3,7 +3,7 @@ import StoreType from "../../store/store-types"
 import classes from "./MainPanel.module.css"
 import MainFunctions from "./MainFunctions"
 import useRouteVisible from "../../hooks/use-rote-visible"
-import React from 'react'
+import React, { Suspense } from "react"
 
 const MainPanel: React.FC = () => {
 	const errorMessage = useSelector((state: StoreType) =>
@@ -11,16 +11,18 @@ const MainPanel: React.FC = () => {
 	)
 	const isRoute = useRouteVisible()
 
-	const Notification=React.lazy(()=>import("../ui/Notification"))
+	const Notification = React.lazy(() => import("../ui/Notification"))
 
 	let className = `${classes.main} ${isRoute ? classes.maxHeight : ""}`
 
 	return (
 		<div className={className}>
 			<MainFunctions />
-			{!isRoute && errorMessage !== "" && (
-				<Notification status='error' message={errorMessage} />
-			)}
+			<Suspense fallback={<p>Loading...</p>}>
+				{!isRoute && errorMessage !== "" && (
+					<Notification status='error' message={errorMessage} />
+				)}
+			</Suspense>
 		</div>
 	)
 }
