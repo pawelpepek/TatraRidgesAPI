@@ -86,7 +86,8 @@ const pointsSlice = createSlice({
 
 		replaceConnections(state, actions) {
 			const connectionsData = actions.payload.data as ConnectionData[]
-
+			state.connections=[]
+			
 			if (state.points.length > 0) {
 				for (const c of connectionsData) {
 					const point1 = state.points.find(p => p.id === c.pointId1)
