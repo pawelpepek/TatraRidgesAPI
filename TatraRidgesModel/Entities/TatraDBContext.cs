@@ -26,11 +26,5 @@ public class TatraDbContext : DbContext
         base.OnModelCreating(modelBuilder);
         ModelCreatorForTatras.Create(modelBuilder);
     }
-
-    //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    //{
-    //    optionsBuilder.UseSqlServer(_connectionString);
-    //    base.OnConfiguring(optionsBuilder);
-    //}
 }
 
