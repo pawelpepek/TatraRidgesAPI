@@ -382,3 +382,4 @@ appsettings.Development.json
 appsettings.json
 /TatraRidgesAPI/appsettings.json
 /TatraRidgesAPI/appsettings.Development.json
+/TatraRidgesAPI/.config/dotnet-tools.json
