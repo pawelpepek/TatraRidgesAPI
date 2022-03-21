@@ -2,6 +2,7 @@
 {
     public class MountainPointDto
     {
+        public int Id { get; set; }
         public byte PointTypeId { get; set; }
         public string Name { get; set; }
         public short? Evaluation { get; set; }
