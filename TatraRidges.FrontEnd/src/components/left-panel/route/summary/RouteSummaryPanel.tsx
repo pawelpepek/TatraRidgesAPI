@@ -4,7 +4,12 @@ import SecondInfoLabel from "../../info/SecondInfoLabel"
 import MountainsPointsConnectionLabel from "../../info/MountainsPointsConnectionLabel"
 import RoundContainer from "../../../ui/RoundContainer"
 
-const RouteSummaryPanel: React.FC<{ info: RidgeAllInformation }> = props => {
+interface RouteSummaryPanelProps {
+	info: RidgeAllInformation
+	className: string
+}
+
+const RouteSummaryPanel: React.FC<RouteSummaryPanelProps> = props => {
 	const summary = props.info.initalRouteSummary
 
 	const point1 = props.info.ridgesContainer[0].point1
@@ -12,7 +17,7 @@ const RouteSummaryPanel: React.FC<{ info: RidgeAllInformation }> = props => {
 		props.info.ridgesContainer[props.info.ridgesContainer.length - 1].point2
 
 	return (
-		<RoundContainer>
+		<RoundContainer className={props.className}>
 			{point1 !== undefined && point2 !== undefined && (
 				<MountainsPointsConnectionLabel point1={point1} point2={point2} />
 			)}

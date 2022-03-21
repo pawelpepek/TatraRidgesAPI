@@ -6,7 +6,12 @@ import { MountainPoint } from "../../types"
 import { getNotNullable } from "../../helpers/functions"
 import classes from "./Chart.module.css"
 
-const Chart: React.FC<{ parts: RidgeWithRoutes[] }> = props => {
+interface ChartProps{
+	parts: RidgeWithRoutes[] 
+	className:string
+}
+
+const Chart: React.FC<ChartProps> = props => {
 	const isNotEmpty = props.parts.length > 0
 
 	const getDistance = (point1: MountainPoint, point2: MountainPoint) => {
@@ -75,7 +80,7 @@ const Chart: React.FC<{ parts: RidgeWithRoutes[] }> = props => {
 		  },
 	}
 	return (
-		<div className={classes.container}>
+		<div className={`${classes.container} ${props.className}`}>
 			{isNotEmpty && (
 				<ReactApexChart
 					options={chartData}

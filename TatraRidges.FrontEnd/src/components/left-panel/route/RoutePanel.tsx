@@ -6,6 +6,7 @@ import RouteHeader from "./RouteHeader"
 import AlternativeRoutesTab from "./alternative/AlternativeRoutesTab"
 import { MountainPoint } from "../../types"
 import { RidgeWithRoutes } from "../../../store/routeTypes"
+import classes from "./RoutePanel.module.css"
 
 const RoutePanel: React.FC = () => {
 	const ridgeInfo = useSelector((state: StoreType) => state.map.ridgeInfo)
@@ -31,6 +32,8 @@ const RoutePanel: React.FC = () => {
 
 	const header = alternative ? "Wybór wariantu" : "Wynik wyszukiwania"
 
+	const classForInfo=alternative?classes.hide:"";
+
 	return (
 		<>
 			<RouteHeader
@@ -38,7 +41,7 @@ const RoutePanel: React.FC = () => {
 				backText={backText}
 				header={header}
 			/>
-			{!alternative && <RouteAllInfoPanel route={ridgeInfo} />}
+			<RouteAllInfoPanel route={ridgeInfo} className={classForInfo}/>
 			{alternative && (
 				<AlternativeRoutesTab
 					routes={getRoutes().routes}

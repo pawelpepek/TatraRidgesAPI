@@ -3,14 +3,31 @@ import RouteSummaryPanel from "./summary/RouteSummaryPanel"
 import RouteList from "./list/RouteList"
 import Chart from "./Chart"
 
-const RouteAllInfoPanel: React.FC<{ route: RidgeAllInformation }> = props => {
+interface RouteAllInfoPanelProps {
+	route: RidgeAllInformation
+	className: string
+}
+
+const RouteAllInfoPanel: React.FC<RouteAllInfoPanelProps> = props => {
 	const isNotEmpty = props.route.initalRouteSummary !== undefined
 
 	return (
 		<>
-			{isNotEmpty && <RouteSummaryPanel info={props.route} />}
-			{isNotEmpty && <Chart parts={props.route.ridgesContainer} />}
-			{isNotEmpty && <RouteList parts={props.route.ridgesContainer} />}
+			{isNotEmpty && (
+				<RouteSummaryPanel info={props.route} className={props.className} />
+			)}
+			{isNotEmpty && (
+				<Chart
+					parts={props.route.ridgesContainer}
+					className={props.className}
+				/>
+			)}
+			{isNotEmpty && (
+				<RouteList
+					parts={props.route.ridgesContainer}
+					className={props.className}
+				/>
+			)}
 		</>
 	)
 }
