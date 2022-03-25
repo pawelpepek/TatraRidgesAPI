@@ -384,3 +384,5 @@ appsettings.json
 /TatraRidgesAPI/appsettings.Development.json
 /TatraRidgesAPI/.config/dotnet-tools.json
 /TatraRidges.FrontEnd/src/config.dev.json
+/TatraRidges.FrontEnd/.firebaserc
+/TatraRidges.FrontEnd/firebase.json
