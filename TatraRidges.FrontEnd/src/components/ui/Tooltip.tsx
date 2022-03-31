@@ -8,7 +8,7 @@ const Tooltip: React.FC = () => {
 			borderColor='gray'
 			border={true}
 			textColor='black'
-			delayShow={400}
+			delayShow={300}
 		/>
 	)
 }
