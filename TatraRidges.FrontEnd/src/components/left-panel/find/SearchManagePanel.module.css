@@ -6,10 +6,12 @@
 	display: flex;
 }
 .button{
-    margin-left: auto;
 	width: 45x;
 	height: 45px;
 	margin-top: 2px;
+}
+.button-clear{
+    margin-left: auto;
 }
 
 @media (min-width: 576px) {

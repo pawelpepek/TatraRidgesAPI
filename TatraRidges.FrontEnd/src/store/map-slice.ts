@@ -33,6 +33,10 @@ const pointsSlice = createSlice({
 			state.points = actions.payload.data
 			state.pointsOk = true
 		},
+		clearPoints(state, action) {
+			state.pointFrom = {} as MountainPoint
+			state.pointTo = {} as MountainPoint
+		},
 		setActualPoint(state, action) {
 			if (action.payload.point.id !== state.pointTo.id) {
 				state.pointFrom = state.pointTo
@@ -86,8 +90,8 @@ const pointsSlice = createSlice({
 
 		replaceConnections(state, actions) {
 			const connectionsData = actions.payload.data as ConnectionData[]
-			state.connections=[]
-			
+			state.connections = []
+
 			if (state.points.length > 0) {
 				for (const c of connectionsData) {
 					const point1 = state.points.find(p => p.id === c.pointId1)
