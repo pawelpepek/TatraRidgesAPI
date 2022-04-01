@@ -11,18 +11,6 @@ const testNavigationPanel = (className: string = "") => {
 }
 
 describe("NavigationPanel component", () => {
-	test("renders 'button-logout' if 'button-login' is clicked", () =>
-		testClickElements(
-			testNavigationPanel(),
-			["#button-login"],
-			"#button-logout"
-		))
-	test("renders 'button-login' if 'button-logout' is clicked", () =>
-		testClickElements(
-			testNavigationPanel(),
-			["#button-login", "#button-logout"],
-			"#button-login"
-		))
 	test("initialy not renders 'button-logout'", () =>
 		testElement(
 			{
