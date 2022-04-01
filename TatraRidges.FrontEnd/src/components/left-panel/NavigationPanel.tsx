@@ -56,7 +56,6 @@ const NavigationPanel: React.FC<{ className?: string }> = props => {
 				imageSrc={helpIcon}
 				onClick={buttonClickHandler}
 				selected={visiblePanel === "help"}
-				disabled={!logged}
 			/>
 			{!logged && (
 				<RoundButton
