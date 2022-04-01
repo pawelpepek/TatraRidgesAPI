@@ -3,26 +3,28 @@ import RoundButton from "../../ui/RoundButton"
 import PanelHeader from "../PanelHeader"
 import loginIcon from "../../img/login.svg"
 import { loginFormActions } from "../../../store/login-form.slice"
-import {login}from "../../../store/user-actions"
-
+import { login } from "../../../store/user-actions"
 
 import classes from "./AuthForm.module.css"
 import StoreType from "../../../store/store-types"
 import Tooltip from "../../ui/Tooltip"
 
 const AuthForm: React.FC = () => {
-
-	const formIsValid= useSelector((state: StoreType) => state.loginForm.isFilled)
+	const formIsValid = useSelector(
+		(state: StoreType) => state.loginForm.isFilled
+	)
 
 	const enteredEmail = useSelector((state: StoreType) => state.loginForm.email)
-	const enteredPassword = useSelector((state: StoreType) => state.loginForm.password)
+	const enteredPassword = useSelector(
+		(state: StoreType) => state.loginForm.password
+	)
 
 	const dispatch = useDispatch()
 
-	const submitHandler =(e: { preventDefault: () => void }) => {
+	const submitHandler = (e: { preventDefault: () => void }) => {
 		e.preventDefault()
 
-		dispatch(login(enteredEmail,enteredPassword))
+		dispatch(login(enteredEmail, enteredPassword))
 	}
 
 	const onChange = (e: React.FormEvent<HTMLInputElement>) => {
@@ -41,11 +43,23 @@ const AuthForm: React.FC = () => {
 			<form onSubmit={submitHandler} className={classes["auth-panel"]}>
 				<div className={classes.control}>
 					<label htmlFor='email'>Email</label>
-					<input type='email' id='email' required onChange={onChange} />
+					<input
+						type='email'
+						id='email'
+						required
+						onChange={onChange}
+						autoComplete='on'
+					/>
 				</div>
 				<div className={classes.control}>
 					<label htmlFor='password'>Hasło</label>
-					<input type='password' id='password' required onChange={onChange} />
+					<input
+						type='password'
+						id='password'
+						required
+						onChange={onChange}
+						autoComplete='on'
+					/>
 				</div>
 				<div className={classes["panel-button"]}>
 					<RoundButton
@@ -56,10 +70,9 @@ const AuthForm: React.FC = () => {
 					/>
 				</div>
 			</form>
-			<Tooltip/>
+			<Tooltip />
 		</>
 	)
 }
 
 export default AuthForm
-
