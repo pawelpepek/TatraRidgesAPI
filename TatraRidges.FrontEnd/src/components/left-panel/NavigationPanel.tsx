@@ -6,6 +6,7 @@ import mapIcon from "../img/map.svg"
 import adminIcon from "../img/tools.svg"
 import userIcon from "../img/user.svg"
 import userOffIcon from "../img/user-off.svg"
+import helpIcon from "../img/help.svg"
 
 import classes from "./NavigationPanel.module.css"
 
@@ -47,6 +48,14 @@ const NavigationPanel: React.FC<{ className?: string }> = props => {
 				imageSrc={adminIcon}
 				onClick={buttonClickHandler}
 				selected={visiblePanel === "admin"}
+				disabled={!logged}
+			/>
+			<RoundButton
+				idButton={"button-help"}
+				alt='Pomoc'
+				imageSrc={helpIcon}
+				onClick={buttonClickHandler}
+				selected={visiblePanel === "help"}
 				disabled={!logged}
 			/>
 			{!logged && (

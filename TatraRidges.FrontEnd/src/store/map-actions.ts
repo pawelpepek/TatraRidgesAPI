@@ -22,6 +22,7 @@ export const fetchPointsData = () => {
 		method: "GET",
 		location: "point",
 		isBody: true,
+		pendingInfo: true,
 	}
 	return dataDispatcher(props, pointsActions.replacePoints)
 }
@@ -42,6 +43,7 @@ export const fetchConnectionsData = () => {
 		method: "GET",
 		location: "connection",
 		isBody: true,
+		pendingInfo: true,
 	}
 	return dataDispatcher(props, pointsActions.replaceConnections)
 }

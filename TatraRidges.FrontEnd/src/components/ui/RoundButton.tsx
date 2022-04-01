@@ -18,7 +18,7 @@ const RoundButton: React.FC<RoundButtonProps> = props => {
 		}
 	}
 
-	const pending = usePending()
+	const [pending, _] = usePending()
 
 	const buttonClasses = `${classes["round-button"]} ${
 		props.selected ? classes.selected : ""

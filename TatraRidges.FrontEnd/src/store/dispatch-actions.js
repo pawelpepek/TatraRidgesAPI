@@ -61,9 +61,11 @@ const dataDispatcher = (props, dispatcher) => {
 	const title = getTitleFromMethod(props.method)
 
 	return async dispatch => {
+		const pendingStatus = props.pendingInfo ? "pendingInfo" : "pending"
+
 		dispatch(
 			uiActions.showNotification({
-				status: "pending",
+				status: pendingStatus,
 				message: title + " danych...",
 			})
 		)

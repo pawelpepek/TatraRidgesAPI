@@ -1,0 +1,21 @@
+.text {
+	text-align: justify;
+	text-justify: inter-word;
+	font-size: 16px;
+	position: absolute;
+	top: calc(50% - 50vh);
+	left: calc(50% - 50vw);
+	text-align: center;
+	width: 100vw;
+	height: 100vh;
+	position: absolute;
+	margin: 0px;
+	background-color: rgba(255, 255, 255, 0.8);
+}
+
+
+@media (min-width: 576px) {
+	.text {
+		padding-top: 200px;
+	}
+}

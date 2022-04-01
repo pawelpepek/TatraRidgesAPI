@@ -4,6 +4,7 @@ import StoreType from "../../store/store-types"
 import AdminPanel from "./admin/AdminPanel"
 import classes from "./MainFunctions.module.css"
 import RoutePanel from "./route/RoutePanel"
+import HelpPanel from "./help/HelpPanel"
 
 const MainFunctions: React.FC = () => {
 	const visiblePanel = useSelector((state: StoreType) => state.ui.visiblePanel)
@@ -24,6 +25,7 @@ const MainFunctions: React.FC = () => {
 						{visiblePanel === "admin" && <AdminPanel />}
 						{visiblePanel === "search" && <SearchPanel />}
 						{visiblePanel === "login" && <AuthForm />}
+						{visiblePanel === "help" && <HelpPanel/>}
 					</>
 				)}
 				{visiblePanel.startsWith("route") && <RoutePanel />}
