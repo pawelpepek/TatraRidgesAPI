@@ -17,7 +17,7 @@ const Info: React.FC = () => {
 					wspinaczkowej.
 				</p>
 				<p>
-					Góry są piekną pasją ale wymagają roztrpności, bo nieodpowiedzialność
+					Góry są piekną pasją ale wymagają roztropności, bo nieodpowiedzialność
 					i brawura mogą zakończyć się śmiercią lub kalectwem.
 				</p>
 			</div>
