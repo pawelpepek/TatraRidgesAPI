@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from "react-redux"
-import { uiActions } from "../../../store/ui-slice"
 import RoundButton from "../../ui/RoundButton"
 import PanelHeader from "../PanelHeader"
 import loginIcon from "../../img/login.svg"

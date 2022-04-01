@@ -6,7 +6,6 @@ export const getPoints = async () =>
 	export const getConnections = async () =>
 	{
 		const result=await load<ConnectionData[]>("https://localhost:44342/api/connection/")
-		// console.log("Ściągam połączenia")
 		return result
 	}
 	
@@ -32,7 +31,6 @@ const load = async <T>(url: string): Promise<T> =>
 		if (!response.ok) {
 			throw new Error(response.statusText)
 		}
-		// console.log("delete")
 		return response.json() as Promise<T>
 	})
 

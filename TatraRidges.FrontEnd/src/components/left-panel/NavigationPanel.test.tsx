@@ -1,10 +1,5 @@
-import React from "react"
 import NavigationPanel from "./NavigationPanel"
-import {
-	testClass,
-	testClickElements,
-	testElement,
-} from "../helpers/testHelper"
+import { testClass, testElement } from "../helpers/testHelper"
 
 const testNavigationPanel = (className: string = "") => {
 	return <NavigationPanel className={className} />
