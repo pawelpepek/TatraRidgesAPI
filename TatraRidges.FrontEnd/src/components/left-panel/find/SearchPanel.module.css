@@ -1,0 +1,10 @@
+.author {
+	margin-top: auto;
+	font-size: 12px;
+}
+
+@media (min-width: 576px) {
+	.author {
+		font-size: 18px;
+	}
+}
