@@ -12,6 +12,7 @@ const RoutePartPanel: React.FC<{ route: Route }> = props => {
 	const guideDesc = route.guideDescription
 
 	const addDescription = `${guideDesc.guide} część ${guideDesc.volume} nr ${guideDesc.number}`
+
 	return (
 		<>
 			<FirstInfoLabel
@@ -22,6 +23,8 @@ const RoutePartPanel: React.FC<{ route: Route }> = props => {
 				routeType={props.route.routeType}
 			/>
 			<SecondInfoLabel
+				warningText={route.warning}
+				infoText={route.info}
 				rappeling={route.rappeling}
 				isEmptyRoute={false}
 				directionDescription={

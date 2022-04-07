@@ -15,6 +15,7 @@ const RouteSummaryPanel: React.FC<RouteSummaryPanelProps> = props => {
 	const point1 = props.info.ridgesContainer[0].point1
 	const point2 =
 		props.info.ridgesContainer[props.info.ridgesContainer.length - 1].point2
+	
 
 	return (
 		<RoundContainer className={props.className}>
@@ -30,6 +31,8 @@ const RouteSummaryPanel: React.FC<RouteSummaryPanelProps> = props => {
 			/>
 			<SecondInfoLabel
 				rappeling={summary.rappeling}
+				warningText={summary.warning}
+				infoText={summary.info}
 				isEmptyRoute={summary.isEmptyRoute}
 				directionDescription={
 					summary.isConsistentDirection

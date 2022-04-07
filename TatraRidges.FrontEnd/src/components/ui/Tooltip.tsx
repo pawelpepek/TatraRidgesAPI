@@ -1,4 +1,5 @@
 import ReactTooltip from "react-tooltip"
+import  "./Tooltip.css"
 
 const Tooltip: React.FC = () => {
 	return (
@@ -9,6 +10,9 @@ const Tooltip: React.FC = () => {
 			border={true}
 			textColor='black'
 			delayShow={300}
+			multiline={true}
+			data-effect="solid" 
+			data-place="left" 
 		/>
 	)
 }
