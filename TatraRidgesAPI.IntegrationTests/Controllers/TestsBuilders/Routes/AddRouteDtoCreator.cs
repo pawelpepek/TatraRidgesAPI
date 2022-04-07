@@ -18,13 +18,14 @@ namespace TatraRidgesAPI.IntegrationTests.Controllers.TestsBuilders.Routes
                 RouteType = 0,
                 GuideDescription = new AddGuideDescriptionDto()
                 {
-                    GuideId=1,
-                    Volume=1,
-                    Page=1,
-                    Number="1"
+                    GuideId = 1,
+                    Volume = 1,
+                    Page = 1,
+                    Number = "1"
                 },
                 RouteTime = new TimeSpan(1, 0, 0),
-                Adjectives = new List<string>()
+                Adjectives = new List<string>(),
+                AdditionalDescriptions = new List<AdditionaDescriptionDto>()
             };
         }
     }

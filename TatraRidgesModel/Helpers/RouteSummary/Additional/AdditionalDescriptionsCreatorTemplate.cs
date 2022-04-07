@@ -52,6 +52,11 @@ namespace TatraRidges.Model.Helpers.RouteSummary.Additional
 
         private static List<string> GetDescriptions(Route route, bool warnings)
         {
+            if (route.AdditionalDescriptions == null)
+            {
+                return new List<string>();
+            }
+
             return route.AdditionalDescriptions.Where(r => r.Warning == warnings)
                                                .Select(r => r.Description)
                                                .ToList();

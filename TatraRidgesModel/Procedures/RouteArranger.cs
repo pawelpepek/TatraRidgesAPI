@@ -35,18 +35,26 @@ namespace TatraRidges.Model.Procedures
 
         private static string GetDescription(Route route, bool warning)
         {
-            var description = route.AdditionalDescriptions
-                        .Where(r => r.Warning == warning)
-                        .Select(r => r.Description)
-                        .ToList();
+            var additional = route.AdditionalDescriptions;
 
-            if(warning)
+            var descriptions = new List<string>();
+
+            if (additional != null)
             {
-                var text = WarningsAdjectives.GetText(new List<Route>() { route });
-                description.AddRange(text);
+                var rows = additional.Where(r => r.Warning == warning)
+                                   .Select(r => r.Description)
+                                   .ToList();
+                descriptions.AddRange(rows);
             }
 
-            return string.Join("\n", description);
+
+            if (warning)
+            {
+                var text = WarningsAdjectives.GetText(new List<Route>() { route });
+                descriptions.AddRange(text);
+            }
+
+            return string.Join("\n", descriptions);
         }
 
         private static RidgeWithRoutesDto GetRidgeWithRoutesDto(PointsConnectionWithDirection ridgePart)
