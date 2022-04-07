@@ -61,6 +61,16 @@ namespace TatraRidges.Model.Procedures
                                             .ToList();
 
             _dbContext.DescriptionAdjectivePairs.AddRange(adjcetivesPairs);
+
+            var additionalDescriptions = dto.AdditionalDescriptions.Select(d => new AdditionalDescription()
+            {
+                RouteId = newRoute.Id,
+                Description = d.Description,
+                Warning = d.Warning
+            }).ToList();
+
+            _dbContext.AdditionalDescriptions.AddRange(additionalDescriptions);
+            
             _dbContext.SaveChanges();
 
             return (newRoute.Id, isNewConnection?connection:null);

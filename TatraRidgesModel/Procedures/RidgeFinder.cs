@@ -20,6 +20,8 @@ public class RidgeFinder
                                             .Include(c => c.Routes)
                                             .ThenInclude(r => r.RouteType)
                                             .Include(c => c.Routes)
+                                            .ThenInclude(r => r.AdditionalDescriptions)
+                                            .Include(c => c.Routes)
                                             .ThenInclude(r => r.Difficulty)
                                             .Include(c => c.Routes)
                                             .ThenInclude(r => r.DifficultyDetail)

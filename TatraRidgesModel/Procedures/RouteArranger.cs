@@ -27,7 +27,12 @@ namespace TatraRidges.Model.Procedures
                                     : !route.ConsistentDirection,
                 DescriptionAdjective = route.DescriptionAdjectivePairs
                                             .Select(a => GetAdjectiveDto(a))
-                                            .ToList()
+                                            .ToList(),
+                AdditionalDescriptions= route.AdditionalDescriptions.Select(a=>new AdditionaDescriptionDto() 
+                { 
+                    Description=a.Description,
+                    Warning=a.Warning
+                }).ToList()
             };
         }
 

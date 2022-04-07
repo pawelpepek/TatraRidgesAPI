@@ -12,6 +12,6 @@
         public AddGuideDescriptionDto GuideDescription { get; set; }
         public TimeSpan RouteTime { get; set; }
         public List<string> Adjectives { get; set; }
-
+        public List<AdditionaDescriptionDto> AdditionalDescriptions { get; set; }
     }
 }
