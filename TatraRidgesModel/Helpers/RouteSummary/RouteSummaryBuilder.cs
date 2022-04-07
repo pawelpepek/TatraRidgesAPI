@@ -1,4 +1,5 @@
 ﻿using TatraRidges.Model.Dtos;
+using TatraRidges.Model.Helpers.RouteSummary.Additional;
 
 namespace TatraRidges.Model.Helpers.RouteSummary
 {
@@ -63,6 +64,17 @@ namespace TatraRidges.Model.Helpers.RouteSummary
         public RouteSummaryBuilder SetDescription()
         {
             _routeSummary.Description = DescriptionCreator.GetDescription(_dbContext, GetNotEmptyRoutes());
+            return this;
+        }
+
+        public RouteSummaryBuilder SetWarnings()
+        {
+            _routeSummary.Warning = new WarningsCreator(_dbContext, GetNotEmptyRoutes()).GetText();
+            return this;
+        }
+        public RouteSummaryBuilder SetInfo()
+        {
+            _routeSummary.Info = new AdditionalDescriptionsCreatorTemplate(_dbContext, GetNotEmptyRoutes()).GetText();
             return this;
         }
 

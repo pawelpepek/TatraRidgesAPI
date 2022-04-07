@@ -13,6 +13,7 @@
 
         public System.TimeSpan RouteTime { get; set; }
         public List<AdjectiveDto> DescriptionAdjective{ get; set; }
-        public List<AdditionaDescriptionDto> AdditionalDescriptions { get; set; }
+        public string Info { get; set; }
+        public string Warning { get; set; }
     }
 }

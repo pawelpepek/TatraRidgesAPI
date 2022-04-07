@@ -19,6 +19,8 @@ namespace TatraRidges.Model.Helpers.RouteSummary
                           .SetRank()
                           .SetRappeling()
                           .SetDescription()
+                          .SetInfo()
+                          .SetWarnings()
                           .Build();
         }
     }

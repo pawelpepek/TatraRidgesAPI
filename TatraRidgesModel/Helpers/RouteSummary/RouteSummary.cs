@@ -12,5 +12,7 @@ namespace TatraRidges.Model.Helpers.RouteSummary
         public int Rank { get; internal set; }
         public bool Rappeling { get; internal set; }
         public string Description { get; internal set; } 
+        public string Warning { get; internal set; }
+        public string Info { get; internal set; }
     }
 }

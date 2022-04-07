@@ -11,7 +11,6 @@ namespace TatraRidges.Model.Helpers.RouteSummary
         {
             _routes = routes;
             _dbContext = dbContext;
-
         }
 
         public static string GetDescription(TatraDbContext dbContext, List<RouteDto> routes)

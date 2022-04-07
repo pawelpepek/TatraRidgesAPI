@@ -28,12 +28,25 @@ namespace TatraRidges.Model.Procedures
                 DescriptionAdjective = route.DescriptionAdjectivePairs
                                             .Select(a => GetAdjectiveDto(a))
                                             .ToList(),
-                AdditionalDescriptions= route.AdditionalDescriptions.Select(a=>new AdditionaDescriptionDto() 
-                { 
-                    Description=a.Description,
-                    Warning=a.Warning
-                }).ToList()
+                Warning = GetDescription(route, true),
+                Info = GetDescription(route, false)
             };
+        }
+
+        private static string GetDescription(Route route, bool warning)
+        {
+            var description = route.AdditionalDescriptions
+                        .Where(r => r.Warning == warning)
+                        .Select(r => r.Description)
+                        .ToList();
+
+            if(warning)
+            {
+                var text = WarningsAdjectives.GetText(new List<Route>() { route });
+                description.AddRange(text);
+            }
+
+            return string.Join("\n", description);
         }
 
         private static RidgeWithRoutesDto GetRidgeWithRoutesDto(PointsConnectionWithDirection ridgePart)
@@ -46,10 +59,10 @@ namespace TatraRidges.Model.Procedures
             var routes = connection.Routes.Select(r => GetRouteDto(r, ridgePart.ConsistDirection))
                                           .OrderByDescending(rt => rt.ConsistentDirection)
                                           .ThenBy(rt => rt.RouteType.Rank)
-                                          .ThenByDescending(rt=>rt.Rank)
+                                          .ThenByDescending(rt => rt.Rank)
                                           .ThenByDescending(rt => rt.DifficultyValue)
                                           .ThenBy(rt => rt.Rappeling)
-                                          .ThenBy(rt=>rt.RouteTime)
+                                          .ThenBy(rt => rt.RouteTime)
                                           .ToList();
 
             var ridgeRoute = new RidgeWithRoutesDto()
@@ -57,7 +70,7 @@ namespace TatraRidges.Model.Procedures
                 PointId1 = ridgePart.ConsistDirection ? point1Id : point2Id,
                 PointId2 = ridgePart.ConsistDirection ? point2Id : point1Id,
 
-                PointsConnectionId=connection.Id,
+                PointsConnectionId = connection.Id,
 
                 Routes = routes
             };
