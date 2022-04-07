@@ -13,7 +13,7 @@ const PointInfo: React.FC<PointInfoProps> = props => {
 		className += " " + classes["point-with-delete"]
 	}
 	return (
-		<section data-tip="Zaznacz punt na mapie" className={className}>
+		<section data-tip='Zaznacz punkt na mapie' className={className}>
 			<p className={classes.name}>{props.point.name}</p>
 			{props.point.id >= 0 && (
 				<p className={classes.evaluation}>

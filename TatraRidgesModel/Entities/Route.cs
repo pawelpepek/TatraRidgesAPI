@@ -22,4 +22,5 @@ public class Route
     public virtual RouteType RouteType { get; set; }
 
     public virtual List<DescriptionAdjectivePair> DescriptionAdjectivePairs { get; set; }
+    public virtual List<AdditionalDescription> AdditionalDescriptions{ get; set; }
 }

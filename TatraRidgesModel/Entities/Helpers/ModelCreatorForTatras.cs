@@ -19,7 +19,8 @@ internal static class ModelCreatorForTatras
         RouteModelCreator.Create(modelBuilder);
         DescriptionPairModelCreator.Create(modelBuilder);
         UserModelCreator.Create(modelBuilder);
-        RoleModelCreator.Create(modelBuilder);   
+        RoleModelCreator.Create(modelBuilder);
+        AdditionalDescriptionModelCreator.Create(modelBuilder);
     }
 }
 
