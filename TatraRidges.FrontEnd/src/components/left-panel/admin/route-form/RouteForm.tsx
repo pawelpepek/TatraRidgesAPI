@@ -48,6 +48,7 @@ const RouteForm: React.FC<{ className?: string }> = props => {
 			routeType: formValue.routeTypeId,
 			difficultyValue: difficulty.valueNumber,
 			difficultySign: difficulty.sign,
+			additionalDescriptions: [],
 		}
 
 		dispatch(postRouteRidge(newRoute))

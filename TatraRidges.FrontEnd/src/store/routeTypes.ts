@@ -11,8 +11,8 @@ export interface RouteSummary extends RouteOptions {
 	maxDifficulty: Difficulty
 	avarageDifficulty: Difficulty
 	description: string
-	info:string
-	warning:string
+	info: string
+	warning: string
 }
 
 export interface RidgeWithRoutes {
@@ -82,11 +82,17 @@ export interface AddRoute {
 	guideDescription: AddGuideDescription
 	routeTime: string
 	adjectives: string[]
+	additionalDescriptions: AdditionalDescription[]
 }
 
 export interface RouteIdFrom {
 	routeId: number
 	pointFrom: number
+}
+
+export interface AdditionalDescription {
+	description: string
+	warning: boolean
 }
 
 export interface AddGuideDescription {
