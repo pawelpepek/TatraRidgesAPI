@@ -16,8 +16,6 @@ namespace TatraRidgesAPI.Services
     public class AccountService : IAccountService
     {
         private readonly TatraDbContext _dbContext;
-        //private readonly IMapper _mapper;
-        //private readonly ILogger<DishService> _logger;
         private readonly IPasswordHasher<User> _passwordHasher;
         private readonly AuthenticationSettings _authenticationSettings;
 

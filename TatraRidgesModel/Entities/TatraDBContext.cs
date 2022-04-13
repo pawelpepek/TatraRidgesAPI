@@ -15,13 +15,13 @@ public class TatraDbContext : DbContext
     public DbSet<RouteType> RouteTypes { get; set; }
     public DbSet<Route> Routes { get; set; }
     public DbSet<AdditionalDescription> AdditionalDescriptions { get; set; }
+    public DbSet<DescriptionAdjectivePair> DescriptionAdjectivePairs { get; set; }
 
     public DbSet<User> Users { get; set; }
     public DbSet<Role> Roles { get; set; }
 
     public TatraDbContext(DbContextOptions<TatraDbContext> options) : base(options) { }
 
-    public DbSet<DescriptionAdjectivePair> DescriptionAdjectivePairs { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
