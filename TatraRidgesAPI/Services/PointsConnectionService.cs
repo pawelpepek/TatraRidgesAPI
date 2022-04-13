@@ -35,13 +35,5 @@ namespace TatraRidgesAPI.Services
 
             return newConnection.Id;
         }
-
-        public long GetNextEmptyRidgeId()
-        {
-            var nextConnection = _dbContext.PointsConnections.Include(c => c.Routes)
-                                                           .Where(c => !c.Routes.Any() && c.Ridge)
-                                                           .FirstOrDefault();
-            return nextConnection == null ? -1 : nextConnection.Id;
-        }
     }
 }

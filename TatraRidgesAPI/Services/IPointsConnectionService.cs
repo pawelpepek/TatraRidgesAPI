@@ -8,7 +8,5 @@ namespace TatraRidgesAPI.Services
         IEnumerable<PointsRidgeDto> GetAllRidges();
 
         long AddConnectionBetweenPoints(PointsConnectionCreateDto dto);
-
-        long GetNextEmptyRidgeId();
     }
 }
