@@ -15,19 +15,17 @@ function App() {
 	const spinnerChildren = pendingInfo ? <Info /> : undefined
 
 	return (
-		<>
-			<div className='body-container'>
-				<div className={className}>
-					{pending && (
-						<div className='centeredSpinner'>
-							<LoadingSpinner>{spinnerChildren}</LoadingSpinner>
-						</div>
-					)}
-					<RidgeMapContainer />
-				</div>
-				<MainPanel />
+		<div className='body-container'>
+			<div className={className}>
+				{pending && (
+					<div className='centeredSpinner'>
+						<LoadingSpinner>{spinnerChildren}</LoadingSpinner>
+					</div>
+				)}
+				<RidgeMapContainer />
 			</div>
-		</>
+			<MainPanel />
+		</div>
 	)
 }
 
