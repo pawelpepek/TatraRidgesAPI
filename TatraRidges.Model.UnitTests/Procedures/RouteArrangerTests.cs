@@ -13,14 +13,6 @@ namespace TatraRidges.Model.UnitTests.Procedures
 {
     public class RouteArrangerTests
     {
-        private static readonly GuideDescription _guideDescription = new()
-        {
-            Id = 1,
-            Guide = new Guide() { Id = 1 },
-            Number = "1",
-            Volume = 1,
-            Page = 1
-        };
         private static readonly List<List<Route>> _routes = new()
         {
             new List<Route>()

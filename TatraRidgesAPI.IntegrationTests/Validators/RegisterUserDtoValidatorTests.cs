@@ -12,7 +12,7 @@ namespace TatraRidgesAPI.IntegrationTests.Validators
 {
     public class RegisterUserDtoValidatorTests : IClassFixture<WebApplicationFactory<Startup>>
     {
-        private TatraDbContext _dbContext;
+        private readonly TatraDbContext _dbContext;
 
         public RegisterUserDtoValidatorTests()
         {

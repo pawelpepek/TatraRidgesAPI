@@ -3,7 +3,7 @@
     internal class RowsDescriptionBuilder
     {
         private string _header;
-        private List<string> _rows = new();
+        private readonly List<string> _rows = new();
         public RowsDescriptionBuilder AddHeader(string header)
         {
             _header = header;

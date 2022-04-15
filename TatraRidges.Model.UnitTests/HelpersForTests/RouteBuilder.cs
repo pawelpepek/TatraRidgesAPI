@@ -18,8 +18,6 @@ namespace TatraRidges.Model.UnitTests.HelpersForTests
         };
 
         private readonly Route _route = new();
-        private readonly string[] _difficultyValues
-            = { "0", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X" };
 
         public RouteBuilder(long pointConnectionId)
         {
