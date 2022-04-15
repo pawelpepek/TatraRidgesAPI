@@ -30,7 +30,7 @@ namespace TatraRidgesAPI.Middleware
             {
                 await HandleException(context, notFoundException, 404);
             }
-            catch(BadRequestException badRequestException)
+            catch (BadRequestException badRequestException)
             {
                 await HandleException(context, badRequestException, 400);
             }
@@ -41,7 +41,7 @@ namespace TatraRidgesAPI.Middleware
             }
         }
 
-        private async Task HandleException(HttpContext context, Exception exception, int statusCode)
+        private static async Task HandleException(HttpContext context, Exception exception, int statusCode)
         {
             context.Response.StatusCode = statusCode;
             await context.Response.WriteAsync(exception.Message);

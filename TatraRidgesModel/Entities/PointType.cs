@@ -10,4 +10,3 @@ public class PointType
 
     public virtual List<MountainPoint> MountainPoints { get; set; }
 }
-

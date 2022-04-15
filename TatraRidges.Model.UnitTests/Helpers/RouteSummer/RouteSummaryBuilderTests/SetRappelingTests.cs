@@ -5,7 +5,7 @@ using Xunit;
 
 namespace TatraRidges.Model.UnitTests.Helpers.RouteSummer.RouteSummaryBuilderTests
 {
-    public class SetRappelingTests:MethodTestsTemplate
+    public class SetRappelingTests : MethodTestsTemplate
     {
         private static IEnumerable<object[]> GetSamplesRangesWithouthRappeling()
         {
@@ -47,8 +47,10 @@ namespace TatraRidges.Model.UnitTests.Helpers.RouteSummer.RouteSummaryBuilderTes
             //assert
             Assert.False(summary.Rappeling);
         }
-        private static RouteDto GetRouteWithRappeling() => RoutesExamples.GetBuilder().SetRappelingTrue().Create();
+        private static RouteDto GetRouteWithRappeling() => RoutesExamples.GetBuilder()
+                                                                         .SetRappelingTrue()
+                                                                         .Create();
 
-        protected override void Act()=>_summaryBuilder.SetRappeling();
+        protected override void Act() => _summaryBuilder.SetRappeling();
     }
 }

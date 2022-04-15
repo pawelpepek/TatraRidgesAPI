@@ -11,4 +11,3 @@ public class RouteType
 
     public virtual List<Route> Routes { get; set; }
 }
-

@@ -46,10 +46,13 @@ namespace TatraRidges.Model.Helpers.RouteSummary
 
             adjectivesGroups.ForEach(g => g.FindClosestAdjective());
 
-            var partsDescriptions = adjectivesGroups.Where(g => g.IsPart()).Select(g => g.GetText());
-            var mostDescriptions = adjectivesGroups.Where(g => !g.IsPart()).Select(g => g.GetText());
+            var partsDescriptions = adjectivesGroups
+                .Where(g => g.IsPart()).Select(g => g.GetText());
+            var mostDescriptions = adjectivesGroups
+                .Where(g => !g.IsPart()).Select(g => g.GetText());
 
-            var partsText = partsDescriptions.Any() ? "częściowo " + ConcatAdjectives(partsDescriptions) : "";
+            var partsText = partsDescriptions.Any() 
+                          ? "częściowo " + ConcatAdjectives(partsDescriptions) : "";
             var andText = mostDescriptions.Any() && partsDescriptions.Any() ? "oraz" : "";
             var mostText = ConcatAdjectives(mostDescriptions);
 
@@ -72,10 +75,11 @@ namespace TatraRidges.Model.Helpers.RouteSummary
         }
 
 
-        private Adjective AdjectiveExample(AdjectiveDto a) => _dbContext.Adjectives.First(o => o.Id == a.Id);
-        private List<Adjective> GetCommonAdjectives(string group) => _dbContext.Adjectives.ToList().Where(a => GetGroup(a) == group).ToList();
+        private Adjective AdjectiveExample(AdjectiveDto a) => _dbContext.Adjectives
+            .First(o => o.Id == a.Id);
+        private List<Adjective> GetCommonAdjectives(string group) => _dbContext.Adjectives
+            .ToList().Where(a => GetGroup(a) == group).ToList();
         private static string GetGroup(Adjective adjecvtive) => adjecvtive.Id[1..];
         private static bool IsPartValue(Adjective adjective) => adjective.Id.StartsWith("n");
-
     }
 }

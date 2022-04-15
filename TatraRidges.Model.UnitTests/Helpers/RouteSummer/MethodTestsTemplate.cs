@@ -7,7 +7,7 @@ namespace TatraRidges.Model.UnitTests.Helpers.RouteSummer
 {
     public abstract class MethodTestsTemplate
     {
-        protected RouteSummaryBuilder _summaryBuilder;
+        protected RouteSummaryBuilder _summaryBuilder = new();
 
         protected static RouteDto GetSimplyRoute() => GetBuilder().Create();
         protected static RouteDtoBuilder GetBuilder() => new();

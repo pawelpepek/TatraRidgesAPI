@@ -23,24 +23,24 @@ namespace TatraRidges.Model.UnitTests.Procedures
         };
         private static readonly List<List<Route>> _routes = new()
         {
-            new List<Route>() 
-            { 
-                new RouteBuilder(1).Create(), 
-                new RouteBuilder(1).SetConsistentDirectionTrue().Create() 
+            new List<Route>()
+            {
+                new RouteBuilder(1).Create(),
+                new RouteBuilder(1).SetConsistentDirectionTrue().Create()
             },
-            new List<Route>() 
-            { 
+            new List<Route>()
+            {
                 new RouteBuilder(2).SetRouteType(1).Create(),
                 new RouteBuilder(2).Create(),
             },
-            new List<Route>() 
+            new List<Route>()
             {
                 new RouteBuilder(3).SetRank(5).Create(),
                 new RouteBuilder(1).Create(),
             },
-            new List<Route>() 
+            new List<Route>()
             {
-                new RouteBuilder(4).SetDifficulty(3,"-").Create(), 
+                new RouteBuilder(4).SetDifficulty(3,"-").Create(),
                 new RouteBuilder(4).SetDifficulty(3,"+").Create(),
             },
             new List<Route>()
@@ -106,7 +106,7 @@ namespace TatraRidges.Model.UnitTests.Procedures
                 }
             };
 
-            var firstExpected = new bool[] { false, false, true, true, true,false};
+            var firstExpected = new bool[] { false, false, true, true, true, false };
 
             var expected = firstExpected.Select(GetRidgeWithRoutesDto).ToList();
 
@@ -114,11 +114,11 @@ namespace TatraRidges.Model.UnitTests.Procedures
             var result = RouteArranger.GetArrangeRouteDto(ridgeRoute);
 
             //assert
-            result.Should().BeEquivalentTo(expected,options=>options.Excluding(r => r.Routes));
+            result.Should().BeEquivalentTo(expected, options => options.Excluding(r => r.Routes));
 
-            for (var i=0;i<result.Count;i++)
+            for (var i = 0; i < result.Count; i++)
             {
-                Assert.Equal( expected[i].Routes.Select(r=>r.Id), 
+                Assert.Equal(expected[i].Routes.Select(r => r.Id),
                               result[i].Routes.Select(r => r.Id));
             }
         }
@@ -138,9 +138,9 @@ namespace TatraRidges.Model.UnitTests.Procedures
 
             return new RidgeWithRoutesDto()
             {
-                PointId1 = index+1,
+                PointId1 = index + 1,
                 PointId2 = index + 2,
-                PointsConnectionId = index+1,
+                PointsConnectionId = index + 1,
                 Routes = new List<RouteDto>() { GetRouteDto(index, firstIndex), GetRouteDto(index, secondIndex) }
             };
         }

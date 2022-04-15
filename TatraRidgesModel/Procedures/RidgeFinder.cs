@@ -42,14 +42,7 @@ public class RidgeFinder
 
         var points = new Points(_ridges.ToList(), pointFromId, pointToId);
 
-        try
-        {
-            points.OnlyRidge();
-        }
-        catch (Exception ex)
-        {
-
-        }
+        points.OnlyRidge();
 
         var connections = points.SelectMany(p => p.Connections)
                                 .Select(c => c.Data)

@@ -12,10 +12,10 @@ namespace TatraRidges.Model.UnitTests.Helpers
     {
         private static readonly List<Adjective> _commonAdjectives = new()
         {
-            new Adjective(){Id="ce", Rank=5, Text="Częściowo eksponowana"},
-            new Adjective(){Id="de", Rank=4, Text="Dość eksponowana"},
-            new Adjective(){Id="_e", Rank=7, Text="Eksponowana"},
-            new Adjective(){Id="be", Rank=9, Text="Bardzo eksponowana"},
+            new Adjective() { Id = "ce", Rank = 5, Text = "Częściowo eksponowana" },
+            new Adjective() { Id = "de", Rank = 4, Text = "Dość eksponowana" },
+            new Adjective() { Id = "_e", Rank = 7, Text = "Eksponowana" },
+            new Adjective() { Id = "be", Rank = 9, Text = "Bardzo eksponowana" },
         };
 
         public struct AdjectiveAndTicks
@@ -70,12 +70,13 @@ namespace TatraRidges.Model.UnitTests.Helpers
 
         [Theory]
         [MemberData(nameof(GetTestData))]
-        public void GetText_ForAdjectivesAndTicksExamples_ReturnsValue((List<AdjectiveAndTicks> Data, long AllTicks, string Text) example)
+        public void GetText_ForAdjectivesAndTicksExamples_ReturnsValue
+            ((List<AdjectiveAndTicks> Data, long AllTicks, string Text) example)
         {
             //arrange
             var adjectiveGroupData = new AdjectiveGroupData("e", _commonAdjectives, example.AllTicks);
 
-            foreach(var adjectiveTicks in example.Data)
+            foreach (var adjectiveTicks in example.Data)
             {
                 adjectiveGroupData.AddTimeAndRank(adjectiveTicks.Ticks, adjectiveTicks.Adjective);
             }
@@ -94,7 +95,7 @@ namespace TatraRidges.Model.UnitTests.Helpers
             var adjectiveGroupData = new AdjectiveGroupData("e", _commonAdjectives, 2000);
 
             adjectiveGroupData.AddTimeAndRank(2000, new Adjective() { Id = "oe" });
- 
+
             //act
             adjectiveGroupData.FindClosestAdjective();
 
@@ -115,6 +116,7 @@ namespace TatraRidges.Model.UnitTests.Helpers
             adjectiveGroupData.GetText().Should().Equals("");
         }
 
-        protected static Adjective? GetAdjective(string id) => _commonAdjectives.FirstOrDefault(a => a.Id == id);
+        protected static Adjective? GetAdjective(string id)
+            => _commonAdjectives.FirstOrDefault(a => a.Id == id);
     }
 }

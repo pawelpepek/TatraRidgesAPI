@@ -19,8 +19,8 @@ namespace TatraRidgesAPI.Services
         private readonly IPasswordHasher<User> _passwordHasher;
         private readonly AuthenticationSettings _authenticationSettings;
 
-
-        public AccountService(TatraDbContext dbContext, IPasswordHasher<User> passwordHasher, AuthenticationSettings authenticationSettings)
+        public AccountService
+            (TatraDbContext dbContext, IPasswordHasher<User> passwordHasher, AuthenticationSettings authenticationSettings)
         {
             _dbContext = dbContext;
             _passwordHasher = passwordHasher;
@@ -50,8 +50,11 @@ namespace TatraRidgesAPI.Services
                     var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authenticationSettings.JwtKey));
                     var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
                     var expires = DateTime.Now.AddDays(_authenticationSettings.JwtExpireDays);
-                    var token = new JwtSecurityToken(_authenticationSettings.JwtIssuer, _authenticationSettings.JwtIssuer, claims,
-                        expires: expires, signingCredentials: cred);
+                    var token = new JwtSecurityToken(_authenticationSettings.JwtIssuer,
+                                                     _authenticationSettings.JwtIssuer,
+                                                     claims,
+                                                     expires: expires,
+                                                     signingCredentials: cred);
 
                     var tokenHandler = new JwtSecurityTokenHandler();
                     return tokenHandler.WriteToken(token);
@@ -59,7 +62,6 @@ namespace TatraRidgesAPI.Services
                 default:
                     throw new BadRequestException("Invalid username or password");
             }
-
         }
 
         public void RegisterUser(RegisteUserDto dto)

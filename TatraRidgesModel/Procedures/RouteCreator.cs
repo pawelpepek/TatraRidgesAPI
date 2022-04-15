@@ -8,7 +8,7 @@ namespace TatraRidges.Model.Procedures
 
         public RouteCreator(TatraDbContext context) => _dbContext = context;
 
-        public (long idRoute, PointsConnection connection)  SaveInDbContext(AddRouteDto dto)
+        public (long idRoute, PointsConnection connection) SaveInDbContext(AddRouteDto dto)
         {
             var newRoute = new Route()
             {
@@ -29,13 +29,13 @@ namespace TatraRidges.Model.Procedures
                                                   .Select(g => g.First())
                                                   .ToList();
 
-            var connection=new Connections(_dbContext).GetRidgeForPointsId(dto.PointId1,dto.PointId2);
+            var connection = new Connections(_dbContext).GetRidgeForPointsId(dto.PointId1, dto.PointId2);
 
             var isNewConnection = connection == null;
 
             if (isNewConnection)
             {
-                connection=new PointsConnection() { PointId1=dto.PointId1, PointId2=dto.PointId2, Ridge=true };
+                connection = new PointsConnection() { PointId1 = dto.PointId1, PointId2 = dto.PointId2, Ridge = true };
                 new ConnectionCreator(_dbContext).SaveInDbContext(connection);
             }
 
@@ -57,8 +57,11 @@ namespace TatraRidges.Model.Procedures
             _dbContext.Routes.Add(newRoute);
             _dbContext.SaveChanges();
 
-            var adjcetivesPairs = adjectives.Select(a => new DescriptionAdjectivePair() { AdjectiveId = a.Id, RouteId = newRoute.Id })
-                                            .ToList();
+            var adjcetivesPairs = adjectives.Select(a => new DescriptionAdjectivePair()
+            {
+                AdjectiveId = a.Id,
+                RouteId = newRoute.Id
+            }).ToList();
 
             _dbContext.DescriptionAdjectivePairs.AddRange(adjcetivesPairs);
 
@@ -70,10 +73,10 @@ namespace TatraRidges.Model.Procedures
             }).ToList();
 
             _dbContext.AdditionalDescriptions.AddRange(additionalDescriptions);
-            
+
             _dbContext.SaveChanges();
 
-            return (newRoute.Id, isNewConnection?connection:null);
+            return (newRoute.Id, isNewConnection ? connection : null);
         }
     }
 }

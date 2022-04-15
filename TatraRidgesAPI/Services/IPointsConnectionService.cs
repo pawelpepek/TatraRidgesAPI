@@ -6,7 +6,6 @@ namespace TatraRidgesAPI.Services
     public interface IPointsConnectionService
     {
         IEnumerable<PointsRidgeDto> GetAllRidges();
-
         long AddConnectionBetweenPoints(PointsConnectionCreateDto dto);
     }
 }

@@ -45,7 +45,7 @@ namespace Tatra.RidgesModel.UnitTests.Procedures
         public void IsCoordinatesValid_SetCorrectValue_RetursTrue(PointGPSDto coordinates)
         {
             //act
-            var result= IsCoordinatesValid(coordinates);
+            var result = IsCoordinatesValid(coordinates);
 
             //assert
             Assert.True(result, InfoForCoordinates(coordinates));
@@ -101,6 +101,7 @@ namespace Tatra.RidgesModel.UnitTests.Procedures
             return validator.ErrorMessage();
         }
 
-        private static string InfoForCoordinates(PointGPSDto coordinates) => $"Coordinates: {coordinates.Latitude}, {coordinates.Longitude}";
+        private static string InfoForCoordinates(PointGPSDto coordinates)
+            => $"Coordinates: {coordinates.Latitude}, {coordinates.Longitude}";
     }
 }

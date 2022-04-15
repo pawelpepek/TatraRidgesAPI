@@ -5,18 +5,23 @@ namespace TatraRidges.Model.Helpers.RouteSummary
 {
     public class RouteSummaryBuilder
     {
-        private readonly List<RouteDto?> _routes;
+        private readonly List<RouteDto> _routes;
         private readonly TatraDbContext _dbContext;
 
         private readonly RouteSummary _routeSummary;
 
-        public RouteSummaryBuilder(List<RouteDto?> routes)
+        public RouteSummaryBuilder()
         {
-            _routes = routes;
+            _routes = new List<RouteDto>();
             _routeSummary = new RouteSummary();
         }
 
-        public RouteSummaryBuilder(TatraDbContext dbContext, List<RouteDto?> routes) : this(routes)
+        public RouteSummaryBuilder(List<RouteDto> routes):this()
+        {
+            _routes = routes;
+        }
+
+        public RouteSummaryBuilder(TatraDbContext dbContext, List<RouteDto> routes) : this(routes)
         {
             _dbContext = dbContext;
         }

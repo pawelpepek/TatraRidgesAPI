@@ -22,4 +22,3 @@ public class PointsConnection
     public bool IsEmpty() => Id < 0;
     public bool IsNotEmpty() => Id > 0;
 }
-

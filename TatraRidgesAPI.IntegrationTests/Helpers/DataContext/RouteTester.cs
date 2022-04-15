@@ -16,8 +16,6 @@ namespace TatraRidgesAPI.IntegrationTests.Helpers.DataContext
             using var scope = GetScope();
             var dbContext = GetDbContext(scope);
 
-            var i = 0;
-
             var first = GetDto(dbContext.Routes.Include(r => r.PointsConnection).First(), true);
             var second = GetDto(dbContext.Routes.Include(r => r.PointsConnection).Last(), false);
 

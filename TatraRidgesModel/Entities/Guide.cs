@@ -12,4 +12,3 @@ public class Guide
 
     public virtual List<GuideDescription> GuideDescriptions { get; set; }
 }
-

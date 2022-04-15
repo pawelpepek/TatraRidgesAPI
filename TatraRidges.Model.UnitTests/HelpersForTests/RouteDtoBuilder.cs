@@ -8,7 +8,8 @@ namespace TatraRidges.Model.UnitTests.HelpersForTests
         private static int _id = 0;
 
         private readonly RouteDto _route = new();
-        private readonly string[] _difficultyValues = { "0", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X" };
+        private readonly string[] _difficultyValues
+            = { "0", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X" };
 
         public RouteDtoBuilder()
         {

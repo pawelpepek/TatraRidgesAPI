@@ -35,7 +35,7 @@ public class DataSaver
             throw new Exception($"Table of {nameof(TEntity)} not found");
         }
     }
-    private IQueryable<TEntity>? GetTable<TEntity>()
+    private IQueryable<TEntity> GetTable<TEntity>()
     {
         var property = _context.GetType().GetProperties().FirstOrDefault(IsThisType<TEntity>);
 

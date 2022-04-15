@@ -12,7 +12,7 @@ namespace TatraRidges.Model.UnitTests.Helpers.RouteSummer.RouteSummaryBuilderTes
     {
         public static IEnumerable<object[]> GetSamplesRanges()
         {
-            var list = new List<(List<RouteDto?> Routes,int Rank)>()
+            var list = new List<(List<RouteDto?> Routes, int Rank)>()
             {
                 (new List<RouteDto?>(){null,null },0),
                 (new List<RouteDto?>(){ RoutesExamples.GetBuilder()
@@ -47,7 +47,8 @@ namespace TatraRidges.Model.UnitTests.Helpers.RouteSummer.RouteSummaryBuilderTes
 
         [Theory]
         [MemberData(nameof(GetSamplesRanges))]
-        public void SetIsConsistentDirection_InsertSampleRoutes_RouteTimeEqualsValuFromSample((List<RouteDto?> Routes, int Rank) example)
+        public void SetIsConsistentDirection_InsertSampleRoutes_RouteTimeEqualsValuFromSample
+            ((List<RouteDto?> Routes, int Rank) example)
         {
             //arrange
             var summaryBuilder = new RouteSummaryBuilder(example.Routes);

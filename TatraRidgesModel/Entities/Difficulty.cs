@@ -10,4 +10,3 @@ public class Difficulty
 
     public virtual List<Route> Routes { get; set; }
 }
-

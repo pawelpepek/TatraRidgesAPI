@@ -10,7 +10,4 @@ public class Adjective
     public short Rank { get; set; }
 
     public virtual List<DescriptionAdjectivePair> DescriptionAdjectivePairs { get; set; }
-
 }
-
-

@@ -18,18 +18,20 @@ namespace TatraRidgesAPI.Services
             _dbContext = dbContext;
             _mapper = mapper;
         }
+
         public IEnumerable<MountainPointDto> GetAll()
         {
-           var points = _dbContext.MountainPoints
-                       .ToList();
+            var points = _dbContext.MountainPoints.ToList();
             return _mapper.Map<List<MountainPointDto>>(points);
         }
+
         public void Move(int id, PointGPSDto newCoordinate)
         {
             var mountainPointsMover = new MountainPointsMover(_dbContext);
 
             mountainPointsMover.MovePoint(id, newCoordinate);
         }
+
         public void Delete(int id)
         {
             var finder = new MountainPointsFinder(_dbContext);

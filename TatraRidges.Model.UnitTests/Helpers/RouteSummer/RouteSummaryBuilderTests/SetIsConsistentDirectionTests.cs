@@ -7,7 +7,7 @@ namespace TatraRidges.Model.UnitTests.Helpers.RouteSummer.RouteSummaryBuilderTes
 {
     public class SetIsConsistentDirectionTests : MethodTestsTemplate
     {
-        private static IEnumerable<object[]> GetInSamplesRangesWithNotConsistentDirectionRoute()
+        public static IEnumerable<object[]> GetInSamplesRangesWithNotConsistentDirectionRoute()
         {
             var list = new List<List<RouteDto?>>()
             {
@@ -17,7 +17,7 @@ namespace TatraRidges.Model.UnitTests.Helpers.RouteSummer.RouteSummaryBuilderTes
             };
             return list.Select(q => new object[] { q });
         }
-        private static IEnumerable<object[]> GetInSamplesRangesAllConsisntentDirection()
+        public static IEnumerable<object[]> GetInSamplesRangesAllConsisntentDirection()
         {
             var list = new List<List<RouteDto?>>()
             {
@@ -30,7 +30,8 @@ namespace TatraRidges.Model.UnitTests.Helpers.RouteSummer.RouteSummaryBuilderTes
 
         [Theory]
         [MemberData(nameof(GetInSamplesRangesAllConsisntentDirection))]
-        public void SetIsConsistentDirection_InsertRoutesWithConsistentDirection_IsConsistentDirectionEqualsTrue(List<RouteDto?> routes)
+        public void SetIsConsistentDirection_InsertRoutesWithConsistentDirection_IsConsistentDirectionEqualsTrue
+            (List<RouteDto?> routes)
         {
             var summary = ArrangeAndAct(routes);
 
@@ -40,7 +41,8 @@ namespace TatraRidges.Model.UnitTests.Helpers.RouteSummer.RouteSummaryBuilderTes
 
         [Theory]
         [MemberData(nameof(GetInSamplesRangesWithNotConsistentDirectionRoute))]
-        public void SetIsConsistentDirection_InsertRoadsWithOneNotConsistentDirection_ConsistentDirectionEqualsFalse(List<RouteDto?> routes)
+        public void SetIsConsistentDirection_InsertRoadsWithOneNotConsistentDirection_ConsistentDirectionEqualsFalse
+            (List<RouteDto?> routes)
         {
             var summary = ArrangeAndAct(routes);
 
@@ -50,6 +52,7 @@ namespace TatraRidges.Model.UnitTests.Helpers.RouteSummer.RouteSummaryBuilderTes
 
         protected override void Act() => _summaryBuilder.SetIsConsistentDirection();
 
-        private static RouteDto GetConsistentDirectionRoute() => GetBuilder().SetConsistentDirectionTrue().Create();
+        private static RouteDto GetConsistentDirectionRoute()
+            => GetBuilder().SetConsistentDirectionTrue().Create();
     }
 }

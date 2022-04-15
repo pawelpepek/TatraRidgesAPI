@@ -32,7 +32,11 @@ namespace TatraRidges.Model.Helpers
                                              .ToList();
 
             var littleDifficulties = _difficulties.Where(d => d.Id == 1 || d.Id == 2)
-                                                 .Select(d => new DifficultyDto() { Text = d.Text, Value = Convert.ToDecimal(d.Id) })
+                                                 .Select(d => new DifficultyDto()
+                                                 {
+                                                     Text = d.Text,
+                                                     Value = Convert.ToDecimal(d.Id)
+                                                 })
                                                  .ToList();
 
             var greaterDifficulties = _difficulties.Where(d => d.Id > 2)
@@ -48,7 +52,7 @@ namespace TatraRidges.Model.Helpers
 
         private List<DifficultyDto> GetDifficultyOptions(Difficulty difficulty)
         {
-            return _difficultiesDetails.Select(d => GetDifficultyDto(difficulty,d))
+            return _difficultiesDetails.Select(d => GetDifficultyDto(difficulty, d))
                                        .ToList();
         }
 

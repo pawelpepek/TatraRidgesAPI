@@ -12,6 +12,6 @@ namespace TatraRidgesModel.UnitTests.HelpersForTests
             MinValue = minValue;
             MaxValue = maxValue;
         }
-        public DecimalRange MakeDecimalRange()=> new(MinValue, MaxValue);
+        public DecimalRange MakeDecimalRange() => new(MinValue, MaxValue);
     }
 }

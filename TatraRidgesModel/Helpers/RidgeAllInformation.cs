@@ -12,7 +12,8 @@ namespace TatraRidges.Model.Helpers
         {
             RidgesContainer = ridgeContainer;
 
-            var initalRoutes = ridgeContainer.Select(r => r.Routes.Any() ? r.Routes[0]: null).ToList();
+            var initalRoutes = ridgeContainer.Select(r => r.Routes.Any() ? r.Routes[0]: null)
+                                             .ToList();
 
             InitalRouteSummary = RouteSummaryCreator.Create(initalRoutes,dbContext);
         }

@@ -25,7 +25,8 @@ namespace TatraRidges.Model.Procedures
         {
             var ridgeFinder = new RidgeFinder(_dbContext);
 
-            var otherRidgeBetweenPoints = ridgeFinder.FindRidge(newConnection.PointId1, newConnection.PointId2);
+            var otherRidgeBetweenPoints = ridgeFinder
+                .FindRidge(newConnection.PointId1, newConnection.PointId2);
 
             if (otherRidgeBetweenPoints.Any())
             {

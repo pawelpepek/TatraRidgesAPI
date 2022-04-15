@@ -43,6 +43,7 @@
 
             return difficultyValue + detailValue;
         }
-        public static string GetDifficultyText(Difficulty difficulty, DifficultyDetail detail) => difficulty.Text + detail.Sign;
+        public static string GetDifficultyText(Difficulty difficulty, DifficultyDetail detail) 
+            => difficulty.Text + detail.Sign;
     }
 }

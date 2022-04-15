@@ -12,24 +12,24 @@ namespace TatraRidges.Model.Procedures
         {
             var connections = _dbContext.PointsConnections;
 
-            return onlyRidge 
+            return onlyRidge
                 ? connections.Where(r => r.Ridge)
-                             .Include(r=>r.MountainPoint1)
-                             .Include(r=>r.MountainPoint2)
-                             .ToList() 
+                             .Include(r => r.MountainPoint1)
+                             .Include(r => r.MountainPoint2)
+                             .ToList()
                 : connections.ToList();
         }
         public PointsConnection GetByIdWithChildren(long id)
         {
             var connection = _dbContext.PointsConnections
-                                       .Include(c=>c.Routes)
-                                       .ThenInclude(r=>r.RouteType)
-                                       .Include(c=>c.Routes)
-                                       .ThenInclude(r=>r.Difficulty)
-                                       .Include(c=>c.Routes)
-                                       .ThenInclude(r=>r.DifficultyDetail)
-                                       .Include(c=>c.Routes)
-                                       .ThenInclude(c=>c.DescriptionAdjectivePairs)
+                                       .Include(c => c.Routes)
+                                       .ThenInclude(r => r.RouteType)
+                                       .Include(c => c.Routes)
+                                       .ThenInclude(r => r.Difficulty)
+                                       .Include(c => c.Routes)
+                                       .ThenInclude(r => r.DifficultyDetail)
+                                       .Include(c => c.Routes)
+                                       .ThenInclude(c => c.DescriptionAdjectivePairs)
                                        .FirstOrDefault(c => c.Id == id);
 
             return connection ?? PointsConnection.Empty();
@@ -37,9 +37,12 @@ namespace TatraRidges.Model.Procedures
 
         public PointsConnection GetRidgeForPointsId(int pointId1, int pointId2)
         {
-            var connectionsFromPoint1 = RidgeForPointId(pointId1,_dbContext.PointsConnections);
+            var connectionsFromPoint1 = RidgeForPointId(pointId1, _dbContext.PointsConnections);
 
-            return connectionsFromPoint1==null?null: RidgeForPointId(pointId2 ,connectionsFromPoint1).FirstOrDefault();
+            return connectionsFromPoint1 == null
+                                          ? null
+                                          : RidgeForPointId(pointId2, connectionsFromPoint1)
+                                                .FirstOrDefault();
         }
         private static IQueryable<PointsConnection> RidgeForPointId(int pointId, IQueryable<PointsConnection> connections)
         {

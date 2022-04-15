@@ -23,7 +23,7 @@ namespace TatraRidgesModel.UnitTests.Helpers
 
         public static IEnumerable<object[]> GetOutSamplesRanges()
         {
-            var list= new List<ValueInDecimalRange>()
+            var list = new List<ValueInDecimalRange>()
             {
                 new ValueInDecimalRange(14,new DecimalRangeForTest(-10,13)),
                 new ValueInDecimalRange(-0.1m,new DecimalRangeForTest(0,0.1m)),
