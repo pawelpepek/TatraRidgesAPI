@@ -12,7 +12,8 @@ namespace TatraRidges.WebScraping.ViewModels
 {
     public class MainViewModel : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler? PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public bool IsLoading { get; private set; }
         public bool IsLoadingBasic { get; private set; }
         public bool IsAnyChecked { get; private set; }
@@ -61,7 +62,7 @@ namespace TatraRidges.WebScraping.ViewModels
             point.PropertyChanged += Point_PropertyChanged;
         }
 
-        private void Point_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        private void Point_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "IsChecked")
             {
@@ -105,7 +106,7 @@ namespace TatraRidges.WebScraping.ViewModels
             ((RelayCommand)SaveToDbContextCommand).OnCanExecuteChanged();
         }
 
-        private void NewDataPoint_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        private void NewDataPoint_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if(e.PropertyName=="IsChecked")
             {

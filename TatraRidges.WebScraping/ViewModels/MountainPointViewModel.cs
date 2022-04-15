@@ -8,12 +8,12 @@ namespace TatraRidges.WebScraping.ViewModels
 {
     public class MountainPointViewModel: INotifyPropertyChanged
     {
-        public bool IsChecked { get; set; }
+        public event PropertyChangedEventHandler PropertyChanged;
 
+        public bool IsChecked { get; set; }
         public string Name{ get;set;}
         public string AlternativeName { get; set; }
         public short? Evaluation { get; }
-
         public decimal Latitude { get; }
         public decimal Longitude { get; }
 
@@ -23,8 +23,6 @@ namespace TatraRidges.WebScraping.ViewModels
 
         [Display(AutoGenerateField =false)]
         private readonly MountainPoint _point;
-
-        public event PropertyChangedEventHandler? PropertyChanged;
 
         public MountainPointViewModel(MountainPoint point, BasicPointInfo basicInfo)
         {

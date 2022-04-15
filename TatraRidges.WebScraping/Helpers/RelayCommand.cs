@@ -6,9 +6,9 @@ namespace TatraRidges.WebScraping.Helpers
     public class RelayCommand : ICommand
     {
         private readonly Action _action;
-        private readonly Func<bool>? _canExecute = null;
+        private readonly Func<bool> _canExecute = null;
 
-        public event EventHandler? CanExecuteChanged;
+        public event EventHandler CanExecuteChanged;
 
 
         public RelayCommand(Action action) => _action = action;
@@ -19,8 +19,8 @@ namespace TatraRidges.WebScraping.Helpers
         }
 
         public void OnCanExecuteChanged() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
-        public bool CanExecute(object? parameter) => _canExecute == null || _canExecute();
+        public bool CanExecute(object parameter) => _canExecute == null || _canExecute();
 
-        public void Execute(object? parameter) => _action();
+        public void Execute(object parameter) => _action();
     }
 }

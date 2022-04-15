@@ -11,26 +11,26 @@ namespace TatraRidges.WebScraping.Model.Scrapers
     public class OnePageScraper
     {
         private readonly string _url;
-        public string NextPageUrl { get; private set; }
+        public string NextPageUrl { get; private set; } = String.Empty;
 
         public OnePageScraper(string url)
         {
             _url = url;
         }
 
-        internal async Task<List<BasicPointInfo>>GetList()
+        internal async Task<List<BasicPointInfo>> GetList()
         {
             var web = new HtmlWeb();
             var doc = await web.LoadFromWebAsync(_url);
 
             var nextPageItem = doc.QuerySelectorAll("#mw-pages a")
-                                  .FirstOrDefault(item=>item.InnerText=="następna strona");
+                                  .FirstOrDefault(item => item.InnerText == "następna strona");
 
-            if (nextPageItem!=null)
+            if (nextPageItem != null)
             {
-                NextPageUrl = "https://pl.wikipedia.org" 
+                NextPageUrl = "https://pl.wikipedia.org"
                             + Regex.Unescape(nextPageItem.Attributes["href"].Value)
-                                   .Replace("&amp;","&");
+                                   .Replace("&amp;", "&");
             }
 
             var items = doc.QuerySelectorAll(".mw-category-group li a");
@@ -40,12 +40,12 @@ namespace TatraRidges.WebScraping.Model.Scrapers
         private BasicPointInfo GetBasicPointInfo(HtmlNode item)
         {
             var name = item.InnerText;
-            var url= item.Attributes["href"].Value;
+            var url = item.Attributes["href"].Value;
             if (name.Contains('('))
             {
-                name=name[..(name.IndexOf("(") - 1)].Trim();
+                name = name[..(name.IndexOf("(") - 1)].Trim();
             }
-            return new BasicPointInfo(url,name);
+            return new BasicPointInfo(url, name);
         }
     }
 }
