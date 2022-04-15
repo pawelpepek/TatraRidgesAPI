@@ -8,7 +8,8 @@ namespace TatraRidges.WebScraping.Model
         public static TatraDbContext GetContext()
         {
             var optionsBuilder = new DbContextOptionsBuilder<TatraDbContext>();
-            optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=TatraDb;Trusted_Connection=True;");
+            optionsBuilder
+                .UseSqlServer("Server=localhost\\SQLEXPRESS;Database=TatraDb;Trusted_Connection=True;");
             var options = optionsBuilder.Options;
 
             return new TatraDbContext(options);

@@ -20,7 +20,7 @@ namespace TTatraRidges.WebScraping.ViewModels.Helpers
             Scraper = new PointsManyListsScraper()
                 {
                     new OneCategoryScraper(
-                    "https://pl.wikipedia.org/wiki/Kategoria:Szczyty_Tatr_Wysokich",
+                        "https://pl.wikipedia.org/wiki/Kategoria:Szczyty_Tatr_Wysokich",
                     pointTop),
                     new OneCategoryScraper(
                         "https://pl.wikipedia.org/wiki/Kategoria:Prze%C5%82%C4%99cze_Tatr_Wysokich",
@@ -34,7 +34,7 @@ namespace TTatraRidges.WebScraping.ViewModels.Helpers
         {
             var downloadedPoints = await Scraper.GetList();
             var sortedPoints = downloadedPoints.OrderBy(p => p.Type.Id)
-                                              .ThenBy(p => p.Name);
+                                               .ThenBy(p => p.Name);
 
             using var context = DbContextFactory.GetContext();
 

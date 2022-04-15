@@ -1,8 +1,6 @@
 ﻿using HtmlAgilityPack;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using TatraRidges.Model.Entities;
@@ -45,14 +43,16 @@ namespace TatraRidges.WebScraping.Model.Scrapers
 
         private static decimal GetCoordinate(HtmlDocument document, string name)
         {
-            var coordinate = document.QuerySelectorAll(".geo-nondefault ." + name).FirstOrDefault();
+            var coordinate = document.QuerySelectorAll(".geo-nondefault ." + name)
+                                     .FirstOrDefault();
             return coordinate == null ? 0 : Convert.ToDecimal(coordinate.InnerText);
         }
 
         private static (short evaluation, bool precised) GetEvaluation(HtmlDocument document)
         {
 
-            var th = document.QuerySelectorAll(".infobox th").FirstOrDefault(th => th.InnerText.StartsWith("Wysokość"));
+            var th = document.QuerySelectorAll(".infobox th")
+                             .FirstOrDefault(th => th.InnerText.StartsWith("Wysokość"));
             if (th != null)
             {
                 var evaluationText = th.ParentNode.QuerySelector("td").InnerText;
@@ -64,7 +64,8 @@ namespace TatraRidges.WebScraping.Model.Scrapers
         }
         private static string GetSlovakName(HtmlDocument document)
         {
-            var previousElement = document.QuerySelectorAll("a").FirstOrDefault(a => a.InnerText == "słow.");
+            var previousElement = document.QuerySelectorAll("a")
+                                          .FirstOrDefault(a => a.InnerText == "słow.");
 
             if (previousElement != null)
             {

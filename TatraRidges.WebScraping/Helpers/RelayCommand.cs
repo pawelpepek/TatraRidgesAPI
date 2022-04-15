@@ -6,7 +6,7 @@ namespace TatraRidges.WebScraping.Helpers
     public class RelayCommand : ICommand
     {
         private readonly Action _action;
-        private Func<bool>? _canExecute = null;
+        private readonly Func<bool>? _canExecute = null;
 
         public event EventHandler? CanExecuteChanged;
 

@@ -3,11 +3,9 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
-using TatraRidges.Model.Entities;
 using TatraRidges.WebScraping.Helpers;
 using TatraRidges.WebScraping.Model;
 using TatraRidges.WebScraping.Model.Scrapers;
-using TatraRidges.WebScraping.Model.Structures;
 using TTatraRidges.WebScraping.ViewModels.Helpers;
 
 namespace TatraRidges.WebScraping.ViewModels
@@ -131,15 +129,26 @@ namespace TatraRidges.WebScraping.ViewModels
 
         private void SaveInDB()
         {
-            var list=DataList.Where(p => p.IsChecked).Select(p=>p.GetPoint()).ToList();
+            var list=DataList.Where(p => p.IsChecked)
+                             .Select(p=>p.GetPoint())
+                             .ToList();
+
             DbContextSaver.Save(list);
-            var checkedPoints= DataList.Where(p => p.IsChecked).ToList();
+
+            var checkedPoints= DataList.Where(p => p.IsChecked)
+                                       .ToList();
+
             checkedPoints.ForEach(p => DataList.Remove(p));
 
-            var savedBasicInfos = BasicList.Where(i => checkedPoints.Select(p => p.BasicPointInfo).Contains(i.Info))
+            var savedBasicInfos = BasicList.Where(i => checkedPoints
+                                           .Select(p => p.BasicPointInfo)
+                                           .Contains(i.Info))
                                            .ToList();
+
             savedBasicInfos.ForEach(p => p.IsInDataBaase=true);
+
             savedBasicInfos.ForEach(p => p.IsChecked = false);
+
             IsSaved = true;
         }
     }
