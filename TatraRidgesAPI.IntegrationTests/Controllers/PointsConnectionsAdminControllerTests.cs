@@ -25,11 +25,6 @@ namespace TatraRidgesAPI.IntegrationTests.Controllers
                                                                              .Build();
 
         [Fact]
-        public async Task GetNextEmptyRidge_WithExistingOne_RetursOK()
-            => await new GetNextEmptyRidgeTestsBuilder(Factory, Client).SetExistEmptyConnection(true)
-                                                                       .SetStatusCode(HttpStatusCode.OK)
-                                                                       .Build();
-        [Fact]
         public async Task PostNewPointsConnection_MakeLoopConnection_ReturnsConflict()
             => await new PostNewPointsConnectionTestsBuilder(Factory, Client).SetIsPointsExists(true)
                                                                              .SetPointsConnectionIsLooped()
