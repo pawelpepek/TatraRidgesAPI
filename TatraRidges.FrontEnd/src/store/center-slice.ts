@@ -8,6 +8,7 @@ const initialState = {
 		},
 		zoom: 14,
 	},
+	mapVersion: 1,
 }
 
 const centerSlice = createSlice({
@@ -16,6 +17,9 @@ const centerSlice = createSlice({
 	reducers: {
 		setValues(state, action) {
 			state.value = action.payload
+		},
+		setVersion(state, action) {
+			state.mapVersion = action.payload
 		},
 	},
 })

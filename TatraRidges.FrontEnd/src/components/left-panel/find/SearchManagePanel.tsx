@@ -7,6 +7,7 @@ import { getRidge } from "../../../store/map-actions"
 import { pointsActions } from "../../../store/map-slice"
 
 import classes from "./SearchManagePanel.module.css"
+import MapVersionPanel from "./MapVersionPanel"
 
 const SearchManagePanel: React.FC = () => {
 	const dispatch = useDispatch()
@@ -27,6 +28,7 @@ const SearchManagePanel: React.FC = () => {
 
 	return (
 		<div className={classes["manage-panel"]}>
+			<MapVersionPanel/>
 			<RoundButton
 				className={`${classes["button-clear"]} ${classes.button}`}
 				alt='Wyczyść'

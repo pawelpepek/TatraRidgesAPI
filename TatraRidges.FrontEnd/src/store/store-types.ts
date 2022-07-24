@@ -31,7 +31,8 @@ interface StoreType {
 		value: {
 			coordinates: Coordinates
 			zoom: number
-		}
+		},
+		mapVersion:number
 	}
 	routeForm: {
 		isRunning:boolean
