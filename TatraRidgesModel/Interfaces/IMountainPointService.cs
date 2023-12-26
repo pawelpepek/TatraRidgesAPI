@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using TatraRidges.Model.Dtos;
+﻿using TatraRidges.Model.Dtos;
 
-namespace TatraRidgesAPI.Services
+namespace TatraRidges.Model.Interfaces
 {
     public interface IMountainPointService
     {

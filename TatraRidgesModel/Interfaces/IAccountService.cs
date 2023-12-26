@@ -1,6 +1,6 @@
 ﻿using TatraRidges.Model.Dtos;
 
-namespace TatraRidgesAPI.Services
+namespace TatraRidges.Model.Interfaces
 {
     public interface IAccountService
     {

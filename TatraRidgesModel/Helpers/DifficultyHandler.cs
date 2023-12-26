@@ -1,18 +1,17 @@
 ﻿using TatraRidges.Model.Dtos;
+using TatraRidges.Model.Interfaces;
 
 namespace TatraRidges.Model.Helpers
 {
     public class DifficultyHandler
     {
-        private readonly TatraDbContext _dbContext;
         private readonly List<Difficulty> _difficulties;
         private readonly List<DifficultyDetail> _difficultiesDetails;
 
-        public DifficultyHandler(TatraDbContext context)
+        public DifficultyHandler(ICashScopeService cash)
         {
-            _dbContext = context;
-            _difficulties = _dbContext.Difficulties.ToList();
-            _difficultiesDetails = _dbContext.DifficultyDetails.ToList();
+            _difficulties = cash.GetDifficulties();
+            _difficultiesDetails = cash.GetDifficultyDetails();
         }
 
         public DifficultyDto GetTextFromDecimal(decimal value)

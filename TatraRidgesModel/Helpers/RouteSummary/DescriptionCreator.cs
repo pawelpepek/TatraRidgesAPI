@@ -1,26 +1,27 @@
 ﻿using TatraRidges.Model.Dtos;
+using TatraRidges.Model.Interfaces;
 
 namespace TatraRidges.Model.Helpers.RouteSummary
 {
     internal class DescriptionCreator
     {
         private readonly List<RouteDto> _routes;
-        private readonly TatraDbContext _dbContext;
+        private readonly ICashScopeService _cash;
 
-        public DescriptionCreator(TatraDbContext dbContext, List<RouteDto> routes)
+        public DescriptionCreator(ICashScopeService cash, List<RouteDto> routes)
         {
             _routes = routes;
-            _dbContext = dbContext;
+            _cash = cash;
         }
 
-        public static string GetDescription(TatraDbContext dbContext, List<RouteDto> routes)
+        public static string GetDescription(ICashScopeService cash, List<RouteDto> routes)
         {
-            return new DescriptionCreator(dbContext, routes).GetDescription();
+            return new DescriptionCreator(cash, routes).GetDescription();
         }
 
         private string GetDescription()
         {
-            var groupsIds = _dbContext.Adjectives.Select(a => GetGroup(a)).ToList();
+            var groupsIds = _cash.GetAdjectives().Select(a => GetGroup(a)).ToList();
 
             var groups = groupsIds.GroupBy(i => i)
                                   .Select(g => g.First())
@@ -75,9 +76,9 @@ namespace TatraRidges.Model.Helpers.RouteSummary
         }
 
 
-        private Adjective AdjectiveExample(AdjectiveDto a) => _dbContext.Adjectives
+        private Adjective AdjectiveExample(AdjectiveDto a) => _cash.GetAdjectives()
             .First(o => o.Id == a.Id);
-        private List<Adjective> GetCommonAdjectives(string group) => _dbContext.Adjectives
+        private List<Adjective> GetCommonAdjectives(string group) => _cash.GetAdjectives()
             .ToList().Where(a => GetGroup(a) == group).ToList();
         private static string GetGroup(Adjective adjecvtive) => adjecvtive.Id[1..];
         private static bool IsPartValue(Adjective adjective) => adjective.Id.StartsWith("n");

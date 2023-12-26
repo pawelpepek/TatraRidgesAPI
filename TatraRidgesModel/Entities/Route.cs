@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using TatraRidges.Model.Helpers;
 
 namespace TatraRidges.Model.Entities;
 
@@ -14,6 +15,12 @@ public class Route
     public byte RouteTypeId { get; set; }
     public int GuideDescriptionId { get; set; }
     public System.TimeSpan RouteTime { get; set; }
+
+    [NotMapped]
+    public int Rank => DescriptionAdjectivePairs.Select(p => p.Adjective).Sum(a => a.Rank);
+
+    [NotMapped]
+    public decimal DifficultyValue => DifficultyConverter.GetValueForDifficulty(Difficulty, DifficultyDetail);
 
     public virtual PointsConnection PointsConnection { get; set; }
     public virtual Difficulty Difficulty { get; set; }

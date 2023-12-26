@@ -5,6 +5,7 @@ using TatraRidges.Model.Dtos;
 using TatraRidges.Model.Entities;
 using TatraRidges.Model.Helpers;
 using TatraRidges.Model.Helpers.RouteSummary;
+using TatraRidges.Model.Interfaces;
 using TatraRidges.Model.Procedures;
 
 namespace TatraRidgesAPI.Services
@@ -13,34 +14,41 @@ namespace TatraRidgesAPI.Services
     {
         private readonly TatraDbContext _dbContext;
         private readonly IMapper _mapper;
+        private readonly ICashScopeService _cashService;
+        private readonly IRidgeFinder _ridgeFinder;
 
-        public RouteService(TatraDbContext dbContext, IMapper mapper)
+        public RouteService
+            (TatraDbContext dbContext, IMapper mapper, ICashScopeService cashService, IRidgeFinder ridgeFinder)
         {
             _dbContext = dbContext;
             _mapper = mapper;
+            _cashService = cashService;
+            _ridgeFinder = ridgeFinder;
         }
 
         public RidgeAllInformation GetRouteBetweenPoints(PointsPair pointsPair)
         {
-            var finder = new RidgeFinder(_dbContext);
+            var finder = new RidgeFinder(_cashService);
 
             var connection = finder.FindRidge(pointsPair.From, pointsPair.To);
 
             var ridgeContainer = RouteArranger.GetArrangeRouteDto(connection);
 
-            return new RidgeAllInformation(ridgeContainer, _dbContext);
+            return new RidgeAllInformation(ridgeContainer, _cashService);
         }
 
         public RouteSummary GetRouteSummary(List<RouteIdFromDto> routesIdFrom)
         {
-            var ridges = (new RoutesConverter(_dbContext)).Convert(routesIdFrom);
+            var ridges = (new RoutesConverter(_cashService)).Convert(routesIdFrom);
 
-            return RouteSummaryCreator.Create(ridges, _dbContext);
+            return RouteSummaryCreator.Create(ridges, _cashService);
         }
 
         public RouteCreateResultDto AddRouteForPoints(AddRouteDto dto)
         {
-            var (newRouteId, connection) = new RouteCreator(_dbContext).SaveInDbContext(dto);
+            var (newRouteId, connection) = new RouteCreator(_dbContext, _ridgeFinder).SaveInDbContext(dto);
+
+            _cashService.Reset();
 
             return new RouteCreateResultDto()
             {
@@ -55,7 +63,7 @@ namespace TatraRidgesAPI.Services
             var guides = _dbContext.Guides.ToList();
             var routeTypes = _dbContext.RouteTypes.ToList();
 
-            var difficulties = new DifficultyHandler(_dbContext).GetAllDifficulties();
+            var difficulties = new DifficultyHandler(_cashService).GetAllDifficulties();
 
             return new ParametersDto()
             {

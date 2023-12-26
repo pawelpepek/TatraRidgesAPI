@@ -1,12 +1,18 @@
 ﻿using TatraRidges.Model.Dtos;
+using TatraRidges.Model.Interfaces;
 
 namespace TatraRidges.Model.Procedures
 {
     public class RouteCreator
     {
         private readonly TatraDbContext _dbContext;
+        private readonly IRidgeFinder _ridgeFinder;
 
-        public RouteCreator(TatraDbContext context) => _dbContext = context;
+        public RouteCreator(TatraDbContext context, IRidgeFinder ridgeFinder)
+        {
+            _dbContext = context;
+            _ridgeFinder = ridgeFinder;
+        }
 
         public (long idRoute, PointsConnection connection) SaveInDbContext(AddRouteDto dto)
         {
@@ -36,7 +42,7 @@ namespace TatraRidges.Model.Procedures
             if (isNewConnection)
             {
                 connection = new PointsConnection() { PointId1 = dto.PointId1, PointId2 = dto.PointId2, Ridge = true };
-                new ConnectionCreator(_dbContext).SaveInDbContext(connection);
+                new ConnectionCreator(_dbContext, _ridgeFinder).SaveInDbContext(connection);
             }
 
             var newGuideDescription = new GuideDescription()

@@ -1,14 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TatraRidges.Model.Dtos;
 using TatraRidges.Model.Exceptions;
+using TatraRidges.Model.Interfaces;
 using TatraRidges.Model.Procedures;
 
 namespace TatraRidges.Model.Helpers.RouteSummary
 {
     public class RoutesConverter
     {
-        private readonly TatraDbContext _dbContext;
-        public RoutesConverter(TatraDbContext dbContext) => _dbContext = dbContext;
+        private readonly ICashScopeService _cash;
+        public RoutesConverter(ICashScopeService cash) => _cash = cash;
 
         public List<RouteDto> Convert(List<RouteIdFromDto> routesIdFrom)
         {
@@ -17,15 +18,9 @@ namespace TatraRidges.Model.Helpers.RouteSummary
 
         private RouteDto Convert(RouteIdFromDto routeIdFrom)
         {
-            var route = _dbContext.Routes.Include(r => r.PointsConnection)
-                                         .Include(r => r.DescriptionAdjectivePairs)
-                                         .ThenInclude(a => a.Adjective)
-                                         .Include(r => r.Difficulty)
-                                         .Include(r => r.DifficultyDetail)
-                                         .Include(r => r.GuideDescription)
-                                         .ThenInclude(g => g.Guide)
-                                         .Include(r => r.RouteType)
-                                         .FirstOrDefault(r => r.Id == routeIdFrom.RouteId);
+            var route = _cash.GetConnections()
+                             .SelectMany(c=>c.Routes)
+                             .FirstOrDefault(r => r.Id == routeIdFrom.RouteId);
             if(route==null)
             {
                 throw new NotFoundException($"Brak drogi numer {routeIdFrom.RouteId}");

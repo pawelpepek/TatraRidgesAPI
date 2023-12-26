@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using TatraRidges.Model.Dtos;
 using TatraRidges.Model.Helpers;
 using TatraRidges.Model.Helpers.RouteSummary;
-using TatraRidgesAPI.Services;
+using TatraRidges.Model.Interfaces;
 
 namespace TatraRidgesAPI.Controllers
 {

@@ -1,12 +1,13 @@
 ﻿using TatraRidges.Model.Dtos;
 using TatraRidges.Model.Helpers.RouteSummary.Additional;
+using TatraRidges.Model.Interfaces;
 
 namespace TatraRidges.Model.Helpers.RouteSummary
 {
     public class RouteSummaryBuilder
     {
         private readonly List<RouteDto> _routes;
-        private readonly TatraDbContext _dbContext;
+        private readonly ICashScopeService _cash;
 
         private readonly RouteSummary _routeSummary;
 
@@ -21,9 +22,9 @@ namespace TatraRidges.Model.Helpers.RouteSummary
             _routes = routes;
         }
 
-        public RouteSummaryBuilder(TatraDbContext dbContext, List<RouteDto> routes) : this(routes)
+        public RouteSummaryBuilder( List<RouteDto> routes, ICashScopeService cash) : this(routes)
         {
-            _dbContext = dbContext;
+            _cash = cash;
         }
         public RouteSummaryBuilder SetIsEmptyRoad()
         {
@@ -42,7 +43,7 @@ namespace TatraRidges.Model.Helpers.RouteSummary
         }
         public RouteSummaryBuilder SetDifficulties()
         {
-            var difficultyCounter = new RouteDifficultyCounter(_dbContext, GetNotEmptyRoutes());
+            var difficultyCounter = new RouteDifficultyCounter(_cash, GetNotEmptyRoutes());
 
             _routeSummary.AvarageDifficulty = difficultyCounter.AvarageDifficulty;
             _routeSummary.MaxDifficulty = difficultyCounter.MaxDifficulty;
@@ -68,18 +69,18 @@ namespace TatraRidges.Model.Helpers.RouteSummary
 
         public RouteSummaryBuilder SetDescription()
         {
-            _routeSummary.Description = DescriptionCreator.GetDescription(_dbContext, GetNotEmptyRoutes());
+            _routeSummary.Description = DescriptionCreator.GetDescription(_cash, GetNotEmptyRoutes());
             return this;
         }
 
         public RouteSummaryBuilder SetWarnings()
         {
-            _routeSummary.Warning = new WarningsCreator(_dbContext, GetNotEmptyRoutes()).GetText();
+            _routeSummary.Warning = new WarningsCreator(_cash, GetNotEmptyRoutes()).GetText();
             return this;
         }
         public RouteSummaryBuilder SetInfo()
         {
-            _routeSummary.Info = new AdditionalDescriptionsCreatorTemplate(_dbContext, GetNotEmptyRoutes()).GetText();
+            _routeSummary.Info = new AdditionalDescriptionsCreatorTemplate(_cash, GetNotEmptyRoutes()).GetText();
             return this;
         }
 

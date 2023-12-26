@@ -11,6 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using TatraRidges.Model.Dtos;
 using TatraRidges.Model.Entities;
+using TatraRidges.Model.Interfaces;
 using TatraRidges.Model.Seeders;
 using TatraRidgesAPI.Middleware;
 using TatraRidgesAPI.Services;
@@ -58,6 +59,7 @@ namespace TatraRidgesAPI
                 (options => options.UseNpgsql(Configuration.GetConnectionString("TatraDbConnection")));
 
             services.AddScoped<DbSeeder>();
+            services.AddSingleton<ICashService, CashService>();
             services.AddAutoMapper(this.GetType().Assembly);
             services.AddScoped<IMountainPointService, MountainPointService>();
             services.AddScoped<IPointsConnectionService, PointsConnectionService>();
@@ -65,6 +67,8 @@ namespace TatraRidgesAPI
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
             services.AddScoped<IValidator<RegisteUserDto>, RegisterUserDtoValidator>();
+            services.AddScoped<IRidgeFinder, RidgeFinder>();
+            services.AddScoped<ICashScopeService, CashScopeService>();
 
             services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 

@@ -1,12 +1,18 @@
 ﻿using TatraRidges.Model.Exceptions;
+using TatraRidges.Model.Interfaces;
 
 namespace TatraRidges.Model.Procedures
 {
     public class ConnectionCreator
     {
         private readonly TatraDbContext _dbContext;
+        private readonly IRidgeFinder _ridgeFinder;
 
-        public ConnectionCreator(TatraDbContext context) => _dbContext = context;
+        public ConnectionCreator(TatraDbContext context, IRidgeFinder ridgeFinder)
+        {
+            _dbContext = context;
+            _ridgeFinder = ridgeFinder;
+        }
 
         public void SaveInDbContext(PointsConnection newConnection)
         {
@@ -23,9 +29,7 @@ namespace TatraRidges.Model.Procedures
         
         private void CheckRidgeMakeCyclicLink(PointsConnection newConnection)
         {
-            var ridgeFinder = new RidgeFinder(_dbContext);
-
-            var otherRidgeBetweenPoints = ridgeFinder
+            var otherRidgeBetweenPoints = _ridgeFinder
                 .FindRidge(newConnection.PointId1, newConnection.PointId2);
 
             if (otherRidgeBetweenPoints.Any())

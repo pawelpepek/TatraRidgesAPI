@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using TatraRidges.Model.Dtos;
 using TatraRidges.Model.Entities;
+using TatraRidges.Model.Interfaces;
 using TatraRidgesAPI.IntegrationTests.Controllers.TestsBuilders.Accounts;
 using TatraRidgesAPI.IntegrationTests.Helpers;
 using TatraRidgesAPI.Services;

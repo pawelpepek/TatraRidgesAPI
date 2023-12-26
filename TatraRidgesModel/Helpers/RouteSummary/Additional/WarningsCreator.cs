@@ -1,10 +1,11 @@
 ﻿using TatraRidges.Model.Dtos;
+using TatraRidges.Model.Interfaces;
 
 namespace TatraRidges.Model.Helpers.RouteSummary.Additional
 {
     internal class WarningsCreator:AdditionalDescriptionsCreatorTemplate
     {
-        public WarningsCreator(TatraDbContext dbContext, List<RouteDto> routes) : base(dbContext, routes)
+        public WarningsCreator(ICashScopeService cash, List<RouteDto> routes) : base(cash, routes)
         {
             Warnings = true;
         }

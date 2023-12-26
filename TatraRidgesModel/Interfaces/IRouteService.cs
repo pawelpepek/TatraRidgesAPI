@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using TatraRidges.Model.Dtos;
+﻿using TatraRidges.Model.Dtos;
 using TatraRidges.Model.Helpers;
 using TatraRidges.Model.Helpers.RouteSummary;
 
-namespace TatraRidgesAPI.Services
+namespace TatraRidges.Model.Interfaces
 {
     public interface IRouteService
     {

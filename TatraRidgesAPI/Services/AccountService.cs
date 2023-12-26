@@ -10,6 +10,7 @@ using System.Text;
 using TatraRidges.Model.Dtos;
 using TatraRidges.Model.Entities;
 using TatraRidges.Model.Exceptions;
+using TatraRidges.Model.Interfaces;
 
 namespace TatraRidgesAPI.Services
 {

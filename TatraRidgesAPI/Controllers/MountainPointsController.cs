@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using TatraRidges.Model.Dtos;
 using TatraRidges.Model.Entities;
-using TatraRidgesAPI.Services;
+using TatraRidges.Model.Interfaces;
 
 namespace TatraRidgesAPI.Controllers
 {

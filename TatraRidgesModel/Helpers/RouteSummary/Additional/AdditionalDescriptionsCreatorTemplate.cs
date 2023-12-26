@@ -1,26 +1,27 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TatraRidges.Model.Dtos;
+using TatraRidges.Model.Interfaces;
 
 namespace TatraRidges.Model.Helpers.RouteSummary.Additional
 {
     internal class AdditionalDescriptionsCreatorTemplate
     {
         protected readonly List<RouteDto> _routes;
-        protected readonly TatraDbContext _dbContext;
+        protected readonly ICashScopeService _cash;
         private readonly RowsDescriptionBuilder _builder = new();
 
         public bool Warnings { get; set; }
 
 
-        public AdditionalDescriptionsCreatorTemplate(TatraDbContext dbContext, List<RouteDto> routes)
+        public AdditionalDescriptionsCreatorTemplate(ICashScopeService cash, List<RouteDto> routes)
         {
             _routes = routes;
-            _dbContext = dbContext;
-
+            _cash = cash;
         }
 
         public string GetText()
@@ -35,10 +36,8 @@ namespace TatraRidges.Model.Helpers.RouteSummary.Additional
         }
 
         protected List<Route> GetRoutes()
-        {
-            return _routes.Select(r => _dbContext.Routes.First(dr => dr.Id == r.Id))
-                          .ToList();
-        }
+            => _routes.Select(r => _cash.GetConnections().SelectMany(c => c.Routes).First(dr => dr.Id == r.Id))
+                      .ToList();
 
         private RowsDescriptionBuilder GetDescription()
         {
