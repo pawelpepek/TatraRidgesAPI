@@ -75,7 +75,7 @@ namespace TatraRidgesAPI
                 options.AddPolicy("FrontEndClient", builder =>
                  builder.AllowAnyMethod()
                  .AllowAnyHeader()
-                 .WithOrigins(Configuration.GetConnectionString("Origins"))
+                 .WithOrigins(Configuration.GetConnectionString("Origins"), Configuration.GetConnectionString("OriginsPl"))
                  );
             });
         }

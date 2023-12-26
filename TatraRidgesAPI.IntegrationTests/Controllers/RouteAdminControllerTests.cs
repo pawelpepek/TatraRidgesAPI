@@ -1,7 +1,5 @@
-﻿using FluentAssertions;
-using Microsoft.AspNetCore.Mvc.Testing;
+﻿using Microsoft.AspNetCore.Mvc.Testing;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using TatraRidgesAPI.IntegrationTests.Controllers.Basics;
 using TatraRidgesAPI.IntegrationTests.Controllers.TestsBuilders.Routes;

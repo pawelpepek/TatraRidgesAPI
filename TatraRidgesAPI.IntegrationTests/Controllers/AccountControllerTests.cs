@@ -9,9 +9,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using TatraRidges.Model.Dtos;
 using TatraRidges.Model.Entities;
-using TatraRidgesAPI.IntegrationTests.Controllers.Basics;
 using TatraRidgesAPI.IntegrationTests.Controllers.TestsBuilders.Accounts;
-using TatraRidgesAPI.IntegrationTests.Controllers.TestsBuilders.MountainPoints;
 using TatraRidgesAPI.IntegrationTests.Helpers;
 using TatraRidgesAPI.Services;
 using Xunit;
@@ -32,13 +30,15 @@ namespace TatraRidgesAPI.IntegrationTests.Controllers
                     builder.ConfigureServices(services =>
                     {
                         var dbContextOptions = services
-                        .SingleOrDefault(service => service.ServiceType == typeof(DbContextOptions<TatraDbContext>));
+                        .SingleOrDefault(service => service.ServiceType 
+                        == typeof(DbContextOptions<TatraDbContext>));
 
                         services.Remove(dbContextOptions);
 
                         services.AddSingleton(_accountServiceMoq.Object);
 
-                        services.AddDbContext<TatraDbContext>(options => options.UseInMemoryDatabase("tatraRidgeForAccounts"));
+                        services.AddDbContext<TatraDbContext>
+                        (options => options.UseInMemoryDatabase("tatraRidgeForAccounts"));
                     });
                 });
 
