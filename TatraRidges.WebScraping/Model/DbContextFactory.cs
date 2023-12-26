@@ -9,7 +9,7 @@ namespace TatraRidges.WebScraping.Model
         {
             var optionsBuilder = new DbContextOptionsBuilder<TatraDbContext>();
             optionsBuilder
-                .UseSqlServer("Server=localhost\\SQLEXPRESS;Database=TatraDb;Trusted_Connection=True;");
+                .UseNpgsql("Host=localhost:5432;Username=postgres;Password=postgres;Database=tatradb");
             var options = optionsBuilder.Options;
 
             return new TatraDbContext(options);

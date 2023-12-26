@@ -54,8 +54,8 @@ namespace TatraRidgesAPI
 
             services.AddControllers().AddFluentValidation();
 
-            services.AddDbContext<TatraDbContext>(options => options
-            .UseSqlServer(Configuration.GetConnectionString("TatraDbConnection")));
+            services.AddDbContext<TatraDbContext>
+                (options => options.UseNpgsql(Configuration.GetConnectionString("TatraDbConnection")));
 
             services.AddScoped<DbSeeder>();
             services.AddAutoMapper(this.GetType().Assembly);
