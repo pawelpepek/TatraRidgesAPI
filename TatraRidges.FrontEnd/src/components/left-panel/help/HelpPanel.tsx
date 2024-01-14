@@ -10,12 +10,12 @@ import PanelHeader from "../PanelHeader"
 const HelpPanel: React.FC = () => {
 	return (
 		<>
-			<PanelHeader text='Instukcja' />
+			<PanelHeader text='Instrukcja' />
 			<section className={classes["info"]}>
 				<h4>Wyszukiwanie</h4>
 				<p>
-					Żeby wyszukać połączenia graniowego pomiędzy dwoma
-					szczytami/przełęczami należy zaznaczyć prawym przyciskiem myszy punkty
+					Żeby wyszukać połączenie graniowe pomiędzy dwoma
+					szczytami/przełęczami, należy zaznaczyć lewym przyciskiem myszy punkty
 					jeden po drugim.
 				</p>
 				<img
@@ -51,17 +51,19 @@ const HelpPanel: React.FC = () => {
 					</ol>
 				</span>
 				<p>
-					Jeśli istnieje więcej niż jeden wariant drogi pojawi się ruszająca się
-					ikonka z ilością dostępnych pozostałych wariantów.
+					Jeśli istnieje więcej niż jeden wariant drogi, pojawi się ruszająca
+					się ikonka z liczbą dostępnych pozostałych wariantów.
 				</p>
 				<img
 					alt='Ikonka alternatywnych wariantów'
 					className={classes.img}
 					src={infoImg4}
 				/>
-				<p>Klikając tę ikonkę wyświetli się lista dostępnych wariantów.</p>
 				<p>
-					Żeby zmienić wariant drogi należy zaznaczyć puste zielone kółeczko
+					Po kliknięciu tej ikonki wyświetli się lista dostępnych wariantów.
+				</p>
+				<p>
+					Żeby zmienić wariant drogi, należy zaznaczyć puste zielone kółeczko
 					wybranego wariantu.
 				</p>
 				<img
@@ -72,7 +74,7 @@ const HelpPanel: React.FC = () => {
 				<p>Trasa zostanie przeliczona na nowo.</p>
 				<h4>Zmiana kolejności punktów</h4>
 				<p>
-					Żeby zmienić kolejność punktów należy kliknąć przycisk ze strzałkami.
+					Żeby zmienić kolejność punktów, należy kliknąć przycisk ze strzałkami.
 				</p>
 				<img
 					alt='Zmiana kolejności punktów'
