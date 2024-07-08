@@ -8,7 +8,7 @@ const initialState = {
 		},
 		zoom: 14,
 	},
-	mapVersion: 1,
+	mapVersion: 0,
 }
 
 const centerSlice = createSlice({
