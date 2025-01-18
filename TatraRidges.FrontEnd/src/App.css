@@ -1,7 +1,7 @@
 .body-container {
 	display: flex;
 	flex-direction: column;
-	height: 100vh;
+	height: calc(100vh - 56px);
 }
 
 .leaflet-container {
@@ -53,5 +53,11 @@
 	}
 	.leaflet-container {
 		height: 100vh;
+	}
+}
+
+@media (max-width: 768px) {
+	.container {
+		height: calc(100vh - 56px);
 	}
 }
