@@ -90,3 +90,23 @@ select setval(pg_get_serial_sequence('"MountainPoints"', 'Id'), (select max("Id"
 select setval(pg_get_serial_sequence('"PointsConnections"', 'Id'), (select max("Id") from "PointsConnections"));
 select setval(pg_get_serial_sequence('"GuideDescriptions"', 'Id'), (select max("Id") from "GuideDescriptions"));
 select setval(pg_get_serial_sequence('"Routes"', 'Id'), (select max("Id") from "Routes"));
+
+-- Local admin for signing in to the app (local Supabase only, not a real account):
+--   e-mail: admin@graniowki.local
+--   hasło:  graniowki-lokalnie
+insert into auth.users (
+    instance_id, id, aud, role, email, encrypted_password, email_confirmed_at,
+    raw_app_meta_data, raw_user_meta_data, created_at, updated_at,
+    confirmation_token, recovery_token, email_change_token_new, email_change)
+values (
+    '00000000-0000-0000-0000-000000000000', 'aaaaaaaa-0000-4000-8000-000000000001',
+    'authenticated', 'authenticated', 'admin@graniowki.local',
+    extensions.crypt('graniowki-lokalnie', extensions.gen_salt('bf')), now(),
+    '{"provider": "email", "providers": ["email"]}', '{}', now(), now(), '', '', '', '');
+
+insert into auth.identities (id, user_id, provider_id, identity_data, provider, last_sign_in_at, created_at, updated_at)
+values (
+    gen_random_uuid(), 'aaaaaaaa-0000-4000-8000-000000000001', 'aaaaaaaa-0000-4000-8000-000000000001',
+    '{"sub": "aaaaaaaa-0000-4000-8000-000000000001", "email": "admin@graniowki.local"}', 'email', now(), now(), now());
+
+insert into public.admins (user_id) values ('aaaaaaaa-0000-4000-8000-000000000001');

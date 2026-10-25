@@ -2,12 +2,32 @@
 // Create React App 5) cannot read. This declares only the part of the API the app
 // uses; remove it once the project moves to TypeScript 4.7 or newer.
 declare module "@supabase/supabase-js" {
+	export interface SupabaseError {
+		message: string
+	}
+
 	export interface SupabaseResponse<T> {
 		data: T | null
-		error: { message: string } | null
+		error: SupabaseError | null
+	}
+
+	export interface Session {
+		access_token: string
+	}
+
+	export interface SupabaseAuthClient {
+		signInWithPassword(credentials: {
+			email: string
+			password: string
+		}): Promise<{
+			data: { session: Session | null }
+			error: SupabaseError | null
+		}>
+		signOut(): Promise<{ error: SupabaseError | null }>
 	}
 
 	export interface SupabaseClient {
+		auth: SupabaseAuthClient
 		rpc<T = unknown>(
 			fn: string,
 			args?: Record<string, unknown>

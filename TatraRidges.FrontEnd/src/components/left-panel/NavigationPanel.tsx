@@ -2,6 +2,7 @@ import { useSelector, useDispatch } from "react-redux"
 import RoundButton from "../ui/RoundButton"
 import StoreType from "../../store/store-types"
 import { uiActions } from "../../store/ui-slice"
+import { logout } from "../../store/user-actions"
 import mapIcon from "../img/map.svg"
 import adminIcon from "../img/tools.svg"
 import userIcon from "../img/user.svg"
@@ -24,7 +25,7 @@ const NavigationPanel: React.FC<{ className?: string }> = props => {
 	const buttonClickHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
 		const button: HTMLButtonElement = event.currentTarget
 		if (button.id === "button-logout") {
-			dispatch(uiActions.setLogged(false))
+			dispatch(logout())
 			changePanelVersion("search")
 		} else {
 			changePanelVersion(getTab(button.id))

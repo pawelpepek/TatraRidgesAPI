@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Copies the production data (schema public, without "Users") into the local Supabase
+# Copies the production data (schema public, without "Users" and admins) into the local Supabase
 # database, replacing what is there. Production is only read: every session runs with
 # default_transaction_read_only=on.
 #
@@ -38,9 +38,11 @@ export PGOPTIONS='-c default_transaction_read_only=on'
 prod() { docker exec -i -e PGHOST -e PGPORT -e PGDATABASE -e PGUSER -e PGPASSWORD -e PGSSLMODE -e PGOPTIONS "$LOCAL_DB" "$@"; }
 local_psql() { docker exec -i "$LOCAL_DB" psql -U postgres -v ON_ERROR_STOP=1 "$@"; }
 
+# Only the tables that exist on production are compared (local migrations may be ahead).
+prod_tables=$(prod psql -At -c "select string_agg(tablename, ',') from pg_tables where schemaname = 'public'")
 columns_query="select table_name || '.' || column_name || ' ' || data_type || ' ' || is_nullable
 from information_schema.columns where table_schema = 'public'
-and table_name in (select tablename from pg_tables where schemaname = 'public')
+and table_name = any (string_to_array('$prod_tables', ','))
 order by 1"
 
 echo "Produkcja: $(prod psql -At -c 'show server_version')"
@@ -62,11 +64,13 @@ if [ "${1:-}" = "--check" ]; then
 	exit 0
 fi
 
+# public.admins refers to auth.users, which differ between the databases: it stays local
+# (the local admin comes from seed.sql).
 prod pg_dump --data-only --schema=public --exclude-table-data='public."Users"' \
-	--no-owner --no-privileges -f "$DUMP"
+	--exclude-table-data=public.admins --no-owner --no-privileges -f "$DUMP"
 
 local_psql -q -c "set client_min_messages = warning;" -c "do \$\$ declare t text; begin
-	for t in select tablename from pg_tables where schemaname = 'public' loop
+	for t in select tablename from pg_tables where schemaname = 'public' and tablename <> 'admins' loop
 		execute format('truncate table public.%I restart identity cascade', t);
 	end loop;
 end \$\$;"

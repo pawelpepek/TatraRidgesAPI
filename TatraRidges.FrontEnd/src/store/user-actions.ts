@@ -1,4 +1,4 @@
-import dataDispatcher from "./dispatch-actions"
+import dataDispatcher, { signOut } from "./dispatch-actions"
 import { uiActions } from "./ui-slice"
 
 export const login = (email: string, password: string) => {
@@ -12,4 +12,9 @@ export const login = (email: string, password: string) => {
         isText:true
 	}
 	return dataDispatcher(props, uiActions.setLogged)
+}
+
+export const logout = () => async (dispatch: any) => {
+	await signOut()
+	dispatch(uiActions.setLogged(false))
 }

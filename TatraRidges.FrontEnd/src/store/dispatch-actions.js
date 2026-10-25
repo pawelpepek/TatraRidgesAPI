@@ -6,6 +6,13 @@ import { getMessage } from "./statusCodeMessage"
 // The Supabase SDK is loaded on demand, so those builds do not include it.
 const useSupabase = Boolean(process.env.REACT_APP_SUPABASE_URL)
 
+export const signOut = async () => {
+	if (useSupabase) {
+		const { signOutFromSupabase } = await import("./supabase-data")
+		await signOutFromSupabase()
+	}
+}
+
 const fetchData = async props => {
 	if (useSupabase) {
 		const { fetchFromSupabase } = await import("./supabase-data")
