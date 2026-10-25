@@ -1,0 +1,1919 @@
+{
+  "ridgeQueries": [
+    {
+      "path": [
+        {
+          "connectionId": 1,
+          "consistDirection": true
+        },
+        {
+          "connectionId": 2,
+          "consistDirection": false
+        },
+        {
+          "connectionId": 3,
+          "consistDirection": true
+        },
+        {
+          "connectionId": 4,
+          "consistDirection": false
+        },
+        {
+          "connectionId": 5,
+          "consistDirection": true
+        }
+      ],
+      "info": {
+        "initalRouteSummary": {
+          "isEmptyRoute": false,
+          "isConsistentDirection": false,
+          "routeTime": "23:30:00",
+          "maxDifficulty": {
+            "text": "IV+",
+            "value": 4.333
+          },
+          "avarageDifficulty": {
+            "text": "IV",
+            "value": 4.000
+          },
+          "rank": 11,
+          "rappeling": true,
+          "description": "Droga ciekawa i wspaniała",
+          "warning": "Występują drogi zawierające zagrożenia:\nTrudne przejście przy płycie\nKruszyzna w żlebie\nBardzo krucha",
+          "info": "Występują drogi zawierające dodatkowe informacje:\nŁadne widoki\nBiwak"
+        },
+        "ridgesContainer": [
+          {
+            "pointId1": 1,
+            "pointId2": 2,
+            "pointsConnectionId": 1,
+            "routes": [
+              {
+                "id": 1,
+                "consistentDirection": true,
+                "difficultyValue": 1.000,
+                "difficulty": "I",
+                "rappeling": false,
+                "routeType": {
+                  "id": 1,
+                  "name": "Ściśle granią",
+                  "rank": 2
+                },
+                "guideDescription": {
+                  "number": "31 C,E",
+                  "page": 57,
+                  "volume": 1,
+                  "guide": "WHP"
+                },
+                "rank": 10,
+                "routeTime": "00:30:00",
+                "descriptionAdjective": [
+                  {
+                    "id": "_e",
+                    "text": "Eksponowana"
+                  },
+                  {
+                    "id": "_p",
+                    "text": "Piękna"
+                  }
+                ],
+                "info": "Ładne widoki",
+                "warning": "Trudne przejście przy płycie"
+              },
+              {
+                "id": 3,
+                "consistentDirection": true,
+                "difficultyValue": -0.333,
+                "difficulty": "0-",
+                "rappeling": false,
+                "routeType": {
+                  "id": 3,
+                  "name": "Obchodząc grań",
+                  "rank": 3
+                },
+                "guideDescription": {
+                  "number": "32",
+                  "page": 58,
+                  "volume": 1,
+                  "guide": "WHP"
+                },
+                "rank": 0,
+                "routeTime": "00:20:00",
+                "descriptionAdjective": [],
+                "info": "",
+                "warning": ""
+              },
+              {
+                "id": 2,
+                "consistentDirection": false,
+                "difficultyValue": 2.333,
+                "difficulty": "II+",
+                "rappeling": true,
+                "routeType": {
+                  "id": 2,
+                  "name": "Prawie ściśle granią",
+                  "rank": 1
+                },
+                "guideDescription": {
+                  "number": "12",
+                  "page": 10,
+                  "volume": 2,
+                  "guide": "WC"
+                },
+                "rank": 7,
+                "routeTime": "00:45:00",
+                "descriptionAdjective": [
+                  {
+                    "id": "be",
+                    "text": "Bardzo eksponowana"
+                  }
+                ],
+                "info": "",
+                "warning": ""
+              }
+            ]
+          },
+          {
+            "pointId1": 2,
+            "pointId2": 3,
+            "pointsConnectionId": 2,
+            "routes": [
+              {
+                "id": 5,
+                "consistentDirection": true,
+                "difficultyValue": 2.667,
+                "difficulty": "III-",
+                "rappeling": false,
+                "routeType": {
+                  "id": 1,
+                  "name": "Ściśle granią",
+                  "rank": 2
+                },
+                "guideDescription": {
+                  "number": "41 O,P",
+                  "page": 73,
+                  "volume": 1,
+                  "guide": "WHP"
+                },
+                "rank": -7,
+                "routeTime": "01:15:00",
+                "descriptionAdjective": [
+                  {
+                    "id": "bk",
+                    "text": "Bardzo krucha"
+                  }
+                ],
+                "info": "",
+                "warning": "Kruszyzna w żlebie\nBardzo krucha"
+              },
+              {
+                "id": 4,
+                "consistentDirection": false,
+                "difficultyValue": 3.000,
+                "difficulty": "III",
+                "rappeling": false,
+                "routeType": {
+                  "id": 1,
+                  "name": "Ściśle granią",
+                  "rank": 2
+                },
+                "guideDescription": {
+                  "number": "41 R",
+                  "page": 73,
+                  "volume": 1,
+                  "guide": "WHP"
+                },
+                "rank": -2,
+                "routeTime": "01:00:00",
+                "descriptionAdjective": [
+                  {
+                    "id": "_k",
+                    "text": "Krucha"
+                  },
+                  {
+                    "id": "ce",
+                    "text": "Cześciowo eksponowana"
+                  }
+                ],
+                "info": "",
+                "warning": "Kruszyzna w żlebie"
+              }
+            ]
+          },
+          {
+            "pointId1": 3,
+            "pointId2": 4,
+            "pointsConnectionId": 3,
+            "routes": [
+              {
+                "id": 6,
+                "consistentDirection": false,
+                "difficultyValue": 4.333,
+                "difficulty": "IV+",
+                "rappeling": true,
+                "routeType": {
+                  "id": 2,
+                  "name": "Prawie ściśle granią",
+                  "rank": 1
+                },
+                "guideDescription": {
+                  "number": "7",
+                  "page": 200,
+                  "volume": 3,
+                  "guide": "WC"
+                },
+                "rank": 13,
+                "routeTime": "20:00:00",
+                "descriptionAdjective": [
+                  {
+                    "id": "wp",
+                    "text": "Wspaniała"
+                  },
+                  {
+                    "id": "_c",
+                    "text": "Ciekawa"
+                  }
+                ],
+                "info": "Biwak",
+                "warning": ""
+              }
+            ]
+          },
+          {
+            "pointId1": 4,
+            "pointId2": 5,
+            "pointsConnectionId": 4,
+            "routes": [
+              {
+                "id": 8,
+                "consistentDirection": false,
+                "difficultyValue": 2.000,
+                "difficulty": "II",
+                "rappeling": false,
+                "routeType": {
+                  "id": 1,
+                  "name": "Ściśle granią",
+                  "rank": 2
+                },
+                "guideDescription": {
+                  "number": "44 B-E",
+                  "page": 77,
+                  "volume": 1,
+                  "guide": "WHP"
+                },
+                "rank": 1,
+                "routeTime": "01:30:00",
+                "descriptionAdjective": [
+                  {
+                    "id": "dz",
+                    "text": "Dość zajmująca"
+                  }
+                ],
+                "info": "",
+                "warning": ""
+              },
+              {
+                "id": 7,
+                "consistentDirection": false,
+                "difficultyValue": 2.000,
+                "difficulty": "II",
+                "rappeling": false,
+                "routeType": {
+                  "id": 1,
+                  "name": "Ściśle granią",
+                  "rank": 2
+                },
+                "guideDescription": {
+                  "number": "44 A",
+                  "page": 77,
+                  "volume": 1,
+                  "guide": "WHP"
+                },
+                "rank": -7,
+                "routeTime": "01:30:00",
+                "descriptionAdjective": [
+                  {
+                    "id": "wk",
+                    "text": "Niezwykle krucha"
+                  },
+                  {
+                    "id": "me",
+                    "text": "Nieco eksponowana"
+                  }
+                ],
+                "info": "",
+                "warning": "Niezwykle krucha"
+              }
+            ]
+          },
+          {
+            "pointId1": 5,
+            "pointId2": 6,
+            "pointsConnectionId": 5,
+            "routes": [
+              {
+                "id": 9,
+                "consistentDirection": false,
+                "difficultyValue": 1.333,
+                "difficulty": "I+",
+                "rappeling": false,
+                "routeType": {
+                  "id": 2,
+                  "name": "Prawie ściśle granią",
+                  "rank": 1
+                },
+                "guideDescription": {
+                  "number": "45",
+                  "page": 78,
+                  "volume": 1,
+                  "guide": "WHP"
+                },
+                "rank": 2,
+                "routeTime": "00:15:00",
+                "descriptionAdjective": [
+                  {
+                    "id": "_z",
+                    "text": "Zajmująca"
+                  }
+                ],
+                "info": "Ładne widoki",
+                "warning": ""
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": [
+        {
+          "connectionId": 5,
+          "consistDirection": false
+        },
+        {
+          "connectionId": 4,
+          "consistDirection": true
+        },
+        {
+          "connectionId": 3,
+          "consistDirection": false
+        },
+        {
+          "connectionId": 2,
+          "consistDirection": true
+        },
+        {
+          "connectionId": 1,
+          "consistDirection": false
+        }
+      ],
+      "info": {
+        "initalRouteSummary": {
+          "isEmptyRoute": false,
+          "isConsistentDirection": true,
+          "routeTime": "23:30:00",
+          "maxDifficulty": {
+            "text": "IV+",
+            "value": 4.333
+          },
+          "avarageDifficulty": {
+            "text": "IV",
+            "value": 4.000
+          },
+          "rank": 11,
+          "rappeling": true,
+          "description": "Droga ciekawa i wspaniała",
+          "warning": "Występują drogi zawierające zagrożenia:\nKruszyzna w żlebie",
+          "info": "Występują drogi zawierające dodatkowe informacje:\nŁadne widoki\nBiwak"
+        },
+        "ridgesContainer": [
+          {
+            "pointId1": 6,
+            "pointId2": 5,
+            "pointsConnectionId": 5,
+            "routes": [
+              {
+                "id": 9,
+                "consistentDirection": true,
+                "difficultyValue": 1.333,
+                "difficulty": "I+",
+                "rappeling": false,
+                "routeType": {
+                  "id": 2,
+                  "name": "Prawie ściśle granią",
+                  "rank": 1
+                },
+                "guideDescription": {
+                  "number": "45",
+                  "page": 78,
+                  "volume": 1,
+                  "guide": "WHP"
+                },
+                "rank": 2,
+                "routeTime": "00:15:00",
+                "descriptionAdjective": [
+                  {
+                    "id": "_z",
+                    "text": "Zajmująca"
+                  }
+                ],
+                "info": "Ładne widoki",
+                "warning": ""
+              }
+            ]
+          },
+          {
+            "pointId1": 5,
+            "pointId2": 4,
+            "pointsConnectionId": 4,
+            "routes": [
+              {
+                "id": 8,
+                "consistentDirection": true,
+                "difficultyValue": 2.000,
+                "difficulty": "II",
+                "rappeling": false,
+                "routeType": {
+                  "id": 1,
+                  "name": "Ściśle granią",
+                  "rank": 2
+                },
+                "guideDescription": {
+                  "number": "44 B-E",
+                  "page": 77,
+                  "volume": 1,
+                  "guide": "WHP"
+                },
+                "rank": 1,
+                "routeTime": "01:30:00",
+                "descriptionAdjective": [
+                  {
+                    "id": "dz",
+                    "text": "Dość zajmująca"
+                  }
+                ],
+                "info": "",
+                "warning": ""
+              },
+              {
+                "id": 7,
+                "consistentDirection": true,
+                "difficultyValue": 2.000,
+                "difficulty": "II",
+                "rappeling": false,
+                "routeType": {
+                  "id": 1,
+                  "name": "Ściśle granią",
+                  "rank": 2
+                },
+                "guideDescription": {
+                  "number": "44 A",
+                  "page": 77,
+                  "volume": 1,
+                  "guide": "WHP"
+                },
+                "rank": -7,
+                "routeTime": "01:30:00",
+                "descriptionAdjective": [
+                  {
+                    "id": "wk",
+                    "text": "Niezwykle krucha"
+                  },
+                  {
+                    "id": "me",
+                    "text": "Nieco eksponowana"
+                  }
+                ],
+                "info": "",
+                "warning": "Niezwykle krucha"
+              }
+            ]
+          },
+          {
+            "pointId1": 4,
+            "pointId2": 3,
+            "pointsConnectionId": 3,
+            "routes": [
+              {
+                "id": 6,
+                "consistentDirection": true,
+                "difficultyValue": 4.333,
+                "difficulty": "IV+",
+                "rappeling": true,
+                "routeType": {
+                  "id": 2,
+                  "name": "Prawie ściśle granią",
+                  "rank": 1
+                },
+                "guideDescription": {
+                  "number": "7",
+                  "page": 200,
+                  "volume": 3,
+                  "guide": "WC"
+                },
+                "rank": 13,
+                "routeTime": "20:00:00",
+                "descriptionAdjective": [
+                  {
+                    "id": "wp",
+                    "text": "Wspaniała"
+                  },
+                  {
+                    "id": "_c",
+                    "text": "Ciekawa"
+                  }
+                ],
+                "info": "Biwak",
+                "warning": ""
+              }
+            ]
+          },
+          {
+            "pointId1": 3,
+            "pointId2": 2,
+            "pointsConnectionId": 2,
+            "routes": [
+              {
+                "id": 4,
+                "consistentDirection": true,
+                "difficultyValue": 3.000,
+                "difficulty": "III",
+                "rappeling": false,
+                "routeType": {
+                  "id": 1,
+                  "name": "Ściśle granią",
+                  "rank": 2
+                },
+                "guideDescription": {
+                  "number": "41 R",
+                  "page": 73,
+                  "volume": 1,
+                  "guide": "WHP"
+                },
+                "rank": -2,
+                "routeTime": "01:00:00",
+                "descriptionAdjective": [
+                  {
+                    "id": "_k",
+                    "text": "Krucha"
+                  },
+                  {
+                    "id": "ce",
+                    "text": "Cześciowo eksponowana"
+                  }
+                ],
+                "info": "",
+                "warning": "Kruszyzna w żlebie"
+              },
+              {
+                "id": 5,
+                "consistentDirection": false,
+                "difficultyValue": 2.667,
+                "difficulty": "III-",
+                "rappeling": false,
+                "routeType": {
+                  "id": 1,
+                  "name": "Ściśle granią",
+                  "rank": 2
+                },
+                "guideDescription": {
+                  "number": "41 O,P",
+                  "page": 73,
+                  "volume": 1,
+                  "guide": "WHP"
+                },
+                "rank": -7,
+                "routeTime": "01:15:00",
+                "descriptionAdjective": [
+                  {
+                    "id": "bk",
+                    "text": "Bardzo krucha"
+                  }
+                ],
+                "info": "",
+                "warning": "Kruszyzna w żlebie\nBardzo krucha"
+              }
+            ]
+          },
+          {
+            "pointId1": 2,
+            "pointId2": 1,
+            "pointsConnectionId": 1,
+            "routes": [
+              {
+                "id": 2,
+                "consistentDirection": true,
+                "difficultyValue": 2.333,
+                "difficulty": "II+",
+                "rappeling": true,
+                "routeType": {
+                  "id": 2,
+                  "name": "Prawie ściśle granią",
+                  "rank": 1
+                },
+                "guideDescription": {
+                  "number": "12",
+                  "page": 10,
+                  "volume": 2,
+                  "guide": "WC"
+                },
+                "rank": 7,
+                "routeTime": "00:45:00",
+                "descriptionAdjective": [
+                  {
+                    "id": "be",
+                    "text": "Bardzo eksponowana"
+                  }
+                ],
+                "info": "",
+                "warning": ""
+              },
+              {
+                "id": 1,
+                "consistentDirection": false,
+                "difficultyValue": 1.000,
+                "difficulty": "I",
+                "rappeling": false,
+                "routeType": {
+                  "id": 1,
+                  "name": "Ściśle granią",
+                  "rank": 2
+                },
+                "guideDescription": {
+                  "number": "31 C,E",
+                  "page": 57,
+                  "volume": 1,
+                  "guide": "WHP"
+                },
+                "rank": 10,
+                "routeTime": "00:30:00",
+                "descriptionAdjective": [
+                  {
+                    "id": "_e",
+                    "text": "Eksponowana"
+                  },
+                  {
+                    "id": "_p",
+                    "text": "Piękna"
+                  }
+                ],
+                "info": "Ładne widoki",
+                "warning": "Trudne przejście przy płycie"
+              },
+              {
+                "id": 3,
+                "consistentDirection": false,
+                "difficultyValue": -0.333,
+                "difficulty": "0-",
+                "rappeling": false,
+                "routeType": {
+                  "id": 3,
+                  "name": "Obchodząc grań",
+                  "rank": 3
+                },
+                "guideDescription": {
+                  "number": "32",
+                  "page": 58,
+                  "volume": 1,
+                  "guide": "WHP"
+                },
+                "rank": 0,
+                "routeTime": "00:20:00",
+                "descriptionAdjective": [],
+                "info": "",
+                "warning": ""
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": [
+        {
+          "connectionId": 7,
+          "consistDirection": false
+        },
+        {
+          "connectionId": 6,
+          "consistDirection": true
+        },
+        {
+          "connectionId": 3,
+          "consistDirection": true
+        },
+        {
+          "connectionId": 4,
+          "consistDirection": false
+        },
+        {
+          "connectionId": 5,
+          "consistDirection": true
+        },
+        {
+          "connectionId": 8,
+          "consistDirection": false
+        }
+      ],
+      "info": {
+        "initalRouteSummary": {
+          "isEmptyRoute": false,
+          "isConsistentDirection": false,
+          "routeTime": "1.00:50:00",
+          "maxDifficulty": {
+            "text": "V",
+            "value": 5.000
+          },
+          "avarageDifficulty": {
+            "text": "IV",
+            "value": 4.000
+          },
+          "rank": 11,
+          "rappeling": true,
+          "description": "Droga ciekawa i wspaniała",
+          "warning": "",
+          "info": "Występują drogi zawierające dodatkowe informacje:\nBiwak\nŁadne widoki"
+        },
+        "ridgesContainer": [
+          {
+            "pointId1": 8,
+            "pointId2": 7,
+            "pointsConnectionId": 7,
+            "routes": [
+              {
+                "id": 11,
+                "consistentDirection": true,
+                "difficultyValue": 1.667,
+                "difficulty": "II-",
+                "rappeling": false,
+                "routeType": {
+                  "id": 3,
+                  "name": "Obchodząc grań",
+                  "rank": 3
+                },
+                "guideDescription": {
+                  "number": "4",
+                  "page": 31,
+                  "volume": 2,
+                  "guide": "WC"
+                },
+                "rank": -7,
+                "routeTime": "00:40:00",
+                "descriptionAdjective": [
+                  {
+                    "id": "nc",
+                    "text": "Nieciekawa"
+                  }
+                ],
+                "info": "",
+                "warning": ""
+              }
+            ]
+          },
+          {
+            "pointId1": 7,
+            "pointId2": 3,
+            "pointsConnectionId": 6,
+            "routes": [
+              {
+                "id": 10,
+                "consistentDirection": true,
+                "difficultyValue": 5.000,
+                "difficulty": "V",
+                "rappeling": false,
+                "routeType": {
+                  "id": 1,
+                  "name": "Ściśle granią",
+                  "rank": 2
+                },
+                "guideDescription": {
+                  "number": "3",
+                  "page": 30,
+                  "volume": 2,
+                  "guide": "WC"
+                },
+                "rank": 4,
+                "routeTime": "02:00:00",
+                "descriptionAdjective": [
+                  {
+                    "id": "ck",
+                    "text": "Częściowo krucha"
+                  },
+                  {
+                    "id": "bp",
+                    "text": "Bardzo piękna"
+                  }
+                ],
+                "info": "",
+                "warning": ""
+              }
+            ]
+          },
+          {
+            "pointId1": 3,
+            "pointId2": 4,
+            "pointsConnectionId": 3,
+            "routes": [
+              {
+                "id": 6,
+                "consistentDirection": false,
+                "difficultyValue": 4.333,
+                "difficulty": "IV+",
+                "rappeling": true,
+                "routeType": {
+                  "id": 2,
+                  "name": "Prawie ściśle granią",
+                  "rank": 1
+                },
+                "guideDescription": {
+                  "number": "7",
+                  "page": 200,
+                  "volume": 3,
+                  "guide": "WC"
+                },
+                "rank": 13,
+                "routeTime": "20:00:00",
+                "descriptionAdjective": [
+                  {
+                    "id": "wp",
+                    "text": "Wspaniała"
+                  },
+                  {
+                    "id": "_c",
+                    "text": "Ciekawa"
+                  }
+                ],
+                "info": "Biwak",
+                "warning": ""
+              }
+            ]
+          },
+          {
+            "pointId1": 4,
+            "pointId2": 5,
+            "pointsConnectionId": 4,
+            "routes": [
+              {
+                "id": 8,
+                "consistentDirection": false,
+                "difficultyValue": 2.000,
+                "difficulty": "II",
+                "rappeling": false,
+                "routeType": {
+                  "id": 1,
+                  "name": "Ściśle granią",
+                  "rank": 2
+                },
+                "guideDescription": {
+                  "number": "44 B-E",
+                  "page": 77,
+                  "volume": 1,
+                  "guide": "WHP"
+                },
+                "rank": 1,
+                "routeTime": "01:30:00",
+                "descriptionAdjective": [
+                  {
+                    "id": "dz",
+                    "text": "Dość zajmująca"
+                  }
+                ],
+                "info": "",
+                "warning": ""
+              },
+              {
+                "id": 7,
+                "consistentDirection": false,
+                "difficultyValue": 2.000,
+                "difficulty": "II",
+                "rappeling": false,
+                "routeType": {
+                  "id": 1,
+                  "name": "Ściśle granią",
+                  "rank": 2
+                },
+                "guideDescription": {
+                  "number": "44 A",
+                  "page": 77,
+                  "volume": 1,
+                  "guide": "WHP"
+                },
+                "rank": -7,
+                "routeTime": "01:30:00",
+                "descriptionAdjective": [
+                  {
+                    "id": "wk",
+                    "text": "Niezwykle krucha"
+                  },
+                  {
+                    "id": "me",
+                    "text": "Nieco eksponowana"
+                  }
+                ],
+                "info": "",
+                "warning": "Niezwykle krucha"
+              }
+            ]
+          },
+          {
+            "pointId1": 5,
+            "pointId2": 6,
+            "pointsConnectionId": 5,
+            "routes": [
+              {
+                "id": 9,
+                "consistentDirection": false,
+                "difficultyValue": 1.333,
+                "difficulty": "I+",
+                "rappeling": false,
+                "routeType": {
+                  "id": 2,
+                  "name": "Prawie ściśle granią",
+                  "rank": 1
+                },
+                "guideDescription": {
+                  "number": "45",
+                  "page": 78,
+                  "volume": 1,
+                  "guide": "WHP"
+                },
+                "rank": 2,
+                "routeTime": "00:15:00",
+                "descriptionAdjective": [
+                  {
+                    "id": "_z",
+                    "text": "Zajmująca"
+                  }
+                ],
+                "info": "Ładne widoki",
+                "warning": ""
+              }
+            ]
+          },
+          {
+            "pointId1": 6,
+            "pointId2": 9,
+            "pointsConnectionId": 8,
+            "routes": [
+              {
+                "id": 12,
+                "consistentDirection": false,
+                "difficultyValue": 1.000,
+                "difficulty": "I",
+                "rappeling": false,
+                "routeType": {
+                  "id": 1,
+                  "name": "Ściśle granią",
+                  "rank": 2
+                },
+                "guideDescription": {
+                  "number": "46",
+                  "page": 79,
+                  "volume": 1,
+                  "guide": "WHP"
+                },
+                "rank": 0,
+                "routeTime": "00:25:00",
+                "descriptionAdjective": [],
+                "info": "",
+                "warning": ""
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": [
+        {
+          "connectionId": 1,
+          "consistDirection": true
+        },
+        {
+          "connectionId": 10,
+          "consistDirection": true
+        }
+      ],
+      "info": {
+        "initalRouteSummary": {
+          "isEmptyRoute": true,
+          "isConsistentDirection": true,
+          "routeTime": "00:30:00",
+          "maxDifficulty": {
+            "text": "I",
+            "value": 1
+          },
+          "avarageDifficulty": {
+            "text": "I",
+            "value": 1
+          },
+          "rank": 10,
+          "rappeling": false,
+          "description": "Droga eksponowana i piękna",
+          "warning": "Występują drogi zawierające zagrożenia:\nTrudne przejście przy płycie",
+          "info": "Występują drogi zawierające dodatkowe informacje:\nŁadne widoki"
+        },
+        "ridgesContainer": [
+          {
+            "pointId1": 1,
+            "pointId2": 2,
+            "pointsConnectionId": 1,
+            "routes": [
+              {
+                "id": 1,
+                "consistentDirection": true,
+                "difficultyValue": 1.000,
+                "difficulty": "I",
+                "rappeling": false,
+                "routeType": {
+                  "id": 1,
+                  "name": "Ściśle granią",
+                  "rank": 2
+                },
+                "guideDescription": {
+                  "number": "31 C,E",
+                  "page": 57,
+                  "volume": 1,
+                  "guide": "WHP"
+                },
+                "rank": 10,
+                "routeTime": "00:30:00",
+                "descriptionAdjective": [
+                  {
+                    "id": "_e",
+                    "text": "Eksponowana"
+                  },
+                  {
+                    "id": "_p",
+                    "text": "Piękna"
+                  }
+                ],
+                "info": "Ładne widoki",
+                "warning": "Trudne przejście przy płycie"
+              },
+              {
+                "id": 3,
+                "consistentDirection": true,
+                "difficultyValue": -0.333,
+                "difficulty": "0-",
+                "rappeling": false,
+                "routeType": {
+                  "id": 3,
+                  "name": "Obchodząc grań",
+                  "rank": 3
+                },
+                "guideDescription": {
+                  "number": "32",
+                  "page": 58,
+                  "volume": 1,
+                  "guide": "WHP"
+                },
+                "rank": 0,
+                "routeTime": "00:20:00",
+                "descriptionAdjective": [],
+                "info": "",
+                "warning": ""
+              },
+              {
+                "id": 2,
+                "consistentDirection": false,
+                "difficultyValue": 2.333,
+                "difficulty": "II+",
+                "rappeling": true,
+                "routeType": {
+                  "id": 2,
+                  "name": "Prawie ściśle granią",
+                  "rank": 1
+                },
+                "guideDescription": {
+                  "number": "12",
+                  "page": 10,
+                  "volume": 2,
+                  "guide": "WC"
+                },
+                "rank": 7,
+                "routeTime": "00:45:00",
+                "descriptionAdjective": [
+                  {
+                    "id": "be",
+                    "text": "Bardzo eksponowana"
+                  }
+                ],
+                "info": "",
+                "warning": ""
+              }
+            ]
+          },
+          {
+            "pointId1": 2,
+            "pointId2": 12,
+            "pointsConnectionId": 10,
+            "routes": []
+          }
+        ]
+      }
+    },
+    {
+      "path": [
+        {
+          "connectionId": 10,
+          "consistDirection": false
+        },
+        {
+          "connectionId": 2,
+          "consistDirection": false
+        },
+        {
+          "connectionId": 6,
+          "consistDirection": false
+        },
+        {
+          "connectionId": 7,
+          "consistDirection": true
+        }
+      ],
+      "info": {
+        "initalRouteSummary": {
+          "isEmptyRoute": true,
+          "isConsistentDirection": false,
+          "routeTime": "03:55:00",
+          "maxDifficulty": {
+            "text": "V",
+            "value": 5.000
+          },
+          "avarageDifficulty": {
+            "text": "IV-",
+            "value": 3.667
+          },
+          "rank": -1,
+          "rappeling": false,
+          "description": "Droga krucha oraz częściowo nieciekawa i bardzo piękna",
+          "warning": "Występują drogi zawierające zagrożenia:\nKruszyzna w żlebie\nBardzo krucha",
+          "info": ""
+        },
+        "ridgesContainer": [
+          {
+            "pointId1": 12,
+            "pointId2": 2,
+            "pointsConnectionId": 10,
+            "routes": []
+          },
+          {
+            "pointId1": 2,
+            "pointId2": 3,
+            "pointsConnectionId": 2,
+            "routes": [
+              {
+                "id": 5,
+                "consistentDirection": true,
+                "difficultyValue": 2.667,
+                "difficulty": "III-",
+                "rappeling": false,
+                "routeType": {
+                  "id": 1,
+                  "name": "Ściśle granią",
+                  "rank": 2
+                },
+                "guideDescription": {
+                  "number": "41 O,P",
+                  "page": 73,
+                  "volume": 1,
+                  "guide": "WHP"
+                },
+                "rank": -7,
+                "routeTime": "01:15:00",
+                "descriptionAdjective": [
+                  {
+                    "id": "bk",
+                    "text": "Bardzo krucha"
+                  }
+                ],
+                "info": "",
+                "warning": "Kruszyzna w żlebie\nBardzo krucha"
+              },
+              {
+                "id": 4,
+                "consistentDirection": false,
+                "difficultyValue": 3.000,
+                "difficulty": "III",
+                "rappeling": false,
+                "routeType": {
+                  "id": 1,
+                  "name": "Ściśle granią",
+                  "rank": 2
+                },
+                "guideDescription": {
+                  "number": "41 R",
+                  "page": 73,
+                  "volume": 1,
+                  "guide": "WHP"
+                },
+                "rank": -2,
+                "routeTime": "01:00:00",
+                "descriptionAdjective": [
+                  {
+                    "id": "_k",
+                    "text": "Krucha"
+                  },
+                  {
+                    "id": "ce",
+                    "text": "Cześciowo eksponowana"
+                  }
+                ],
+                "info": "",
+                "warning": "Kruszyzna w żlebie"
+              }
+            ]
+          },
+          {
+            "pointId1": 3,
+            "pointId2": 7,
+            "pointsConnectionId": 6,
+            "routes": [
+              {
+                "id": 10,
+                "consistentDirection": false,
+                "difficultyValue": 5.000,
+                "difficulty": "V",
+                "rappeling": false,
+                "routeType": {
+                  "id": 1,
+                  "name": "Ściśle granią",
+                  "rank": 2
+                },
+                "guideDescription": {
+                  "number": "3",
+                  "page": 30,
+                  "volume": 2,
+                  "guide": "WC"
+                },
+                "rank": 4,
+                "routeTime": "02:00:00",
+                "descriptionAdjective": [
+                  {
+                    "id": "ck",
+                    "text": "Częściowo krucha"
+                  },
+                  {
+                    "id": "bp",
+                    "text": "Bardzo piękna"
+                  }
+                ],
+                "info": "",
+                "warning": ""
+              }
+            ]
+          },
+          {
+            "pointId1": 7,
+            "pointId2": 8,
+            "pointsConnectionId": 7,
+            "routes": [
+              {
+                "id": 11,
+                "consistentDirection": false,
+                "difficultyValue": 1.667,
+                "difficulty": "II-",
+                "rappeling": false,
+                "routeType": {
+                  "id": 3,
+                  "name": "Obchodząc grań",
+                  "rank": 3
+                },
+                "guideDescription": {
+                  "number": "4",
+                  "page": 31,
+                  "volume": 2,
+                  "guide": "WC"
+                },
+                "rank": -7,
+                "routeTime": "00:40:00",
+                "descriptionAdjective": [
+                  {
+                    "id": "nc",
+                    "text": "Nieciekawa"
+                  }
+                ],
+                "info": "",
+                "warning": ""
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": [],
+      "info": {
+        "initalRouteSummary": {
+          "isEmptyRoute": false,
+          "isConsistentDirection": true,
+          "routeTime": "00:00:00",
+          "maxDifficulty": {
+            "text": "0",
+            "value": 0.000
+          },
+          "avarageDifficulty": {
+            "text": "0",
+            "value": 0.000
+          },
+          "rank": 0,
+          "rappeling": false,
+          "description": "Droga",
+          "warning": "",
+          "info": ""
+        },
+        "ridgesContainer": []
+      }
+    },
+    {
+      "path": [],
+      "info": {
+        "initalRouteSummary": {
+          "isEmptyRoute": false,
+          "isConsistentDirection": true,
+          "routeTime": "00:00:00",
+          "maxDifficulty": {
+            "text": "0",
+            "value": 0.000
+          },
+          "avarageDifficulty": {
+            "text": "0",
+            "value": 0.000
+          },
+          "rank": 0,
+          "rappeling": false,
+          "description": "Droga",
+          "warning": "",
+          "info": ""
+        },
+        "ridgesContainer": []
+      }
+    },
+    {
+      "path": [
+        {
+          "connectionId": 1,
+          "consistDirection": true
+        }
+      ],
+      "info": {
+        "initalRouteSummary": {
+          "isEmptyRoute": false,
+          "isConsistentDirection": true,
+          "routeTime": "00:30:00",
+          "maxDifficulty": {
+            "text": "I",
+            "value": 1
+          },
+          "avarageDifficulty": {
+            "text": "I",
+            "value": 1
+          },
+          "rank": 10,
+          "rappeling": false,
+          "description": "Droga eksponowana i piękna",
+          "warning": "Występują drogi zawierające zagrożenia:\nTrudne przejście przy płycie",
+          "info": "Występują drogi zawierające dodatkowe informacje:\nŁadne widoki"
+        },
+        "ridgesContainer": [
+          {
+            "pointId1": 1,
+            "pointId2": 2,
+            "pointsConnectionId": 1,
+            "routes": [
+              {
+                "id": 1,
+                "consistentDirection": true,
+                "difficultyValue": 1.000,
+                "difficulty": "I",
+                "rappeling": false,
+                "routeType": {
+                  "id": 1,
+                  "name": "Ściśle granią",
+                  "rank": 2
+                },
+                "guideDescription": {
+                  "number": "31 C,E",
+                  "page": 57,
+                  "volume": 1,
+                  "guide": "WHP"
+                },
+                "rank": 10,
+                "routeTime": "00:30:00",
+                "descriptionAdjective": [
+                  {
+                    "id": "_e",
+                    "text": "Eksponowana"
+                  },
+                  {
+                    "id": "_p",
+                    "text": "Piękna"
+                  }
+                ],
+                "info": "Ładne widoki",
+                "warning": "Trudne przejście przy płycie"
+              },
+              {
+                "id": 3,
+                "consistentDirection": true,
+                "difficultyValue": -0.333,
+                "difficulty": "0-",
+                "rappeling": false,
+                "routeType": {
+                  "id": 3,
+                  "name": "Obchodząc grań",
+                  "rank": 3
+                },
+                "guideDescription": {
+                  "number": "32",
+                  "page": 58,
+                  "volume": 1,
+                  "guide": "WHP"
+                },
+                "rank": 0,
+                "routeTime": "00:20:00",
+                "descriptionAdjective": [],
+                "info": "",
+                "warning": ""
+              },
+              {
+                "id": 2,
+                "consistentDirection": false,
+                "difficultyValue": 2.333,
+                "difficulty": "II+",
+                "rappeling": true,
+                "routeType": {
+                  "id": 2,
+                  "name": "Prawie ściśle granią",
+                  "rank": 1
+                },
+                "guideDescription": {
+                  "number": "12",
+                  "page": 10,
+                  "volume": 2,
+                  "guide": "WC"
+                },
+                "rank": 7,
+                "routeTime": "00:45:00",
+                "descriptionAdjective": [
+                  {
+                    "id": "be",
+                    "text": "Bardzo eksponowana"
+                  }
+                ],
+                "info": "",
+                "warning": ""
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": [
+        {
+          "connectionId": 1,
+          "consistDirection": false
+        }
+      ],
+      "info": {
+        "initalRouteSummary": {
+          "isEmptyRoute": false,
+          "isConsistentDirection": true,
+          "routeTime": "00:45:00",
+          "maxDifficulty": {
+            "text": "II",
+            "value": 2
+          },
+          "avarageDifficulty": {
+            "text": "II",
+            "value": 2
+          },
+          "rank": 7,
+          "rappeling": true,
+          "description": "Droga bardzo eksponowana",
+          "warning": "",
+          "info": ""
+        },
+        "ridgesContainer": [
+          {
+            "pointId1": 2,
+            "pointId2": 1,
+            "pointsConnectionId": 1,
+            "routes": [
+              {
+                "id": 2,
+                "consistentDirection": true,
+                "difficultyValue": 2.333,
+                "difficulty": "II+",
+                "rappeling": true,
+                "routeType": {
+                  "id": 2,
+                  "name": "Prawie ściśle granią",
+                  "rank": 1
+                },
+                "guideDescription": {
+                  "number": "12",
+                  "page": 10,
+                  "volume": 2,
+                  "guide": "WC"
+                },
+                "rank": 7,
+                "routeTime": "00:45:00",
+                "descriptionAdjective": [
+                  {
+                    "id": "be",
+                    "text": "Bardzo eksponowana"
+                  }
+                ],
+                "info": "",
+                "warning": ""
+              },
+              {
+                "id": 1,
+                "consistentDirection": false,
+                "difficultyValue": 1.000,
+                "difficulty": "I",
+                "rappeling": false,
+                "routeType": {
+                  "id": 1,
+                  "name": "Ściśle granią",
+                  "rank": 2
+                },
+                "guideDescription": {
+                  "number": "31 C,E",
+                  "page": 57,
+                  "volume": 1,
+                  "guide": "WHP"
+                },
+                "rank": 10,
+                "routeTime": "00:30:00",
+                "descriptionAdjective": [
+                  {
+                    "id": "_e",
+                    "text": "Eksponowana"
+                  },
+                  {
+                    "id": "_p",
+                    "text": "Piękna"
+                  }
+                ],
+                "info": "Ładne widoki",
+                "warning": "Trudne przejście przy płycie"
+              },
+              {
+                "id": 3,
+                "consistentDirection": false,
+                "difficultyValue": -0.333,
+                "difficulty": "0-",
+                "rappeling": false,
+                "routeType": {
+                  "id": 3,
+                  "name": "Obchodząc grań",
+                  "rank": 3
+                },
+                "guideDescription": {
+                  "number": "32",
+                  "page": 58,
+                  "volume": 1,
+                  "guide": "WHP"
+                },
+                "rank": 0,
+                "routeTime": "00:20:00",
+                "descriptionAdjective": [],
+                "info": "",
+                "warning": ""
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": [
+        {
+          "connectionId": 9,
+          "consistDirection": true
+        }
+      ],
+      "info": {
+        "initalRouteSummary": {
+          "isEmptyRoute": false,
+          "isConsistentDirection": true,
+          "routeTime": "00:10:00",
+          "maxDifficulty": {
+            "text": "I",
+            "value": 1
+          },
+          "avarageDifficulty": {
+            "text": "I",
+            "value": 1
+          },
+          "rank": 5,
+          "rappeling": false,
+          "description": "Droga widokowo piękna",
+          "warning": "",
+          "info": ""
+        },
+        "ridgesContainer": [
+          {
+            "pointId1": 10,
+            "pointId2": 11,
+            "pointsConnectionId": 9,
+            "routes": [
+              {
+                "id": 13,
+                "consistentDirection": true,
+                "difficultyValue": 1.000,
+                "difficulty": "I",
+                "rappeling": false,
+                "routeType": {
+                  "id": 1,
+                  "name": "Ściśle granią",
+                  "rank": 2
+                },
+                "guideDescription": {
+                  "number": "90",
+                  "page": 150,
+                  "volume": 2,
+                  "guide": "WHP"
+                },
+                "rank": 5,
+                "routeTime": "00:10:00",
+                "descriptionAdjective": [
+                  {
+                    "id": "_w",
+                    "text": "Widokowo piękna"
+                  }
+                ],
+                "info": "",
+                "warning": ""
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "summaryQueries": [
+    {
+      "isEmptyRoute": false,
+      "isConsistentDirection": false,
+      "routeTime": "01:45:00",
+      "maxDifficulty": {
+        "text": "III-",
+        "value": 2.667
+      },
+      "avarageDifficulty": {
+        "text": "II",
+        "value": 2
+      },
+      "rank": -2,
+      "rappeling": false,
+      "description": "Droga bardzo krucha oraz częściowo eksponowana i piękna",
+      "warning": "Występują drogi zawierające zagrożenia:\nTrudne przejście przy płycie\nKruszyzna w żlebie\nBardzo krucha",
+      "info": "Występują drogi zawierające dodatkowe informacje:\nŁadne widoki"
+    },
+    {
+      "isEmptyRoute": false,
+      "isConsistentDirection": false,
+      "routeTime": "02:00:00",
+      "maxDifficulty": {
+        "text": "III-",
+        "value": 2.667
+      },
+      "avarageDifficulty": {
+        "text": "III-",
+        "value": 2.667
+      },
+      "rank": -2,
+      "rappeling": true,
+      "description": "Droga częściowo bardzo eksponowana i bardzo krucha",
+      "warning": "Występują drogi zawierające zagrożenia:\nKruszyzna w żlebie\nBardzo krucha",
+      "info": ""
+    },
+    {
+      "isEmptyRoute": false,
+      "isConsistentDirection": false,
+      "routeTime": "21:45:00",
+      "maxDifficulty": {
+        "text": "IV+",
+        "value": 4.333
+      },
+      "avarageDifficulty": {
+        "text": "IV",
+        "value": 4.000
+      },
+      "rank": 11,
+      "rappeling": true,
+      "description": "Droga ciekawa i wspaniała",
+      "warning": "Występują drogi zawierające zagrożenia:\nNiezwykle krucha",
+      "info": "Występują drogi zawierające dodatkowe informacje:\nBiwak\nŁadne widoki"
+    },
+    {
+      "isEmptyRoute": false,
+      "isConsistentDirection": true,
+      "routeTime": "03:00:00",
+      "maxDifficulty": {
+        "text": "V",
+        "value": 5.000
+      },
+      "avarageDifficulty": {
+        "text": "IV+",
+        "value": 4.333
+      },
+      "rank": 2,
+      "rappeling": false,
+      "description": "Droga bardzo piękna oraz częściowo cześciowo eksponowana i krucha",
+      "warning": "Występują drogi zawierające zagrożenia:\nKruszyzna w żlebie",
+      "info": ""
+    },
+    {
+      "isEmptyRoute": false,
+      "isConsistentDirection": false,
+      "routeTime": "00:40:00",
+      "maxDifficulty": {
+        "text": "II",
+        "value": 2
+      },
+      "avarageDifficulty": {
+        "text": "II",
+        "value": 2
+      },
+      "rank": -7,
+      "rappeling": false,
+      "description": "Droga nieciekawa",
+      "warning": "",
+      "info": ""
+    },
+    {
+      "error": "NotFoundException",
+      "message": "Brak drogi numer 999"
+    },
+    {
+      "isEmptyRoute": false,
+      "isConsistentDirection": true,
+      "routeTime": "00:00:00",
+      "maxDifficulty": {
+        "text": "0",
+        "value": 0.000
+      },
+      "avarageDifficulty": {
+        "text": "0",
+        "value": 0.000
+      },
+      "rank": 0,
+      "rappeling": false,
+      "description": "Droga",
+      "warning": "",
+      "info": ""
+    }
+  ],
+  "allDifficulties": [
+    {
+      "text": "0-",
+      "value": -0.333
+    },
+    {
+      "text": "0",
+      "value": 0.000
+    },
+    {
+      "text": "0+",
+      "value": 0.333
+    },
+    {
+      "text": "I",
+      "value": 1
+    },
+    {
+      "text": "II",
+      "value": 2
+    },
+    {
+      "text": "III-",
+      "value": 2.667
+    },
+    {
+      "text": "III",
+      "value": 3.000
+    },
+    {
+      "text": "III+",
+      "value": 3.333
+    },
+    {
+      "text": "IV-",
+      "value": 3.667
+    },
+    {
+      "text": "IV",
+      "value": 4.000
+    },
+    {
+      "text": "IV+",
+      "value": 4.333
+    },
+    {
+      "text": "V-",
+      "value": 4.667
+    },
+    {
+      "text": "V",
+      "value": 5.000
+    },
+    {
+      "text": "V+",
+      "value": 5.333
+    },
+    {
+      "text": "VI-",
+      "value": 5.667
+    },
+    {
+      "text": "VI",
+      "value": 6.000
+    },
+    {
+      "text": "VI+",
+      "value": 6.333
+    },
+    {
+      "text": "VII-",
+      "value": 6.667
+    },
+    {
+      "text": "VII",
+      "value": 7.000
+    },
+    {
+      "text": "VII+",
+      "value": 7.333
+    }
+  ],
+  "closestDifficulties": [
+    {
+      "text": "0-",
+      "value": -0.333
+    },
+    {
+      "text": "0",
+      "value": 0.000
+    },
+    {
+      "text": "0+",
+      "value": 0.333
+    },
+    {
+      "text": "I",
+      "value": 1
+    },
+    {
+      "text": "III-",
+      "value": 2.667
+    },
+    {
+      "text": "III",
+      "value": 3.000
+    },
+    {
+      "text": "III+",
+      "value": 3.333
+    },
+    {
+      "text": "VII+",
+      "value": 7.333
+    },
+    {
+      "text": "VII+",
+      "value": 7.333
+    }
+  ],
+  "adjectiveGroupTexts": [
+    "eksponowana",
+    "dość eksponowana",
+    "",
+    "eksponowana",
+    "dość eksponowana",
+    ""
+  ],
+  "ranks": [
+    0,
+    6,
+    -3,
+    0,
+    0,
+    2,
+    2
+  ],
+  "routeTimes": [
+    "00:00:00",
+    "01:00:00",
+    "01:00:00",
+    "03:03:00",
+    "03:08:00",
+    "02:00:00",
+    "02:00:00"
+  ]
+}

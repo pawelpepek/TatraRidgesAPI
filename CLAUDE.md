@@ -11,15 +11,15 @@ The rewrite is in progress on the `firebase` branch. Goal: **everything on Fireb
 | Folder | Role | Fate |
 |---|---|---|
 | `TatraRidges.FrontEnd/` | React (CRA 5, React 17, Redux Toolkit, react-leaflet, apexcharts), Firebase Hosting | Stays and takes over all the logic |
-| `TatraRidgesModel/` | EF entities, domain logic in C# | Reference source for the TS port, then removed |
-| `TatraRidges.Model.UnitTests/` | Domain logic tests (xUnit) | Port to Jest with the same cases, then remove |
+| `TatraRidgesModel/` | EF entities, domain logic in C# | Ported to `TatraRidges.FrontEnd/src/domain/`; to be removed |
+| `TatraRidges.Model.UnitTests/` | Domain logic tests (xUnit) | Ported to Jest in `src/domain/`; to be removed |
 | `TatraRidgesAPI/` | ASP.NET Core 6 API | To be removed |
 | `TatraRidgesAPI.IntegrationTests/` | API tests | To be removed (replaced by security rules tests on the emulator) |
 
 ## Target architecture
 
 - **Firebase Hosting** (project `graniowki`) + **Firestore** + **Firebase Auth**. No Cloud Functions — it must run on the Spark plan.
-- **Domain logic in TypeScript in the browser.** The backend already kept the whole database in memory (`CashService`) and computed on it; now the client does that after loading the data. To port, among others: ridge search (`Procedures/SearchModel/Points` — pruning graph leaves, `RidgeFinder`), `RouteArranger`, `Helpers/RouteSummary/*`, `DifficultyConverter`/`DifficultyHandler`, `WarningsAdjectives`, coordinate validation (`MountainPointValidator`), ridge cycle detection (`ConnectionCreator`).
+- **Domain logic in TypeScript in the browser.** The backend already kept the whole database in memory (`CashService`) and computed on it; now the client does that after loading the data. The port lives in `TatraRidges.FrontEnd/src/domain/` (see below).
 - **Writes are admin-only**, directly to Firestore in transactions. Admin = a UID listed in the `config/admins` document, checked in the security rules (no custom claims, no Admin SDK at runtime). Reads are public.
 - No user registration — admin sign-in only.
 
@@ -48,6 +48,16 @@ Decisions:
 
 The Firebase console cannot import JSON into Firestore. Plan: SQL queries (`json_agg`/`json_build_object`) export Postgres straight into the target JSON shape, and a one-off Node script using `firebase-admin` (planned in `tools/migration/`) writes the documents — against the emulator first. Before migrating, run check queries to confirm `Routes.GuideDescriptionId` is unique and there are no orphaned descriptions.
 
+## Domain module (`src/domain/`)
+
+Pure TypeScript port of `TatraRidgesModel` + the API services, with no Firebase or React dependency. It takes the data model above (`TatraData`) and returns results in the exact JSON shape the ASP.NET API returned (`routeTime` as a .NET TimeSpan string, e.g. `"1.02:30:00"`), so the Redux slices need no changes.
+
+- `queries.ts` — read side: `getMountainPoints`, `getRidges`, `getRouteBetweenPoints`, `getRouteSummary`, `getParameters`.
+- `commands.ts` — admin writes as pure functions returning new arrays (`movePoint`, `deletePoint`, `addConnection`, `addRoute`); validation and ridge cycle detection happen here.
+- `ridgeFinder.ts`, `routeArranger.ts`, `routeSummary.ts`, `difficulty.ts`, `coordinates.ts`, `time.ts` — the ported logic.
+- `csharpParity.test.ts` compares results with `__fixtures__/csharp-golden.json`: the output of the original C# code for `__fixtures__/scenarios.json`, generated once before .NET is removed. Never edit the golden file by hand; if behaviour is changed on purpose, update the expectations in a dedicated test and say so.
+- Known C# quirks kept on purpose: `getRouteSummary` reports the direction of routes stored with `consistentDirection = false` the opposite way than `getRouteBetweenPoints` (bug in `RoutesConverter`); C# `Math.Round` rounds halves to even (`roundHalfToEven`).
+
 ## Frontend — where things are
 
 - All API calls go through `fetchData` in `src/store/dispatch-actions.js` (dispatched by `props.location`, e.g. `point`, `connection`, `route`, `route/parts`, `route/parameters`, `account/login/`). This is where Firestore and the local logic get plugged in — the Redux slices and `dataDispatcher` should stay unchanged.
@@ -72,4 +82,5 @@ Ignored in the root `.gitignore`, do not commit: `TatraRidges.FrontEnd/firebase.
 ## Conventions
 
 - UI text, error messages and commit messages are in Polish.
-- When porting logic from C#, keep the results identical; the tests in `TatraRidges.Model.UnitTests/` are the specification.
+- Domain results must stay identical to the C# implementation unless a change is deliberate; `csharpParity.test.ts` guards this.
+- Frontend code is formatted with Prettier: tabs, no semicolons, `arrowParens: avoid`, `trailingComma: es5`.

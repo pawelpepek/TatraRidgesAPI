@@ -1,0 +1,166 @@
+{
+	"params": {
+		"adjectives": [
+			{ "id": "_c", "text": "Ciekawa", "rank": 3 },
+			{ "id": "_e", "text": "Eksponowana", "rank": 5 },
+			{ "id": "_k", "text": "Krucha", "rank": -5 },
+			{ "id": "_p", "text": "Piękna", "rank": 5 },
+			{ "id": "_w", "text": "Widokowo piękna", "rank": 5 },
+			{ "id": "bk", "text": "Bardzo krucha", "rank": -7 },
+			{ "id": "bp", "text": "Bardzo piękna", "rank": 7 },
+			{ "id": "bw", "text": "Widokowo bardzo piękna", "rank": 7 },
+			{ "id": "be", "text": "Bardzo eksponowana", "rank": 7 },
+			{ "id": "ce", "text": "Cześciowo eksponowana", "rank": 3 },
+			{ "id": "ck", "text": "Częściowo krucha", "rank": -3 },
+			{ "id": "me", "text": "Nieco eksponowana", "rank": 3 },
+			{ "id": "nc", "text": "Nieciekawa", "rank": -7 },
+			{ "id": "wk", "text": "Niezwykle krucha", "rank": -10 },
+			{ "id": "wp", "text": "Wspaniała", "rank": 10 },
+			{ "id": "ww", "text": "Widokowo wspaniała", "rank": 10 },
+			{ "id": "_z", "text": "Zajmująca", "rank": 2 },
+			{ "id": "dz", "text": "Dość zajmująca", "rank": 1 },
+			{ "id": "dc", "text": "Dość ciekawa", "rank": 1 }
+		],
+		"difficulties": [
+			{ "id": 0, "text": "0" },
+			{ "id": 1, "text": "I" },
+			{ "id": 2, "text": "II" },
+			{ "id": 3, "text": "III" },
+			{ "id": 4, "text": "IV" },
+			{ "id": 5, "text": "V" },
+			{ "id": 6, "text": "VI" },
+			{ "id": 7, "text": "VII" }
+		],
+		"difficultyDetails": [
+			{ "id": 0, "sign": "" },
+			{ "id": 1, "sign": "+" },
+			{ "id": 2, "sign": "-" }
+		],
+		"guides": [
+			{ "id": 1, "shortName": "WHP", "name": "Tatry Wysokie Przewodnik Taternicki", "author": "Witold Henryk Paryski" },
+			{ "id": 2, "shortName": "WC", "name": "Tatry Przewodnik Szczegółowy", "author": "Władysław Cywiński" }
+		],
+		"routeTypes": [
+			{ "id": 1, "name": "Ściśle granią", "rank": 2 },
+			{ "id": 2, "name": "Prawie ściśle granią", "rank": 1 },
+			{ "id": 3, "name": "Obchodząc grań", "rank": 3 }
+		],
+		"pointTypes": [
+			{ "id": 1, "name": "Szczyt" },
+			{ "id": 2, "name": "Przełęcz" }
+		]
+	},
+	"points": [
+		{ "id": 1, "name": "P1", "altName": null, "evaluation": 2100, "precisedEvaluation": true, "lat": 49.2, "lng": 20.0, "wikiLat": 49.2, "wikiLng": 20.0, "wikiAddress": null, "pointTypeId": 1 },
+		{ "id": 2, "name": "P2", "altName": null, "evaluation": 2050, "precisedEvaluation": true, "lat": 49.201, "lng": 20.01, "wikiLat": 49.201, "wikiLng": 20.01, "wikiAddress": null, "pointTypeId": 2 },
+		{ "id": 3, "name": "P3", "altName": null, "evaluation": 2150, "precisedEvaluation": false, "lat": 49.202, "lng": 20.02, "wikiLat": 49.202, "wikiLng": 20.02, "wikiAddress": null, "pointTypeId": 1 },
+		{ "id": 4, "name": "P4", "altName": null, "evaluation": null, "precisedEvaluation": false, "lat": 49.203, "lng": 20.03, "wikiLat": 49.203, "wikiLng": 20.03, "wikiAddress": null, "pointTypeId": 2 },
+		{ "id": 5, "name": "P5", "altName": null, "evaluation": 2200, "precisedEvaluation": true, "lat": 49.204, "lng": 20.04, "wikiLat": 49.204, "wikiLng": 20.04, "wikiAddress": null, "pointTypeId": 1 },
+		{ "id": 6, "name": "P6", "altName": null, "evaluation": 2120, "precisedEvaluation": true, "lat": 49.205, "lng": 20.05, "wikiLat": 49.205, "wikiLng": 20.05, "wikiAddress": null, "pointTypeId": 2 },
+		{ "id": 7, "name": "P7", "altName": null, "evaluation": 2010, "precisedEvaluation": true, "lat": 49.21, "lng": 20.02, "wikiLat": 49.21, "wikiLng": 20.02, "wikiAddress": null, "pointTypeId": 1 },
+		{ "id": 8, "name": "P8", "altName": null, "evaluation": 1980, "precisedEvaluation": true, "lat": 49.22, "lng": 20.02, "wikiLat": 49.22, "wikiLng": 20.02, "wikiAddress": null, "pointTypeId": 1 },
+		{ "id": 9, "name": "P9", "altName": null, "evaluation": 2090, "precisedEvaluation": true, "lat": 49.206, "lng": 20.06, "wikiLat": 49.206, "wikiLng": 20.06, "wikiAddress": null, "pointTypeId": 1 },
+		{ "id": 10, "name": "P10", "altName": null, "evaluation": 1900, "precisedEvaluation": true, "lat": 49.25, "lng": 20.2, "wikiLat": 49.25, "wikiLng": 20.2, "wikiAddress": null, "pointTypeId": 1 },
+		{ "id": 11, "name": "P11", "altName": null, "evaluation": 1950, "precisedEvaluation": true, "lat": 49.251, "lng": 20.21, "wikiLat": 49.251, "wikiLng": 20.21, "wikiAddress": null, "pointTypeId": 2 },
+		{ "id": 12, "name": "P12", "altName": null, "evaluation": 2000, "precisedEvaluation": true, "lat": 49.19, "lng": 20.01, "wikiLat": 49.19, "wikiLng": 20.01, "wikiAddress": null, "pointTypeId": 2 }
+	],
+	"ridges": [
+		{
+			"id": 1, "pointId1": 1, "pointId2": 2,
+			"routes": [
+				{ "id": 1, "consistentDirection": true, "difficultyId": 1, "difficultyDetailId": 0, "rappeling": false, "routeTypeId": 1, "routeTimeMin": 30, "guideId": 1, "guideNumber": "31 C,E", "guidePage": 57, "guideVolume": 1, "adjectiveIds": ["_e", "_p"], "additional": [{ "description": "Trudne przejście przy płycie", "warning": true }, { "description": "Ładne widoki", "warning": false }] },
+				{ "id": 2, "consistentDirection": false, "difficultyId": 2, "difficultyDetailId": 1, "rappeling": true, "routeTypeId": 2, "routeTimeMin": 45, "guideId": 2, "guideNumber": "12", "guidePage": 10, "guideVolume": 2, "adjectiveIds": ["be"], "additional": [] },
+				{ "id": 3, "consistentDirection": true, "difficultyId": 0, "difficultyDetailId": 2, "rappeling": false, "routeTypeId": 3, "routeTimeMin": 20, "guideId": 1, "guideNumber": "32", "guidePage": 58, "guideVolume": 1, "adjectiveIds": [], "additional": [] }
+			]
+		},
+		{
+			"id": 2, "pointId1": 3, "pointId2": 2,
+			"routes": [
+				{ "id": 4, "consistentDirection": true, "difficultyId": 3, "difficultyDetailId": 0, "rappeling": false, "routeTypeId": 1, "routeTimeMin": 60, "guideId": 1, "guideNumber": "41 R", "guidePage": 73, "guideVolume": 1, "adjectiveIds": ["_k", "ce"], "additional": [{ "description": "Kruszyzna w żlebie", "warning": true }] },
+				{ "id": 5, "consistentDirection": false, "difficultyId": 3, "difficultyDetailId": 2, "rappeling": false, "routeTypeId": 1, "routeTimeMin": 75, "guideId": 1, "guideNumber": "41 O,P", "guidePage": 73, "guideVolume": 1, "adjectiveIds": ["bk"], "additional": [{ "description": "Kruszyzna w żlebie", "warning": true }] }
+			]
+		},
+		{
+			"id": 3, "pointId1": 3, "pointId2": 4,
+			"routes": [
+				{ "id": 6, "consistentDirection": false, "difficultyId": 4, "difficultyDetailId": 1, "rappeling": true, "routeTypeId": 2, "routeTimeMin": 1200, "guideId": 2, "guideNumber": "7", "guidePage": 200, "guideVolume": 3, "adjectiveIds": ["wp", "_c"], "additional": [{ "description": "Biwak", "warning": false }] }
+			]
+		},
+		{
+			"id": 4, "pointId1": 5, "pointId2": 4,
+			"routes": [
+				{ "id": 7, "consistentDirection": true, "difficultyId": 2, "difficultyDetailId": 0, "rappeling": false, "routeTypeId": 1, "routeTimeMin": 90, "guideId": 1, "guideNumber": "44 A", "guidePage": 77, "guideVolume": 1, "adjectiveIds": ["wk", "me"], "additional": [] },
+				{ "id": 8, "consistentDirection": true, "difficultyId": 2, "difficultyDetailId": 0, "rappeling": false, "routeTypeId": 1, "routeTimeMin": 90, "guideId": 1, "guideNumber": "44 B-E", "guidePage": 77, "guideVolume": 1, "adjectiveIds": ["dz"], "additional": [] }
+			]
+		},
+		{
+			"id": 5, "pointId1": 5, "pointId2": 6,
+			"routes": [
+				{ "id": 9, "consistentDirection": false, "difficultyId": 1, "difficultyDetailId": 1, "rappeling": false, "routeTypeId": 2, "routeTimeMin": 15, "guideId": 1, "guideNumber": "45", "guidePage": 78, "guideVolume": 1, "adjectiveIds": ["_z"], "additional": [{ "description": "Ładne widoki", "warning": false }] }
+			]
+		},
+		{
+			"id": 6, "pointId1": 7, "pointId2": 3,
+			"routes": [
+				{ "id": 10, "consistentDirection": true, "difficultyId": 5, "difficultyDetailId": 0, "rappeling": false, "routeTypeId": 1, "routeTimeMin": 120, "guideId": 2, "guideNumber": "3", "guidePage": 30, "guideVolume": 2, "adjectiveIds": ["ck", "bp"], "additional": [] }
+			]
+		},
+		{
+			"id": 7, "pointId1": 7, "pointId2": 8,
+			"routes": [
+				{ "id": 11, "consistentDirection": false, "difficultyId": 2, "difficultyDetailId": 2, "rappeling": false, "routeTypeId": 3, "routeTimeMin": 40, "guideId": 2, "guideNumber": "4", "guidePage": 31, "guideVolume": 2, "adjectiveIds": ["nc"], "additional": [] }
+			]
+		},
+		{
+			"id": 8, "pointId1": 9, "pointId2": 6,
+			"routes": [
+				{ "id": 12, "consistentDirection": true, "difficultyId": 1, "difficultyDetailId": 0, "rappeling": false, "routeTypeId": 1, "routeTimeMin": 25, "guideId": 1, "guideNumber": "46", "guidePage": 79, "guideVolume": 1, "adjectiveIds": [], "additional": [] }
+			]
+		},
+		{
+			"id": 9, "pointId1": 10, "pointId2": 11,
+			"routes": [
+				{ "id": 13, "consistentDirection": true, "difficultyId": 1, "difficultyDetailId": 0, "rappeling": false, "routeTypeId": 1, "routeTimeMin": 10, "guideId": 1, "guideNumber": "90", "guidePage": 150, "guideVolume": 2, "adjectiveIds": ["_w"], "additional": [] }
+			]
+		},
+		{ "id": 10, "pointId1": 2, "pointId2": 12, "routes": [] }
+	],
+	"ridgeQueries": [
+		[1, 6], [6, 1], [8, 9], [1, 12], [12, 8], [1, 11], [4, 4], [1, 2], [2, 1], [10, 11]
+	],
+	"summaryQueries": [
+		[{ "routeId": 1, "pointFrom": 1 }, { "routeId": 5, "pointFrom": 2 }],
+		[{ "routeId": 2, "pointFrom": 2 }, { "routeId": 5, "pointFrom": 3 }],
+		[{ "routeId": 6, "pointFrom": 3 }, { "routeId": 7, "pointFrom": 4 }, { "routeId": 9, "pointFrom": 5 }],
+		[{ "routeId": 10, "pointFrom": 7 }, { "routeId": 4, "pointFrom": 3 }],
+		[{ "routeId": 11, "pointFrom": 8 }],
+		[{ "routeId": 999, "pointFrom": 1 }],
+		[]
+	],
+	"difficultyValues": [-1, 0, 0.2, 1.5, 2.5, 3.1665, 3.5, 7.4, 10],
+	"units": {
+		"commonAdjectives": [
+			{ "id": "ce", "rank": 5, "text": "Częściowo eksponowana" },
+			{ "id": "de", "rank": 4, "text": "Dość eksponowana" },
+			{ "id": "_e", "rank": 7, "text": "Eksponowana" },
+			{ "id": "be", "rank": 9, "text": "Bardzo eksponowana" }
+		],
+		"adjectiveGroupCases": [
+			{ "allMinutes": 300, "items": [{ "adjective": { "id": "ce", "rank": 5, "text": "Częściowo eksponowana" }, "minutes": 60 }, { "adjective": { "id": "de", "rank": 4, "text": "Dość eksponowana" }, "minutes": 60 }] },
+			{ "allMinutes": 70, "items": [{ "adjective": { "id": "be", "rank": 9, "text": "Bardzo eksponowana" }, "minutes": 1 }, { "adjective": { "id": "de", "rank": 4, "text": "Dość eksponowana" }, "minutes": 60 }] },
+			{ "allMinutes": 610, "items": [{ "adjective": { "id": "be", "rank": 9, "text": "Bardzo eksponowana" }, "minutes": 1 }, { "adjective": { "id": "de", "rank": 4, "text": "Dość eksponowana" }, "minutes": 60 }] },
+			{ "allMinutes": 120, "items": [{ "adjective": { "id": "_e", "rank": 7, "text": "Eksponowana" }, "minutes": 60 }] },
+			{ "allMinutes": 2000, "items": [{ "adjective": { "id": "oe", "rank": 0, "text": "" }, "minutes": 2000 }] },
+			{ "allMinutes": 2000, "items": [] }
+		],
+		"rankCases": [
+			[null, null],
+			[{ "minutes": 60, "rank": 6 }],
+			[{ "minutes": 60, "rank": -3 }, null],
+			[{ "minutes": 120, "rank": -2 }, { "minutes": 63, "rank": 5 }],
+			[{ "minutes": 63, "rank": 0 }, { "minutes": 125, "rank": 0 }],
+			[{ "minutes": 60, "rank": 1 }, { "minutes": 60, "rank": 2 }],
+			[{ "minutes": 60, "rank": 2 }, { "minutes": 60, "rank": 3 }]
+		]
+	}
+}
