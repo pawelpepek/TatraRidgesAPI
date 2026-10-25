@@ -1,7 +1,17 @@
 import { uiActions } from "./ui-slice"
 import { getMessage } from "./statusCodeMessage"
 
+// With REACT_APP_SUPABASE_URL set (see .env.development) the data comes from Supabase
+// and is computed locally. Until the cutover, builds without it still call the old API.
+// The Supabase SDK is loaded on demand, so those builds do not include it.
+const useSupabase = Boolean(process.env.REACT_APP_SUPABASE_URL)
+
 const fetchData = async props => {
+	if (useSupabase) {
+		const { fetchFromSupabase } = await import("./supabase-data")
+		return fetchFromSupabase(props)
+	}
+
 	const conf = require("../config.dev.json")
 	let url = conf.webAPI + props.location
 	if (props.pathPart !== undefined) {

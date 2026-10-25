@@ -22,7 +22,7 @@ The rewrite is in progress on the `supabase` branch. Goal: **no .NET, no custom 
 
 - **Supabase**: Postgres (the existing production database, project ref `ianxfuclpdtcxoeljppt`, region eu-central-1), Supabase Auth for the admin, row level security, SQL functions called through RPC. No Edge Functions unless really needed.
 - **Static hosting** of the React build stays on Firebase Hosting (project `graniowki`) for now — Supabase does not host SPAs.
-- **Reads**: one RPC (planned `get_tatra_data()`) returns all points, ridges with routes and dictionaries as JSON in the `TatraData` shape, so `src/domain` and `src/store/local-api.ts` work unchanged.
+- **Reads**: one RPC, `get_tatra_data()`, returns all points, ridges with routes and dictionaries as JSON in the `TatraData` shape, so `src/domain` and `src/store/local-api.ts` work unchanged.
 - **Writes**: admin-only, through SQL functions that check an `admins` table (planned) and run in one transaction (e.g. a route with its adjectives and descriptions).
 - No user registration — admin sign-in only. Supabase Auth sign-ups must be disabled in the dashboard.
 
@@ -33,7 +33,8 @@ The rewrite is in progress on the `supabase` branch. Goal: **no .NET, no custom 
 - `supabase/config.toml` — Realtime, Storage, Edge Functions and Analytics are off; Auth sign-ups are off (create the admin in Studio, http://127.0.0.1:54323). API on 54321, Postgres on 54322.
 - `supabase/migrations/20231225153425_init.sql` — baseline reproducing the production schema created by EF (including `__EFMigrationsHistory`). New schema changes are new migration files; never edit the baseline.
 - `supabase/seed.sql` — dictionaries and a small example around Świnica (what the C# `DbSeeder` used to insert). Local only.
-- Tables in `public` are exposed through the Supabase API to the `anon` role unless row level security is enabled. The baseline has no RLS, like production; enabling it is the first change to make.
+- `supabase/migrations/20261025160000_read_access.sql` — revokes all table and sequence privileges from `anon`/`authenticated` (Supabase grants them by default, including on `"Users"`), enables RLS with no policies on every table, and adds `get_tatra_data()` (`security definer`, `search_path = ''`, executable by `anon`/`authenticated`). Adjectives are returned in physical (`ctid`) order, like EF read them, because the order of adjective groups decides the word order in descriptions. The old API is unaffected: it connects as `postgres`, which owns the tables and has `bypassrls`. Not applied to production yet.
+- Every new table in `public` gets the default Supabase grants again: revoke them and enable RLS in the same migration.
 - Local Postgres is version 17 (`[db] major_version`); check the production version before relying on newer features.
 
 ### Current database schema (production)
@@ -62,7 +63,9 @@ Pure TypeScript port of the C# model and API services, with no React or backend 
 ## Frontend — where things are
 
 - All API calls go through `fetchData` in `src/store/dispatch-actions.js` (dispatched by `props.location`, e.g. `point`, `connection`, `route`, `route/parts`, `route/parameters`, `account/login/`). The Redux slices and `dataDispatcher` should stay unchanged.
-- `src/store/local-api.ts` — `handleRequest(props, data)` answers the read requests of the old API with `src/domain`; writes and login throw until they are implemented. Not wired into `fetchData` yet.
+- `src/store/local-api.ts` — `handleRequest(props, data)` answers the read requests of the old API with `src/domain`; writes and login throw until they are implemented.
+- With `REACT_APP_SUPABASE_URL` set (`.env.development` points it at the local Supabase, with the CLI's fixed local publishable key in `REACT_APP_SUPABASE_KEY`), `fetchData` loads `src/store/supabase-data.ts` on demand (the SDK is a separate chunk), which calls `get_tatra_data()` once per page load and passes requests to `handleRequest`. Without it (production builds until the cutover) `fetchData` still calls the ASP.NET API from `config.dev.json`. So `npm start` needs `npm run db:start` running.
+- `src/supabase.ts` — the client. `src/types/supabase-js.d.ts` declares the few supabase-js APIs in use, because the package ships `.d.cts` types that TypeScript 4.5 (CRA 5) cannot read; remove it after upgrading TypeScript.
 - `src/store/*-actions.ts` — actions calling `dataDispatcher`; `src/store/authorizationHandler.ts` — current sign-in via a token in `localStorage` (to be replaced by Supabase Auth).
 - `src/components/helpers/fetcher.ts` — dead code with `localhost:44342` URLs.
 
