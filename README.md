@@ -4,25 +4,22 @@ A map of the ridges of the Tatra Mountains. Pick two points and the app finds th
 
 Live at [graniowki.pl](https://graniowki.pl).
 
-## Status: moving to Firebase
+## Status: moving to Supabase
 
-The project is being rewritten to run entirely on Firebase, with no custom backend:
+The project is being rewritten without a custom backend:
 
-- **Firebase Hosting** serves the React app.
-- **Firestore** stores points, ridges with their routes, and dictionaries.
-- **Firebase Auth** handles the admin sign-in.
+- **Supabase** keeps the Postgres database and handles the admin sign-in.
 - Ridge search and route summaries run in the browser, in TypeScript.
+- The React app stays on static hosting (Firebase Hosting).
 
-The previous version (ASP.NET Core API + PostgreSQL, plus a WPF Wikipedia scraper) is kept on the [`legacy`](https://github.com/pawelpepek/TatraRidgesAPI/tree/legacy) branch.
+The previous version (ASP.NET Core API, C# model and a WPF Wikipedia scraper) is kept on the [`legacy`](https://github.com/pawelpepek/TatraRidgesAPI/tree/legacy) branch.
 
 ## Repository layout
 
 | Folder | Contents |
 |---|---|
 | `TatraRidges.FrontEnd/` | React app (Create React App, Redux Toolkit, Leaflet) |
-| `TatraRidgesModel/` | Domain logic in C#, the reference for the TypeScript port (to be removed) |
-| `TatraRidges.Model.UnitTests/` | Tests of the domain logic (to be ported to Jest) |
-| `TatraRidgesAPI/`, `TatraRidgesAPI.IntegrationTests/` | Legacy ASP.NET Core API (to be removed) |
+| `TatraRidges.FrontEnd/src/domain/` | Ridge search and route summaries, ported from C# |
 
 ## Running the frontend
 
