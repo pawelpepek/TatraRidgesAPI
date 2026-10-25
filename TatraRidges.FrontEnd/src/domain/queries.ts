@@ -84,15 +84,12 @@ const convertRoute = (data: TatraData, routeIdFrom: RouteIdFrom): RouteDto => {
 		throw new NotFoundError(`Brak drogi numer ${routeIdFrom.routeId}`)
 	}
 
-	// Ported as is from RoutesConverter. It compares pointFrom with the start of the
-	// route, while getRouteDto expects the direction of the ridge, so routes stored
-	// with consistentDirection = false get the opposite direction than in getRouteBetweenPoints.
-	const pointFromRoute = route.consistentDirection
-		? ridge.pointId1
-		: ridge.pointId2
-	const consistentDirection = routeIdFrom.pointFrom === pointFromRoute
+	// getRouteDto expects the direction of the ridge, as in getRouteBetweenPoints.
+	// The C# RoutesConverter passed the direction of the route instead, which flipped
+	// routes stored with consistentDirection = false.
+	const consistDirection = routeIdFrom.pointFrom === ridge.pointId1
 
-	return getRouteDto(route, consistentDirection, data.params)
+	return getRouteDto(route, consistDirection, data.params)
 }
 
 export const getRouteSummary = (data: TatraData, routesIdFrom: RouteIdFrom[]) =>

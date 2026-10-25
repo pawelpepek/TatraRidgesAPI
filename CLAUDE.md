@@ -56,7 +56,8 @@ Pure TypeScript port of `TatraRidgesModel` + the API services, with no Firebase 
 - `commands.ts` — admin writes as pure functions returning new arrays (`movePoint`, `deletePoint`, `addConnection`, `addRoute`); validation and ridge cycle detection happen here.
 - `ridgeFinder.ts`, `routeArranger.ts`, `routeSummary.ts`, `difficulty.ts`, `coordinates.ts`, `time.ts` — the ported logic.
 - `csharpParity.test.ts` compares results with `__fixtures__/csharp-golden.json`: the output of the original C# code for `__fixtures__/scenarios.json`, generated once before .NET is removed. Never edit the golden file by hand; if behaviour is changed on purpose, update the expectations in a dedicated test and say so.
-- Known C# quirks kept on purpose: `getRouteSummary` reports the direction of routes stored with `consistentDirection = false` the opposite way than `getRouteBetweenPoints` (bug in `RoutesConverter`); C# `Math.Round` rounds halves to even (`roundHalfToEven`).
+- Deliberate change from C#: `getRouteSummary` reports route direction the same way as `getRouteBetweenPoints` (the C# `RoutesConverter` flipped routes stored with `consistentDirection = false`); `csharpParity.test.ts` overrides the golden value for those queries and `queries.test.ts` checks both functions agree.
+- C# quirk kept on purpose: `Math.Round` rounds halves to even (`roundHalfToEven`).
 
 ## Frontend — where things are
 

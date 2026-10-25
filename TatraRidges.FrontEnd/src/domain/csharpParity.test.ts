@@ -36,7 +36,14 @@ describe("parity with the C# implementation", () => {
 	describe.each(
 		scenario.summaryQueries.map((q, i): [number, RouteIdFrom[]] => [i, q])
 	)("summary query %i", (index, query) => {
-		const expected = csharpGolden.summaryQueries[index]
+		// Deliberate change: the C# RoutesConverter flipped the direction of routes
+		// stored with consistentDirection = false (routes 5 and 11 in queries 0 and 4).
+		const fixedDirections: Record<number, boolean> = { 0: true, 4: true }
+		const golden = csharpGolden.summaryQueries[index]
+		const expected =
+			index in fixedDirections
+				? { ...golden, isConsistentDirection: fixedDirections[index] }
+				: golden
 
 		it("returns the same summary", () => {
 			if (expected.error) {

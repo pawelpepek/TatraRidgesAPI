@@ -1,9 +1,10 @@
-import { data } from "./__fixtures__/scenarioData"
+import { data, scenario } from "./__fixtures__/scenarioData"
 import { NotFoundError } from "./errors"
 import {
 	getMountainPoints,
 	getParameters,
 	getRidges,
+	getRouteBetweenPoints,
 	getRouteSummary,
 } from "./queries"
 
@@ -70,11 +71,50 @@ describe("getParameters", () => {
 })
 
 describe("getRouteSummary", () => {
-	// Kept from the C# RoutesConverter: route 11 is stored from point 8 to 7
-	// (consistentDirection = false), and walking it from point 8 is still reported
-	// as the opposite direction. getRouteBetweenPoints(8, 7) reports it as consistent.
-	it("reports the direction of routes stored backwards like the C# code", () => {
-		const summary = getRouteSummary(data, [{ routeId: 11, pointFrom: 8 }])
-		expect(summary.isConsistentDirection).toBe(false)
-	})
+	// Route 11 is stored from point 8 to 7 (consistentDirection = false). The C#
+	// RoutesConverter reported walking it from point 8 as the opposite direction.
+	it.each([
+		[8, true],
+		[7, false],
+	])(
+		"reports a route stored backwards walked from point %i as consistent: %s",
+		(pointFrom, consistent) => {
+			const summary = getRouteSummary(data, [{ routeId: 11, pointFrom }])
+			expect(summary.isConsistentDirection).toBe(consistent)
+		}
+	)
+
+	describe.each(scenario.ridgeQueries)(
+		"agrees with getRouteBetweenPoints(%i, %i)",
+		(from, to) => {
+			const { ridgesContainer, initalRouteSummary } = getRouteBetweenPoints(
+				data,
+				from,
+				to
+			)
+
+			it("for the direction of every route", () => {
+				ridgesContainer.forEach(section =>
+					section.routes.forEach(route => {
+						const summary = getRouteSummary(data, [
+							{ routeId: route.id, pointFrom: section.pointId1 },
+						])
+						expect(summary.isConsistentDirection).toBe(
+							route.consistentDirection
+						)
+					})
+				)
+			})
+
+			const complete = ridgesContainer.every(s => s.routes.length > 0)
+
+			;(complete ? it : it.skip)("for the initial summary", () => {
+				const routesIdFrom = ridgesContainer.map(s => ({
+					routeId: s.routes[0].id,
+					pointFrom: s.pointId1,
+				}))
+				expect(getRouteSummary(data, routesIdFrom)).toEqual(initalRouteSummary)
+			})
+		}
+	)
 })
