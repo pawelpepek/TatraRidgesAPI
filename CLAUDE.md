@@ -33,9 +33,17 @@ The rewrite is in progress on the `supabase` branch. Goal: **no .NET, no custom 
 - `supabase/config.toml` — Realtime, Storage, Edge Functions and Analytics are off; Auth sign-ups are off (create the admin in Studio, http://127.0.0.1:54323). API on 54321, Postgres on 54322.
 - `supabase/migrations/20231225153425_init.sql` — baseline reproducing the production schema created by EF (including `__EFMigrationsHistory`). New schema changes are new migration files; never edit the baseline.
 - `supabase/seed.sql` — dictionaries and a small example around Świnica (what the C# `DbSeeder` used to insert). Local only.
+- `supabase/import-prod-data.sh` (`npm run db:import-prod`, `-- --check` to only compare schemas and count rows) — replaces the local data with a copy of production (schema `public`, without `"Users"` data). It reads the connection string from `TatraRidgesAPI/appsettings.json` (or `PROD_DB_CONNECTION`), runs every production session with `default_transaction_read_only=on`, refuses to import if the production columns differ from the local ones, and afterwards moves the local identity sequences past the largest ids. `npm run db:reset` brings back the seed data. If `npm run` crashes in Git Bash, call `wsl bash -l supabase/import-prod-data.sh` directly.
 - `supabase/migrations/20261025160000_read_access.sql` — revokes all table and sequence privileges from `anon`/`authenticated` (Supabase grants them by default, including on `"Users"`), enables RLS with no policies on every table, and adds `get_tatra_data()` (`security definer`, `search_path = ''`, executable by `anon`/`authenticated`). Adjectives are returned in physical (`ctid`) order, like EF read them, because the order of adjective groups decides the word order in descriptions. The old API is unaffected: it connects as `postgres`, which owns the tables and has `bypassrls`. Not applied to production yet.
 - Every new table in `public` gets the default Supabase grants again: revoke them and enable RLS in the same migration.
-- Local Postgres is version 17 (`[db] major_version`); check the production version before relying on newer features.
+- Local Postgres is version 17 (`[db] major_version`), production runs 15.8: don't rely on features newer than 15.
+
+### Production data (checked 2026-10-25)
+
+- 781 points, 777 connections (all ridges), 930 routes, 731 adjective pairs, 2 additional descriptions, 45 adjectives, 1 user. `get_tatra_data()` returns about 530 KB of JSON.
+- Every route has its own guide description (confirmed 1:1); 24 descriptions have no route and can be dropped when folding them into `"Routes"`.
+- The identity sequences lagged far behind the largest ids (e.g. `MountainPoints` at 18 with ids up to 2072; `AdditionalDescriptions` would have hit a taken id on the 3rd insert). Fixed on production on 2026-10-25 with `supabase/scripts/fix-identity-sequences.sql` (moves each sequence to max id, never backwards; safe to rerun).
+- `src/domain` was compared with the live ASP.NET API on this data: 100 random routes (8142 sections) and their summaries gave identical results.
 
 ### Current database schema (production)
 
@@ -76,6 +84,7 @@ From the repository root (local Supabase in WSL):
 ```bash
 npm run db:start     # start local Supabase (migrations + seed.sql on first start) and keep WSL running
 npm run db:reset     # recreate the local database from migrations + seed
+npm run db:import-prod  # replace local data with a read-only copy of production
 npm run db:status    # URLs and local keys
 npm run db:stop
 ```

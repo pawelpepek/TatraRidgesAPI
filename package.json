@@ -6,6 +6,7 @@
     "db:start": "wsl bash -l supabase/start-wsl.sh",
     "db:stop": "wsl bash -lc \"supabase stop\"",
     "db:status": "wsl bash -lc \"supabase status\"",
-    "db:reset": "wsl bash -lc \"supabase db reset\""
+    "db:reset": "wsl bash -lc \"supabase db reset\"",
+    "db:import-prod": "wsl bash -l supabase/import-prod-data.sh"
   }
 }
