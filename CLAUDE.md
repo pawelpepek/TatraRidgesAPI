@@ -4,68 +4,78 @@
 
 Graniówki ([graniowki.pl](https://graniowki.pl)) — a map of the Tatra ridges. The user picks two points, the app finds the ridge traverse between them, shows the route variants for each section and computes a trip summary (time, average and maximum difficulty, rank, rappels, warnings, descriptions). An admin edits points, connections and routes.
 
-## Status: migration to Firebase (serverless)
+## Status: migration to Supabase
 
-The rewrite is in progress on the `firebase` branch. Goal: **everything on Firebase, no .NET, no custom backend**. The pre-migration state (ASP.NET backend + PostgreSQL on Azure, WPF scraper) is frozen on the `legacy` branch — do not develop it further.
+The rewrite is in progress on the `supabase` branch. Goal: **no .NET, no custom backend** — data and sign-in on Supabase, the logic in the browser.
 
-| Folder | Role | Fate |
-|---|---|---|
-| `TatraRidges.FrontEnd/` | React (CRA 5, React 17, Redux Toolkit, react-leaflet, apexcharts), Firebase Hosting | Stays and takes over all the logic |
-| `TatraRidgesModel/` | EF entities, domain logic in C# | Ported to `TatraRidges.FrontEnd/src/domain/`; to be removed |
-| `TatraRidges.Model.UnitTests/` | Domain logic tests (xUnit) | Ported to Jest in `src/domain/`; to be removed |
-| `TatraRidgesAPI/` | ASP.NET Core 6 API | To be removed |
-| `TatraRidgesAPI.IntegrationTests/` | API tests | To be removed (replaced by security rules tests on the emulator) |
+- `legacy` — frozen pre-migration state (ASP.NET Core API on Azure, C# model, WPF scraper). Do not develop it.
+- `firebase` — an abandoned attempt with Firestore. Its domain port was moved here; the Firestore parts (rules, emulator, seed) are not needed.
+- Production still runs the old stack: the deployed frontend calls the ASP.NET API on Azure, which uses the Supabase Postgres database.
+
+| Folder | Role |
+|---|---|
+| `TatraRidges.FrontEnd/` | React (CRA 5, React 17, Redux Toolkit, react-leaflet, apexcharts), deployed to Firebase Hosting |
+| `TatraRidges.FrontEnd/src/domain/` | Domain logic ported from C# (see below) |
+| `supabase/` | Supabase CLI project: config, migrations, local seed |
 
 ## Target architecture
 
-- **Firebase Hosting** (project `graniowki`) + **Firestore** + **Firebase Auth**. No Cloud Functions — it must run on the Spark plan.
-- **Domain logic in TypeScript in the browser.** The backend already kept the whole database in memory (`CashService`) and computed on it; now the client does that after loading the data. The port lives in `TatraRidges.FrontEnd/src/domain/` (see below).
-- **Writes are admin-only**, directly to Firestore in transactions. Admin = a UID listed in the `config/admins` document, checked in the security rules (no custom claims, no Admin SDK at runtime). Reads are public.
-- No user registration — admin sign-in only.
+- **Supabase**: Postgres (the existing production database, project ref `ianxfuclpdtcxoeljppt`, region eu-central-1), Supabase Auth for the admin, row level security, SQL functions called through RPC. No Edge Functions unless really needed.
+- **Static hosting** of the React build stays on Firebase Hosting (project `graniowki`) for now — Supabase does not host SPAs.
+- **Reads**: one RPC (planned `get_tatra_data()`) returns all points, ridges with routes and dictionaries as JSON in the `TatraData` shape, so `src/domain` and `src/store/local-api.ts` work unchanged.
+- **Writes**: admin-only, through SQL functions that check an `admins` table (planned) and run in one transaction (e.g. a route with its adjectives and descriptions).
+- No user registration — admin sign-in only. Supabase Auth sign-ups must be disabled in the dashboard.
 
-### Firestore data model
+### Local Supabase (`supabase/`)
 
-Denormalized for the "load everything" access pattern — one page visit is 3 reads:
+- Docker Engine and the Supabase CLI (release binary in `~/.local/bin`) run inside WSL 2 (Ubuntu); there is no Docker Desktop. The root `package.json` scripts (`npm run db:start`, `db:stop`, `db:status`, `db:reset`) call the CLI through `wsl bash -lc` from the repository root. WSL forwards the ports, so Windows sees them on `127.0.0.1`.
+- WSL stops the distribution (and Docker with the database) when no WSL session is open. `npm run db:start` runs `supabase/start-wsl.sh`, which waits for the containers Docker restarts on its own, runs `supabase start` only if needed and then keeps the session open; keep that terminal running and stop it with Ctrl+C. Data survives restarts. `.gitattributes` keeps `*.sh` files with LF line endings.
+- `supabase/config.toml` — Realtime, Storage, Edge Functions and Analytics are off; Auth sign-ups are off (create the admin in Studio, http://127.0.0.1:54323). API on 54321, Postgres on 54322.
+- `supabase/migrations/20231225153425_init.sql` — baseline reproducing the production schema created by EF (including `__EFMigrationsHistory`). New schema changes are new migration files; never edit the baseline.
+- `supabase/seed.sql` — dictionaries and a small example around Świnica (what the C# `DbSeeder` used to insert). Local only.
+- Tables in `public` are exposed through the Supabase API to the `anon` role unless row level security is enabled. The baseline has no RLS, like production; enabling it is the first change to make.
+- Local Postgres is version 17 (`[db] major_version`); check the production version before relying on newer features.
 
-```
-public/points  → { items: [ { id, name, altName, evaluation, precisedEvaluation, lat, lng, wikiLat, wikiLng, wikiAddress, pointTypeId } ] }
-public/ridges  → { items: [ { id, pointId1, pointId2, routes: [ {
-                     id, consistentDirection, difficultyId, difficultyDetailId, rappeling, routeTypeId, routeTimeMin,
-                     guideId, guideNumber, guidePage, guideVolume,
-                     adjectiveIds: [...], additional: [ { description, warning } ] } ] } ] }
-public/params  → { adjectives, difficulties, difficultyDetails, guides, routeTypes, pointTypes }
-config/admins  → { uids: [...] }
-```
+### Current database schema (production)
 
-Decisions:
-- The `GuideDescriptions` table was de facto 1:1 with `Routes` (every route creates its own description) — its fields are folded into the route (`guide*`).
-- `DescriptionAdjectivePairs` → `adjectiveIds` array on the route; `RouteTime` (`TimeSpan`) → `routeTimeMin` (number of minutes).
-- `Users`/`Roles` go away (Firebase Auth).
-- IDs stay numeric (the frontend relies on them); new ID = `max + 1` inside a transaction.
-- Firestore's document limit is 1 MB — watch the size of `public/ridges` when changing the model.
+Created by the EF Core migration `20231225153425_init`, reproduced in `supabase/migrations/`. Table and column names are quoted PascalCase:
 
-### Data migration
+- Dictionaries: `"Adjectives"` (`"Id"` varchar(2), `"Text"`, `"Rank"`), `"Difficulties"` (`"Id"`, `"Text"`), `"DifficultyDetails"` (`"Id"`, `"Sign"`), `"Guides"` (`"Id"`, `"ShortName"`, `"Name"`, `"Author"`), `"RouteTypes"` (`"Id"`, `"Name"`, `"Rank"`), `"PointTypes"` (`"Id"`, `"Name"`).
+- `"MountainPoints"` (`"Id"`, `"PointTypeId"`, `"Name"`, `"AlternativeName"`, `"Evaluation"` nullable, `"PrecisedEvaluation"`, `"WikiLatitude"`, `"WikiLongitude"`, `"Latitude"`, `"Longitude"` numeric(8,6), `"WikiAddress"`).
+- `"PointsConnections"` (`"Id"`, `"PointId1"`, `"PointId2"`, `"Ridge"`) — FKs to points with `ON DELETE RESTRICT`, so a point's connections must be deleted first.
+- `"Routes"` (`"Id"`, `"PointsConnectionId"`, `"ConsistentDirection"`, `"DifficultyId"`, `"DifficultyDetailId"`, `"Rappeling"`, `"RouteTypeId"`, `"GuideDescriptionId"`, `"RouteTime"` interval) — cascades from its connection.
+- `"GuideDescriptions"` (`"Id"`, `"Number"`, `"Page"`, `"Volume"`, `"GuideId"`) — de facto 1:1 with `"Routes"`; to be folded into it.
+- `"DescriptionAdjectivePairs"` (`"RouteId"`, `"AdjectiveId"`), `"AdditionalDescriptions"` (`"RouteId"`, `"Description"`, `"Warning"`).
+- `"Users"`, `"Roles"` — the old ASP.NET sign-in; replaced by Supabase Auth.
 
-The Firebase console cannot import JSON into Firestore. Plan: SQL queries (`json_agg`/`json_build_object`) export Postgres straight into the target JSON shape, and a one-off Node script using `firebase-admin` (planned in `tools/migration/`) writes the documents — against the emulator first. Before migrating, run check queries to confirm `Routes.GuideDescriptionId` is unique and there are no orphaned descriptions.
+Schema changes must go through migration files in the repo, tried on a non-production database first. Never change the production schema while the old API still runs on it.
 
-## Domain module (`src/domain/`)
+## Domain module (`TatraRidges.FrontEnd/src/domain/`)
 
-Pure TypeScript port of `TatraRidgesModel` + the API services, with no Firebase or React dependency. It takes the data model above (`TatraData`) and returns results in the exact JSON shape the ASP.NET API returned (`routeTime` as a .NET TimeSpan string, e.g. `"1.02:30:00"`), so the Redux slices need no changes.
+Pure TypeScript port of the C# model and API services, with no React or backend dependency. It takes `TatraData` (points, ridges with embedded routes, dictionaries) and returns results in the exact JSON shape the ASP.NET API returned (`routeTime` as a .NET TimeSpan string, e.g. `"1.02:30:00"`), so the Redux slices need no changes.
 
 - `queries.ts` — read side: `getMountainPoints`, `getRidges`, `getRouteBetweenPoints`, `getRouteSummary`, `getParameters`.
-- `commands.ts` — admin writes as pure functions returning new arrays (`movePoint`, `deletePoint`, `addConnection`, `addRoute`); validation and ridge cycle detection happen here.
-- `ridgeFinder.ts`, `routeArranger.ts`, `routeSummary.ts`, `difficulty.ts`, `coordinates.ts`, `time.ts` — the ported logic.
-- `csharpParity.test.ts` compares results with `__fixtures__/csharp-golden.json`: the output of the original C# code for `__fixtures__/scenarios.json`, generated once before .NET is removed. Never edit the golden file by hand; if behaviour is changed on purpose, update the expectations in a dedicated test and say so.
-- Deliberate change from C#: `getRouteSummary` reports route direction the same way as `getRouteBetweenPoints` (the C# `RoutesConverter` flipped routes stored with `consistentDirection = false`); `csharpParity.test.ts` overrides the golden value for those queries and `queries.test.ts` checks both functions agree.
-- C# quirk kept on purpose: `Math.Round` rounds halves to even (`roundHalfToEven`).
+- `commands.ts` — admin writes as pure functions (`movePoint`, `deletePoint`, `addConnection`, `addRoute`) with validation and ridge cycle detection. With Supabase the writes will run as SQL functions; these remain the reference and can validate input before sending it.
+- `csharpParity.test.ts` compares results with `__fixtures__/csharp-golden.json`: the output of the original C# code (now only on `legacy`) for `__fixtures__/scenarios.json`. Never edit the golden file by hand; a deliberate change gets an explicit override in a test.
+- Deliberate change from C#: `getRouteSummary` reports route direction the same way as `getRouteBetweenPoints` (the C# `RoutesConverter` flipped routes stored with `consistentDirection = false`). C# quirk kept on purpose: `Math.Round` rounds halves to even (`roundHalfToEven`).
 
 ## Frontend — where things are
 
-- All API calls go through `fetchData` in `src/store/dispatch-actions.js` (dispatched by `props.location`, e.g. `point`, `connection`, `route`, `route/parts`, `route/parameters`, `account/login/`). This is where Firestore and the local logic get plugged in — the Redux slices and `dataDispatcher` should stay unchanged.
-- `src/store/*-actions.ts` — actions calling `dataDispatcher`; `src/store/authorizationHandler.ts` — current sign-in via a token in `localStorage` (to be replaced by Firebase Auth).
+- All API calls go through `fetchData` in `src/store/dispatch-actions.js` (dispatched by `props.location`, e.g. `point`, `connection`, `route`, `route/parts`, `route/parameters`, `account/login/`). The Redux slices and `dataDispatcher` should stay unchanged.
+- `src/store/local-api.ts` — `handleRequest(props, data)` answers the read requests of the old API with `src/domain`; writes and login throw until they are implemented. Not wired into `fetchData` yet.
+- `src/store/*-actions.ts` — actions calling `dataDispatcher`; `src/store/authorizationHandler.ts` — current sign-in via a token in `localStorage` (to be replaced by Supabase Auth).
 - `src/components/helpers/fetcher.ts` — dead code with `localhost:44342` URLs.
 
 ## Commands
+
+From the repository root (local Supabase in WSL):
+
+```bash
+npm run db:start     # start local Supabase (migrations + seed.sql on first start) and keep WSL running
+npm run db:reset     # recreate the local database from migrations + seed
+npm run db:status    # URLs and local keys
+npm run db:stop
+```
 
 From `TatraRidges.FrontEnd/`:
 
@@ -78,7 +88,7 @@ firebase deploy --only hosting
 
 ## Files outside git
 
-Ignored in the root `.gitignore`, do not commit: `TatraRidges.FrontEnd/firebase.json`, `TatraRidges.FrontEnd/.firebaserc`, `TatraRidges.FrontEnd/src/config.dev.json`, `TatraRidgesAPI/appsettings.json` (connection string to the production database — don't read it unless needed). Keep Firebase service account keys out of the repo too.
+Ignored, do not commit or print: `TatraRidges.FrontEnd/src/config.dev.json`, the leftover `TatraRidgesAPI/appsettings.json` (connection string with the password of the production Supabase `postgres` user — read only the host if needed, never the password) and `TatraRidgesAPI/*.PublishSettings` (Azure deploy credentials). Keep Supabase service role keys and database passwords out of the repo; the anon key and project URL are public by design.
 
 ## Conventions
 
