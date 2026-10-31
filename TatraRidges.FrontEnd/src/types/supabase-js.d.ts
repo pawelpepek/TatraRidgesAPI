@@ -4,6 +4,7 @@
 declare module "@supabase/supabase-js" {
 	export interface SupabaseError {
 		message: string
+		code?: string
 	}
 
 	export interface SupabaseResponse<T> {
@@ -24,6 +25,8 @@ declare module "@supabase/supabase-js" {
 			error: SupabaseError | null
 		}>
 		signOut(): Promise<{ error: SupabaseError | null }>
+		getSession(): Promise<{ data: { session: Session | null } }>
+		onAuthStateChange(callback: (event: string) => void): unknown
 	}
 
 	export interface SupabaseClient {

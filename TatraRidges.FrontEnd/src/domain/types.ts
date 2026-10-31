@@ -1,4 +1,4 @@
-// Data model stored in Firestore (see CLAUDE.md, "Firestore data model").
+// Data model returned by get_tatra_data() (supabase/migrations/20261025160000_read_access.sql).
 
 export interface AdjectiveData {
 	id: string

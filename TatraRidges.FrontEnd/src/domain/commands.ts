@@ -18,7 +18,8 @@ import {
 } from "./types"
 
 // Write side of the former API. Every command is pure: it validates the input and
-// returns new arrays, which the caller saves to Firestore in a transaction.
+// returns new arrays. The app writes through the SQL functions of migration
+// admin_writes; these stay as the reference.
 
 const nextId = (ids: number[]) =>
 	ids.reduce((max, id) => Math.max(max, id), 0) + 1

@@ -59,9 +59,9 @@ describe("handleRequest", () => {
 		["POST", "connection"],
 		["POST", "route"],
 		["POST", "account/login/"],
-	])("refuses %s %s, which is not available yet", (method, location) => {
+	])("refuses %s %s, which is not a read", (method, location) => {
 		expect(() => handleRequest({ method, location }, data)).toThrow(
-			"nie jest jeszcze dostępna w trybie Firebase"
+			"nie jest obsługiwana przez dane lokalne"
 		)
 	})
 })

@@ -21,7 +21,17 @@ export const roundHalfToEven = (value: number) => {
 	return Math.abs(value % 1) === 0.5 ? 2 * Math.round(value / 2) : rounded
 }
 
-const routeMinutes = (route: RouteDto) => parseTimeSpan(route.routeTime)
+// The time of each route is read many times per summary; parse it once.
+const minutesByRoute = new WeakMap<RouteDto, number>()
+
+const routeMinutes = (route: RouteDto) => {
+	let minutes = minutesByRoute.get(route)
+	if (minutes === undefined) {
+		minutes = parseTimeSpan(route.routeTime)
+		minutesByRoute.set(route, minutes)
+	}
+	return minutes
+}
 
 export const totalMinutes = (routes: (RouteDto | null)[]) =>
 	routes.reduce((sum, r) => (r === null ? sum : sum + routeMinutes(r)), 0)
@@ -299,9 +309,7 @@ export class RouteSummaryBuilder {
 
 	private requireData() {
 		if (this.data === undefined) {
-			throw new Error(
-				"RouteSummaryBuilder needs params and ridges for this step"
-			)
+			throw new Error("Podsumowanie trasy wymaga parametrów i grani")
 		}
 		return this.data
 	}

@@ -6,6 +6,9 @@ import "./index.css"
 import App from "./App"
 import reportWebVitals from "./reportWebVitals"
 import store from "./store/index"
+import { syncLogin } from "./store/user-actions"
+
+store.dispatch(syncLogin())
 
 ReactDOM.render(
 	<Provider store={store}>

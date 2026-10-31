@@ -1,8 +1,8 @@
 import { uiActions } from "./ui-slice"
 import { getMessage } from "./statusCodeMessage"
 
-// With REACT_APP_SUPABASE_URL set (see .env.development) the data comes from Supabase
-// and is computed locally. Until the cutover, builds without it still call the old API.
+// With REACT_APP_SUPABASE_URL set (.env, .env.development) the data comes from Supabase
+// and is computed locally. Builds without it still call the old API.
 // The Supabase SDK is loaded on demand, so those builds do not include it.
 const useSupabase = Boolean(process.env.REACT_APP_SUPABASE_URL)
 
@@ -10,6 +10,13 @@ export const signOut = async () => {
 	if (useSupabase) {
 		const { signOutFromSupabase } = await import("./supabase-data")
 		await signOutFromSupabase()
+	}
+}
+
+export const watchSession = async onSignedOut => {
+	if (useSupabase) {
+		const { watchAdminSession } = await import("./supabase-data")
+		await watchAdminSession(onSignedOut)
 	}
 }
 
