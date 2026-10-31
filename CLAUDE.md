@@ -10,7 +10,8 @@ The rewrite is in progress on the `supabase` branch. Goal: **no .NET, no custom 
 
 - `legacy` — frozen pre-migration state (ASP.NET Core API on Azure, C# model, WPF scraper). Do not develop it.
 - `firebase` — an abandoned attempt with Firestore. Its domain port was moved here; the Firestore parts (rules, emulator, seed) are not needed.
-- Production still runs the old stack: the deployed frontend calls the ASP.NET API on Azure, which uses the Supabase Postgres database.
+- Since 2026-10-31 production (graniowki.pl, Firebase Hosting) runs this branch: the frontend reads through `get_tatra_data()` and writes through the SQL functions on Supabase. The old ASP.NET API on Azure still runs on the same database but nothing calls it; to roll back, use "Rollback" in Firebase Hosting's release history. Turn Azure off once the new version has run without problems for a while.
+- Supabase Auth sign-ups are still enabled on production (`disable_signup: false`); switch them off in the dashboard (Authentication → Sign In / Providers).
 
 | Folder | Role |
 |---|---|
@@ -23,7 +24,8 @@ The rewrite is in progress on the `supabase` branch. Goal: **no .NET, no custom 
 - **Supabase**: Postgres (the existing production database, project ref `ianxfuclpdtcxoeljppt`, region eu-central-1), Supabase Auth for the admin, row level security, SQL functions called through RPC. No Edge Functions unless really needed.
 - **Static hosting** of the React build stays on Firebase Hosting (project `graniowki`) for now — Supabase does not host SPAs.
 - **Reads**: one RPC, `get_tatra_data()`, returns all points, ridges with routes and dictionaries as JSON in the `TatraData` shape, so `src/domain` and `src/store/local-api.ts` work unchanged.
-- **Writes**: admin-only, through SQL functions that check the `admins` table and run in one transaction (e.g. a route with its adjectives and descriptions). Done locally (migration `admin_writes`), not on production yet.
+- **Writes**: admin-only, through SQL functions that check the `admins` table and run in one transaction (e.g. a route with its adjectives and descriptions). Migration `admin_writes` is on production (applied by the user with the SQL editor); the production admin is in `admins`.
+- **Build configuration**: `TatraRidges.FrontEnd/.env` holds the production project URL and public anon key (used by `npm run build`); `.env.development` overrides it for `npm start` with the local Supabase. Deploy with `firebase deploy --only hosting` from `TatraRidges.FrontEnd/` (`firebase.json`, `.firebaserc` are in git).
 - No user registration — admin sign-in only. Supabase Auth sign-ups must be disabled in the dashboard, and anyone signed in who is not in `admins` is signed out again by the app.
 
 ### Local Supabase (`supabase/`)
