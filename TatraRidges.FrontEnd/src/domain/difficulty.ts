@@ -51,12 +51,20 @@ export const getAllDifficulties = (params: Params): DifficultyDto[] => {
 	].sort((a, b) => a.value - b.value)
 }
 
+// Built once per data set: every route summary looks up two difficulties.
+const difficultiesByParams = new WeakMap<Params, DifficultyDto[]>()
+
 export const getClosestDifficulty = (
 	params: Params,
 	value: number
 ): DifficultyDto => {
-	const all = getAllDifficulties(params)
-	return all.reduce((closest, d) =>
+	let all = difficultiesByParams.get(params)
+	if (all === undefined) {
+		all = getAllDifficulties(params)
+		difficultiesByParams.set(params, all)
+	}
+	const closest = all.reduce((closest, d) =>
 		Math.abs(d.value - value) < Math.abs(closest.value - value) ? d : closest
 	)
+	return { ...closest }
 }

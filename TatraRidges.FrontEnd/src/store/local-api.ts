@@ -42,7 +42,7 @@ export const handleRequest = (props: RequestProps, data: TatraData) => {
 			return getParameters(data.params)
 		default:
 			throw new Error(
-				`Operacja ${props.method} ${props.location} nie jest jeszcze dostępna w trybie Firebase`
+				`Operacja ${props.method} ${props.location} nie jest obsługiwana przez dane lokalne`
 			)
 	}
 }

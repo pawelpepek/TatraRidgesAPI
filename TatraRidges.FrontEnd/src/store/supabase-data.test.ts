@@ -4,7 +4,12 @@ import { data } from "../domain/__fixtures__/scenarioData"
 vi.mock("../supabase", () => {
 	const supabase = {
 		rpc: vi.fn(),
-		auth: { signInWithPassword: vi.fn(), signOut: vi.fn() },
+		auth: {
+			signInWithPassword: vi.fn(),
+			signOut: vi.fn(),
+			getSession: vi.fn(),
+			onAuthStateChange: vi.fn(),
+		},
 	}
 	return { supabase, getSupabase: () => supabase }
 })
@@ -22,7 +27,12 @@ const setup = async () => {
 				? { data: true, error: null }
 				: { data: null, error: null }
 	)
-	return { fetch: module.fetchFromSupabase, client, rpc }
+	return {
+		fetch: module.fetchFromSupabase,
+		watch: module.watchAdminSession,
+		client,
+		rpc,
+	}
 }
 
 const dataLoads = (rpc: Mock) =>
@@ -134,9 +144,63 @@ describe("fetchFromSupabase", () => {
 			const { fetch, client } = await setup()
 			client.auth.signInWithPassword.mockResolvedValue({
 				data: { session: null },
-				error: { message: "Invalid login credentials" },
+				error: {
+					code: "invalid_credentials",
+					message: "Invalid login credentials",
+				},
 			})
 			await expect(fetch(login)).rejects.toThrow("Niepoprawny e-mail lub hasło")
+		})
+
+		it("reports other sign-in errors as they are", async () => {
+			const { fetch, client } = await setup()
+			client.auth.signInWithPassword.mockResolvedValue({
+				data: { session: null },
+				error: {
+					code: "over_request_rate_limit",
+					message: "Too many requests",
+				},
+			})
+			await expect(fetch(login)).rejects.toThrow(
+				"Błąd logowania: Too many requests"
+			)
+		})
+
+		it("signs out when the admin check fails", async () => {
+			const { fetch, client, rpc } = await setup()
+			client.auth.signInWithPassword.mockResolvedValue({
+				data: { session: { access_token: "token" } },
+				error: null,
+			})
+			rpc.mockResolvedValueOnce({ data: null, error: { message: "offline" } })
+			await expect(fetch(login)).rejects.toThrow("offline")
+			expect(client.auth.signOut).toHaveBeenCalled()
+		})
+	})
+
+	describe("watchAdminSession", () => {
+		it("reports a missing session on page load", async () => {
+			const { watch, client } = await setup()
+			client.auth.getSession.mockResolvedValue({ data: { session: null } })
+			const onSignedOut = vi.fn()
+			await watch(onSignedOut)
+			expect(onSignedOut).toHaveBeenCalledTimes(1)
+		})
+
+		it("keeps an admin session and reports when it ends", async () => {
+			const { watch, client } = await setup()
+			client.auth.getSession.mockResolvedValue({
+				data: { session: { access_token: "token" } },
+			})
+			const onSignedOut = vi.fn()
+			await watch(onSignedOut)
+			expect(onSignedOut).not.toHaveBeenCalled()
+
+			const listener = client.auth.onAuthStateChange.mock.calls[0][0]
+			listener("TOKEN_REFRESHED")
+			expect(onSignedOut).not.toHaveBeenCalled()
+			listener("SIGNED_OUT")
+			expect(onSignedOut).toHaveBeenCalledTimes(1)
 		})
 	})
 })

@@ -29,17 +29,43 @@ const loadTatraData = () => {
 const signIn = async (credentials: { email: string; password: string }) => {
 	const { data, error } =
 		await getSupabase().auth.signInWithPassword(credentials)
-	if (error || data.session === null) {
+	if (error?.code === "invalid_credentials" || (!error && !data.session)) {
 		throw new Error("Niepoprawny e-mail lub hasło")
 	}
-	if (!(await rpc<boolean>("is_admin"))) {
-		await getSupabase().auth.signOut()
+	if (error || !data.session) {
+		throw new Error(`Błąd logowania: ${error?.message}`)
+	}
+
+	let isAdmin = false
+	try {
+		isAdmin = await rpc<boolean>("is_admin")
+	} finally {
+		// Also when the check itself failed: no session is left behind.
+		if (!isAdmin) {
+			await getSupabase().auth.signOut()
+		}
+	}
+	if (!isAdmin) {
 		throw new Error(getMessage(401))
 	}
 	return data.session.access_token
 }
 
 export const signOutFromSupabase = () => getSupabase().auth.signOut()
+
+// Calls onSignedOut when there is no admin session on page load and whenever the
+// session ends later (expired, revoked, signed out in another tab).
+export const watchAdminSession = async (onSignedOut: () => void) => {
+	getSupabase().auth.onAuthStateChange(event => {
+		if (event === "SIGNED_OUT") {
+			onSignedOut()
+		}
+	})
+	const { data } = await getSupabase().auth.getSession()
+	if (data.session === null || !(await rpc<boolean>("is_admin"))) {
+		onSignedOut()
+	}
+}
 
 // The writes of the old API, as SQL functions (migration admin_writes).
 const write = async (props: RequestProps) => {
