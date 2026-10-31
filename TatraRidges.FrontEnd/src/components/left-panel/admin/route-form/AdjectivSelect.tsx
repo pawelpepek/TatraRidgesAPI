@@ -3,13 +3,14 @@ import {
 	OptionsProps,
 	routeFormActions,
 } from "../../../../store/route-form-slice"
-import { useSelector, useDispatch } from "react-redux"
+import { useSelector } from "react-redux"
 import classes from "./AdjectivSelect.module.css"
 import StoreType from "../../../../store/store-types"
 import { Adjective } from "../../../../store/routeTypes"
+import useAppDispatch from "../../../../hooks/use-app-dispatch"
 
 const AdjectivSelect: React.FC = () => {
-	const dispatch = useDispatch()
+	const dispatch = useAppDispatch()
 
 	const selected = useSelector((state: StoreType) => state.routeForm.adjectives)
 	const adjectives = useSelector(

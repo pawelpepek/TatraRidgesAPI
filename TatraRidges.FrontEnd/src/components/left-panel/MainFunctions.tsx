@@ -6,12 +6,13 @@ import classes from "./MainFunctions.module.css"
 import RoutePanel from "./route/RoutePanel"
 import HelpPanel from "./help/HelpPanel"
 
+// Outside the component: a lazy component created during render suspends again on every render.
+const SearchPanel = React.lazy(() => import("./find/SearchPanel"))
+const AuthForm = React.lazy(() => import("./authorization/AuthForm"))
+const NavigationPanel = React.lazy(() => import("./NavigationPanel"))
+
 const MainFunctions: React.FC = () => {
 	const visiblePanel = useSelector((state: StoreType) => state.ui.visiblePanel)
-
-	const SearchPanel = React.lazy(() => import("./find/SearchPanel"))
-	const AuthForm = React.lazy(() => import("./authorization/AuthForm"))
-	const NavigationPanel = React.lazy(() => import("./NavigationPanel"))
 
 	return (
 		<div className={classes.functions}>

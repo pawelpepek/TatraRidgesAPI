@@ -1,4 +1,4 @@
-import { useSelector, useDispatch } from "react-redux"
+import { useSelector } from "react-redux"
 import RoundButton from "../ui/RoundButton"
 import StoreType from "../../store/store-types"
 import { uiActions } from "../../store/ui-slice"
@@ -10,9 +10,10 @@ import userOffIcon from "../img/user-off.svg"
 import helpIcon from "../img/help.svg"
 
 import classes from "./NavigationPanel.module.css"
+import useAppDispatch from "../../hooks/use-app-dispatch"
 
 const NavigationPanel: React.FC<{ className?: string }> = props => {
-	const dispatch = useDispatch()
+	const dispatch = useAppDispatch()
 
 	const changePanelVersion = (version: string) =>
 		dispatch(uiActions.setPanelVersion(version))

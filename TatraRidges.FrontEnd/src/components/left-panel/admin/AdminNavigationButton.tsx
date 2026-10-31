@@ -1,8 +1,9 @@
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 
 import StoreType from "../../../store/store-types"
 import { uiActions } from "../../../store/ui-slice"
 import RoundButton from "../../ui/RoundButton"
+import useAppDispatch from "../../../hooks/use-app-dispatch"
 
 interface AdminNavButtonProps {
 	imageSrc: string
@@ -11,7 +12,7 @@ interface AdminNavButtonProps {
 }
 
 const AdminNavigationButton: React.FC<AdminNavButtonProps> = props => {
-	const dispatch = useDispatch()
+	const dispatch = useAppDispatch()
 
 	const partVisible = useSelector(
 		(state: StoreType) => state.ui.visibleAdminPart

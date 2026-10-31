@@ -1,16 +1,17 @@
 import RoundButton from "../../ui/RoundButton"
 import icon from "../../img/search.svg"
 import iconClear from "../../img/clear.svg"
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 import StoreType from "../../../store/store-types"
 import { getRidge } from "../../../store/map-actions"
 import { pointsActions } from "../../../store/map-slice"
 
 import classes from "./SearchManagePanel.module.css"
 import MapVersionPanel from "./MapVersionPanel"
+import useAppDispatch from "../../../hooks/use-app-dispatch"
 
 const SearchManagePanel: React.FC = () => {
-	const dispatch = useDispatch()
+	const dispatch = useAppDispatch()
 
 	const pointFrom = useSelector((state: StoreType) => state.map.pointFrom)
 	const pointTo = useSelector((state: StoreType) => state.map.pointTo)

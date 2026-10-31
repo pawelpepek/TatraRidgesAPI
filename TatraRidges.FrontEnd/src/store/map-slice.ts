@@ -1,5 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit"
-import { WritableDraft } from "immer/dist/internal"
+import { createSlice, Draft } from "@reduxjs/toolkit"
 
 import {
 	MountainPoint,
@@ -62,7 +61,7 @@ const pointsSlice = createSlice({
 			const point = state.points.find(p => p.id === id)
 
 			const setPointCoordinates = (
-				point: WritableDraft<MountainPoint>,
+				point: Draft<MountainPoint>,
 				coordinates: Coordinates
 			) => {
 				point.latitude = coordinates.latitude

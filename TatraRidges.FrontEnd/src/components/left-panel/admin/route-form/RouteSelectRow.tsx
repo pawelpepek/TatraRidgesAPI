@@ -1,8 +1,9 @@
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 import { getPropertyValue } from "../../../../store/filler"
 import { routeFormActions } from "../../../../store/route-form-slice"
 import StoreType from "../../../../store/store-types"
 import SelectRow from "../../../ui/form/SelectRow"
+import useAppDispatch from "../../../../hooks/use-app-dispatch"
 
 interface RouteSelectRowProps {
 	id: string
@@ -14,7 +15,7 @@ interface Options {
 }
 
 const RouteSelectRow: React.FC<RouteSelectRowProps> = props => {
-	const dispatch = useDispatch()
+	const dispatch = useAppDispatch()
 	const selectedOptions = useSelector((state: StoreType) =>
 		getPropertyValue(state.routeForm, props.id)
 	)

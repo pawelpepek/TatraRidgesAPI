@@ -5,7 +5,7 @@ import addIcon from "../../../img/plus.svg"
 import RouteInputRow from "./RouteInputRow"
 import RouteSelectRow from "./RouteSelectRow"
 import RouteCheckboxRow from "./RouteCheckBoxRow"
-import { useSelector, useDispatch } from "react-redux"
+import { useSelector } from "react-redux"
 import StoreType from "../../../../store/store-types"
 import { getParameters } from "../../../../store/map-actions"
 import { useEffect } from "react"
@@ -15,9 +15,10 @@ import {
 	getNotNullable,
 	destructDifficultyValue,
 } from "../../../helpers/functions"
+import useAppDispatch from "../../../../hooks/use-app-dispatch"
 
 const RouteForm: React.FC<{ className?: string }> = props => {
-	const dispatch = useDispatch()
+	const dispatch = useAppDispatch()
 
 	const isStarted = useSelector((state: StoreType) => state.routeForm.isRunning)
 

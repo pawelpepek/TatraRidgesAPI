@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 import RoundButton from "../../ui/RoundButton"
 import PanelHeader from "../PanelHeader"
 import loginIcon from "../../img/login.svg"
@@ -7,7 +7,7 @@ import { login } from "../../../store/user-actions"
 
 import classes from "./AuthForm.module.css"
 import StoreType from "../../../store/store-types"
-import Tooltip from "../../ui/Tooltip"
+import useAppDispatch from "../../../hooks/use-app-dispatch"
 
 const AuthForm: React.FC = () => {
 	const formIsValid = useSelector(
@@ -19,7 +19,7 @@ const AuthForm: React.FC = () => {
 		(state: StoreType) => state.loginForm.password
 	)
 
-	const dispatch = useDispatch()
+	const dispatch = useAppDispatch()
 
 	const submitHandler = (e: { preventDefault: () => void }) => {
 		e.preventDefault()
@@ -70,7 +70,6 @@ const AuthForm: React.FC = () => {
 					/>
 				</div>
 			</form>
-			<Tooltip />
 		</>
 	)
 }

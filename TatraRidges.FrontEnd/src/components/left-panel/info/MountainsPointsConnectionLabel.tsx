@@ -2,10 +2,12 @@ import classes from "./MountainsPointsConnectionLabel.module.css"
 import { MountainPoint } from "../../types"
 import MountainPointRowLabel from "./MountainPointRowLabel"
 
-const MountainsPointsConnectionLabel: React.FC<{
-	point1: MountainPoint
-	point2: MountainPoint
-}> = props => {
+const MountainsPointsConnectionLabel: React.FC<
+	React.PropsWithChildren<{
+		point1: MountainPoint
+		point2: MountainPoint
+	}>
+> = props => {
 	return (
 		<>
 			<MountainPointRowLabel

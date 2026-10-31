@@ -1,9 +1,9 @@
-import { useDispatch } from "react-redux"
 import classes from "./RouteVersionsButton.module.css"
 import { Route } from "../../../../store/routeTypes"
 import { uiActions } from "../../../../store/ui-slice"
+import useAppDispatch from "../../../../hooks/use-app-dispatch"
 const RouteVersionsButton: React.FC<{ routes: Route[], id:number}> = props => {
-	const dispatch=useDispatch()
+	const dispatch=useAppDispatch()
 
 	const onClick = () => {
 		dispatch(uiActions.setRoutePartVisible(props.id))
@@ -11,7 +11,7 @@ const RouteVersionsButton: React.FC<{ routes: Route[], id:number}> = props => {
 
 	return (
 		<button
-			data-tip='Alternatywne warianty do wyboru'
+			data-tooltip-id="tooltip" data-tooltip-content='Alternatywne warianty do wyboru'
 			className={classes.add}
 			onClick={onClick}>
 			+{props.routes.length-1}

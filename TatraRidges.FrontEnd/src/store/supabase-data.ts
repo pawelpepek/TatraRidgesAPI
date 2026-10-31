@@ -6,7 +6,7 @@ import { getMessage } from "./statusCodeMessage"
 let cache: Promise<TatraData> | null = null
 
 const rpc = async <T>(fn: string, args?: Record<string, unknown>) => {
-	const { data, error } = await getSupabase().rpc<T>(fn, args)
+	const { data, error } = await getSupabase().rpc(fn, args)
 	if (error) {
 		throw new Error(error.message)
 	}

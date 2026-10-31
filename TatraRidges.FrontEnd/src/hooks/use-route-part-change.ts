@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 import { getSummaryForRoutes } from "../store/map-actions"
 import { pointsActions } from "../store/map-slice"
 import { RouteIdFrom } from "../store/routeTypes"
 import StoreType from "../store/store-types"
 import { uiActions } from "../store/ui-slice"
+import useAppDispatch from "./use-app-dispatch"
 
 const useRoutePartChange = (id: number) => {
-	const dispatch = useDispatch()
+	const dispatch = useAppDispatch()
 	const visibleRoutePart = useSelector(
 		(state: StoreType) => state.ui.selectedRoutePart
 	)

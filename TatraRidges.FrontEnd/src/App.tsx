@@ -5,6 +5,7 @@ import LoadingSpinner from "./components/ui/LoadingSpinner"
 import useRouteVisible from "./hooks/use-rote-visible"
 import usePending from "./hooks/use-pending"
 import Info from "./components/ridge-map/Info"
+import Tooltip from "./components/ui/Tooltip"
 
 function App() {
 	const [pending, pendingInfo] = usePending()
@@ -25,6 +26,7 @@ function App() {
 				<RidgeMapContainer />
 			</div>
 			<MainPanel />
+			<Tooltip />
 		</div>
 	)
 }

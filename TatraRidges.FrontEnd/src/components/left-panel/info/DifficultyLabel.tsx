@@ -8,7 +8,7 @@ const DifficultyLabel: React.FC<{ text: string; small?: boolean }> = props => {
 	const text = (props.small ? "Średni" : "Maksymalny") + " poziom trudności"
 	return (
 		<>
-			<span data-tip={text} className={className}>
+			<span data-tooltip-id="tooltip" data-tooltip-content={text} className={className}>
 				{props.text}
 			</span>
 		</>

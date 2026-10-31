@@ -10,15 +10,15 @@ let client: SupabaseClient | null = null
 // leaves the importing modules half-initialised ("Cannot access … before initialization").
 export const getSupabase = () => {
 	if (client === null) {
-		const url = process.env.REACT_APP_SUPABASE_URL ?? ""
-		const key = process.env.REACT_APP_SUPABASE_KEY ?? ""
+		const url = import.meta.env.VITE_SUPABASE_URL ?? ""
+		const key = import.meta.env.VITE_SUPABASE_KEY ?? ""
 		if (!/^https?:\/\/[^\s=]+$/.test(url)) {
 			throw new Error(
-				`Niepoprawny adres Supabase w REACT_APP_SUPABASE_URL: "${url}"`
+				`Niepoprawny adres Supabase w VITE_SUPABASE_URL: "${url}"`
 			)
 		}
 		if (key === "") {
-			throw new Error("Brak klucza Supabase w REACT_APP_SUPABASE_KEY")
+			throw new Error("Brak klucza Supabase w VITE_SUPABASE_KEY")
 		}
 		client = createClient(url, key)
 	}

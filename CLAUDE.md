@@ -15,7 +15,7 @@ The rewrite is in progress on the `supabase` branch. Goal: **no .NET, no custom 
 
 | Folder | Role |
 |---|---|
-| `TatraRidges.FrontEnd/` | React (CRA 5, React 17, Redux Toolkit, react-leaflet, apexcharts), deployed to Firebase Hosting |
+| `TatraRidges.FrontEnd/` | React 19 on Vite (TypeScript 7, Redux Toolkit 2, react-leaflet 5, apexcharts, react-tooltip 6), tests in Vitest; deployed to Firebase Hosting |
 | `TatraRidges.FrontEnd/src/domain/` | Domain logic ported from C# (see below) |
 | `supabase/` | Supabase CLI project: config, migrations, local seed |
 
@@ -79,8 +79,10 @@ Pure TypeScript port of the C# model and API services, with no React or backend 
 - All API calls go through `fetchData` in `src/store/dispatch-actions.js` (dispatched by `props.location`, e.g. `point`, `connection`, `route`, `route/parts`, `route/parameters`, `account/login/`). The Redux slices and `dataDispatcher` should stay unchanged.
 - `src/store/local-api.ts` — `handleRequest(props, data)` answers the read requests of the old API with `src/domain`.
 - `src/store/supabase-data.ts` — in Supabase mode: login (`account/login/` → `signInWithPassword`, then `is_admin`, returns the access token the UI keeps as "logged in"), the writes (`PUT/DELETE point/`, `POST connection`, `POST route` → the SQL functions, same results as the old API; the connection returns its new id) and the reads through `handleRequest`. The data is loaded again after every write. Logout (`logout` in `user-actions.ts`) also ends the Supabase session.
-- With `REACT_APP_SUPABASE_URL` set (`.env.development` points it at the local Supabase, with the CLI's fixed local publishable key in `REACT_APP_SUPABASE_KEY`), `fetchData` loads `src/store/supabase-data.ts` on demand (the SDK is a separate chunk), which calls `get_tatra_data()` once per page load and passes requests to `handleRequest`. Without it (production builds until the cutover) `fetchData` still calls the ASP.NET API from `config.dev.json`. So `npm start` needs `npm run db:start` running.
-- `src/supabase.ts` — the client. `src/types/supabase-js.d.ts` declares the few supabase-js APIs in use, because the package ships `.d.cts` types that TypeScript 4.5 (CRA 5) cannot read; remove it after upgrading TypeScript.
+- With `VITE_SUPABASE_URL` set (`.env` for builds, `.env.development` points it at the local Supabase with the CLI's fixed local publishable key in `VITE_SUPABASE_KEY`), `fetchData` loads `src/store/supabase-data.ts` on demand (the SDK is a separate chunk), which calls `get_tatra_data()` once per page load and passes requests to `handleRequest`. Without it `fetchData` still calls the old ASP.NET API from `src/config.dev.json` (loaded with `import.meta.glob`, so a missing file only fails at request time). So `npm start` needs `npm run db:start` running.
+- `src/supabase.ts` — the client.
+- Tooltips: one `react-tooltip` instance in `App` (`src/components/ui/Tooltip.tsx`, id `tooltip`); elements opt in with `data-tooltip-id="tooltip"` and `data-tooltip-content`.
+- Thunks from `dataDispatcher` are dispatched with `useAppDispatch` (`src/hooks/use-app-dispatch.ts`); plain `useDispatch` is typed for plain actions only. `React.lazy` components are declared at module level: created during render they suspend again on every render under React 19.
 - `src/store/*-actions.ts` — actions calling `dataDispatcher`; `src/store/authorizationHandler.ts` — current sign-in via a token in `localStorage` (to be replaced by Supabase Auth).
 - `src/components/helpers/fetcher.ts` — dead code with `localhost:44342` URLs.
 
@@ -100,9 +102,9 @@ npm run db:stop
 From `TatraRidges.FrontEnd/`:
 
 ```bash
-npm start            # dev server at http://localhost:3000
-npm test             # Jest (watch)
-npm run build
+npm start            # Vite dev server at http://localhost:3000
+npm test             # Vitest (watch); `npx vitest run` for one run
+npm run build        # tsc, then vite build into build/
 firebase deploy --only hosting
 ```
 

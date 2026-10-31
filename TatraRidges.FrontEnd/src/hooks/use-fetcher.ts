@@ -1,5 +1,6 @@
 import { useEffect } from "react"
-import { useDispatch} from "react-redux"
+import useAppDispatch from "./use-app-dispatch"
+
 
 interface UseFetherProps{
     fetchingMethod: () => (dispatch: any) => Promise<boolean>
@@ -7,7 +8,7 @@ interface UseFetherProps{
 }
 
 const useFetcher = (props:UseFetherProps) => {
-	const dispatch = useDispatch()
+	const dispatch = useAppDispatch()
 
 	useEffect(() => {
 		dispatch(props.fetchingMethod())

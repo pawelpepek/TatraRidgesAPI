@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 import { MountainPoint } from "../components/types"
 import { pointsActions } from "../store/map-slice"
 import StoreType from "../store/store-types"
+import useAppDispatch from "./use-app-dispatch"
 
 const usePointClick = (point:MountainPoint) => {
-	const dispatch = useDispatch()
+	const dispatch = useAppDispatch()
 	const [clicked, setClicked] = useState(false)
 
 	const isRoute = useSelector((state: StoreType) =>

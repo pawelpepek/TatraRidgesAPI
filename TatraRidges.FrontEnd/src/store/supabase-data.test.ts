@@ -1,22 +1,20 @@
+import { Mock } from "vitest"
 import { data } from "../domain/__fixtures__/scenarioData"
 
-jest.mock("../supabase", () => {
+vi.mock("../supabase", () => {
 	const supabase = {
-		rpc: jest.fn(),
-		auth: { signInWithPassword: jest.fn(), signOut: jest.fn() },
+		rpc: vi.fn(),
+		auth: { signInWithPassword: vi.fn(), signOut: vi.fn() },
 	}
 	return { supabase, getSupabase: () => supabase }
 })
 
 // A fresh module per test: supabase-data keeps the loaded data in a module variable.
-const setup = () => {
-	let module: typeof import("./supabase-data") | undefined
-	let client: any
-	jest.isolateModules(() => {
-		module = require("./supabase-data")
-		client = require("../supabase").supabase
-	})
-	const rpc = client.rpc as jest.Mock
+const setup = async () => {
+	vi.resetModules()
+	const module = await import("./supabase-data")
+	const client: any = ((await import("../supabase")) as any).supabase
+	const rpc = client.rpc as Mock
 	rpc.mockImplementation(async (fn: string) =>
 		fn === "get_tatra_data"
 			? { data, error: null }
@@ -24,15 +22,15 @@ const setup = () => {
 				? { data: true, error: null }
 				: { data: null, error: null }
 	)
-	return { fetch: module!.fetchFromSupabase, client, rpc }
+	return { fetch: module.fetchFromSupabase, client, rpc }
 }
 
-const dataLoads = (rpc: jest.Mock) =>
+const dataLoads = (rpc: Mock) =>
 	rpc.mock.calls.filter(([fn]) => fn === "get_tatra_data").length
 
 describe("fetchFromSupabase", () => {
 	it("answers reads from one get_tatra_data call", async () => {
-		const { fetch, rpc } = setup()
+		const { fetch, rpc } = await setup()
 		const points = await fetch({ method: "GET", location: "point" })
 		await fetch({ method: "GET", location: "connection" })
 		expect(points).toHaveLength(data.points.length)
@@ -40,7 +38,7 @@ describe("fetchFromSupabase", () => {
 	})
 
 	it("moves a point and reloads the data afterwards", async () => {
-		const { fetch, rpc } = setup()
+		const { fetch, rpc } = await setup()
 		await fetch({ method: "GET", location: "point" })
 
 		const result = await fetch({
@@ -61,7 +59,7 @@ describe("fetchFromSupabase", () => {
 	})
 
 	it("deletes a point", async () => {
-		const { fetch, rpc } = setup()
+		const { fetch, rpc } = await setup()
 		expect(
 			await fetch({ method: "DELETE", location: "point/", pathPart: 7 })
 		).toBe(true)
@@ -69,7 +67,7 @@ describe("fetchFromSupabase", () => {
 	})
 
 	it("adds a ridge and returns its id", async () => {
-		const { fetch, rpc } = setup()
+		const { fetch, rpc } = await setup()
 		rpc.mockResolvedValueOnce({ data: 42, error: null })
 		const id = await fetch({
 			method: "POST",
@@ -84,7 +82,7 @@ describe("fetchFromSupabase", () => {
 	})
 
 	it("adds a route with the form data", async () => {
-		const { fetch, rpc } = setup()
+		const { fetch, rpc } = await setup()
 		const route = { pointId1: 1, pointId2: 2, routeTime: "01:00:00" }
 		const created = { routeId: 99, pointsRidge: null }
 		rpc.mockResolvedValueOnce({ data: created, error: null })
@@ -95,7 +93,7 @@ describe("fetchFromSupabase", () => {
 	})
 
 	it("passes database errors to the notification", async () => {
-		const { fetch, rpc } = setup()
+		const { fetch, rpc } = await setup()
 		rpc.mockResolvedValueOnce({
 			data: null,
 			error: { message: "Brak uprawnień" },
@@ -113,7 +111,7 @@ describe("fetchFromSupabase", () => {
 		}
 
 		it("returns the access token of an admin", async () => {
-			const { fetch, client } = setup()
+			const { fetch, client } = await setup()
 			client.auth.signInWithPassword.mockResolvedValue({
 				data: { session: { access_token: "token" } },
 				error: null,
@@ -122,7 +120,7 @@ describe("fetchFromSupabase", () => {
 		})
 
 		it("signs out a user who is not an admin", async () => {
-			const { fetch, client, rpc } = setup()
+			const { fetch, client, rpc } = await setup()
 			client.auth.signInWithPassword.mockResolvedValue({
 				data: { session: { access_token: "token" } },
 				error: null,
@@ -133,7 +131,7 @@ describe("fetchFromSupabase", () => {
 		})
 
 		it("rejects wrong credentials", async () => {
-			const { fetch, client } = setup()
+			const { fetch, client } = await setup()
 			client.auth.signInWithPassword.mockResolvedValue({
 				data: { session: null },
 				error: { message: "Invalid login credentials" },

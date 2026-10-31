@@ -1,7 +1,7 @@
 import classes from "./LiContainer.module.css"
 
 
-const LiContainer: React.FC = props => {
+const LiContainer: React.FC<React.PropsWithChildren> = props => {
 	return (
 		<li className={classes.container}>
 			{props.children}

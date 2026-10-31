@@ -19,6 +19,6 @@ export function destructDifficultyValue(value: number) {
 	return { valueNumber, sign }
 }
 
-export function isNotEmpty<T>(value:T){
+export function isNotEmpty<T extends object>(value:T){
     return Object.keys(value).length>0
 }

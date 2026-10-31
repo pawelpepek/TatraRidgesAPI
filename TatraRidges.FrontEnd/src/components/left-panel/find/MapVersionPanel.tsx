@@ -1,14 +1,15 @@
 import RoundButton from "../../ui/RoundButton"
 import iconTopo from "../../img/mountain.svg"
 import iconJawg from "../../img/tree.svg"
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 import StoreType from "../../../store/store-types"
 
 import classes from "./MapVersionPanel.module.css"
 import { centerActions } from "../../../store/center-slice"
+import useAppDispatch from "../../../hooks/use-app-dispatch"
 
 const MapVersionPanel: React.FC = () => {
-	const dispatch = useDispatch()
+	const dispatch = useAppDispatch()
 	const mapVersion = useSelector((state: StoreType) => state.center.mapVersion)
 
 	const clickOpenTopoHandler = () => {
