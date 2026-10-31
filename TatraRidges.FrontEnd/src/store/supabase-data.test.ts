@@ -1,11 +1,12 @@
 import { data } from "../domain/__fixtures__/scenarioData"
 
-jest.mock("../supabase", () => ({
-	supabase: {
+jest.mock("../supabase", () => {
+	const supabase = {
 		rpc: jest.fn(),
 		auth: { signInWithPassword: jest.fn(), signOut: jest.fn() },
-	},
-}))
+	}
+	return { supabase, getSupabase: () => supabase }
+})
 
 // A fresh module per test: supabase-data keeps the loaded data in a module variable.
 const setup = () => {

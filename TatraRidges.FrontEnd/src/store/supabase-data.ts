@@ -1,12 +1,12 @@
 import { AddRouteInput, Coordinates, TatraData } from "../domain"
-import { supabase } from "../supabase"
+import { getSupabase } from "../supabase"
 import { handleRequest, RequestProps } from "./local-api"
 import { getMessage } from "./statusCodeMessage"
 
 let cache: Promise<TatraData> | null = null
 
 const rpc = async <T>(fn: string, args?: Record<string, unknown>) => {
-	const { data, error } = await supabase.rpc<T>(fn, args)
+	const { data, error } = await getSupabase().rpc<T>(fn, args)
 	if (error) {
 		throw new Error(error.message)
 	}
@@ -27,18 +27,19 @@ const loadTatraData = () => {
 
 // Returns the access token, which the UI keeps as the sign of being logged in.
 const signIn = async (credentials: { email: string; password: string }) => {
-	const { data, error } = await supabase.auth.signInWithPassword(credentials)
+	const { data, error } =
+		await getSupabase().auth.signInWithPassword(credentials)
 	if (error || data.session === null) {
 		throw new Error("Niepoprawny e-mail lub hasło")
 	}
 	if (!(await rpc<boolean>("is_admin"))) {
-		await supabase.auth.signOut()
+		await getSupabase().auth.signOut()
 		throw new Error(getMessage(401))
 	}
 	return data.session.access_token
 }
 
-export const signOutFromSupabase = () => supabase.auth.signOut()
+export const signOutFromSupabase = () => getSupabase().auth.signOut()
 
 // The writes of the old API, as SQL functions (migration admin_writes).
 const write = async (props: RequestProps) => {
