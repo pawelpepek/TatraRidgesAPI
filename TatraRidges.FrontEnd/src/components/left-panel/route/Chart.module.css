@@ -1,7 +1,8 @@
 .container {
-	border: var(--input-border);
-	border-radius: var(--input-border-radius);
+	border: var(--card-border);
+	border-radius: var(--card-radius);
 	background-color: var(--color-surface);
-	margin-top: 7px;
-    margin-bottom: 7px;
+	box-shadow: var(--shadow-sm);
+	margin-top: 12px;
+	margin-bottom: 12px;
 }

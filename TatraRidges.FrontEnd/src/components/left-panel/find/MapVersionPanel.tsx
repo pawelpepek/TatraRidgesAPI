@@ -20,9 +20,9 @@ const MapVersionPanel: React.FC = () => {
 	}
 
 	return (
-		<>
+		<div className={classes.switch} role='group' aria-label='Wersja mapy'>
 			<RoundButton
-				className={`${classes["button-clear"]} ${classes.button}`}
+				className={classes.button}
 				alt='Mapa w wersji OpenTopoMap'
 				imageSrc={iconTopo}
 				onClick={clickOpenTopoHandler}
@@ -35,7 +35,7 @@ const MapVersionPanel: React.FC = () => {
 				onClick={clickJawgHandler}
 				selected={mapVersion === 1}
 			/>
-		</>
+		</div>
 	)
 }
 

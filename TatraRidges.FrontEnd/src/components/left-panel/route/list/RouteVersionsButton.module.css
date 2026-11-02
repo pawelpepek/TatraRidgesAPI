@@ -1,13 +1,14 @@
 .add {
 	position: absolute;
 	right: 50px;
-	border-radius: 50%;
-	background-color: var(--color-surface);
-	padding: 2px;
+	border-radius: 999px;
+	background-color: var(--color-text);
+	padding: 2px 8px;
 	text-align: center;
 	font-weight: bold;
-	color: var(--color-accent-strong);
-	border: 2px solid var(--color-accent-strong);
+	color: var(--color-surface);
+	border: none;
+	box-shadow: var(--shadow-md);
 	cursor: pointer;
 	animation: grow-animation 2s ease-in-out infinite;
 	font-size: 14px;
@@ -36,5 +37,11 @@
 	}
 	100% {
 		transform: rotate(0deg);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.add {
+		animation: none;
 	}
 }

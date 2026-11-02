@@ -11,8 +11,8 @@
 	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 .point:hover {
-	border-color: var(--color-accent);
-	box-shadow: var(--focus-ring);
+	border-color: var(--color-text-muted);
+	box-shadow: var(--shadow-sm);
 }
 
 .delete {
@@ -24,8 +24,8 @@
 
 @media (min-width: 576px) {
 	.point {
-		height: 80px;
+		height: 64px;
 		font-size: 16px;
-		margin: 5px 0px;
+		margin: 6px 0px;
 	}
 }

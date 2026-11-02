@@ -1,9 +1,10 @@
 .container {
 	display: flex;
 	flex-direction: column;
-	margin-top: 20px;
-	border: var(--input-border);
+	margin-top: 12px;
+	border: var(--card-border);
 	height: auto;
-	border-radius: var(--input-border-radius);
+	border-radius: var(--card-radius);
 	background-color: var(--color-surface);
+	box-shadow: var(--shadow-sm);
 }

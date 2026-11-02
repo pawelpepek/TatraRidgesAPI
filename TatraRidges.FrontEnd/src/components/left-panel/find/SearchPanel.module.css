@@ -1,5 +1,6 @@
 .author {
 	margin-top: auto;
+	margin-left: var(--left-margin);
 	padding-top: 10px;
 	font-size: 12px;
 	color: var(--color-text-muted);
