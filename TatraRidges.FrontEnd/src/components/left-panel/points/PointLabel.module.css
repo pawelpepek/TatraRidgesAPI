@@ -6,17 +6,24 @@
 	height: 40px;
 	border-radius: var(--input-border-radius);
 	font-size: 12px;
+	background-color: var(--color-surface);
+	cursor: pointer;
+	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.point:hover {
+	border-color: var(--color-accent);
+	box-shadow: var(--focus-ring);
 }
 
 .delete {
-	position:fixed;
+	position: fixed;
 	align-self: flex-end;
 	margin-bottom: 5px;
 	margin-left: 5px;
 }
 
 @media (min-width: 576px) {
-	.point{
+	.point {
 		height: 80px;
 		font-size: 16px;
 		margin: 5px 0px;

@@ -18,7 +18,7 @@ const MainPanel: React.FC = () => {
 	return (
 		<div className={className}>
 			<MainFunctions />
-			<Suspense fallback={<p>Loading...</p>}>
+			<Suspense fallback={<p>Wczytywanie…</p>}>
 				{!isRoute && errorMessage !== "" && (
 					<Notification status='error' message={errorMessage} />
 				)}

@@ -7,22 +7,9 @@
 	overflow-y: overlay;
 	border-radius: var(--input-border-radius);
 	border: var(--input-border);
+	background-color: var(--color-surface);
 }
 
-.list::-webkit-scrollbar {
-	width: 10px;
-	height: 5px;
-}
-.list::-webkit-scrollbar-track {
-	border: rgb(180, 180, 180);
-	background-color: rgb(243, 243, 243);
-	border-top-right-radius: var(--input-border-radius);
-	border-bottom-right-radius: var(--input-border-radius);
-}
-.list::-webkit-scrollbar-thumb {
-	background-color: lightgrey;
-	border-radius: var(--input-border-radius);
-}
 .list li:last-child {
 	border-bottom: none;
 }

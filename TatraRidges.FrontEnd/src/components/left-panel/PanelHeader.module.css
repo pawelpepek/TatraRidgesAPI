@@ -2,12 +2,12 @@
 	margin-left: var(--left-margin);
 	margin-bottom: 3px;
 	font-size: 18px;
+	font-weight: 600;
 }
-
 
 @media (min-width: 576px) {
 	.header {
 		margin-bottom: 10px;
-		font-size: 24px;
+		font-size: 22px;
 	}
 }

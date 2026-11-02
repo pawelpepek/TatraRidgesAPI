@@ -16,7 +16,7 @@ const MainFunctions: React.FC = () => {
 
 	return (
 		<div className={classes.functions}>
-			<Suspense fallback={<p>Loading...</p>}>
+			<Suspense fallback={<p>Wczytywanie…</p>}>
 				{!visiblePanel.startsWith("route") && (
 					<>
 						<header className={classes.header}>

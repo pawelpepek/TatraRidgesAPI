@@ -3,7 +3,7 @@
 	flex-direction: column;
 	margin-top: 5px;
 	margin-left: 0px;
-	border-bottom: 1px solid gray;
+	border-bottom: var(--input-border);
 	height: auto;
 	width: 100%;
 }

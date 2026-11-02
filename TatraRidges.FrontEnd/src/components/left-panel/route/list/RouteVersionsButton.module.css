@@ -2,12 +2,13 @@
 	position: absolute;
 	right: 50px;
 	border-radius: 50%;
-	background-color: white;
+	background-color: var(--color-surface);
 	padding: 2px;
 	text-align: center;
 	font-weight: bold;
-	color: blue;
-	border: 2px solid blue;
+	color: var(--color-accent-strong);
+	border: 2px solid var(--color-accent-strong);
+	cursor: pointer;
 	animation: grow-animation 2s ease-in-out infinite;
 	font-size: 14px;
 }

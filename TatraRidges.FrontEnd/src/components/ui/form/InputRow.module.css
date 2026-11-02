@@ -1,11 +1,11 @@
 .input {
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 	width: 100%;
 	border-radius: var(--input-border-radius);
 	border: var(--input-border);
-	height: 25px;
+	height: 28px;
 	font-size: 14px;
-	padding-left: 5px;
+	padding-left: 6px;
+	color: var(--color-text);
+	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }

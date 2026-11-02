@@ -1,25 +1,26 @@
-.notification{
-	height: 40px;
-	background-color: rgb(243, 243, 243);
+.notification {
+	box-sizing: border-box;
 	width: 100%;
+	min-height: 40px;
+	border-top: 1px solid var(--color-border);
+	background-color: var(--color-surface-muted);
 }
 .section {
 	display: flex;
-	flex-direction: row-reverse;
-	justify-content: space-between;
 	align-items: center;
-	margin: 0px 45px;
-	margin-right: 45px;
-	padding: 0.5rem 5%;
+	padding: 10px 20px;
 }
 
 .notification h4 {
-	font-size: 1rem;
+	font-size: 0.95rem;
+	font-weight: 600;
 	margin: 0px;
 }
 
 .error {
-	color: rgb(187, 2, 2);
+	color: var(--color-danger);
+	background-color: var(--color-danger-soft);
+	border-top-color: rgba(187, 2, 2, 0.3);
 }
 
 .success {
@@ -28,5 +29,5 @@
 }
 
 .pending {
-	color: #1a8ed1;
+	color: var(--color-accent-strong);
 }

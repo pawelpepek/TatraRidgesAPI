@@ -2,22 +2,9 @@
 	width: 100%;
 	border-radius: var(--input-border-radius);
 	border: var(--input-border);
+	background-color: var(--color-surface);
 }
 
-.no-location-list::-webkit-scrollbar {
-	width: 10px;
-	height: 10px;
-}
-.no-location-list::-webkit-scrollbar-track {
-	border: rgb(180, 180, 180);
-	background-color: rgb(243, 243, 243);
-	border-top-right-radius: var(--input-border-radius);
-	border-bottom-right-radius: var(--input-border-radius);
-}
-.no-location-list::-webkit-scrollbar-thumb {
-	background-color: lightgrey;
-	border-radius: var(--input-border-radius);
-}
 .description {
 	margin-bottom: 7px;
 	margin-top: 5px;
