@@ -5,24 +5,12 @@
 	margin-bottom: 5px;
 	padding: 0px 0px;
 	overflow-y: overlay;
-	border-radius: var(--input-border-radius);
-	border: var(--input-border);
+	border-radius: var(--card-radius);
+	border: var(--card-border);
+	background-color: var(--color-surface);
+	box-shadow: var(--shadow-sm);
 }
 
-.list::-webkit-scrollbar {
-	width: 10px;
-	height: 5px;
-}
-.list::-webkit-scrollbar-track {
-	border: rgb(180, 180, 180);
-	background-color: rgb(243, 243, 243);
-	border-top-right-radius: var(--input-border-radius);
-	border-bottom-right-radius: var(--input-border-radius);
-}
-.list::-webkit-scrollbar-thumb {
-	background-color: lightgrey;
-	border-radius: var(--input-border-radius);
-}
 .list li:last-child {
 	border-bottom: none;
 }

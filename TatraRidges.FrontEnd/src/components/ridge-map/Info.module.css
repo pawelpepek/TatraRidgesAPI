@@ -1,20 +1,24 @@
 .text {
-	text-align: justify;
-	text-justify: inter-word;
-	font-size: 18px;
-	position: absolute;
-	top: calc(50% - 50vh);
-	left: calc(50% - 50vw);
-	text-align: center;
-	width: 100vw;
-	height: 100vh;
-	position: absolute;
+	box-sizing: border-box;
+	max-width: min(560px, calc(100vw - 32px));
+	max-height: calc(100vh - 140px);
+	overflow-y: auto;
 	margin: 0px;
-	background-color: rgba(255, 255, 255, 0.8);
+	padding: 20px 24px 8px;
+	font-size: 16px;
+	line-height: 1.5;
+	text-align: center;
+	background-color: var(--color-surface);
+	border-top: 4px solid var(--color-danger);
+	border-radius: 12px;
+	box-shadow: var(--card-shadow);
 }
 
-@media (min-width: 576px) {
-	.text {
-		padding-top: 200px;
-	}
+.text h2 {
+	margin: 0px 0px 4px;
+	color: var(--color-danger);
+}
+
+.text p {
+	margin: 0px 0px 12px;
 }

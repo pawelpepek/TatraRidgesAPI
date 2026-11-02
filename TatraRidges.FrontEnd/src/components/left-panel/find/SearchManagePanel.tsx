@@ -1,16 +1,19 @@
 import RoundButton from "../../ui/RoundButton"
 import icon from "../../img/search.svg"
 import iconClear from "../../img/clear.svg"
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 import StoreType from "../../../store/store-types"
 import { getRidge } from "../../../store/map-actions"
 import { pointsActions } from "../../../store/map-slice"
 
 import classes from "./SearchManagePanel.module.css"
 import MapVersionPanel from "./MapVersionPanel"
+import useAppDispatch from "../../../hooks/use-app-dispatch"
+import usePending from "../../../hooks/use-pending"
 
 const SearchManagePanel: React.FC = () => {
-	const dispatch = useDispatch()
+	const dispatch = useAppDispatch()
+	const [pending] = usePending()
 
 	const pointFrom = useSelector((state: StoreType) => state.map.pointFrom)
 	const pointTo = useSelector((state: StoreType) => state.map.pointTo)
@@ -28,20 +31,20 @@ const SearchManagePanel: React.FC = () => {
 
 	return (
 		<div className={classes["manage-panel"]}>
-			<MapVersionPanel/>
+			<MapVersionPanel />
 			<RoundButton
 				className={`${classes["button-clear"]} ${classes.button}`}
 				alt='Wyczyść'
 				imageSrc={iconClear}
 				onClick={clickClearHandler}
 			/>
-			<RoundButton
-				className={classes.button}
-				alt='Wyszukaj'
-				imageSrc={icon}
+			<button
+				className={classes.search}
 				onClick={clickHandler}
-				disabled={!enabled}
-			/>
+				disabled={!enabled || pending}>
+				<img alt='' src={icon} />
+				Wyszukaj
+			</button>
 		</div>
 	)
 }

@@ -1,0 +1,13 @@
+{
+  "name": "tatra-ridges-supabase",
+  "private": true,
+  "description": "Local Supabase (see supabase/). The CLI and Docker run inside WSL.",
+  "scripts": {
+    "db:start": "wsl bash -l supabase/start-wsl.sh",
+    "db:stop": "wsl bash -lc \"supabase stop\"",
+    "db:status": "wsl bash -lc \"supabase status\"",
+    "db:reset": "wsl bash -lc \"supabase db reset\"",
+    "db:import-prod": "wsl bash -l supabase/import-prod-data.sh",
+    "db:test": "wsl bash -lc \"supabase test db\""
+  }
+}

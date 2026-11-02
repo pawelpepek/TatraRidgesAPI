@@ -2,8 +2,13 @@
 	margin: 3px 10px 3px 10px;
 	position: relative;
 }
+.p > span:first-child {
+	font-weight: 600;
+}
 .evaluation {
 	position: absolute;
 	right: 5px;
 	margin-right: 2px;
+	color: var(--color-text-muted);
+	font-variant-numeric: tabular-nums;
 }

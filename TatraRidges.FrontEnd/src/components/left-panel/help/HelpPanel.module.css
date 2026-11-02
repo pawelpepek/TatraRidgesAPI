@@ -3,29 +3,17 @@
 	margin-bottom: 10px;
 	margin-top: 10px;
 	height: auto;
-	overflow-y: scroll;
+	overflow-y: auto;
+	padding-right: 15px;
 	text-align: justify;
 	text-justify: inter-word;
-    padding-right: 15px;
-    text-align: justify;
-	text-justify: inter-word;
-}
-.info::-webkit-scrollbar {
-	width: 10px;
-	height: 10px;
-}
-.info::-webkit-scrollbar-track {
-	border: rgb(180, 180, 180);
-	background-color: rgb(243, 243, 243);
-	border-top-right-radius: var(--input-border-radius);
-	border-bottom-right-radius: var(--input-border-radius);
-}
-.info::-webkit-scrollbar-thumb {
-	background-color: lightgrey;
-	border-radius: var(--input-border-radius);
+	line-height: 1.5;
 }
 
 .img {
 	margin-top: 5px;
 	margin-bottom: 5px;
+	max-width: 100%;
+	border-radius: var(--input-border-radius);
+	box-shadow: 0 1px 4px rgba(31, 41, 51, 0.2);
 }

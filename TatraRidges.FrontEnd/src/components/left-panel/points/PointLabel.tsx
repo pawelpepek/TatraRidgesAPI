@@ -1,10 +1,10 @@
-import { useDispatch } from "react-redux"
 import { deletePointById } from "../../../store/map-actions"
 import deleteIcon from "../../img/trash.svg"
 import { MountainPoint } from "../../types"
 import RoundButton from "../../ui/RoundButton"
 import classes from "./PointLabel.module.css"
 import PointInfo from "./PointInfo"
+import useAppDispatch from "../../../hooks/use-app-dispatch"
 
 export interface PointLabelProps {
 	deleteVisible?: boolean
@@ -12,7 +12,7 @@ export interface PointLabelProps {
 }
 
 const PointLabel: React.FC<PointLabelProps> = props => {
-	const dispatch = useDispatch()
+	const dispatch = useAppDispatch()
 
 	const clickDeleteHandler = () => dispatch(deletePointById(props.point.id))
 

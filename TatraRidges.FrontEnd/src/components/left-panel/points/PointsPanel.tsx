@@ -1,13 +1,13 @@
-import { useDispatch } from "react-redux"
 import { pointsActions } from "../../../store/map-slice"
 import reverseIcon from "../../img/arrow-down-back.svg"
 import RoundButton from "../../ui/RoundButton"
 import PointsImages from "./PointsImages"
 import PointsLabels from "./PointsLabels"
 import classes from "./PointsPanel.module.css"
+import useAppDispatch from "../../../hooks/use-app-dispatch"
 
 const PointsPanel: React.FC<{ deleteVisible: boolean }> = props => {
-	const dispatch = useDispatch()
+	const dispatch = useAppDispatch()
 
 	const clickSwitchHandler = () =>
 		dispatch(pointsActions.toggleSelectedPoints())

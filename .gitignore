@@ -349,8 +349,8 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 
-# Migrations
-Migrations/
+# EF Core migrations of the removed C# model (kept only on disk)
+/TatraRidgesModel/Migrations/
 
 #React Web Project
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
@@ -384,5 +384,5 @@ appsettings.json
 /TatraRidgesAPI/appsettings.Development.json
 /TatraRidgesAPI/.config/dotnet-tools.json
 /TatraRidges.FrontEnd/src/config.dev.json
-/TatraRidges.FrontEnd/.firebaserc
-/TatraRidges.FrontEnd/firebase.json
+/TatraRidges.FrontEnd/.firebase/
+firebase-debug.log

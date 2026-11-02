@@ -1,7 +1,8 @@
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 import { RidgeWithRoutes } from "../store/routeTypes"
 import StoreType from "../store/store-types"
 import useRouteVisible from "./use-rote-visible"
+import useAppDispatch from "./use-app-dispatch"
 
 const useRouteData = <T>(props: {
 	defaultValues: T[]

@@ -6,7 +6,6 @@ import PanelHeader from "../PanelHeader"
 import RouteAddPanel from "./route-form/RouteAddPanel"
 import classes from "./AdminPanel.module.css"
 import AdminNavigationPanel from "./AdminNavigationPanel"
-import Tooltip from "../../ui/Tooltip"
 
 const AdminPanel: React.FC = () => {
 	const partVisible = useSelector(
@@ -22,7 +21,6 @@ const AdminPanel: React.FC = () => {
 				{partVisible === "route" && <RouteAddPanel />}
 				{partVisible === "noLocation" && <NoLocationMarks />}
 			</div>
-			<Tooltip/>
 		</>
 	)
 }

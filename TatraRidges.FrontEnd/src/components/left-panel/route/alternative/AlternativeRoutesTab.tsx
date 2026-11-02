@@ -1,4 +1,3 @@
-import Tooltip from "../../../ui/Tooltip"
 import AlternativeRoutesList from "./AlternativeRoutesList"
 import { Route } from "../../../../store/routeTypes"
 import MountainsPointsConnectionLabel from "../../info/MountainsPointsConnectionLabel"
@@ -22,7 +21,6 @@ const AlternativeRoutesTab: React.FC<AlternativeRoutesTabProps> = props => {
 				routes={props.routes}
 				selectedId={props.selectedId}
 			/>
-			<Tooltip />
 		</>
 	)
 }

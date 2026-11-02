@@ -1,12 +1,13 @@
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 import { movePoint } from "../../../store/map-actions"
 import { pointsActions } from "../../../store/map-slice"
 import StoreType from "../../../store/store-types"
 import { MountainPoint } from "../../types"
 import classes from "./PointOption.module.css"
+import useAppDispatch from "../../../hooks/use-app-dispatch"
 
 const PointOption: React.FC<{ point: MountainPoint }> = props => {
-	const dispatch = useDispatch()
+	const dispatch = useAppDispatch()
 	const centerValue = useSelector((state: StoreType) => state.center.value)
 
 	const clickHandler = () => {

@@ -1,8 +1,39 @@
 import { uiActions } from "./ui-slice"
 import { getMessage } from "./statusCodeMessage"
 
+// With VITE_SUPABASE_URL set (.env, .env.development) the data comes from Supabase
+// and is computed locally. Builds without it still call the old API.
+// The Supabase SDK is loaded on demand, so those builds do not include it.
+const useSupabase = Boolean(import.meta.env.VITE_SUPABASE_URL)
+
+// The old API's address is in src/config.dev.json, which is outside git and may be missing.
+const oldApiConfig = import.meta.glob("../config.dev.json", { import: "default" })
+
+export const signOut = async () => {
+	if (useSupabase) {
+		const { signOutFromSupabase } = await import("./supabase-data")
+		await signOutFromSupabase()
+	}
+}
+
+export const watchSession = async onSignedOut => {
+	if (useSupabase) {
+		const { watchAdminSession } = await import("./supabase-data")
+		await watchAdminSession(onSignedOut)
+	}
+}
+
 const fetchData = async props => {
-	const conf = require("../config.dev.json")
+	if (useSupabase) {
+		const { fetchFromSupabase } = await import("./supabase-data")
+		return fetchFromSupabase(props)
+	}
+
+	const loadConfig = oldApiConfig["../config.dev.json"]
+	if (loadConfig === undefined) {
+		throw new Error("Brak konfiguracji: ustaw VITE_SUPABASE_URL w pliku .env")
+	}
+	const conf = await loadConfig()
 	let url = conf.webAPI + props.location
 	if (props.pathPart !== undefined) {
 		url += props.pathPart

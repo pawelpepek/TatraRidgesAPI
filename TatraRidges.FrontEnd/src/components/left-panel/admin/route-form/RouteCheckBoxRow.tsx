@@ -1,8 +1,9 @@
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 import CheckboxRow from "../../../ui/form/CheckboxRow"
 import { routeFormActions } from "../../../../store/route-form-slice"
 import StoreType from "../../../../store/store-types"
 import { getPropertyValue } from "../../../../store/filler"
+import useAppDispatch from "../../../../hooks/use-app-dispatch"
 
 interface RouteCheckboxRowProps {
 	id: string
@@ -13,7 +14,7 @@ const RouteCheckboxRow: React.FC<RouteCheckboxRowProps> = props => {
 	const value = useSelector((state: StoreType) =>
 		getPropertyValue(state.routeForm, props.id)
 	)
-	const dispatch = useDispatch()
+	const dispatch = useAppDispatch()
 
 	const onChange = (e: React.FormEvent<HTMLInputElement>) => {
 		const value = e.currentTarget.checked

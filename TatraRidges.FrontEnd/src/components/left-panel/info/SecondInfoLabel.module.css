@@ -7,7 +7,7 @@
 	width: 100%;
 }
 .empty {
-	color: red;
+	color: var(--color-danger);
 	font-weight: bold;
 	width: 100px;
 	white-space: nowrap;

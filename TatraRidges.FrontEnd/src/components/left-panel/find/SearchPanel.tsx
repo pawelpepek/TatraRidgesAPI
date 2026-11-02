@@ -1,7 +1,6 @@
 import SearchManagePanel from "./SearchManagePanel"
 import PointsPanel from "../points/PointsPanel"
 import PanelHeader from "../PanelHeader"
-import Tooltip from "../../ui/Tooltip"
 import classes from "./SearchPanel.module.css"
 
 const SearchPanel: React.FC = () => {
@@ -13,7 +12,6 @@ const SearchPanel: React.FC = () => {
 			<a className={classes.author} href='mailto: pawel.pepek@gmail.com'>
 					pawel.pepek@gmail.com
 				</a>
-			<Tooltip/>
 		</>
 	)
 }

@@ -1,5 +1,5 @@
 .warning{
-    color: red;
+    color: var(--color-danger);
     font-weight:bold;
     margin: 5px 10px;
 }

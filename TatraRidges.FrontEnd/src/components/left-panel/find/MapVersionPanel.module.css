@@ -1,5 +1,13 @@
-.button{
-	width: 45x;
-	height: 45px;
-	margin-top: 2px;
+.switch {
+	display: flex;
+	gap: 4px;
+	padding: 4px;
+	border-radius: 12px;
+	background-color: var(--color-surface-muted);
+}
+.button {
+	width: 40px;
+	height: 40px;
+	margin-right: 0;
+	border-radius: 8px;
 }

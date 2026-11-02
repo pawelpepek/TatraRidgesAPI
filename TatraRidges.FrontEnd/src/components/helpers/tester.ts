@@ -32,12 +32,12 @@ class tester {
 	}
 
 	checkIsElementInDocument(visible = true) {
-		const exp = expect(this.element)
+		// a new expect for each check: in Vitest `.not` stays set on the assertion
 		if (visible) {
-			exp.not.toBeNull()
-			exp.toBeInTheDocument()
+			expect(this.element).not.toBeNull()
+			expect(this.element).toBeInTheDocument()
 		} else {
-			exp.toBeNull()
+			expect(this.element).toBeNull()
 		}
 	}
 

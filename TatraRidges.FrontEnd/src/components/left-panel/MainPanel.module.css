@@ -3,9 +3,13 @@
 	display: flex;
 	width: auto;
 	max-height: 100vh;
+	position: relative;
+	z-index: 1000;
+	background-color: var(--color-surface);
+	box-shadow: var(--panel-shadow);
 }
 
-.maxHeight{
+.maxHeight {
 	height: 100vh;
 }
 

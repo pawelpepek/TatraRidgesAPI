@@ -10,6 +10,13 @@
 	margin-bottom: 0px;
 	white-space: normal;
 	overflow: hidden;
+	font-weight: 600;
+}
+.name:empty::before {
+	content: "Kliknij punkt na mapie";
+	color: var(--color-text-muted);
+	font-style: italic;
+	font-weight: 400;
 }
 .evaluation{
 	margin-top: 0px;
@@ -17,6 +24,8 @@
 	margin-bottom:2px;
 	margin-right: 2px;
 	text-align: right;
+	font-size: 0.85em;
+	color: var(--color-text-muted);
 }
 
 .point-with-delete {

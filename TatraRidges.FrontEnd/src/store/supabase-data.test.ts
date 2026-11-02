@@ -1,0 +1,206 @@
+import { Mock } from "vitest"
+import { data } from "../domain/__fixtures__/scenarioData"
+
+vi.mock("../supabase", () => {
+	const supabase = {
+		rpc: vi.fn(),
+		auth: {
+			signInWithPassword: vi.fn(),
+			signOut: vi.fn(),
+			getSession: vi.fn(),
+			onAuthStateChange: vi.fn(),
+		},
+	}
+	return { supabase, getSupabase: () => supabase }
+})
+
+// A fresh module per test: supabase-data keeps the loaded data in a module variable.
+const setup = async () => {
+	vi.resetModules()
+	const module = await import("./supabase-data")
+	const client: any = ((await import("../supabase")) as any).supabase
+	const rpc = client.rpc as Mock
+	rpc.mockImplementation(async (fn: string) =>
+		fn === "get_tatra_data"
+			? { data, error: null }
+			: fn === "is_admin"
+				? { data: true, error: null }
+				: { data: null, error: null }
+	)
+	return {
+		fetch: module.fetchFromSupabase,
+		watch: module.watchAdminSession,
+		client,
+		rpc,
+	}
+}
+
+const dataLoads = (rpc: Mock) =>
+	rpc.mock.calls.filter(([fn]) => fn === "get_tatra_data").length
+
+describe("fetchFromSupabase", () => {
+	it("answers reads from one get_tatra_data call", async () => {
+		const { fetch, rpc } = await setup()
+		const points = await fetch({ method: "GET", location: "point" })
+		await fetch({ method: "GET", location: "connection" })
+		expect(points).toHaveLength(data.points.length)
+		expect(dataLoads(rpc)).toBe(1)
+	})
+
+	it("moves a point and reloads the data afterwards", async () => {
+		const { fetch, rpc } = await setup()
+		await fetch({ method: "GET", location: "point" })
+
+		const result = await fetch({
+			method: "PUT",
+			location: "point/",
+			pathPart: 5,
+			body: { latitude: 49.2, longitude: 20.1 },
+		})
+		await fetch({ method: "GET", location: "point" })
+
+		expect(result).toBe(true)
+		expect(rpc).toHaveBeenCalledWith("move_point", {
+			point_id: 5,
+			latitude: 49.2,
+			longitude: 20.1,
+		})
+		expect(dataLoads(rpc)).toBe(2)
+	})
+
+	it("deletes a point", async () => {
+		const { fetch, rpc } = await setup()
+		expect(
+			await fetch({ method: "DELETE", location: "point/", pathPart: 7 })
+		).toBe(true)
+		expect(rpc).toHaveBeenCalledWith("delete_point", { point_id: 7 })
+	})
+
+	it("adds a ridge and returns its id", async () => {
+		const { fetch, rpc } = await setup()
+		rpc.mockResolvedValueOnce({ data: 42, error: null })
+		const id = await fetch({
+			method: "POST",
+			location: "connection",
+			body: { pointId1: 1, pointId2: 2, ridge: true },
+		})
+		expect(id).toBe(42)
+		expect(rpc).toHaveBeenCalledWith("add_connection", {
+			point_id1: 1,
+			point_id2: 2,
+		})
+	})
+
+	it("adds a route with the form data", async () => {
+		const { fetch, rpc } = await setup()
+		const route = { pointId1: 1, pointId2: 2, routeTime: "01:00:00" }
+		const created = { routeId: 99, pointsRidge: null }
+		rpc.mockResolvedValueOnce({ data: created, error: null })
+		expect(
+			await fetch({ method: "POST", location: "route", body: route })
+		).toEqual(created)
+		expect(rpc).toHaveBeenCalledWith("add_route", { route })
+	})
+
+	it("passes database errors to the notification", async () => {
+		const { fetch, rpc } = await setup()
+		rpc.mockResolvedValueOnce({
+			data: null,
+			error: { message: "Brak uprawnień" },
+		})
+		await expect(
+			fetch({ method: "DELETE", location: "point/", pathPart: 1 })
+		).rejects.toThrow("Brak uprawnień")
+	})
+
+	describe("login", () => {
+		const login = {
+			method: "POST",
+			location: "account/login/",
+			body: { email: "a@b.c", password: "x" },
+		}
+
+		it("returns the access token of an admin", async () => {
+			const { fetch, client } = await setup()
+			client.auth.signInWithPassword.mockResolvedValue({
+				data: { session: { access_token: "token" } },
+				error: null,
+			})
+			expect(await fetch(login)).toBe("token")
+		})
+
+		it("signs out a user who is not an admin", async () => {
+			const { fetch, client, rpc } = await setup()
+			client.auth.signInWithPassword.mockResolvedValue({
+				data: { session: { access_token: "token" } },
+				error: null,
+			})
+			rpc.mockResolvedValueOnce({ data: false, error: null })
+			await expect(fetch(login)).rejects.toThrow("Brak uprawnień")
+			expect(client.auth.signOut).toHaveBeenCalled()
+		})
+
+		it("rejects wrong credentials", async () => {
+			const { fetch, client } = await setup()
+			client.auth.signInWithPassword.mockResolvedValue({
+				data: { session: null },
+				error: {
+					code: "invalid_credentials",
+					message: "Invalid login credentials",
+				},
+			})
+			await expect(fetch(login)).rejects.toThrow("Niepoprawny e-mail lub hasło")
+		})
+
+		it("reports other sign-in errors as they are", async () => {
+			const { fetch, client } = await setup()
+			client.auth.signInWithPassword.mockResolvedValue({
+				data: { session: null },
+				error: {
+					code: "over_request_rate_limit",
+					message: "Too many requests",
+				},
+			})
+			await expect(fetch(login)).rejects.toThrow(
+				"Błąd logowania: Too many requests"
+			)
+		})
+
+		it("signs out when the admin check fails", async () => {
+			const { fetch, client, rpc } = await setup()
+			client.auth.signInWithPassword.mockResolvedValue({
+				data: { session: { access_token: "token" } },
+				error: null,
+			})
+			rpc.mockResolvedValueOnce({ data: null, error: { message: "offline" } })
+			await expect(fetch(login)).rejects.toThrow("offline")
+			expect(client.auth.signOut).toHaveBeenCalled()
+		})
+	})
+
+	describe("watchAdminSession", () => {
+		it("reports a missing session on page load", async () => {
+			const { watch, client } = await setup()
+			client.auth.getSession.mockResolvedValue({ data: { session: null } })
+			const onSignedOut = vi.fn()
+			await watch(onSignedOut)
+			expect(onSignedOut).toHaveBeenCalledTimes(1)
+		})
+
+		it("keeps an admin session and reports when it ends", async () => {
+			const { watch, client } = await setup()
+			client.auth.getSession.mockResolvedValue({
+				data: { session: { access_token: "token" } },
+			})
+			const onSignedOut = vi.fn()
+			await watch(onSignedOut)
+			expect(onSignedOut).not.toHaveBeenCalled()
+
+			const listener = client.auth.onAuthStateChange.mock.calls[0][0]
+			listener("TOKEN_REFRESHED")
+			expect(onSignedOut).not.toHaveBeenCalled()
+			listener("SIGNED_OUT")
+			expect(onSignedOut).toHaveBeenCalledTimes(1)
+		})
+	})
+})

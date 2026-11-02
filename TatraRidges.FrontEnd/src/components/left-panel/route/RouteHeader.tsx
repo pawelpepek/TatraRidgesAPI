@@ -1,9 +1,9 @@
-import { useDispatch } from "react-redux"
 import RoundButton from "../../ui/RoundButton"
 import { uiActions } from "../../../store/ui-slice"
 import backIcon from "../../img/back.svg"
 
 import classes from "./RouteHeader.module.css"
+import useAppDispatch from "../../../hooks/use-app-dispatch"
 
 interface RouteHeaderProps {
 	className?: string
@@ -13,7 +13,7 @@ interface RouteHeaderProps {
 }
 
 const RouteHeader: React.FC<RouteHeaderProps> = props => {
-	const dispatch = useDispatch()
+	const dispatch = useAppDispatch()
 
 	const buttonClickHandler = () => {
 		if (props.backVersion === "search") {

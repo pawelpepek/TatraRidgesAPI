@@ -1,6 +1,5 @@
 import { useSelector } from "react-redux"
 import StoreType from "../../../store/store-types"
-import Tooltip from "../../ui/Tooltip"
 import RouteAllInfoPanel from "./RouteAllInfoPanel"
 import RouteHeader from "./RouteHeader"
 import AlternativeRoutesTab from "./alternative/AlternativeRoutesTab"
@@ -50,7 +49,6 @@ const RoutePanel: React.FC = () => {
 					point2={getPoint2()}
 				/>
 			)}
-			<Tooltip />
 		</>
 	)
 }

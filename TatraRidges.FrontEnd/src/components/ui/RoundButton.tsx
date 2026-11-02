@@ -26,7 +26,7 @@ const RoundButton: React.FC<RoundButtonProps> = props => {
 
 	return (
 		<button
-			data-tip={props.alt}
+			data-tooltip-id="tooltip" data-tooltip-content={props.alt}
 			className={buttonClasses}
 			onClick={buttonClickHandler}
 			id={props.idButton}>

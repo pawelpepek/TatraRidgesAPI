@@ -25,7 +25,7 @@ const OptionBox: React.FC<{
 			/>
 			<img
 				className={classes.box}
-				data-tip={text}
+				data-tooltip-id="tooltip" data-tooltip-content={text}
 				src={icon}
 				alt={text}
 				onClick={clickHandler}

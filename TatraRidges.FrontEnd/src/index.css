@@ -1,11 +1,40 @@
+:root {
+	--left-margin: 45px;
+	--right-margin: 52px;
+
+	--color-text: #1f2933;
+	--color-text-muted: #616e7c;
+	--color-surface: #ffffff;
+	--color-surface-muted: #f3f5f7;
+	--color-hover: #e9edf1;
+	--color-border: #c3cbd3;
+	--color-accent: #008ffb;
+	--color-accent-strong: #0067b8;
+	--color-accent-soft: #e3f1fe;
+	--color-danger: #bb0202;
+	--color-danger-soft: #fdecec;
+
+	--input-border-radius: 6px;
+	--input-border: 1px solid var(--color-border);
+	--panel-shadow: 2px 0 12px rgba(31, 41, 51, 0.15);
+	--card-shadow: 0 4px 24px rgba(31, 41, 51, 0.2);
+	--shadow-sm: 0 1px 2px rgba(31, 41, 51, 0.06), 0 1px 3px rgba(31, 41, 51, 0.1);
+	--shadow-md: 0 2px 4px rgba(31, 41, 51, 0.06), 0 4px 12px rgba(31, 41, 51, 0.12);
+	--card-border: 1px solid rgba(31, 41, 51, 0.08);
+	--card-radius: 10px;
+	--focus-ring: 0 0 0 3px rgba(0, 143, 251, 0.35);
+}
+
 body {
 	margin: 0;
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-		"Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-		sans-serif;
+	font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+		"Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+		"Helvetica Neue", sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	position: relative;
+	color: var(--color-text);
+	background-color: var(--color-surface);
 }
 
 code {
@@ -13,9 +42,23 @@ code {
 		monospace;
 }
 
-:root {
-	--left-margin: 45px;
-	--right-margin: 52px;
-	--input-border-radius: 5px;
-	--input-border: 1px solid black;
+a {
+	color: var(--color-accent-strong);
+}
+
+* {
+	scrollbar-width: thin;
+	scrollbar-color: var(--color-border) transparent;
+}
+
+:focus-visible {
+	outline: 2px solid var(--color-accent);
+	outline-offset: 2px;
+}
+
+input:focus,
+select:focus {
+	outline: none;
+	border-color: var(--color-accent);
+	box-shadow: var(--focus-ring);
 }

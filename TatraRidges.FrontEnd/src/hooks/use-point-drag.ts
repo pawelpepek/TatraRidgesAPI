@@ -1,12 +1,13 @@
 import { DragEndEvent } from "leaflet"
 import { useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 import { Coordinates, LatLongOwner, MountainPoint } from "../components/types"
 import { movePoint } from "../store/map-actions"
 import StoreType from "../store/store-types"
+import useAppDispatch from "./use-app-dispatch"
 
 const usePointDrag = (point: MountainPoint) => {
-	const dispatch = useDispatch()
+	const dispatch = useAppDispatch()
 
 	const draggable = useSelector(
 		(state: StoreType) => state.ui.visiblePanel === "admin"

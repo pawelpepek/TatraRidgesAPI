@@ -5,20 +5,20 @@ import MainFunctions from "./MainFunctions"
 import useRouteVisible from "../../hooks/use-rote-visible"
 import React, { Suspense } from "react"
 
+const Notification = React.lazy(() => import("../ui/Notification"))
+
 const MainPanel: React.FC = () => {
 	const errorMessage = useSelector((state: StoreType) =>
 		state.ui.notification.status == "error" ? state.ui.notification.message : ""
 	)
 	const isRoute = useRouteVisible()
 
-	const Notification = React.lazy(() => import("../ui/Notification"))
-
 	let className = `${classes.main} ${isRoute ? classes.maxHeight : ""}`
 
 	return (
 		<div className={className}>
 			<MainFunctions />
-			<Suspense fallback={<p>Loading...</p>}>
+			<Suspense fallback={<p>Wczytywanie…</p>}>
 				{!isRoute && errorMessage !== "" && (
 					<Notification status='error' message={errorMessage} />
 				)}
