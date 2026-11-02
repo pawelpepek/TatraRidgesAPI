@@ -1,3 +1,5 @@
+import { RouteDto } from "./types"
+
 const pad = (value: number) => value.toString().padStart(2, "0")
 
 // Formats minutes like .NET TimeSpan.ToString("c"): "hh:mm:ss" or "d.hh:mm:ss".
@@ -21,3 +23,18 @@ export const parseTimeSpan = (text: string) => {
 	}
 	return days * 1440 + hours * 60 + minutes
 }
+
+// The time of each route is read many times per summary; parse it once.
+const minutesByRoute = new WeakMap<RouteDto, number>()
+
+export const routeMinutes = (route: RouteDto) => {
+	let minutes = minutesByRoute.get(route)
+	if (minutes === undefined) {
+		minutes = parseTimeSpan(route.routeTime)
+		minutesByRoute.set(route, minutes)
+	}
+	return minutes
+}
+
+export const totalMinutes = (routes: (RouteDto | null)[]) =>
+	routes.reduce((sum, r) => (r === null ? sum : sum + routeMinutes(r)), 0)
