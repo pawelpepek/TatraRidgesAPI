@@ -10,7 +10,7 @@ The rewrite is in progress on the `supabase` branch. Goal: **no .NET, no custom 
 
 - `legacy` — frozen pre-migration state (ASP.NET Core API on Azure, C# model, WPF scraper). Do not develop it.
 - `firebase` — an abandoned attempt with Firestore. Its domain port was moved here; the Firestore parts (rules, emulator, seed) are not needed.
-- Since 2026-10-31 production (graniowki.pl, Firebase Hosting) runs this branch: the frontend reads through `get_tatra_data()` and writes through the SQL functions on Supabase. The old ASP.NET API on Azure still runs on the same database but nothing calls it; to roll back, use "Rollback" in Firebase Hosting's release history. Turn Azure off once the new version has run without problems for a while.
+- Since 2026-10-31 production (graniowki.pl, Firebase Hosting) runs this branch: the frontend reads through `get_tatra_data()` and writes through the SQL functions on Supabase. The old ASP.NET API on Azure is turned off (2026-11), so a rollback to the old frontend is no longer possible and the production schema may change.
 - Supabase Auth sign-ups are still enabled on production (`disable_signup: false`); switch them off in the dashboard (Authentication → Sign In / Providers).
 
 | Folder | Role |
@@ -37,8 +37,9 @@ The rewrite is in progress on the `supabase` branch. Goal: **no .NET, no custom 
 - `supabase/seed.sql` — dictionaries and a small example around Świnica (what the C# `DbSeeder` used to insert), plus a local admin account in `auth.users` and `admins` (its test e-mail and password are in the file's comment). Local only.
 - `supabase/migrations/20261025170000_admin_writes.sql` — `public.admins` (user ids from `auth.users`, no API access), `is_admin()` and the writes `move_point`, `delete_point`, `add_connection`, `add_route` (`security definer`, executable by `authenticated` only, each checks `is_admin()` and raises Polish messages with SQL error codes). Helpers live in the schema `private`, which the API cannot reach. Deliberate changes from C#: a ridge from a point to itself is refused, and `delete_point` also removes the guide descriptions of the deleted routes.
 - `supabase/migrations/20261031120000_admin_writes_fixes.sql` — replaces `insert_connection`, `delete_point` and `add_route`: adding ridges takes a `share row exclusive` lock on `"PointsConnections"` (no duplicate ridge or loop from concurrent calls), `delete_point` keeps guide descriptions still used by routes of other ridges, `add_route` stores the time in whole minutes. Not yet on production: apply it with the SQL editor.
+- `supabase/migrations/20261102120000_fold_guide_descriptions.sql` — folds `"GuideDescriptions"` into `"Routes"` (columns `"GuideId"`, `"GuideNumber"`, `"GuidePage"`, `"GuideVolume"`; descriptions without a route are dropped with the table) and replaces `get_tatra_data()`, `delete_point` (now just deletes the point's ridges, which cascade) and `add_route` (its JSON input still has a nested `guideDescription`, so the frontend is unchanged). `"Routes"."GuideId"` → `"Guides"` is `on delete restrict`: a used guide cannot be deleted. `get_tatra_data()` returns the same JSON as before. Not yet on production: apply it after `admin_writes_fixes` with the SQL editor (dry run with ROLLBACK first).
 - `supabase/tests/database/*.test.sql` — pgTAP tests (`npm run db:test`, i.e. `supabase test db`); they create their own rows with ids from 900001 inside a transaction that is rolled back, so they run on seed or imported data alike.
-- `supabase/import-prod-data.sh` (`npm run db:import-prod`, `-- --check` to only compare schemas and count rows) — replaces the local data with a copy of production (schema `public`, without `"Users"` data; `admins` is neither copied nor cleared, so the local admin survives). It compares columns only for the tables that exist on production. It reads the connection string from `TatraRidgesAPI/appsettings.json` (or `PROD_DB_CONNECTION`), runs every production session with `default_transaction_read_only=on`, refuses to import if the production columns differ from the local ones, and afterwards moves the local identity sequences past the largest ids. `npm run db:reset` brings back the seed data. If `npm run` crashes in Git Bash, call `wsl bash -l supabase/import-prod-data.sh` directly.
+- `supabase/import-prod-data.sh` (`npm run db:import-prod`, `-- --check` to only compare schemas and count rows) — replaces the local data with a copy of production (schema `public`, without `"Users"` data; `admins` is neither copied nor cleared, so the local admin survives). It compares columns only for the tables that exist on production. It reads the connection string (Npgsql format) from `PROD_DB_CONNECTION`, or from `TatraRidgesAPI/appsettings.json` if that file is still there, runs every production session with `default_transaction_read_only=on`, refuses to import if the production columns differ from the local ones, and afterwards moves the local identity sequences past the largest ids. `npm run db:reset` brings back the seed data. If `npm run` crashes in Git Bash, call `wsl bash -l supabase/import-prod-data.sh` directly.
 - `supabase/migrations/20261025160000_read_access.sql` — revokes all table and sequence privileges from `anon`/`authenticated` (Supabase grants them by default, including on `"Users"`), enables RLS with no policies on every table, and adds `get_tatra_data()` (`security definer`, `search_path = ''`, executable by `anon`/`authenticated`). Adjectives are returned in physical (`ctid`) order, like EF read them, because the order of adjective groups decides the word order in descriptions. The old API is unaffected: it connects as `postgres`, which owns the tables and has `bypassrls`. Applied to production on 2026-10-25 (dry run with ROLLBACK first; the old API answered the same before and after).
 - Every new table in `public` gets the default Supabase grants again: revoke them and enable RLS in the same migration.
 - Local Postgres is version 17 (`[db] major_version`), production runs 15.8: don't rely on features newer than 15.
@@ -46,7 +47,7 @@ The rewrite is in progress on the `supabase` branch. Goal: **no .NET, no custom 
 ### Production data (checked 2026-10-25)
 
 - 781 points, 777 connections (all ridges), 930 routes, 731 adjective pairs, 2 additional descriptions, 45 adjectives, 1 user. `get_tatra_data()` returns about 530 KB of JSON.
-- Every route has its own guide description (confirmed 1:1); 24 descriptions have no route and can be dropped when folding them into `"Routes"`.
+- Every route has its own guide description (confirmed 1:1); 24 descriptions have no route (dropped by `20261102120000_fold_guide_descriptions`).
 - Row level security was already enabled (no policies, no FORCE) on all 15 tables in production before our migrations; the local baseline migration has no RLS. Since `20261025160000_read_access` (applied 2026-10-25 with psql, not the CLI) `anon`/`authenticated` hold no table privileges and production serves `get_tatra_data()`.
 - There is no `supabase_migrations` schema on production: once the project is linked (`supabase link`, needs `supabase login`), record the applied migrations with `supabase migration repair --status applied 20231225153425 20261025160000` before any `supabase db push`.
 - The identity sequences lagged far behind the largest ids (e.g. `MountainPoints` at 18 with ids up to 2072; `AdditionalDescriptions` would have hit a taken id on the 3rd insert). Fixed on production on 2026-10-25 with `supabase/scripts/fix-identity-sequences.sql` (moves each sequence to max id, never backwards; safe to rerun).
@@ -60,11 +61,11 @@ Created by the EF Core migration `20231225153425_init`, reproduced in `supabase/
 - `"MountainPoints"` (`"Id"`, `"PointTypeId"`, `"Name"`, `"AlternativeName"`, `"Evaluation"` nullable, `"PrecisedEvaluation"`, `"WikiLatitude"`, `"WikiLongitude"`, `"Latitude"`, `"Longitude"` numeric(8,6), `"WikiAddress"`).
 - `"PointsConnections"` (`"Id"`, `"PointId1"`, `"PointId2"`, `"Ridge"`) — FKs to points with `ON DELETE RESTRICT`, so a point's connections must be deleted first.
 - `"Routes"` (`"Id"`, `"PointsConnectionId"`, `"ConsistentDirection"`, `"DifficultyId"`, `"DifficultyDetailId"`, `"Rappeling"`, `"RouteTypeId"`, `"GuideDescriptionId"`, `"RouteTime"` interval) — cascades from its connection.
-- `"GuideDescriptions"` (`"Id"`, `"Number"`, `"Page"`, `"Volume"`, `"GuideId"`) — de facto 1:1 with `"Routes"`; to be folded into it.
+- `"GuideDescriptions"` (`"Id"`, `"Number"`, `"Page"`, `"Volume"`, `"GuideId"`) — de facto 1:1 with `"Routes"`. Locally already folded into it by `20261102120000_fold_guide_descriptions` (`"Routes"` has `"GuideId"`, `"GuideNumber"`, `"GuidePage"`, `"GuideVolume"` instead of `"GuideDescriptionId"`).
 - `"DescriptionAdjectivePairs"` (`"RouteId"`, `"AdjectiveId"`), `"AdditionalDescriptions"` (`"RouteId"`, `"Description"`, `"Warning"`).
 - `"Users"`, `"Roles"` — the old ASP.NET sign-in; replaced by Supabase Auth.
 
-Schema changes must go through migration files in the repo, tried on a non-production database first. Never change the production schema while the old API still runs on it.
+Schema changes must go through migration files in the repo, tried on a non-production database first.
 
 ## Domain module (`TatraRidges.FrontEnd/src/domain/`)
 
@@ -111,7 +112,7 @@ firebase deploy --only hosting
 
 ## Files outside git
 
-Ignored, do not commit or print: `TatraRidges.FrontEnd/src/config.dev.json`, the leftover `TatraRidgesAPI/appsettings.json` (connection string with the password of the production Supabase `postgres` user — read only the host if needed, never the password) and `TatraRidgesAPI/*.PublishSettings` (Azure deploy credentials). Keep Supabase service role keys and database passwords out of the repo; the anon key and project URL are public by design.
+Ignored, do not commit or print: `TatraRidges.FrontEnd/src/config.dev.json`, the leftover `TatraRidgesAPI/appsettings.json`, if present (connection string with the password of the production Supabase `postgres` user — read only the host if needed, never the password) and `TatraRidgesAPI/*.PublishSettings` (Azure deploy credentials). Keep Supabase service role keys and database passwords out of the repo; the anon key and project URL are public by design.
 
 ## Conventions
 

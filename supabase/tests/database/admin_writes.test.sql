@@ -117,32 +117,29 @@ select results_eq(
 
 select results_eq(
 	$$ select r."ConsistentDirection", r."DifficultyId", d."Sign", r."Rappeling", r."RouteTypeId", r."RouteTime",
-			g."GuideId", g."Page", g."Volume"
+			r."GuideId", r."GuidePage", r."GuideVolume"
 		from public."Routes" r
-		join public."GuideDescriptions" g on g."Id" = r."GuideDescriptionId"
 		join public."DifficultyDetails" d on d."Id" = r."DifficultyDetailId"
-		where g."Number" = 'TEST-B' $$,
+		where r."GuideNumber" = 'TEST-B' $$,
 	$$ values (true, 3::smallint, '-'::varchar, true, 2::smallint, interval '01:30', 1::smallint, 15::smallint, 1::smallint) $$,
-	'the new route is stored with its guide description');
+	'the new route is stored with its guide reference');
 
 select results_eq(
 	$$ select p."AdjectiveId"::text from public."DescriptionAdjectivePairs" p
 		join public."Routes" r on r."Id" = p."RouteId"
-		join public."GuideDescriptions" g on g."Id" = r."GuideDescriptionId"
-		where g."Number" = 'TEST-B' order by p."Id" $$,
+		where r."GuideNumber" = 'TEST-B' order by p."Id" $$,
 	$$ values ('be'), ('_k'), ('_p') $$,
 	'one adjective per group, the highest rank, in group order');
 
 select results_eq(
 	$$ select a."Description", a."Warning" from public."AdditionalDescriptions" a
 		join public."Routes" r on r."Id" = a."RouteId"
-		join public."GuideDescriptions" g on g."Id" = r."GuideDescriptionId"
-		where g."Number" = 'TEST-B' $$,
+		where r."GuideNumber" = 'TEST-B' $$,
 	$$ values ('Luźne bloki'::text, true) $$,
 	'additional descriptions are stored');
 
-select is((select count(*) from public."GuideDescriptions" where "Number" in ('TEST-A', 'TEST-C', 'TEST-D')), 0::bigint,
-	'deleting the point removed its routes with their guide descriptions, failed routes left nothing');
+select is((select count(*) from public."Routes" where "GuideNumber" in ('TEST-A', 'TEST-C', 'TEST-D')), 0::bigint,
+	'deleting the point removed its routes, failed routes left nothing');
 
 select is((select count(*) from public."PointsConnections" where 900002 in ("PointId1", "PointId2")), 0::bigint,
 	'deleting the point removed its ridges');

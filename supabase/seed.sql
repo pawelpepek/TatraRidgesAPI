@@ -62,22 +62,15 @@ insert into "PointsConnections" ("Id", "PointId1", "PointId2", "Ridge") values
     (4, 4, 5, true),
     (5, 3, 6, true);
 
-insert into "GuideDescriptions" ("Id", "GuideId", "Number", "Page", "Volume") values
-    (1, 1, '31 C,E', 57, 1),
-    (2, 1, '41 R', 73, 1),
-    (3, 1, '44 B-E', 77, 1),
-    (4, 1, '44 A', 77, 1),
-    (5, 1, '41 O,P', 73, 1);
-
 insert into "Routes"
     ("Id", "PointsConnectionId", "ConsistentDirection", "DifficultyId", "DifficultyDetailId",
-     "Rappeling", "RouteTypeId", "GuideDescriptionId", "RouteTime")
+     "Rappeling", "RouteTypeId", "RouteTime", "GuideId", "GuideNumber", "GuidePage", "GuideVolume")
 values
-    (1, 1, true, 1, 0, false, 2, 1, '00:10:00'),
-    (2, 2, true, 0, 1, false, 2, 2, '00:10:00'),
-    (3, 3, false, 2, 0, false, 2, 3, '01:15:00'),
-    (4, 4, false, 2, 0, false, 2, 4, '01:15:00'),
-    (5, 5, false, 1, 0, false, 2, 5, '00:08:00');
+    (1, 1, true, 1, 0, false, 2, '00:10:00', 1, '31 C,E', 57, 1),
+    (2, 2, true, 0, 1, false, 2, '00:10:00', 1, '41 R', 73, 1),
+    (3, 3, false, 2, 0, false, 2, '01:15:00', 1, '44 B-E', 77, 1),
+    (4, 4, false, 2, 0, false, 2, '01:15:00', 1, '44 A', 77, 1),
+    (5, 5, false, 1, 0, false, 2, '00:08:00', 1, '41 O,P', 73, 1);
 
 insert into "DescriptionAdjectivePairs" ("RouteId", "AdjectiveId") values
     (1, '_e'), (1, 'dz'),
@@ -88,7 +81,6 @@ insert into "DescriptionAdjectivePairs" ("RouteId", "AdjectiveId") values
 select setval(pg_get_serial_sequence('"Roles"', 'Id'), (select max("Id") from "Roles"));
 select setval(pg_get_serial_sequence('"MountainPoints"', 'Id'), (select max("Id") from "MountainPoints"));
 select setval(pg_get_serial_sequence('"PointsConnections"', 'Id'), (select max("Id") from "PointsConnections"));
-select setval(pg_get_serial_sequence('"GuideDescriptions"', 'Id'), (select max("Id") from "GuideDescriptions"));
 select setval(pg_get_serial_sequence('"Routes"', 'Id'), (select max("Id") from "Routes"));
 
 -- Local admin for signing in to the app (local Supabase only, not a real account):

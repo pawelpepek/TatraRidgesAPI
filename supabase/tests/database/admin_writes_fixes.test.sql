@@ -28,24 +28,23 @@ select lives_ok($$ select public.add_route(json_build_object(
 
 reset role;
 
-select is((select r."RouteTime" from public."Routes" r
-		join public."GuideDescriptions" g on g."Id" = r."GuideDescriptionId" where g."Number" = 'TEST-S'),
+select is((select "RouteTime" from public."Routes" where "GuideNumber" = 'TEST-S'),
 	interval '01:30', 'the route time is stored in whole minutes');
 
--- A route on the other ridge that shares the guide description (the schema allows it).
+-- A route on the other ridge with the same guide reference.
 insert into public."Routes" ("Id", "PointsConnectionId", "ConsistentDirection", "DifficultyId",
-	"DifficultyDetailId", "Rappeling", "RouteTypeId", "GuideDescriptionId", "RouteTime")
+	"DifficultyDetailId", "Rappeling", "RouteTypeId", "RouteTime",
+	"GuideId", "GuideNumber", "GuidePage", "GuideVolume")
 select 900001, 900002, true, r."DifficultyId", r."DifficultyDetailId", false, r."RouteTypeId",
-	r."GuideDescriptionId", interval '1 hour'
-from public."Routes" r
-join public."GuideDescriptions" g on g."Id" = r."GuideDescriptionId" where g."Number" = 'TEST-S';
+	interval '1 hour', r."GuideId", r."GuideNumber", r."GuidePage", r."GuideVolume"
+from public."Routes" r where r."GuideNumber" = 'TEST-S';
 
 set local role authenticated;
 select lives_ok($$ select public.delete_point(900001) $$, 'the admin deletes a point');
 reset role;
 
-select is((select count(*) from public."Routes" where "Id" = 900001), 1::bigint,
-	'a route of another ridge sharing the guide description survives');
+select is((select count(*) from public."Routes" where "GuideNumber" = 'TEST-S'), 1::bigint,
+	'the routes of the deleted point are gone, a route of another ridge with the same guide reference survives');
 select is((select count(*) from public."PointsConnections" where "Id" = 900001), 0::bigint,
 	'the ridges of the deleted point are gone');
 

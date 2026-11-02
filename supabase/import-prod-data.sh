@@ -15,6 +15,11 @@ cd "$(dirname "$0")/.."
 LOCAL_DB=supabase_db_tatra-ridges
 DUMP=/tmp/prod-data.sql
 
+if [ -z "${PROD_DB_CONNECTION:-}" ] && [ ! -f TatraRidgesAPI/appsettings.json ]; then
+	echo "Brak TatraRidgesAPI/appsettings.json: ustaw PROD_DB_CONNECTION (Host=...;Port=...;Database=...;Username=...;Password=...)." >&2
+	exit 1
+fi
+
 connection=${PROD_DB_CONNECTION:-$(python3 -c '
 import json
 with open("TatraRidgesAPI/appsettings.json", encoding="utf-8-sig") as f:
