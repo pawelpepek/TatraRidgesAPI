@@ -35,7 +35,7 @@ const MountainMap: React.FC<React.PropsWithChildren> = props => {
 	}, [])
 
 	// The map is passed to the ref once it exists, before its layers are added,
-	// so the pane used by CirclePoint is ready in time.
+	// so the pane used by PointSymbol is ready in time.
 	const onMapCreated = useCallback((m: Map | null) => {
 		if (m === null) {
 			return
@@ -51,8 +51,8 @@ const MountainMap: React.FC<React.PropsWithChildren> = props => {
 		m.on("moveend", onChangeMap)
 		m.on("zoomend", onChangeMap)
 		m.on("keydown", onKeyDown)
-		if (m.getPane("circleMarkerPane") === undefined) {
-			m.createPane("circleMarkerPane")
+		if (m.getPane("pointsPane") === undefined) {
+			m.createPane("pointsPane")
 		}
 		return () => {
 			m.off("moveend", onChangeMap)
