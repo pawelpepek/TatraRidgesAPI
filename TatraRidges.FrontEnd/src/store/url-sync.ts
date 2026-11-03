@@ -1,6 +1,7 @@
 import type { AppDispatch, RootState } from "./index"
 import { getRidge, getSummaryForRoutes } from "./map-actions"
 import { pointsActions } from "./map-slice"
+import { centerActions } from "./center-slice"
 import {
 	formatUrlState,
 	parseUrlState,
@@ -50,6 +51,10 @@ const restore = async (store: UrlSyncStore, url: UrlState) => {
 	}
 	if (!(await dispatch(getRidge(from.id, to.id)))) {
 		return
+	}
+	// A link without the map view shows the whole route.
+	if (url.center === undefined) {
+		dispatch(centerActions.requestRouteFit())
 	}
 	const ridges = getState().map.ridgeInfo.ridgesContainer
 	const picked = pickRoutes(ridges, url.routes)

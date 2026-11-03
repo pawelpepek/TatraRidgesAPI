@@ -5,6 +5,7 @@ import { useSelector } from "react-redux"
 import StoreType from "../../../store/store-types"
 import { getRidge } from "../../../store/map-actions"
 import { pointsActions } from "../../../store/map-slice"
+import { centerActions } from "../../../store/center-slice"
 
 import classes from "./SearchManagePanel.module.css"
 import MapVersionPanel from "./MapVersionPanel"
@@ -18,9 +19,11 @@ const SearchManagePanel: React.FC = () => {
 	const pointFrom = useSelector((state: StoreType) => state.map.pointFrom)
 	const pointTo = useSelector((state: StoreType) => state.map.pointTo)
 
-	const clickHandler = () => {
+	const clickHandler = async () => {
 		if (pointFrom.name !== undefined && pointTo.name !== undefined) {
-			dispatch(getRidge(pointFrom.id, pointTo.id))
+			if (await dispatch(getRidge(pointFrom.id, pointTo.id))) {
+				dispatch(centerActions.requestRouteFit())
+			}
 		}
 	}
 	const clickClearHandler = () => {

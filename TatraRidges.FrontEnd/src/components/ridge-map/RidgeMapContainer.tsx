@@ -1,6 +1,7 @@
 import MountainMap from "./basics/MountainMap"
 import RidgesLinesContainer from "./RidgesLinesContainer"
 import RidgesPointsContainer from "./RidgesPointsContainer"
+import RouteFit from "./RouteFit"
 import React from "react"
 
 const RidgeMapContainer: React.FC = () => {
@@ -8,6 +9,7 @@ const RidgeMapContainer: React.FC = () => {
 		<MountainMap>
 			<RidgesPointsContainer />
 			<RidgesLinesContainer />
+			<RouteFit />
 		</MountainMap>
 	)
 }

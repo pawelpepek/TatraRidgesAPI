@@ -13,6 +13,8 @@ const initialState = {
 		zoom: 14,
 	},
 	mapVersion: fromUrl.mapVersion ?? 0,
+	// Raised to fit the map to the shown route.
+	routeFitRequest: 0,
 }
 
 const centerSlice = createSlice({
@@ -24,6 +26,9 @@ const centerSlice = createSlice({
 		},
 		setVersion(state, action) {
 			state.mapVersion = action.payload
+		},
+		requestRouteFit(state) {
+			state.routeFitRequest++
 		},
 	},
 })

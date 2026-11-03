@@ -33,6 +33,7 @@ interface StoreType {
 			zoom: number
 		},
 		mapVersion:number
+		routeFitRequest: number
 	}
 	routeForm: {
 		isRunning:boolean
