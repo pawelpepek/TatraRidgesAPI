@@ -16,15 +16,16 @@ const HelpPanel: React.FC = () => {
 				<p>
 					Żeby wyszukać połączenie graniowe pomiędzy dwoma
 					szczytami/przełęczami, należy zaznaczyć lewym przyciskiem myszy punkty
-					jeden po drugim.
+					jeden po drugim. Szczyty są oznaczone na mapie trójkątem, a przełęcze
+					znakiem )( ułożonym wzdłuż grani.
 				</p>
 				<img
-					alt='Zazaczanie punktu początkowego'
+					alt='Zaznaczanie punktu początkowego'
 					className={classes.img}
 					src={infoImg1}
 				/>
 				<img
-					alt='Zazaczanie punktu końcowego'
+					alt='Zaznaczanie punktu końcowego'
 					className={classes.img}
 					src={infoImg2}
 				/>
@@ -51,8 +52,8 @@ const HelpPanel: React.FC = () => {
 					</ol>
 				</span>
 				<p>
-					Jeśli istnieje więcej niż jeden wariant drogi, pojawi się ruszająca
-					się ikonka z liczbą dostępnych pozostałych wariantów.
+					Jeśli istnieje więcej niż jeden wariant drogi, przy odcinku pojawi się
+					ruszająca się ikonka z liczbą pozostałych wariantów (np. +1).
 				</p>
 				<img
 					alt='Ikonka alternatywnych wariantów'
