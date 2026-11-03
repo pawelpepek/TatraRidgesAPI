@@ -1,14 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit"
+import { parseUrlState } from "./url-state"
+
+// The map is created with the view from the address, if it has one.
+const fromUrl = parseUrlState(window.location.search)
 
 const initialState = {
-	value: {
+	value: fromUrl.center ?? {
 		coordinates: {
 			latitude: 49.179306,
 			longitude: 20.088444,
 		},
 		zoom: 14,
 	},
-	mapVersion: 0,
+	mapVersion: fromUrl.mapVersion ?? 0,
 }
 
 const centerSlice = createSlice({

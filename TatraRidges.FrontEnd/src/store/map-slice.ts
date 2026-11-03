@@ -42,6 +42,10 @@ const pointsSlice = createSlice({
 				state.pointTo = action.payload.point
 			}
 		},
+		setPoints(state, action) {
+			state.pointFrom = action.payload.from ?? ({} as MountainPoint)
+			state.pointTo = action.payload.to ?? ({} as MountainPoint)
+		},
 		toggleSelectedPoints(state) {
 			if (state.pointTo.hasOwnProperty("id")) {
 				const tempPoint = state.pointFrom
