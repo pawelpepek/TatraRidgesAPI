@@ -46,6 +46,17 @@ const pointsSlice = createSlice({
 			state.pointFrom = action.payload.from ?? ({} as MountainPoint)
 			state.pointTo = action.payload.to ?? ({} as MountainPoint)
 		},
+		// Picked by name: replaces one end; picking the other end's point
+		// swaps the ends.
+		setPoint(state, action) {
+			const point = action.payload.point as MountainPoint
+			const isFrom = action.payload.end === "from"
+			const other = isFrom ? state.pointTo : state.pointFrom
+			const current = isFrom ? state.pointFrom : state.pointTo
+			const otherValue = other.id === point.id ? current : other
+			state.pointFrom = isFrom ? point : otherValue
+			state.pointTo = isFrom ? otherValue : point
+		},
 		toggleSelectedPoints(state) {
 			if (state.pointTo.hasOwnProperty("id")) {
 				const tempPoint = state.pointFrom

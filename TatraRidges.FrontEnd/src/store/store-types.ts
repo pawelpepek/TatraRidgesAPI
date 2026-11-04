@@ -35,6 +35,10 @@ interface StoreType {
 		},
 		mapVersion:number
 		routeFitRequest: number
+		pointFocus: {
+			request: number
+			coordinates: Coordinates
+		}
 	}
 	routeForm: {
 		isRunning:boolean

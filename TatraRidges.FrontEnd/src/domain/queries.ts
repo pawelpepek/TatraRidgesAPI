@@ -24,6 +24,7 @@ export const getMountainPoints = (points: PointData[]): MountainPointDto[] =>
 		id: p.id,
 		pointTypeId: p.pointTypeId,
 		name: p.name,
+		alternativeName: p.altName || null,
 		evaluation: p.evaluation,
 		latitude: p.lat,
 		longitude: p.lng,

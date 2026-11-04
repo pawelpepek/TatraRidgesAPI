@@ -3,11 +3,12 @@ import deleteIcon from "../../img/trash.svg"
 import { MountainPoint } from "../../types"
 import RoundButton from "../../ui/RoundButton"
 import classes from "./PointLabel.module.css"
-import PointInfo from "./PointInfo"
+import PointSearch, { PointEnd } from "./PointSearch"
 import useAppDispatch from "../../../hooks/use-app-dispatch"
 
 export interface PointLabelProps {
 	deleteVisible?: boolean
+	end: PointEnd
 	point: MountainPoint
 }
 
@@ -18,7 +19,11 @@ const PointLabel: React.FC<PointLabelProps> = props => {
 
 	return (
 		<div className={classes.point}>
-			<PointInfo withButton={props.deleteVisible} point={props.point}/>
+			<PointSearch
+				end={props.end}
+				withButton={props.deleteVisible}
+				point={props.point}
+			/>
 			{props.deleteVisible && (
 				<RoundButton
 					className={classes.delete}

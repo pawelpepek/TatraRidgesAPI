@@ -1,4 +1,5 @@
 .point {
+	position: relative;
 	display: flex;
 	justify-items: center;
 	margin: 2px 0px;
@@ -7,12 +8,16 @@
 	border-radius: var(--input-border-radius);
 	font-size: 12px;
 	background-color: var(--color-surface);
-	cursor: pointer;
+	cursor: text;
 	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 .point:hover {
 	border-color: var(--color-text-muted);
 	box-shadow: var(--shadow-sm);
+}
+.point:focus-within {
+	border-color: var(--color-accent);
+	box-shadow: var(--focus-ring);
 }
 
 .delete {

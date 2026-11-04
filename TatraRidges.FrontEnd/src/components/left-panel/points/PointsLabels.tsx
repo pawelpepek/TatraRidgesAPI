@@ -10,8 +10,8 @@ const PointsLabels: React.FC<{ deleteVisible: boolean }> = props => {
 
 	return (
 		<div className={classes["points-div"]}>
-			<PointLabel point={pointFrom} />
-			<PointLabel point={pointTo} deleteVisible={props.deleteVisible} />
+			<PointLabel end='from' point={pointFrom} />
+			<PointLabel end='to' point={pointTo} deleteVisible={props.deleteVisible} />
 		</div>
 	)
 }

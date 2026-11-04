@@ -1,5 +1,6 @@
 export interface MountainPoint {
 	name: string
+	alternativeName?: string | null
 	latitude: number
 	longitude: number
 	id: number

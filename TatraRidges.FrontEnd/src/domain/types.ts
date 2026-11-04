@@ -103,6 +103,7 @@ export interface MountainPointDto {
 	id: number
 	pointTypeId: number
 	name: string
+	alternativeName: string | null
 	evaluation: number | null
 	latitude: number
 	longitude: number

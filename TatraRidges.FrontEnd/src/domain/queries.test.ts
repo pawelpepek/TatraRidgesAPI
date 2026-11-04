@@ -14,6 +14,7 @@ describe("getMountainPoints", () => {
 			id: 4,
 			pointTypeId: 2,
 			name: "P4",
+			alternativeName: null,
 			evaluation: null,
 			latitude: 49.203,
 			longitude: 20.03,

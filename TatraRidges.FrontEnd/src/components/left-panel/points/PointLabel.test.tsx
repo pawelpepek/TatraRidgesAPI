@@ -9,7 +9,7 @@ const point: MountainPoint = {
 	latitude: 50,
 	longitude: 20,
 }
-const pointLabel = <PointLabel point={point} />
+const pointLabel = <PointLabel end='to' point={point} />
 
 describe("PointInfo component", () => {
 	test("nothing", () => expect(true).toBe(true))

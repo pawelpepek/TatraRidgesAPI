@@ -15,6 +15,11 @@ const initialState = {
 	mapVersion: fromUrl.mapVersion ?? 0,
 	// Raised to fit the map to the shown route.
 	routeFitRequest: 0,
+	// Raised to show a point picked by name.
+	pointFocus: {
+		request: 0,
+		coordinates: { latitude: 0, longitude: 0 },
+	},
 }
 
 const centerSlice = createSlice({
@@ -29,6 +34,10 @@ const centerSlice = createSlice({
 		},
 		requestRouteFit(state) {
 			state.routeFitRequest++
+		},
+		requestPointFocus(state, action) {
+			state.pointFocus.request++
+			state.pointFocus.coordinates = action.payload
 		},
 	},
 })

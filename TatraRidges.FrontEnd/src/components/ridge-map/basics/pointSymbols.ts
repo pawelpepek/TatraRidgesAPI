@@ -1,8 +1,8 @@
 import L from "leaflet"
 import { ConnectionPoints, MountainPoint } from "../../types"
 
-const PEAK = 1
-const PASS = 2
+export const PEAK = 1
+export const PASS = 2
 
 const SIZE = 20
 
@@ -45,16 +45,16 @@ export const ridgeAngles = (connections: ConnectionPoints[]) => {
 
 // Drawn for a ridge running east-west: the arcs stand on the ridge
 // on both sides of the pass.
-const passSvg = (color: string) => {
+export const passSvg = (color: string) => {
 	const arcs = "M5 3Q9.5 10 5 17M15 3Q10.5 10 15 17"
 	return `<path d="${arcs}" fill="none" stroke="white" stroke-width="5" stroke-linecap="round"/>
 <path d="${arcs}" fill="none" stroke="${color}" stroke-width="2.5" stroke-linecap="round"/>`
 }
 
-const peakSvg = (color: string) =>
+export const peakSvg = (color: string) =>
 	`<path d="M10 2.5L18 16.5H2Z" fill="${color}" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>`
 
-const otherSvg = (color: string) =>
+export const otherSvg = (color: string) =>
 	`<circle cx="10" cy="10" r="6" fill="none" stroke="white" stroke-width="5"/>
 <circle cx="10" cy="10" r="6" fill="none" stroke="${color}" stroke-width="2.5"/>`
 

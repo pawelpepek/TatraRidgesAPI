@@ -2,6 +2,7 @@ import MountainMap from "./basics/MountainMap"
 import RidgesLinesContainer from "./RidgesLinesContainer"
 import RidgesPointsContainer from "./RidgesPointsContainer"
 import RouteFit from "./RouteFit"
+import PointFocus from "./PointFocus"
 import DataAttribution from "./DataAttribution"
 import React from "react"
 
@@ -11,6 +12,7 @@ const RidgeMapContainer: React.FC = () => {
 			<RidgesPointsContainer />
 			<RidgesLinesContainer />
 			<RouteFit />
+			<PointFocus />
 			<DataAttribution />
 		</MountainMap>
 	)
