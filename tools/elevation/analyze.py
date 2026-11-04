@@ -1,6 +1,6 @@
 """Dopasowuje punkty do modelu terenu i wyznacza linie grani z profilami.
 
-1. Szczyty: wspinaczka po wygładzonym modelu od położenia z bazy do najbliższego wierzchołka.
+1. Szczyty: wierzchołek modelu w pobliżu punktu z bazy, bliski i o wysokości zgodnej z bazą.
 2. Grań: najtańsza ścieżka po modelu, tania na grzbiecie (wzniesienie nad otoczeniem w kilku skalach),
    droga na zboczu, w żlebie i wyraźnie poniżej niższego z końców.
 3. Przełęcze: wcięcie grani między sąsiadami przełęczy, bliskie jej położeniu i wysokości z bazy.
@@ -23,7 +23,13 @@ import dem
 from config import CRS, POINTS, RIDGES, TATRA_DATA
 
 SUMMIT = 1
-SUMMIT_MAX_SHIFT = 80  # m
+SUMMIT_SEARCH = 45  # m: promień szukania wierzchołka wokół punktu z bazy
+SUMMIT_EDGE = 5  # m przy brzegu koła pomijane (tam zaczyna się zbocze sąsiedniej formy)
+SUMMIT_DISTANCE_WEIGHT = 0.4  # za metr odległości od punktu z bazy
+SUMMIT_LIDAR_TOLERANCE = 1.5  # m: o tyle szczyt w modelu może być niższy niż w bazie bez kary
+SUMMIT_BELOW_WEIGHT = 3  # za metr poniżej wysokości z bazy (ponad tolerancję)
+SUMMIT_ABOVE_WEIGHT = 1  # za metr powyżej wysokości z bazy
+SUMMIT_MAX_SHIFT = 80  # m, granica wspinaczki, gdy w promieniu SUMMIT_SEARCH nie ma wierzchołka
 PASS_SEARCH = 80  # m
 NOTCH_WINDOW = 8  # komórek ścieżki (ok. 8–11 m) po obu stronach
 PASS_HEIGHT_WEIGHT = 3  # metr różnicy wysokości waży tyle co 3 m odległości
@@ -41,6 +47,8 @@ LINE_TOLERANCE = 1.0  # m: usuwa schodki siatki, zakręty grani zostają
 REVIEW_RATIO = 1.4  # długość granią względem prostej
 REVIEW_BELOW = 15  # m poniżej niższego końca
 REVIEW_EDGE = 0.2  # udział grani przy braku danych
+REVIEW_SUMMIT_RADIUS = 40  # m od szczytu wzdłuż grani...
+REVIEW_SUMMIT_BELOW = 3  # ...grań wyżej niż szczyt o więcej niż tyle metrów
 
 to_pl = Transformer.from_crs("EPSG:4326", CRS, always_xy=True)
 to_wgs = Transformer.from_crs(CRS, "EPSG:4326", always_xy=True)
@@ -91,8 +99,45 @@ def ridge_path(a, b):
     return win, path
 
 
+def find_summit(p, evaluation):
+    """Wierzchołek w promieniu SUMMIT_SEARCH m: spośród lokalnych szczytów modelu (bez brzegu koła, gdzie zaczyna się
+    zbocze sąsiedniej, wyższej formy) ten bliski i o wysokości zgodnej z bazą. Najbliższe wzniesienie bywa niższym
+    garbem obok prawdziwego wierzchołka (Mały Kozi Wierch: garb 2219,7 m, szczyt 2225,6 m 30 m dalej)."""
+    r = SUMMIT_SEARCH
+    win = dem.read(p[0] - r - 4, p[1] - r - 4, p[0] + r + 5, p[1] + r + 5)
+    r0, c0 = win.cell(*p)
+    if not win.inside(r0, c0):
+        return None
+    smooth = ndimage.gaussian_filter(filled(win.z), 1.5)
+    peaks = (smooth == ndimage.maximum_filter(smooth, size=7)) & ~np.isnan(win.z)
+    candidates = []
+    for row, col in zip(*np.nonzero(peaks)):
+        d = math.hypot(row - r0, col - c0)
+        if d > r - SUMMIT_EDGE:
+            continue
+        # Najwyższa surowa komórka w promieniu 3 m od szczytu wygładzonego modelu
+        window = np.nan_to_num(win.z[row - 3 : row + 4, col - 3 : col + 4], nan=-1e9)
+        dr, dc = np.unravel_index(np.argmax(window), window.shape)
+        top = (row + dr - 3, col + dc - 3)
+        z = float(win.z[top])
+        if evaluation is None:
+            mismatch = -z  # bez wysokości w bazie: najwyższy
+        else:
+            # Skaner rzadko trafia w sam czubek, więc szczyt w modelu bywa trochę niższy niż w bazie: to nic.
+            # Wyraźnie niższy to raczej garb obok wierzchołka, wyższy to raczej niedokładna wysokość w bazie
+            mismatch = SUMMIT_BELOW_WEIGHT * max(0.0, evaluation - z - SUMMIT_LIDAR_TOLERANCE) + SUMMIT_ABOVE_WEIGHT * max(
+                0.0, z - evaluation
+            )
+        candidates.append((SUMMIT_DISTANCE_WEIGHT * d + mismatch, top, z))
+    if not candidates:
+        return None
+    _, top, z = min(candidates)
+    return win.xy(*top), z
+
+
 def climb(p):
-    """Wspinaczka po wygładzonym modelu do najbliższego wierzchołka; potem najwyższa surowa komórka w promieniu 3 m."""
+    """Wspinaczka po wygładzonym modelu do najbliższego wierzchołka; potem najwyższa surowa komórka w promieniu 3 m.
+    Zapas, gdy w promieniu SUMMIT_SEARCH nie ma wierzchołka."""
     r = SUMMIT_MAX_SHIFT + 10
     win = dem.read(p[0] - r, p[1] - r, p[0] + r, p[1] + r)
     row, col = r0, c0 = win.cell(*p)
@@ -159,7 +204,7 @@ def main():
         win = dem.read(p["xy"][0] - 1, p["xy"][1] - 1, p["xy"][0] + 2, p["xy"][1] + 2)
         p["covered"] = not np.isnan(win.z[1, 1])
         if p["covered"] and p["pointTypeId"] == SUMMIT:
-            top = climb(p["xy"])
+            top = find_summit(p["xy"], p["evaluation"]) or climb(p["xy"])
             if top:
                 p["lidar"], p["zLidar"] = top
             else:
@@ -225,6 +270,11 @@ def main():
             reasons.append(f"schodzi {below:.0f} m poniżej niższego końca")
         if near_edge > REVIEW_EDGE:
             reasons.append(f"{near_edge:.0%} przy braku danych")
+        # Tuż przy szczycie grań wyżej niż on sam: punkt stoi raczej na garbie obok wierzchołka
+        near = int(REVIEW_SUMMIT_RADIUS / PROFILE_STEP) + 1
+        for end, p in ((profile[:near], p1), (profile[::-1][:near], p2)):
+            if p["pointTypeId"] == SUMMIT and end.max() - end[0] > REVIEW_SUMMIT_BELOW:
+                reasons.append(f"{end.max() - end[0]:.0f} m obok szczytu {p['name']} grań jest wyżej niż on")
         out_ridges.append(
             {
                 "id": r["id"],
