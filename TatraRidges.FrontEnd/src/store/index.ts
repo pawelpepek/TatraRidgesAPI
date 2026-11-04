@@ -5,6 +5,7 @@ import uiReducer from "./ui-slice"
 import centerReducer from "./center-slice"
 import routeFormReducer from "./route-form-slice"
 import loginFormReducer from "./login-form.slice"
+import ridgeGeometryReducer from "./ridge-geometry-slice"
 
 
 const store = configureStore({
@@ -13,7 +14,8 @@ const store = configureStore({
 		ui: uiReducer,
 		center:centerReducer,
 		routeForm:routeFormReducer,
-		loginForm:loginFormReducer
+		loginForm:loginFormReducer,
+		ridgeGeometry: ridgeGeometryReducer,
 	},
 })
 

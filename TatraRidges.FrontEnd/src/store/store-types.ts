@@ -5,6 +5,7 @@ import {
 } from "../components/types"
 
 import { Adjective, Difficulty, Guide, RidgeAllInformation, RouteType } from "./routeTypes"
+import { RidgeGeometry } from "./ridge-geometry"
 
 interface StoreType {
 	adminMode: { value: boolean }
@@ -59,6 +60,9 @@ interface StoreType {
 		email: string
 		password: string
 		isFilled: boolean
+	}
+	ridgeGeometry: {
+		byId: Record<number, RidgeGeometry>
 	}
 }
 

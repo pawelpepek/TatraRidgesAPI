@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Granie z LIDAR</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+	:root {
+		--bg: #ffffff;
+		--fg: #1d1d1b;
+		--muted: #6b6b66;
+		--line: #dedcd6;
+		--raw: #b3261e;
+		--almost: #e08a1e;
+		--around: #2f6db5;
+		--old: #8a8a85;
+		--variant: #1d1d1b;
+	}
+	html, body { margin: 0; height: 100%; background: var(--bg); color: var(--fg); font: 14px/1.4 system-ui, sans-serif; }
+	#app { display: grid; grid-template-rows: 1fr auto; grid-template-columns: minmax(0, 1fr); height: 100%; }
+	#map { min-height: 60vh; }
+	#panel { border-top: 1px solid var(--line); padding: 10px 16px 14px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; }
+	#panel header { display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: baseline; }
+	#title { font-weight: 600; }
+	.muted { color: var(--muted); }
+	.controls { display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: center; }
+	.controls label { display: flex; gap: 6px; align-items: center; }
+	#legend { display: flex; flex-wrap: wrap; gap: 4px 16px; }
+	#legend span::before { content: ""; display: inline-block; width: 18px; height: 3px; margin-right: 6px; vertical-align: middle; background: var(--c); }
+	#legend span.dashed::before { background: repeating-linear-gradient(90deg, var(--c) 0 5px, transparent 5px 8px); }
+	#chartBox { display: flex; align-items: flex-start; }
+	#chartBox[hidden] { display: none; }
+	#chartScroll { overflow-x: auto; flex: 0 1 auto; min-width: 0; cursor: grab; }
+	#chart, #axis { display: block; }
+	button { font: inherit; padding: 2px 10px; }
+</style>
+</head>
+<body>
+<div id="app">
+	<div id="map"></div>
+	<section id="panel">
+		<div class="controls">
+			<label>Łagodzenie linii: tolerancja <input id="tol" type="range" min="0" max="40" step="1" value="25"> <span id="tolv"></span> m</label>
+			<label>zaokrąglenie <input id="round" type="range" min="0" max="4" step="1" value="4"> <span id="roundv"></span></label>
+			<label><input id="showStraight" type="checkbox"> proste (obecnie)</label>
+			<label><input id="showExact" type="checkbox"> grań dokładnie</label>
+			<span id="lineStats" class="muted"></span>
+		</div>
+		<header>
+			<span id="title">Kliknij dwa punkty, żeby wyznaczyć trasę granią</span>
+			<button id="reset">Wyczyść trasę</button>
+		</header>
+		<div class="controls">
+			<label>Prawie ściśle granią: okno <input id="w1" type="range" min="4" max="80" step="2" value="24"> <span id="w1v"></span> m</label>
+			<label>Obchodząc grań: okno <input id="w2" type="range" min="20" max="300" step="10" value="120"> <span id="w2v"></span> m</label>
+			<label>Skala wykresu (1:1) <input id="scale" type="range" min="0.1" max="10" step="0.05" value="0.5"> <span id="scalev"></span> px/m</label>
+			<span class="muted">kółko myszy nad wykresem: powiększenie, przeciąganie: przesuwanie</span>
+		</div>
+		<div id="legend">
+			<span style="--c: var(--old)" class="dashed">obecny wykres (wysokości punktów)</span>
+			<span style="--c: var(--raw)">ściśle granią (LIDAR)</span>
+			<span style="--c: var(--almost)">prawie ściśle granią</span>
+			<span style="--c: var(--around)">obchodząc grań</span>
+			<span style="--c: var(--variant)" class="dashed">wg typu pierwszego wariantu odcinka</span>
+		</div>
+		<div id="chartBox" hidden>
+			<div id="chartScroll"><canvas id="chart"></canvas></div>
+			<canvas id="axis"></canvas>
+		</div>
+		<div id="stats" class="muted"></div>
+	</section>
+</div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+const ROUTE_TYPE = { 1: "Ściśle granią", 2: "Prawie ściśle granią", 3: "Obchodząc grań" }
+const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim()
+const $ = id => document.getElementById(id)
+
+const map = L.map("map", { maxZoom: 17 }).setView([49.21, 20.05], 12)
+L.tileLayer("https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png", {
+	maxZoom: 17,
+	attribution: '&copy; OpenStreetMap contributors, SRTM | &copy; OpenTopoMap (CC-BY-SA) | NMT &copy; GUGiK',
+}).addTo(map)
+
+// Lokalny serwer (python -m http.server) zrywa czasem równoległe połączenia: pobieramy po kolei, z ponowieniem
+const getJson = (url, attempt = 1) =>
+	fetch(url, { cache: "no-cache" })
+		.then(r => r.json())
+		.catch(e => (attempt < 8 ? new Promise(r => setTimeout(r, 500 * attempt)).then(() => getJson(url, attempt + 1)) : Promise.reject(e)))
+
+getJson("../data/tatra-data.json")
+	.then(data => getJson("../data/ridges.json").then(ridges => init(data, ridges)))
+	.catch(e => { document.getElementById("lineStats").textContent = `Nie udało się wczytać danych (${e}); odśwież stronę.` })
+
+// Linie w metrach lokalnych (wystarczające na obszarze Tatr)
+const LAT0 = 49.2, M_LAT = 111132, M_LNG = 111320 * Math.cos((LAT0 * Math.PI) / 180)
+const toXY = ([lat, lng]) => [lng * M_LNG, lat * M_LAT]
+const toLatLng = ([x, y]) => [y / M_LAT, x / M_LNG]
+
+// Douglas–Peucker: zostawia wierzchołki odchylone od uproszczonej linii o więcej niż tol metrów
+function simplify(pts, tol) {
+	if (pts.length < 3 || tol <= 0) return pts
+	const keep = new Uint8Array(pts.length)
+	keep[0] = keep[pts.length - 1] = 1
+	const stack = [[0, pts.length - 1]]
+	while (stack.length) {
+		const [i, j] = stack.pop()
+		const [ax, ay] = pts[i], [bx, by] = pts[j]
+		const dx = bx - ax, dy = by - ay, len = Math.hypot(dx, dy) || 1
+		let best = -1, bestD = tol
+		for (let k = i + 1; k < j; k++) {
+			const d = Math.abs(dy * (pts[k][0] - ax) - dx * (pts[k][1] - ay)) / len
+			if (d > bestD) { bestD = d; best = k }
+		}
+		if (best > 0) { keep[best] = 1; stack.push([i, best], [best, j]) }
+	}
+	return pts.filter((_, k) => keep[k])
+}
+// Bez zawracania: wierzchołek zostaje, jeśli wzdłuż prostej między końcami leży dalej niż poprzedni
+// (jak forward_only w export_sql.py), więc przy punktach nie ma haczyków ani pętli
+function forwardOnly(pts, minProgress = 2) {
+	const [ax, ay] = pts[0], [bx, by] = pts[pts.length - 1]
+	const dx = bx - ax, dy = by - ay, len = Math.hypot(dx, dy)
+	if (!len) return [pts[0], pts[pts.length - 1]]
+	const kept = [pts[0]]
+	let last = 0
+	for (const p of pts.slice(1, -1)) {
+		const along = ((p[0] - ax) * dx + (p[1] - ay) * dy) / len
+		if (along >= last + minProgress && along <= len - minProgress) { kept.push(p); last = along }
+	}
+	kept.push(pts[pts.length - 1])
+	return kept
+}
+// Chaikin: ścina narożniki, końce zostają w punktach
+function round(pts, n) {
+	for (let it = 0; it < n && pts.length > 2; it++) {
+		const out = [pts[0]]
+		for (let k = 0; k < pts.length - 1; k++) {
+			const [ax, ay] = pts[k], [bx, by] = pts[k + 1]
+			if (k > 0) out.push([0.75 * ax + 0.25 * bx, 0.75 * ay + 0.25 * by])
+			if (k < pts.length - 2) out.push([0.25 * ax + 0.75 * bx, 0.25 * ay + 0.75 * by])
+		}
+		out.push(pts[pts.length - 1])
+		pts = out
+	}
+	return pts
+}
+
+function init(data, ridges) {
+	const byId = new Map(data.points.map(p => [p.id, { ...p, current: [p.lat, p.lng] }]))
+	const computed = new Map(ridges.map(r => [r.id, r]))
+	const straightLayer = L.layerGroup().addTo(map)
+	const exactLayer = L.layerGroup()
+	const ridgeLayer = L.layerGroup().addTo(map)
+	const routeLayer = L.layerGroup().addTo(map)
+	const pointLayer = L.layerGroup().addTo(map)
+
+	// Proste między punktami: dla grani bez danych zawsze (cieńsze), dla pozostałych na życzenie
+	const straight = []
+	for (const r of data.ridges) {
+		const a = byId.get(r.pointId1), b = byId.get(r.pointId2)
+		const has = computed.has(r.id)
+		const line = L.polyline([a.current, b.current], has
+			? { color: "#555", weight: 1.5, dashArray: "4 4", opacity: 0.8 }
+			: { color: "#3388ff", weight: 3, opacity: 0.45 })
+			.bindTooltip(`${a.name} – ${b.name}${has ? "" : "<br>brak danych LIDAR"}`)
+		if (!has) line.addTo(ridgeLayer)
+		else straight.push(line)
+	}
+	$("showStraight").onchange = e => straight.forEach(l => (e.target.checked ? l.addTo(straightLayer) : straightLayer.removeLayer(l)))
+
+	for (const r of ridges) {
+		L.polyline(r.line, { color: "#b3261e", weight: 1.2, opacity: 0.9 }).addTo(exactLayer)
+	}
+	$("showExact").onchange = e => (e.target.checked ? exactLayer.addTo(map) : map.removeLayer(exactLayer))
+
+	const smoothLines = ridges.map(r => {
+		const a = byId.get(r.pointId1), b = byId.get(r.pointId2)
+		const review = r.review.length ? `<br><b>Do przejrzenia:</b> ${r.review.join(", ")}` : ""
+		return {
+			ridge: r,
+			xy: r.line.map(toXY),
+			layer: L.polyline(r.line, { color: r.review.length ? "#e07b00" : "#3388ff", weight: 3 })
+				.bindTooltip(`${a.name} – ${b.name}<br>${r.length} m granią, ${r.straight} m prosto${review}`)
+				.addTo(ridgeLayer),
+		}
+	})
+	function redrawLines() {
+		const tol = +$("tol").value, n = +$("round").value
+		$("tolv").textContent = tol
+		$("roundv").textContent = n
+		let vertices = 0
+		for (const s of smoothLines) {
+			const pts = round(forwardOnly(simplify(s.xy, tol)), n)
+			vertices += pts.length
+			s.layer.setLatLngs(pts.map(toLatLng))
+		}
+		const review = ridges.filter(r => r.review.length).length
+		$("lineStats").textContent = `${ridges.length} grani z LIDAR (${review} do przejrzenia, pomarańczowe), ${data.ridges.length - ridges.length} bez danych; ${vertices} wierzchołków`
+	}
+	$("tol").oninput = $("round").oninput = redrawLines
+	redrawLines()
+
+	for (const p of byId.values()) {
+		L.circleMarker(p.current, { radius: 3.5, color: "#1f5fa8", weight: 1.5, fillColor: "#fff", fillOpacity: 1 })
+			.bindTooltip(`${p.name} ${p.evaluation ?? ""}`)
+			.on("click", () => pick(p))
+			.addTo(pointLayer)
+	}
+
+	// Graf grani i trasa między dwoma punktami
+	const adjacency = new Map()
+	for (const r of data.ridges) {
+		for (const [a, b] of [[r.pointId1, r.pointId2], [r.pointId2, r.pointId1]]) {
+			if (!adjacency.has(a)) adjacency.set(a, [])
+			adjacency.get(a).push({ to: b, ridge: r })
+		}
+	}
+	function findPath(from, to) {
+		const prev = new Map([[from, null]])
+		const queue = [from]
+		while (queue.length) {
+			const id = queue.shift()
+			if (id === to) break
+			for (const edge of adjacency.get(id) || []) {
+				if (!prev.has(edge.to)) {
+					prev.set(edge.to, { id, edge })
+					queue.push(edge.to)
+				}
+			}
+		}
+		if (!prev.has(to)) return null
+		const steps = []
+		for (let id = to; prev.get(id); id = prev.get(id).id) steps.unshift({ from: prev.get(id).id, to: id, ridge: prev.get(id).edge.ridge })
+		return steps
+	}
+
+	let picked = []
+	let route = null
+	function pick(p) {
+		picked = picked.length === 1 ? [picked[0], p] : [p]
+		route = null
+		routeLayer.clearLayers()
+		if (picked.length === 2) {
+			route = findPath(picked[0].id, picked[1].id)
+			for (const s of route || []) {
+				const r = computed.get(s.ridge.id)
+				const a = byId.get(s.ridge.pointId1), b = byId.get(s.ridge.pointId2)
+				L.polyline(r ? r.line : [a.current, b.current], { color: "#b3261e", weight: 6, opacity: 0.45 }).addTo(routeLayer)
+			}
+		}
+		draw()
+	}
+	$("reset").onclick = () => { picked = []; route = null; routeLayer.clearLayers(); draw() }
+	for (const id of ["w1", "w2", "scale"]) $(id).oninput = draw
+
+	// Profil
+	const marker = L.circleMarker([0, 0], { radius: 6, color: "#000", weight: 2, fillOpacity: 0 })
+
+	function minMax(z, w, step, f) {
+		const half = Math.max(1, Math.round(w / 2 / step))
+		return z.map((_, i) => {
+			let v = z[i]
+			for (let j = Math.max(0, i - half); j <= Math.min(z.length - 1, i + half); j++) v = f(v, z[j])
+			return v
+		})
+	}
+	function smooth(z, n) {
+		return z.map((_, i) => {
+			let s = 0, c = 0
+			for (let j = Math.max(0, i - n); j <= Math.min(z.length - 1, i + n); j++) { s += z[j]; c++ }
+			return s / c
+		})
+	}
+	// Otwarcie (ścina wypukłości węższe niż okno), lekkie wygładzenie,
+	// a przy końcach odcinka powrót do grani, bo odcinek kończy się na punkcie
+	function soften(dist, z, w, step) {
+		if (w <= 0) return z
+		const opened = smooth(minMax(minMax(z, w, step, Math.min), w, step, Math.max), 2)
+		const total = dist[dist.length - 1]
+		return z.map((v, i) => {
+			const t = Math.min(1, Math.min(dist[i], total - dist[i]) / (w / 2))
+			return t * opened[i] + (1 - t) * v
+		})
+	}
+	function ascent(z, threshold = 5) {
+		let up = 0, down = 0, ref = z[0]
+		for (const v of z) {
+			if (v - ref >= threshold) { up += v - ref; ref = v }
+			else if (ref - v >= threshold) { down += ref - v; ref = v }
+		}
+		return [Math.round(up), Math.round(down)]
+	}
+	// Położenie na dokładnej linii grani w danym ułamku jej długości
+	function along(line, fraction) {
+		const xy = line.map(toXY)
+		const seg = xy.slice(1).map((p, k) => Math.hypot(p[0] - xy[k][0], p[1] - xy[k][1]))
+		let target = fraction * seg.reduce((s, v) => s + v, 0)
+		for (let k = 0; k < seg.length; k++) {
+			if (target <= seg[k] || k === seg.length - 1) {
+				const t = seg[k] ? Math.min(1, target / seg[k]) : 0
+				return toLatLng([xy[k][0] + t * (xy[k + 1][0] - xy[k][0]), xy[k][1] + t * (xy[k + 1][1] - xy[k][1])])
+			}
+			target -= seg[k]
+		}
+		return line[0]
+	}
+
+	function buildSeries() {
+		const w1 = +$("w1").value, w2 = +$("w2").value
+		$("w1v").textContent = w1
+		$("w2v").textContent = w2
+		const out = { dist: [], raw: [], almost: [], around: [], variant: [], where: [], old: [{ x: 0, y: byId.get(route[0].from).evaluation }], missing: 0 }
+		let offset = 0
+		for (const s of route) {
+			const r = computed.get(s.ridge.id)
+			const a = byId.get(s.from), b = byId.get(s.to)
+			let dist, z, where
+			if (r) {
+				const forward = r.pointId1 === s.from
+				z = forward ? r.z : [...r.z].reverse()
+				const len = r.length
+				dist = z.map((_, i) => Math.min(len, i * r.profileStep))
+				const line = forward ? r.line : [...r.line].reverse()
+				where = dist.map(d => () => along(line, d / len))
+			} else {
+				// Odcinek bez danych: prosta między wysokościami punktów, jak dotąd
+				const len = map.distance(a.current, b.current)
+				dist = [0, len]
+				z = [a.evaluation, b.evaluation]
+				where = [() => a.current, () => b.current]
+				out.missing++
+			}
+			const step = r ? r.profileStep : dist[1]
+			const almost = r ? soften(dist, z, w1, step) : z
+			const around = r ? soften(dist, z, w2, step) : z
+			const type = s.ridge.routes[0]?.routeTypeId
+			const variant = type === 3 ? around : type === 2 ? almost : z
+			for (let i = 0; i < dist.length; i++) {
+				out.dist.push(offset + dist[i])
+				out.raw.push(z[i]); out.almost.push(almost[i]); out.around.push(around[i]); out.variant.push(variant[i])
+				out.where.push(where[i])
+			}
+			offset += dist[dist.length - 1]
+			out.old.push({ x: offset, y: b.evaluation })
+		}
+		return out
+	}
+
+	const canvas = $("chart"), axis = $("axis"), box = $("chartBox")
+	let geometry = null
+	function sizeCanvas(c, w, h) {
+		const dpr = window.devicePixelRatio || 1
+		c.style.width = `${w}px`
+		c.style.height = `${h}px`
+		c.width = Math.round(w * dpr)
+		c.height = Math.round(h * dpr)
+		const ctx = c.getContext("2d")
+		ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+		ctx.clearRect(0, 0, w, h)
+		ctx.font = "11px system-ui"
+		return ctx
+	}
+
+	function draw() {
+		const scale = +$("scale").value
+		$("scalev").textContent = scale
+		box.hidden = !route
+		geometry = null
+		if (picked.length === 0) { $("title").textContent = "Kliknij dwa punkty, żeby wyznaczyć trasę granią"; $("stats").textContent = ""; return }
+		if (picked.length === 1) { $("title").textContent = `Od: ${picked[0].name} — kliknij punkt końcowy`; $("stats").textContent = ""; return }
+		if (!route) { $("title").textContent = `Brak połączenia granią: ${picked[0].name} – ${picked[1].name}`; $("stats").textContent = ""; return }
+
+		const s = buildSeries()
+		$("title").textContent = `${picked[0].name} – ${picked[1].name}: ${route.length} odc.`
+		const [up, down] = ascent(s.raw), [up1] = ascent(s.almost), [up2] = ascent(s.around)
+		const types = route.map(r => ROUTE_TYPE[r.ridge.routes[0]?.routeTypeId] || "?")
+		$("stats").textContent =
+			`Długość ${(s.dist.at(-1) / 1000).toFixed(2)} km. Podejścia ściśle granią ${up} m, zejścia ${down} m; prawie ściśle ${up1} m; obchodząc ${up2} m. ` +
+			(s.missing ? `Odcinki bez danych LIDAR: ${s.missing} (proste). ` : "") +
+			`Typy odcinków: ${types.join(", ")}.`
+
+		// Ta sama skala w poziomie i w pionie: krótka trasa daje krótki wykres, długą się przewija
+		const pad = { l: 8, r: 8, t: 8, b: 22 }
+		const xMax = s.dist.at(-1)
+		const all = [...s.raw, ...s.old.map(p => p.y)].filter(v => v != null)
+		const yMin = Math.floor((Math.min(...all) - 10) / 20) * 20, yMax = Math.ceil((Math.max(...all) + 10) / 20) * 20
+		const W = pad.l + xMax * scale + pad.r
+		const H = pad.t + (yMax - yMin) * scale + pad.b
+		const X = d => pad.l + d * scale
+		const Y = z => pad.t + (yMax - z) * scale
+		geometry = { s, X }
+
+		const ctx = sizeCanvas(canvas, W, H)
+		const axisCtx = sizeCanvas(axis, 52, H)
+		ctx.fillStyle = axisCtx.fillStyle = css("--muted")
+		ctx.strokeStyle = css("--line")
+		ctx.lineWidth = 1
+		const range = yMax - yMin
+		const step = range * scale > 200 ? (range > 300 ? 100 : 50) : range > 120 ? 50 : 20
+		for (let z = Math.ceil(yMin / step) * step; z <= yMax; z += step) {
+			ctx.beginPath(); ctx.moveTo(pad.l, Y(z)); ctx.lineTo(W - pad.r, Y(z)); ctx.stroke()
+			axisCtx.fillText(`${z} m`, 4, Y(z) + 4)
+		}
+		const xStep = [100, 200, 500, 1000, 2000].find(v => v * scale >= 80) || 5000
+		for (let d = 0; d <= xMax; d += xStep) ctx.fillText(d >= 1000 ? `${d / 1000} km` : `${d} m`, X(d) - 8, H - 6)
+
+		const line = (xs, ys, color, width, dash = []) => {
+			ctx.strokeStyle = color; ctx.lineWidth = width; ctx.setLineDash(dash)
+			ctx.beginPath()
+			xs.forEach((x, i) => (i ? ctx.lineTo(X(x), Y(ys[i])) : ctx.moveTo(X(x), Y(ys[i]))))
+			ctx.stroke(); ctx.setLineDash([])
+		}
+		line(s.old.map(p => p.x), s.old.map(p => p.y), css("--old"), 1.5, [5, 3])
+		line(s.dist, s.around, css("--around"), 1.5)
+		line(s.dist, s.almost, css("--almost"), 1.5)
+		line(s.dist, s.raw, css("--raw"), 1.2)
+		line(s.dist, s.variant, css("--variant"), 1.5, [2, 3])
+		ctx.strokeStyle = "rgba(0,0,0,.15)"
+		for (const p of s.old.slice(1, -1)) { ctx.beginPath(); ctx.moveTo(X(p.x), pad.t); ctx.lineTo(X(p.x), H - pad.b); ctx.stroke() }
+	}
+
+	canvas.addEventListener("mousemove", e => {
+		if (!geometry) return
+		const { s, X } = geometry
+		let best = 0
+		for (let i = 0; i < s.dist.length; i++) if (Math.abs(X(s.dist[i]) - e.offsetX) < Math.abs(X(s.dist[best]) - e.offsetX)) best = i
+		marker.setLatLng(s.where[best]()).addTo(map)
+		marker.bindTooltip(`${Math.round(s.raw[best])} m`, { permanent: true, direction: "right" }).openTooltip()
+	})
+	canvas.addEventListener("mouseleave", () => marker.remove())
+
+	// Powiększanie kółkiem wokół kursora (skala ta sama w obu osiach) i przesuwanie przeciąganiem
+	const scroller = $("chartScroll"), scaleInput = $("scale")
+	scroller.addEventListener("wheel", e => {
+		if (!geometry) return
+		e.preventDefault()
+		const old = +scaleInput.value
+		const next = Math.min(+scaleInput.max, Math.max(+scaleInput.min, old * Math.exp(-e.deltaY * 0.0015)))
+		const cursor = e.clientX - scroller.getBoundingClientRect().left
+		const distance = (scroller.scrollLeft + cursor - 8) / old
+		scaleInput.value = next
+		draw()
+		scroller.scrollLeft = 8 + distance * +scaleInput.value - cursor
+	}, { passive: false })
+	let drag = null
+	scroller.addEventListener("mousedown", e => { drag = { x: e.clientX, left: scroller.scrollLeft }; e.preventDefault() })
+	window.addEventListener("mousemove", e => { if (drag) scroller.scrollLeft = drag.left - (e.clientX - drag.x) })
+	window.addEventListener("mouseup", () => { drag = null })
+	window.addEventListener("resize", draw)
+	draw()
+}
+</script>
+</body>
+</html>

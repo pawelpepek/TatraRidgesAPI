@@ -1,6 +1,7 @@
 import { AddRouteInput, Coordinates, TatraData } from "../domain"
 import { getSupabase } from "../supabase"
 import { handleRequest, RequestProps } from "./local-api"
+import { RidgeGeometry } from "./ridge-geometry"
 import { getMessage } from "./statusCodeMessage"
 
 let cache: Promise<TatraData> | null = null
@@ -24,6 +25,10 @@ const loadTatraData = () => {
 	}
 	return cache
 }
+
+// Ridge lines and profiles (migration ridge_geometry), separate from get_tatra_data()
+// because the map is usable without them.
+export const loadRidgeGeometry = () => rpc<RidgeGeometry[]>("get_ridge_geometry")
 
 // Returns the access token, which the UI keeps as the sign of being logged in.
 const signIn = async (credentials: { email: string; password: string }) => {

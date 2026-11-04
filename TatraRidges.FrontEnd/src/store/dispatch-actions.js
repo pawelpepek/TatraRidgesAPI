@@ -23,6 +23,15 @@ export const watchSession = async onSignedOut => {
 	}
 }
 
+// Ridge lines and profiles exist only in the Supabase database.
+export const fetchRidgeGeometry = async () => {
+	if (useSupabase) {
+		const { loadRidgeGeometry } = await import("./supabase-data")
+		return loadRidgeGeometry()
+	}
+	return []
+}
+
 const fetchData = async props => {
 	if (useSupabase) {
 		const { fetchFromSupabase } = await import("./supabase-data")

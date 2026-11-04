@@ -8,8 +8,10 @@ import App from "./App"
 import store from "./store/index"
 import { syncLogin } from "./store/user-actions"
 import { startUrlSync } from "./store/url-sync"
+import { loadRidgeGeometry } from "./store/ridge-geometry-slice"
 
 store.dispatch(syncLogin())
+store.dispatch(loadRidgeGeometry())
 startUrlSync(store)
 
 createRoot(document.getElementById("root")!).render(

@@ -7,6 +7,12 @@
       "runtimeArgs": ["--prefix", "TatraRidges.FrontEnd", "start"],
       "env": { "BROWSER": "none" },
       "port": 3000
+    },
+    {
+      "name": "elevation-preview",
+      "runtimeExecutable": "tools/elevation/.venv/Scripts/python",
+      "runtimeArgs": ["-m", "http.server", "8765", "--directory", "tools/elevation"],
+      "port": 8765
     }
   ]
 }
