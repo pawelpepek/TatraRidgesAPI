@@ -21,7 +21,8 @@ const MainFunctions: React.FC = () => {
 				{!visiblePanel.startsWith("route") && (
 					<>
 						<header className={classes.header}>
-							<h1>Granie Tatr Wysokich</h1>
+							<h1>Graniówki</h1>
+							<p className={classes.subtitle}>Mapa grani Tatr Wysokich</p>
 						</header>
 						<NavigationPanel className={classes.navigation} />
 						{visiblePanel === "admin" && <AdminPanel />}

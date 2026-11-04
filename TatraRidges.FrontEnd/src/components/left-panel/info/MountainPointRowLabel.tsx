@@ -13,7 +13,7 @@ const MountainPointRowLabel: React.FC<
 		<p className={className}>
 			<span>{props.point.name}</span>
 				{props.children}
-			<span data-tooltip-id="tooltip" data-tooltip-content='Wysokość w m.n.p.m.' className={classes.evaluation}>
+			<span data-tooltip-id="tooltip" data-tooltip-content='Wysokość w m n.p.m.' className={classes.evaluation}>
 				{props.point.evaluation}
 			</span>
 		</p>

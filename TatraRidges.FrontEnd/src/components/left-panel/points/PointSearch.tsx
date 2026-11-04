@@ -81,10 +81,9 @@ const PointSearch: React.FC<PointSearchProps> = props => {
 	const choose = (point: MountainPoint) => {
 		dispatch(pointsActions.setPoint({ end: props.end, point }))
 		dispatch(
-			centerActions.requestPointFocus({
-				latitude: point.latitude,
-				longitude: point.longitude,
-			})
+			centerActions.requestPointFocus([
+				{ latitude: point.latitude, longitude: point.longitude },
+			])
 		)
 		setQuery(null)
 		inputRef.current?.blur()
@@ -151,10 +150,8 @@ const PointSearch: React.FC<PointSearchProps> = props => {
 				onChange={changeHandler}
 				onKeyDown={keyDownHandler}
 			/>
-			{props.point.id >= 0 && !open && (
-				<p className={classes.evaluation}>
-					{props.point.evaluation > 0 ? props.point.evaluation : "/nan"} m.n.p.m
-				</p>
+			{props.point.id >= 0 && props.point.evaluation > 0 && !open && (
+				<p className={classes.evaluation}>{props.point.evaluation} m n.p.m.</p>
 			)}
 			{open && (
 				<ul

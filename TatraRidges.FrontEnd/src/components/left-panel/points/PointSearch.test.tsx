@@ -59,8 +59,21 @@ describe("PointSearch", () => {
 		expect(store.getState().map.pointFrom.id).toBe(1)
 		expect(store.getState().map.pointTo.id).toBeUndefined()
 		expect(store.getState().center.pointFocus.request).toBe(1)
+		expect(store.getState().center.pointFocus.points).toEqual([
+			{ latitude: 49.2, longitude: 20.01 },
+		])
 		expect(screen.queryByRole("listbox")).toBeNull()
 		expect(from).toHaveProperty("value", "Świnica")
+		expect(screen.getByText("2301 m n.p.m.")).toBeTruthy()
+	})
+
+	test("a point without a known height shows no height", async () => {
+		const { store } = setup()
+		store.dispatch(
+			pointsActions.setPoint({ end: "from", point: point(4, "Turnia", 0) })
+		)
+		expect(await screen.findByDisplayValue("Turnia")).toBeTruthy()
+		expect(screen.queryByText(/n\.p\.m/)).toBeNull()
 	})
 
 	test("arrows and Enter choose a suggestion", async () => {

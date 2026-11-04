@@ -37,7 +37,7 @@ interface StoreType {
 		routeFitRequest: number
 		pointFocus: {
 			request: number
-			coordinates: Coordinates
+			points: Coordinates[]
 		}
 	}
 	routeForm: {

@@ -1,4 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { Coordinates } from "../domain"
 import { parseUrlState } from "./url-state"
 
 // The map is created with the view from the address, if it has one.
@@ -15,10 +16,10 @@ const initialState = {
 	mapVersion: fromUrl.mapVersion ?? 0,
 	// Raised to fit the map to the shown route.
 	routeFitRequest: 0,
-	// Raised to show a point picked by name.
+	// Raised to show a point picked by name, or both ends from a link.
 	pointFocus: {
 		request: 0,
-		coordinates: { latitude: 0, longitude: 0 },
+		points: [] as Coordinates[],
 	},
 }
 
@@ -35,9 +36,9 @@ const centerSlice = createSlice({
 		requestRouteFit(state) {
 			state.routeFitRequest++
 		},
-		requestPointFocus(state, action) {
+		requestPointFocus(state, action: PayloadAction<Coordinates[]>) {
 			state.pointFocus.request++
-			state.pointFocus.coordinates = action.payload
+			state.pointFocus.points = action.payload
 		},
 	},
 })

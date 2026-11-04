@@ -46,13 +46,24 @@ const restore = async (store: UrlSyncStore, url: UrlState) => {
 			from !== undefined && to !== undefined ? { from, to } : { to: to ?? from }
 		)
 	)
-	if (from === undefined || to === undefined || url.routes === undefined) {
+	// A link without the map view shows the whole route, or else its points.
+	if (
+		from === undefined ||
+		to === undefined ||
+		url.routes === undefined ||
+		!(await dispatch(getRidge(from.id, to.id)))
+	) {
+		if (url.center === undefined) {
+			dispatch(
+				centerActions.requestPointFocus(
+					[from, to]
+						.filter(p => p !== undefined)
+						.map(p => ({ latitude: p.latitude, longitude: p.longitude }))
+				)
+			)
+		}
 		return
 	}
-	if (!(await dispatch(getRidge(from.id, to.id)))) {
-		return
-	}
-	// A link without the map view shows the whole route.
 	if (url.center === undefined) {
 		dispatch(centerActions.requestRouteFit())
 	}

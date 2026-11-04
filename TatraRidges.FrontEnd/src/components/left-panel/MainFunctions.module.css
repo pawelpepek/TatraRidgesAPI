@@ -24,6 +24,12 @@ h1 {
 	background-color: var(--color-accent);
 }
 
+.subtitle {
+	margin: 6px 0 0;
+	font-size: 14px;
+	opacity: 0.7;
+}
+
 .functions {
 	display: flex;
 	flex-direction: column;

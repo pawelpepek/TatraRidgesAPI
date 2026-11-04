@@ -152,7 +152,10 @@ const Chart: React.FC<ChartProps> = props => {
 								className={classes.label}
 								x={x(d)}
 								y={height - 5}
-								textAnchor={d === 0 ? "start" : "middle"}
+								// The labels at the ends stay inside the plot.
+								textAnchor={
+									d === 0 ? "start" : x(d) > width - 30 ? "end" : "middle"
+								}
 							>
 								{formatDistance(d)}
 							</text>
