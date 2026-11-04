@@ -82,6 +82,46 @@ const HelpPanel: React.FC = () => {
 					className={classes.img}
 					src={infoImg6}
 				/>
+				<h4>Linie i profil grani</h4>
+				<p>
+					Linie grani na mapie i profil wysokościowy trasy są wyznaczone z
+					lotniczego skaningu laserowego terenu. Przy drogach „prawie ściśle
+					granią” profil pomija drobne zęby grani, a przy „obchodząc grań” także
+					większe turnie.
+				</p>
+				<p>
+					Źródła danych (przetworzonych): NMT ©{" "}
+					<a href='https://www.geoportal.gov.pl' target='_blank' rel='noopener'>
+						GUGiK
+					</a>
+					;{" "}
+					<a
+						href='https://www.skgeodesy.sk/geoportal/inspire/udaje-stiahnutie/'
+						target='_blank'
+						rel='noopener'>
+						DMR 5.0
+					</a>{" "}
+					©{" "}
+					<a href='https://www.skgeodesy.sk' target='_blank' rel='noopener'>
+						ÚGKK SR
+					</a>
+					, licencja{" "}
+					<a
+						href='https://creativecommons.org/licenses/by/4.0/deed.pl'
+						target='_blank'
+						rel='noopener'>
+						CC BY 4.0
+					</a>
+					.
+				</p>
+				<p>
+					Nazwy, wysokości i położenie punktów opracowano m.in. na podstawie{" "}
+					<a href='https://pl.wikipedia.org' target='_blank' rel='noopener'>
+						Wikipedii
+					</a>
+					, a opisy dróg na podstawie przewodników W.H. Paryskiego i W.
+					Cywińskiego.
+				</p>
 			</section>
 		</>
 	)
