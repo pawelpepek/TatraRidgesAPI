@@ -20,7 +20,8 @@ from skimage.graph import route_through_array
 from skimage.measure import approximate_polygon
 
 import dem
-from config import CRS, POINTS, RIDGES, TATRA_DATA
+import osm
+from config import CRS, POINTS, RIDGES, load_tatra_data
 
 SUMMIT = 1
 SUMMIT_SEARCH = 45  # m: promień szukania wierzchołka wokół punktu z bazy
@@ -30,7 +31,14 @@ SUMMIT_LIDAR_TOLERANCE = 1.5  # m: o tyle szczyt w modelu może być niższy ni�
 SUMMIT_BELOW_WEIGHT = 3  # za metr poniżej wysokości z bazy (ponad tolerancję)
 SUMMIT_ABOVE_WEIGHT = 1  # za metr powyżej wysokości z bazy
 SUMMIT_MAX_SHIFT = 80  # m, granica wspinaczki, gdy w promieniu SUMMIT_SEARCH nie ma wierzchołka
+# Wysokość oznaczona w bazie jako przybliżona (PrecisedEvaluation = false) bywa daleka od prawdziwej, więc przy
+# szukaniu szczytu i przełęczy waży tyle razy mniej; o wyborze decyduje wtedy głównie odległość od punktu
+APPROXIMATE_HEIGHT_FACTOR = 0.2
+MISMATCH_REJECT = 10  # m: przy dokładnej wysokości w bazie forma różniąca się bardziej to nie ta forma
+MERGED_DISTANCE = 10  # m: sąsiednie punkty dopasowane bliżej siebie zlały się w jedną formę
+OSM_TRUST = 25  # m: dalej od obiektu OSM o tej samej nazwie punkt z bazy uznajemy za źle położony
 PASS_SEARCH = 80  # m
+PASS_SEARCH_FAR = 200  # m: dalej szukamy tylko przełęczy z przybliżoną wysokością, gdy bliżej nie ma wcięcia
 NOTCH_WINDOW = 8  # komórek ścieżki (ok. 8–11 m) po obu stronach
 PASS_HEIGHT_WEIGHT = 3  # metr różnicy wysokości waży tyle co 3 m odległości
 TPI_RADII = (10, 30, 60)  # m
@@ -99,10 +107,12 @@ def ridge_path(a, b):
     return win, path
 
 
-def find_summit(p, evaluation):
+def find_summit(p, evaluation, precise):
     """Wierzchołek w promieniu SUMMIT_SEARCH m: spośród lokalnych szczytów modelu (bez brzegu koła, gdzie zaczyna się
     zbocze sąsiedniej, wyższej formy) ten bliski i o wysokości zgodnej z bazą. Najbliższe wzniesienie bywa niższym
-    garbem obok prawdziwego wierzchołka (Mały Kozi Wierch: garb 2219,7 m, szczyt 2225,6 m 30 m dalej)."""
+    garbem obok prawdziwego wierzchołka (Mały Kozi Wierch: garb 2219,7 m, szczyt 2225,6 m 30 m dalej).
+    Przybliżona wysokość z bazy (precise False) jest tylko słabą wskazówką."""
+    height_factor = 1.0 if precise else APPROXIMATE_HEIGHT_FACTOR
     r = SUMMIT_SEARCH
     win = dem.read(p[0] - r - 4, p[1] - r - 4, p[0] + r + 5, p[1] + r + 5)
     r0, c0 = win.cell(*p)
@@ -128,7 +138,7 @@ def find_summit(p, evaluation):
             mismatch = SUMMIT_BELOW_WEIGHT * max(0.0, evaluation - z - SUMMIT_LIDAR_TOLERANCE) + SUMMIT_ABOVE_WEIGHT * max(
                 0.0, z - evaluation
             )
-        candidates.append((SUMMIT_DISTANCE_WEIGHT * d + mismatch, top, z))
+        candidates.append((SUMMIT_DISTANCE_WEIGHT * d + height_factor * mismatch, top, z))
     if not candidates:
         return None
     _, top, z = min(candidates)
@@ -159,22 +169,29 @@ def climb(p):
 
 def find_pass(p, a, b):
     """Wcięcie grani między sąsiadami a i b. Na poszarpanej grani w promieniu PASS_SEARCH bywa kilka przełączek,
-    więc wybieramy bliskie i o wysokości bliskiej tej z bazy."""
+    więc wybieramy bliskie i o wysokości bliskiej tej z bazy (przybliżona wysokość jest tylko słabą wskazówką)."""
     found = ridge_path(a, b)
     if not found:
         return None
     win, path = found
     z = [float(win.z[c]) for c in path]
+    height_weight = PASS_HEIGHT_WEIGHT * (1.0 if p["precisedEvaluation"] else APPROXIMATE_HEIGHT_FACTOR)
     notches = []
     for i, c in enumerate(path):
         x, y = win.xy(*c)
-        d = math.hypot(x - p["xy"][0], y - p["xy"][1])
-        if d <= PASS_SEARCH and z[i] == min(z[max(0, i - NOTCH_WINDOW) : i + NOTCH_WINDOW + 1]):
-            notches.append((d + PASS_HEIGHT_WEIGHT * abs(z[i] - (p["evaluation"] or z[i])), (x, y), z[i]))
-    if not notches:
-        return None
-    _, xy, z_best = min(notches)
-    return xy, z_best
+        d = math.hypot(x - p["search"][0], y - p["search"][1])
+        if d <= PASS_SEARCH_FAR and z[i] == min(z[max(0, i - NOTCH_WINDOW) : i + NOTCH_WINDOW + 1]):
+            notches.append((d + height_weight * abs(z[i] - (p["evaluation"] or z[i])), (x, y), z[i], d))
+    near = [n for n in notches if n[3] <= PASS_SEARCH]
+    if near:
+        _, xy, z_best, _ = min(near)
+        return xy, z_best
+    # Punkt daleko od grani (Sucha Przełęcz Jaworowa: 77 m od niej, siodło 130 m dalej): przy przybliżonej wysokości
+    # bierzemy najniższe wcięcie grani między sąsiadami w promieniu PASS_SEARCH_FAR
+    if notches and not p["precisedEvaluation"]:
+        _, xy, z_best, _ = min(notches, key=lambda n: n[2])
+        return xy, z_best
+    return None
 
 
 def anchored(points, a, b, a_new, b_new):
@@ -189,8 +206,17 @@ def latlng(x, y):
     return [round(lat, 6), round(lng, 6)]
 
 
+def accept(p, xy, z):
+    """Przyjmuje dopasowanie, chyba że przy dokładnej wysokości w bazie znaleziona forma ma wyraźnie inną wysokość:
+    wtedy to nie ta forma (np. Świstowy Róg 2112 m: najbliższy garb 2095,5 m 35 m dalej), a punkt zostaje w miejscu."""
+    if p["precisedEvaluation"] and p["evaluation"] is not None and abs(z - p["evaluation"]) > MISMATCH_REJECT:
+        p["note"] = f"w pobliżu brak formy o wysokości z bazy (najbliższa {z:.0f} m, w bazie {p['evaluation']} m), położenie bez zmian"
+        return
+    p["lidar"], p["zLidar"] = xy, z
+
+
 def main():
-    data = json.loads(TATRA_DATA.read_text(encoding="utf-8"))
+    data = load_tatra_data()
     points = {p["id"]: {**p, "xy": to_pl.transform(p["lng"], p["lat"])} for p in data["points"]}
 
     neighbours = {pid: [] for pid in points}
@@ -198,15 +224,23 @@ def main():
         neighbours[r["pointId1"]].append(r["pointId2"])
         neighbours[r["pointId2"]].append(r["pointId1"])
 
+    # Gdzie szukać formy: wokół punktu z bazy, a gdy obiekt OSM o tej samej nazwie leży dalej niż OSM_TRUST,
+    # wokół niego (punkt w bazie jest wtedy ewidentnie zły, np. Nawiesista Turnia 200 m od swojej turni)
+    osm_points = osm.load()
+    for p in points.values():
+        found = osm.find(osm_points, p, p["xy"])
+        p["viaOsm"] = found is not None and math.dist(found, p["xy"]) > OSM_TRUST
+        p["search"] = found if p["viaOsm"] else p["xy"]
+
     # 1. Szczyty
     for p in points.values():
         p["lidar"], p["zLidar"], p["note"] = None, None, None
         win = dem.read(p["xy"][0] - 1, p["xy"][1] - 1, p["xy"][0] + 2, p["xy"][1] + 2)
         p["covered"] = not np.isnan(win.z[1, 1])
         if p["covered"] and p["pointTypeId"] == SUMMIT:
-            top = find_summit(p["xy"], p["evaluation"]) or climb(p["xy"])
+            top = find_summit(p["search"], p["evaluation"], p["precisedEvaluation"]) or climb(p["search"])
             if top:
-                p["lidar"], p["zLidar"] = top
+                accept(p, *top)
             else:
                 p["note"] = f"brak wierzchołka w promieniu {SUMMIT_MAX_SHIFT} m"
 
@@ -223,9 +257,20 @@ def main():
             continue
         found = find_pass(p, anchor(nb[0]), anchor(nb[1]))
         if found:
-            p["lidar"], p["zLidar"] = found
+            accept(p, *found)
         else:
             p["note"] = "brak wcięcia grani w pobliżu przełęczy"
+
+    # Sąsiedzi dopasowani w to samo miejsce, choć w bazie leżą daleko: jeden z nich trafił w nie swoją formę
+    # (porównujemy ostateczne położenia, także punktu, który został w miejscu z bazy)
+    for r in data["ridges"]:
+        p1, p2 = points[r["pointId1"]], points[r["pointId2"]]
+        if (p1["lidar"] or p2["lidar"]) and math.dist(anchor(p1["id"]), anchor(p2["id"])) < MERGED_DISTANCE:
+            if math.dist(p1["search"], p2["search"]) > 2 * MERGED_DISTANCE:
+                for p in (p1, p2):
+                    if p["lidar"]:
+                        p["lidar"], p["zLidar"] = None, None
+                        p["note"] = f"dopasowanie zlało się z sąsiadem ({p1['name']} – {p2['name']}), położenie bez zmian"
     print("punkty gotowe", flush=True)
 
     # 2. i 4. Granie
@@ -242,6 +287,8 @@ def main():
             continue
         win, path = found
         # Środki komórek, ale końce dokładnie w punktach (komórka końca jest przesunięta o ułamek metra)
+        if len(path) == 1:
+            path = path * 2  # oba punkty w tej samej komórce 1 m
         xy = [a] + [win.xy(*c) for c in path[1:-1]] + [b]
         z = np.array([win.z[c] for c in path], dtype=np.float64)
         steps = np.hypot(np.diff([q[0] for q in xy]), np.diff([q[1] for q in xy]))
@@ -303,6 +350,7 @@ def main():
             "evaluation": p["evaluation"],
             "current": [p["lat"], p["lng"]],
             "note": p["note"],
+            "viaOsm": p["viaOsm"],
         }
         if p["lidar"]:
             item |= {

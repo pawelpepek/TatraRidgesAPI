@@ -132,6 +132,16 @@ function forwardOnly(pts, minProgress = 2) {
 	kept.push(pts[pts.length - 1])
 	return kept
 }
+// Bez ostrych zwrotów: wierzchołek ze skrętem ponad 90° znika (jak no_sharp_turns w export_sql.py)
+function noSharpTurns(pts) {
+	pts = [...pts]
+	for (let k = 1; k < pts.length - 1; ) {
+		const ux = pts[k][0] - pts[k - 1][0], uy = pts[k][1] - pts[k - 1][1]
+		const wx = pts[k + 1][0] - pts[k][0], wy = pts[k + 1][1] - pts[k][1]
+		if (ux * wx + uy * wy < 0) { pts.splice(k, 1); k = 1 } else k++
+	}
+	return pts
+}
 // Chaikin: ścina narożniki, końce zostają w punktach
 function round(pts, n) {
 	for (let it = 0; it < n && pts.length > 2; it++) {
@@ -192,7 +202,7 @@ function init(data, ridges) {
 		$("roundv").textContent = n
 		let vertices = 0
 		for (const s of smoothLines) {
-			const pts = round(forwardOnly(simplify(s.xy, tol)), n)
+			const pts = round(noSharpTurns(forwardOnly(simplify(s.xy, tol))), n)
 			vertices += pts.length
 			s.layer.setLatLngs(pts.map(toLatLng))
 		}

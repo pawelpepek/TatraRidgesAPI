@@ -6,7 +6,7 @@ from functools import lru_cache
 
 import numpy as np
 
-from config import NMT_DIR, TILE
+from config import NMT_DIR, NMT_SK_DIR, TILE
 
 
 def asc_to_array(content):
@@ -18,8 +18,17 @@ def asc_to_array(content):
 
 @lru_cache(maxsize=64)
 def tile(x, y):
-    path = NMT_DIR / f"{x}_{y}.npy"
-    return np.load(path) if path.exists() else None
+    """Kafel 1 km: polski NMT, a gdzie go nie ma, słowacki DMR 5.0 (import_sk.py) przeliczony do PL-1992."""
+    pl, sk = NMT_DIR / f"{x}_{y}.npy", NMT_SK_DIR / f"{x}_{y}.npy"
+    z = np.load(pl) if pl.exists() else None
+    if sk.exists():
+        z_sk = np.load(sk)
+        if z is None:
+            return z_sk
+        z = z.copy()
+        missing = np.isnan(z)
+        z[missing] = z_sk[missing]
+    return z
 
 
 class Window:

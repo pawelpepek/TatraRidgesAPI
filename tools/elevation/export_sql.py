@@ -21,11 +21,12 @@ from shapely.strtree import STRtree
 from skimage.measure import approximate_polygon
 
 from analyze import PROFILE_STEP
-from config import CRS, DATA, RIDGES, TATRA_DATA
+from config import CRS, DATA, RIDGES, load_tatra_data
 
 LINE_SMOOTHING = 25  # m, wybrane na podglądzie
 ROUNDING_STEPS = 4  # jak ROUNDING_STEPS w TatraRidges.FrontEnd/src/store/ridge-geometry.ts
 MIN_PROGRESS = 2  # m: o tyle co najmniej kolejny wierzchołek musi być dalej wzdłuż prostej
+MAX_TURN = 90  # stopni: ostrzejszy skręt na wierzchołku linii usuwa ten wierzchołek
 OUTPUT = DATA / "ridge-geometry.sql"
 
 to_pl = Transformer.from_crs("EPSG:4326", CRS, always_xy=True)
@@ -47,6 +48,23 @@ def forward_only(xy):
             last = along
     kept.append(b)
     return np.array(kept)
+
+
+def no_sharp_turns(xy):
+    """Usuwa wierzchołki, na których linia skręca o więcej niż MAX_TURN stopni. Ostry zwrot tuż przy punkcie
+    po zaokrągleniu wygląda jak haczyk z boku punktu, którego forward_only nie wyłapuje (Świstowy Róg)."""
+    pts = list(xy)
+    changed = True
+    while changed and len(pts) > 2:
+        changed = False
+        for k in range(1, len(pts) - 1):
+            u, w = pts[k] - pts[k - 1], pts[k + 1] - pts[k]
+            cos = float(np.dot(u, w)) / (float(np.hypot(*u)) * float(np.hypot(*w)) or 1)
+            if cos < np.cos(np.radians(MAX_TURN)):
+                del pts[k]
+                changed = True
+                break
+    return np.array(pts)
 
 
 def rounded(xy, steps=ROUNDING_STEPS):
@@ -78,7 +96,7 @@ def to_latlng(xy, p1, p2):
 
 def smoothed(line):
     xy = np.array([to_pl.transform(lng, lat) for lat, lng in line])
-    return forward_only(approximate_polygon(xy, tolerance=LINE_SMOOTHING))
+    return no_sharp_turns(forward_only(approximate_polygon(xy, tolerance=LINE_SMOOTHING)))
 
 
 def crossing(shapes, ends):
@@ -101,7 +119,7 @@ def crossing(shapes, ends):
 
 
 def main():
-    data = json.loads(TATRA_DATA.read_text(encoding="utf-8"))
+    data = load_tatra_data()
     points = {p["id"]: p for p in data["points"]}
     names = {p["id"]: p["name"] for p in data["points"]}
     ridges = json.loads(RIDGES.read_text(encoding="utf-8"))
