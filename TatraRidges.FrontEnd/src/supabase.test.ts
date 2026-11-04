@@ -35,3 +35,14 @@ describe("getSupabase", () => {
 		expect(getSupabase()).toBe(getSupabase())
 	})
 })
+
+describe("authStorageKey", () => {
+	// supabase-js's default key: changing it would sign the admin out.
+	it.each([
+		["https://ianxfuclpdtcxoeljppt.supabase.co", "sb-ianxfuclpdtcxoeljppt-auth-token"],
+		["http://127.0.0.1:54321", "sb-127-auth-token"],
+	])("for %s is %s", async (url, key) => {
+		const { authStorageKey } = await import("./supabase-rest")
+		expect(authStorageKey(url)).toBe(key)
+	})
+})

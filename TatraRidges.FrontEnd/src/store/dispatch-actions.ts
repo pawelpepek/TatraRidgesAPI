@@ -1,25 +1,15 @@
 import type { Dispatch, UnknownAction } from "@reduxjs/toolkit"
 import type { RequestProps } from "./local-api"
+import { fetchFromSupabase } from "./supabase-data"
 import { uiActions } from "./ui-slice"
 
 // The data comes from Supabase (get_tatra_data, the admin's SQL functions) and is
-// computed locally. The Supabase SDK is a separate chunk, loaded with the first request.
-const supabaseData = () => import("./supabase-data")
-
-export const signOut = async () => {
-	const { signOutFromSupabase } = await supabaseData()
-	await signOutFromSupabase()
-}
-
-export const watchSession = async (onChange: (isAdmin: boolean) => void) => {
-	const { watchAdminSession } = await supabaseData()
-	await watchAdminSession(onChange)
-}
-
-export const fetchRidgeGeometry = async () => {
-	const { loadRidgeGeometry } = await supabaseData()
-	return loadRidgeGeometry()
-}
+// computed locally; supabase-data.ts loads the SDK only for the admin.
+export {
+	loadRidgeGeometry as fetchRidgeGeometry,
+	signOutFromSupabase as signOut,
+	watchAdminSession as watchSession,
+} from "./supabase-data"
 
 export interface DispatchProps extends RequestProps {
 	// Shows the spinner with the data sources (the first loads of the map).
@@ -61,7 +51,6 @@ const dataDispatcher = (
 			})
 		)
 		try {
-			const { fetchFromSupabase } = await supabaseData()
 			const data = await fetchFromSupabase(props)
 
 			dispatch(uiActions.showNotification({ status: "success", message: "Ok" }))

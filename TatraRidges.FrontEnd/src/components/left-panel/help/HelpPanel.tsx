@@ -1,10 +1,10 @@
 import classes from "./HelpPanel.module.css"
-import infoImg1 from "../../img/help1.png"
-import infoImg2 from "../../img/help2.png"
-import infoImg3 from "../../img/help3.png"
-import infoImg4 from "../../img/help4.png"
-import infoImg5 from "../../img/help5.png"
-import infoImg6 from "../../img/help6.png"
+import infoImg1 from "../../img/help1.webp"
+import infoImg2 from "../../img/help2.webp"
+import infoImg3 from "../../img/help3.webp"
+import infoImg4 from "../../img/help4.webp"
+import infoImg5 from "../../img/help5.webp"
+import infoImg6 from "../../img/help6.webp"
 import PanelHeader from "../PanelHeader"
 
 const HelpPanel: React.FC = () => {

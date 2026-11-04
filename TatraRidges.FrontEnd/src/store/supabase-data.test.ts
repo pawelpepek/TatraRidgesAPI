@@ -14,41 +14,93 @@ vi.mock("../supabase", () => {
 	return { supabase, getSupabase: () => supabase }
 })
 
+const sessionKey = "sb-abc-auth-token"
+
 // A fresh module per test: supabase-data keeps the loaded data in a module variable.
+// Reads go through fetch (mocked as `http`), the admin's calls through the SDK (`rpc`).
 const setup = async () => {
 	vi.resetModules()
+	vi.stubEnv("VITE_SUPABASE_URL", "https://abc.supabase.co")
+	vi.stubEnv("VITE_SUPABASE_KEY", "key")
+	const http = vi.fn(async (url: string) =>
+		url.endsWith("/get_tatra_data")
+			? new Response(JSON.stringify(data))
+			: new Response(JSON.stringify([]))
+	)
+	vi.stubGlobal("fetch", http)
 	const module = await import("./supabase-data")
 	const client: any = ((await import("../supabase")) as any).supabase
 	const rpc = client.rpc as Mock
+	rpc.mockReset()
 	rpc.mockImplementation(async (fn: string) =>
-		fn === "get_tatra_data"
-			? { data, error: null }
-			: fn === "is_admin"
-				? { data: true, error: null }
-				: { data: null, error: null }
+		fn === "is_admin" ? { data: true, error: null } : { data: null, error: null }
 	)
+	client.auth.onAuthStateChange.mockReset()
+	client.auth.getSession.mockReset()
+	client.auth.signOut.mockReset()
 	return {
 		fetch: module.fetchFromSupabase,
 		watch: module.watchAdminSession,
+		loadGeometry: module.loadRidgeGeometry,
 		client,
 		rpc,
+		http,
 	}
 }
 
-const dataLoads = (rpc: Mock) =>
-	rpc.mock.calls.filter(([fn]) => fn === "get_tatra_data").length
+afterEach(() => {
+	vi.unstubAllEnvs()
+	vi.unstubAllGlobals()
+	localStorage.clear()
+})
+
+const dataLoads = (http: Mock) =>
+	http.mock.calls.filter(([url]) => url.endsWith("/get_tatra_data")).length
 
 describe("fetchFromSupabase", () => {
-	it("answers reads from one get_tatra_data call", async () => {
-		const { fetch, rpc } = await setup()
+	it("answers reads from one get_tatra_data call, without the SDK", async () => {
+		const { fetch, rpc, http } = await setup()
 		const points = await fetch({ method: "GET", location: "point" })
 		await fetch({ method: "GET", location: "connection" })
 		expect(points).toHaveLength(data.points.length)
-		expect(dataLoads(rpc)).toBe(1)
+		expect(dataLoads(http)).toBe(1)
+		expect(http).toHaveBeenCalledWith(
+			"https://abc.supabase.co/rest/v1/rpc/get_tatra_data",
+			expect.objectContaining({
+				method: "POST",
+				headers: expect.objectContaining({ apikey: "key" }),
+			})
+		)
+		expect(rpc).not.toHaveBeenCalled()
+	})
+
+	it("reports a failed read with the database's message", async () => {
+		const { fetch, http } = await setup()
+		http.mockResolvedValueOnce(
+			new Response(JSON.stringify({ message: "permission denied" }), {
+				status: 401,
+			})
+		)
+		await expect(fetch({ method: "GET", location: "point" })).rejects.toThrow(
+			"Błąd odczytu danych: permission denied"
+		)
+		// The failed load is not kept: the next read tries again.
+		expect(await fetch({ method: "GET", location: "point" })).toHaveLength(
+			data.points.length
+		)
+	})
+
+	it("loads the ridge geometry without the SDK", async () => {
+		const { loadGeometry, rpc, http } = await setup()
+		expect(await loadGeometry()).toEqual([])
+		expect(http.mock.calls[0][0]).toBe(
+			"https://abc.supabase.co/rest/v1/rpc/get_ridge_geometry"
+		)
+		expect(rpc).not.toHaveBeenCalled()
 	})
 
 	it("moves a point and reloads the data afterwards", async () => {
-		const { fetch, rpc } = await setup()
+		const { fetch, rpc, http } = await setup()
 		await fetch({ method: "GET", location: "point" })
 
 		const result = await fetch({
@@ -65,7 +117,7 @@ describe("fetchFromSupabase", () => {
 			latitude: 49.2,
 			longitude: 20.1,
 		})
-		expect(dataLoads(rpc)).toBe(2)
+		expect(dataLoads(http)).toBe(2)
 	})
 
 	it("deletes a point", async () => {
@@ -179,8 +231,17 @@ describe("fetchFromSupabase", () => {
 	})
 
 	describe("watchAdminSession", () => {
-		it("reports a missing session on page load", async () => {
+		it("reports no session on page load without loading the SDK", async () => {
 			const { watch, client } = await setup()
+			const onChange = vi.fn()
+			await watch(onChange)
+			expect(onChange.mock.calls).toEqual([[false]])
+			expect(client.auth.getSession).not.toHaveBeenCalled()
+		})
+
+		it("reports an expired stored session as logged out", async () => {
+			const { watch, client } = await setup()
+			localStorage.setItem(sessionKey, "{}")
 			client.auth.getSession.mockResolvedValue({ data: { session: null } })
 			const onChange = vi.fn()
 			await watch(onChange)
@@ -189,6 +250,7 @@ describe("fetchFromSupabase", () => {
 
 		it("reports a session of someone who is not an admin as logged out", async () => {
 			const { watch, client, rpc } = await setup()
+			localStorage.setItem(sessionKey, "{}")
 			client.auth.getSession.mockResolvedValue({
 				data: { session: { access_token: "token" } },
 			})
@@ -200,6 +262,7 @@ describe("fetchFromSupabase", () => {
 
 		it("reports an admin session and when it ends", async () => {
 			const { watch, client } = await setup()
+			localStorage.setItem(sessionKey, "{}")
 			client.auth.getSession.mockResolvedValue({
 				data: { session: { access_token: "token" } },
 			})
@@ -212,6 +275,24 @@ describe("fetchFromSupabase", () => {
 			expect(onChange).toHaveBeenCalledTimes(1)
 			listener("SIGNED_OUT")
 			expect(onChange.mock.calls).toEqual([[true], [false]])
+		})
+
+		it("reports the end of a session started later on the page", async () => {
+			const { watch, fetch, client } = await setup()
+			const onChange = vi.fn()
+			await watch(onChange)
+			client.auth.signInWithPassword.mockResolvedValue({
+				data: { session: { access_token: "token" } },
+				error: null,
+			})
+			await fetch({
+				method: "POST",
+				location: "account/login/",
+				body: { email: "a@b.c", password: "x" },
+			})
+			const listener = client.auth.onAuthStateChange.mock.calls[0][0]
+			listener("SIGNED_OUT")
+			expect(onChange.mock.calls).toEqual([[false], [false]])
 		})
 	})
 })
