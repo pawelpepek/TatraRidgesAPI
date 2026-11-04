@@ -24,6 +24,10 @@
 	display: block;
 }
 
+.axis {
+	flex-shrink: 0;
+}
+
 .grid {
 	stroke: var(--color-hover);
 	stroke-width: 1;
