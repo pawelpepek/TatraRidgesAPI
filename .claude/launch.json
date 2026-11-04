@@ -9,6 +9,12 @@
       "port": 3000
     },
     {
+      "name": "frontend-build",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "TatraRidges.FrontEnd", "run", "preview", "--", "--port", "4173", "--strictPort"],
+      "port": 4173
+    },
+    {
       "name": "elevation-preview",
       "runtimeExecutable": "tools/elevation/.venv/Scripts/python",
       "runtimeArgs": ["-m", "http.server", "8765", "--directory", "tools/elevation"],

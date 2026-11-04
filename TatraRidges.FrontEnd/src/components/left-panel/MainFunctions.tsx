@@ -1,12 +1,13 @@
 import { useSelector } from "react-redux"
 import React, { Suspense } from "react"
 import StoreType from "../../store/store-types"
-import AdminPanel from "./admin/AdminPanel"
 import classes from "./MainFunctions.module.css"
 import RoutePanel from "./route/RoutePanel"
 import HelpPanel from "./help/HelpPanel"
 
 // Outside the component: a lazy component created during render suspends again on every render.
+// The admin panel brings react-select, which visitors never need.
+const AdminPanel = React.lazy(() => import("./admin/AdminPanel"))
 const SearchPanel = React.lazy(() => import("./find/SearchPanel"))
 const AuthForm = React.lazy(() => import("./authorization/AuthForm"))
 const NavigationPanel = React.lazy(() => import("./NavigationPanel"))
