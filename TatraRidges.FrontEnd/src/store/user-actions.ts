@@ -10,9 +10,9 @@ export const login = (email: string, password: string) => {
 			email,
 			password,
 		},
-        isText:true
 	}
-	return dataDispatcher(props, uiActions.setLogged)
+	// Not uiActions.setLogged itself: its payload would carry the password.
+	return dataDispatcher(props, () => uiActions.setLogged(true))
 }
 
 export const logout = () => async (dispatch: AppDispatch) => {
@@ -24,13 +24,9 @@ export const logout = () => async (dispatch: AppDispatch) => {
 }
 
 // Keeps the "logged in" state in step with the Supabase session.
-export const syncLogin =
-	() =>
-	(dispatch: AppDispatch, getState: () => { ui: { isLogged: boolean } }) =>
-		watchSession(() => {
-			if (getState().ui.isLogged) {
-				dispatch(uiActions.setLogged(false))
-			}
-		}).catch(() => {
-			// Offline: keep the state; a write would report the missing session anyway.
-		})
+export const syncLogin = () => (dispatch: AppDispatch) =>
+	watchSession(isAdmin => dispatch(uiActions.setSessionLogged(isAdmin))).catch(
+		() => {
+			// Offline: stay logged out; the admin can log in again once online.
+		}
+	)

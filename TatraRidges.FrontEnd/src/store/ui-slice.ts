@@ -1,5 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit"
-import { isLoginOk, loginHandler } from "./authorizationHandler"
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 const initialState = {
 	visiblePanel: "search",
@@ -9,7 +8,15 @@ const initialState = {
 	},
 	visibleAdminPart: "route",
 	selectedRoutePart: -1,
-	isLogged: isLoginOk(),
+	// Follows the admin's Supabase session (syncLogin), so it starts as false.
+	isLogged: false,
+}
+
+const setLoggedState = (state: typeof initialState, logged: boolean) => {
+	state.isLogged = logged
+	if (!logged && state.visiblePanel === "admin") {
+		state.visiblePanel = "search"
+	}
 }
 
 const uiSlice = createSlice({
@@ -25,18 +32,16 @@ const uiSlice = createSlice({
 		setPanelVersion(state, action) {
 			state.visiblePanel = action.payload
 		},
-		setLogged(state, action) {
-			const logged = action.payload.data != null
-			if (logged) {
-				loginHandler(action.payload.data)
+		// After the login form (true) or logout (false).
+		setLogged(state, action: PayloadAction<unknown>) {
+			setLoggedState(state, Boolean(action.payload))
+			if (state.isLogged) {
 				state.visiblePanel = "admin"
-			} else {
-				if (state.visiblePanel === "admin") {
-					state.visiblePanel = "search"
-				}
-				localStorage.removeItem("token")
 			}
-			state.isLogged = isLoginOk()
+		},
+		// The session found on page load, or its end later.
+		setSessionLogged(state, action: PayloadAction<boolean>) {
+			setLoggedState(state, action.payload)
 		},
 		setAdminPartVisible(state, action) {
 			state.visibleAdminPart = action.payload

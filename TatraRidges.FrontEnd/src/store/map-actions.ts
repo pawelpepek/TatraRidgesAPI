@@ -12,7 +12,6 @@ export const movePoint = (id: number, coordinates: Coordinates) => {
 		pathPart: id,
 		body: coordinates,
 		addingInfo: { id },
-		token: true,
 	}
 	return dataDispatcher(props, pointsActions.movePointById)
 }
@@ -21,7 +20,6 @@ export const fetchPointsData = () => {
 	const props = {
 		method: "GET",
 		location: "point",
-		isBody: true,
 		pendingInfo: true,
 	}
 	return dataDispatcher(props, pointsActions.replacePoints)
@@ -33,7 +31,6 @@ export const deletePointById = (id: number) => {
 		location: "point/",
 		pathPart: id,
 		addingInfo: { id },
-		token: true,
 	}
 	return dataDispatcher(props, pointsActions.deletePoint)
 }
@@ -42,7 +39,6 @@ export const fetchConnectionsData = () => {
 	const props = {
 		method: "GET",
 		location: "connection",
-		isBody: true,
 		pendingInfo: true,
 	}
 	return dataDispatcher(props, pointsActions.replaceConnections)
@@ -59,7 +55,6 @@ export const postConnectionRidge = (pointId1: number, pointId2: number) => {
 		location: "connection",
 		body,
 		addingInfo: { pointId1, pointId2 },
-		token: true,
 	}
 	return dataDispatcher(props, pointsActions.connectRidgePoints)
 }
@@ -69,7 +64,6 @@ export const getRidge = (pointFrom: number, pointTo: number) => {
 	const props = {
 		method: "GET",
 		location: "route",
-		isBody: true,
 		pathPart,
 	}
 	return dataDispatcher(props, [
@@ -82,8 +76,6 @@ export const getParameters = () => {
 	const props = {
 		method: "GET",
 		location: "route/parameters",
-		isBody: true,
-		token: true,
 	}
 	return dataDispatcher(props, routeFormActions.setValuesContainer)
 }
@@ -93,7 +85,6 @@ export const getSummaryForRoutes = (routes: RouteIdFrom[]) => {
 		method: "POST",
 		location: "route/parts",
 		body: routes,
-		isBody: true,
 	}
 	return dataDispatcher(props, pointsActions.getSummary)
 }
@@ -107,12 +98,10 @@ export const postRouteRidge = (route: AddRoute) => {
 		method: "POST",
 		location: "route",
 		body,
-		isBody: true,
 		addingInfo: {
 			pointId1,
 			pointId2,
 		},
-		token: true,
 	}
 	return dataDispatcher(props, [
 		pointsActions.addRidgePoints,

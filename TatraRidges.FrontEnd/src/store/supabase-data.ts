@@ -30,7 +30,7 @@ const loadTatraData = () => {
 // because the map is usable without them.
 export const loadRidgeGeometry = () => rpc<RidgeGeometry[]>("get_ridge_geometry")
 
-// Returns the access token, which the UI keeps as the sign of being logged in.
+// Resolves to true for an admin; supabase-js keeps the session in localStorage.
 const signIn = async (credentials: { email: string; password: string }) => {
 	const { data, error } =
 		await getSupabase().auth.signInWithPassword(credentials)
@@ -53,23 +53,21 @@ const signIn = async (credentials: { email: string; password: string }) => {
 	if (!isAdmin) {
 		throw new Error(getMessage(401))
 	}
-	return data.session.access_token
+	return true
 }
 
 export const signOutFromSupabase = () => getSupabase().auth.signOut()
 
-// Calls onSignedOut when there is no admin session on page load and whenever the
-// session ends later (expired, revoked, signed out in another tab).
-export const watchAdminSession = async (onSignedOut: () => void) => {
+// Reports whether the session found on page load belongs to an admin, then reports
+// false whenever the session ends (expired, revoked, signed out in another tab).
+export const watchAdminSession = async (onChange: (isAdmin: boolean) => void) => {
 	getSupabase().auth.onAuthStateChange(event => {
 		if (event === "SIGNED_OUT") {
-			onSignedOut()
+			onChange(false)
 		}
 	})
 	const { data } = await getSupabase().auth.getSession()
-	if (data.session === null || !(await rpc<boolean>("is_admin"))) {
-		onSignedOut()
-	}
+	onChange(data.session !== null && (await rpc<boolean>("is_admin")))
 }
 
 // The writes of the old API, as SQL functions (migration admin_writes).

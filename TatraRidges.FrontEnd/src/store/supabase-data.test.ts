@@ -120,13 +120,13 @@ describe("fetchFromSupabase", () => {
 			body: { email: "a@b.c", password: "x" },
 		}
 
-		it("returns the access token of an admin", async () => {
+		it("succeeds for an admin", async () => {
 			const { fetch, client } = await setup()
 			client.auth.signInWithPassword.mockResolvedValue({
 				data: { session: { access_token: "token" } },
 				error: null,
 			})
-			expect(await fetch(login)).toBe("token")
+			expect(await fetch(login)).toBe(true)
 		})
 
 		it("signs out a user who is not an admin", async () => {
@@ -182,25 +182,36 @@ describe("fetchFromSupabase", () => {
 		it("reports a missing session on page load", async () => {
 			const { watch, client } = await setup()
 			client.auth.getSession.mockResolvedValue({ data: { session: null } })
-			const onSignedOut = vi.fn()
-			await watch(onSignedOut)
-			expect(onSignedOut).toHaveBeenCalledTimes(1)
+			const onChange = vi.fn()
+			await watch(onChange)
+			expect(onChange.mock.calls).toEqual([[false]])
 		})
 
-		it("keeps an admin session and reports when it ends", async () => {
+		it("reports a session of someone who is not an admin as logged out", async () => {
+			const { watch, client, rpc } = await setup()
+			client.auth.getSession.mockResolvedValue({
+				data: { session: { access_token: "token" } },
+			})
+			rpc.mockResolvedValueOnce({ data: false, error: null })
+			const onChange = vi.fn()
+			await watch(onChange)
+			expect(onChange.mock.calls).toEqual([[false]])
+		})
+
+		it("reports an admin session and when it ends", async () => {
 			const { watch, client } = await setup()
 			client.auth.getSession.mockResolvedValue({
 				data: { session: { access_token: "token" } },
 			})
-			const onSignedOut = vi.fn()
-			await watch(onSignedOut)
-			expect(onSignedOut).not.toHaveBeenCalled()
+			const onChange = vi.fn()
+			await watch(onChange)
+			expect(onChange.mock.calls).toEqual([[true]])
 
 			const listener = client.auth.onAuthStateChange.mock.calls[0][0]
 			listener("TOKEN_REFRESHED")
-			expect(onSignedOut).not.toHaveBeenCalled()
+			expect(onChange).toHaveBeenCalledTimes(1)
 			listener("SIGNED_OUT")
-			expect(onSignedOut).toHaveBeenCalledTimes(1)
+			expect(onChange.mock.calls).toEqual([[true], [false]])
 		})
 	})
 })
