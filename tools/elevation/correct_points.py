@@ -27,7 +27,7 @@ def main():
     added = 0
     for p in json.loads(POINTS.read_text(encoding="utf-8")):
         # Raz poprawiony punkt zostaje: ponowne dopasowanie już przesuniętego punktu potrafi przeskoczyć dalej
-        if str(p["id"]) in corrections:
+        if str(p["id"]) in corrections or p.get("manual"):
             continue
         if p.get("lidar") and not p["note"] and p["shift"] >= MIN_MOVE:
             corrections[str(p["id"])] = p["lidar"]
@@ -39,9 +39,15 @@ def main():
         "-- (NMT GUGiK, DMR 5.0 ÚGKK SR). Punkt zmienia się tylko, jeśli ma jeszcze pierwotne współrzędne.",
         "begin;",
     ]
-    for pid, (lat, lng) in sorted(corrections.items(), key=lambda c: points[int(c[0])]["name"]):
+    # Położenie końcowe: poprawka albo ustawienie ręczne (manual-points.json), które z nią wygrywa
+    moved = {str(p["id"]) for p in points.values() if p["manual"]} | set(corrections)
+    for pid in sorted(moved, key=lambda i: points[int(i)]["name"]):
         p = points[int(pid)]
-        sql.append(f"-- {p['name']}: {p['originalLat']}, {p['originalLng']} -> {lat}, {lng}")
+        lat, lng = (p["lat"], p["lng"]) if p["manual"] else corrections[pid]
+        if (lat, lng) == (p["originalLat"], p["originalLng"]):
+            continue
+        manual = " (ręcznie)" if p["manual"] else ""
+        sql.append(f"-- {p['name']}{manual}: {p['originalLat']}, {p['originalLng']} -> {lat}, {lng}")
         sql.append(
             f'update public."MountainPoints" set "Latitude" = {lat}, "Longitude" = {lng} '
             f'where "Id" = {pid} and "Latitude" = {p["originalLat"]} and "Longitude" = {p["originalLng"]};'

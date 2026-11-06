@@ -1,0 +1,17 @@
+{
+	"1198": {
+		"name": "Ważecka Turnia",
+		"position": [49.155026, 20.02137],
+		"reason": "Wierzchołek 2138 m według LIDAR, 2 m od współrzędnych z pl.wikipedia; ręczne przesunięcie z 2026-11-05 (49.155138, 20.021017) trafiło na zbocze 2105 m."
+	},
+	"1877": {
+		"name": "Niżnia Wysoka Gerlachowska",
+		"position": [49.168531, 20.129714],
+		"reason": "Wierzchołek 2536 m według pl.wikipedia i LIDAR; węzeł OSM Malá Litvorová veža leży 90 m dalej na garbie 2485 m."
+	},
+	"1056": {
+		"name": "Gerlachowska Kopa",
+		"position": [49.167238, 20.131304],
+		"reason": "Wierzchołek 2597 m między Wyżnią Wysoką Gerlachowską a Lawinowym Szczytem według pl.wikipedia i LIDAR; w OSM nazwa polska przypięta do Veľkej Litvorovej veży."
+	}
+}

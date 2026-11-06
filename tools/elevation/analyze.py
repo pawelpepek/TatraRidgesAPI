@@ -237,7 +237,10 @@ def main():
         p["lidar"], p["zLidar"], p["note"] = None, None, None
         win = dem.read(p["xy"][0] - 1, p["xy"][1] - 1, p["xy"][0] + 2, p["xy"][1] + 2)
         p["covered"] = not np.isnan(win.z[1, 1])
-        if p["covered"] and p["pointTypeId"] == SUMMIT:
+        if p["covered"] and p["manual"]:
+            # Położenie ustawione ręcznie (manual-points.json): bez szukania formy w modelu
+            p["lidar"], p["zLidar"], p["viaOsm"] = p["xy"], float(win.z[1, 1]), False
+        elif p["covered"] and p["pointTypeId"] == SUMMIT:
             top = find_summit(p["search"], p["evaluation"], p["precisedEvaluation"]) or climb(p["search"])
             if top:
                 accept(p, *top)
@@ -249,7 +252,7 @@ def main():
 
     # 3. Przełęcze
     for p in points.values():
-        if not p["covered"] or p["pointTypeId"] == SUMMIT:
+        if not p["covered"] or p["pointTypeId"] == SUMMIT or p["manual"]:
             continue
         nb = neighbours[p["id"]]
         if len(nb) != 2:
@@ -268,7 +271,7 @@ def main():
         if (p1["lidar"] or p2["lidar"]) and math.dist(anchor(p1["id"]), anchor(p2["id"])) < MERGED_DISTANCE:
             if math.dist(p1["search"], p2["search"]) > 2 * MERGED_DISTANCE:
                 for p in (p1, p2):
-                    if p["lidar"]:
+                    if p["lidar"] and not p["manual"]:
                         p["lidar"], p["zLidar"] = None, None
                         p["note"] = f"dopasowanie zlało się z sąsiadem ({p1['name']} – {p2['name']}), położenie bez zmian"
     print("punkty gotowe", flush=True)
@@ -351,6 +354,7 @@ def main():
             "current": [p["lat"], p["lng"]],
             "note": p["note"],
             "viaOsm": p["viaOsm"],
+            "manual": p["manual"],
         }
         if p["lidar"]:
             item |= {
